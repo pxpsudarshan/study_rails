@@ -1,0 +1,135 @@
+<%= form_for @user, html: { class: 'needs-validation', novalidate: true, id: 'user', role: 'form' } do |f| %>
+<% if @user.errors.any? %>
+<div class="row">
+  <div class="col-md-12">
+    <div id="error_explanations" class="alert fade show alert-danger">
+      <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+        <li>
+          <%= content_tag(:div, msg) %>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+<% end %>
+<div class="row">
+  <div class="col-md-7">
+    <div id="error_explanations_required" class="alert text-center fade alert-danger">
+      必須項目を入力してください。
+    </div>
+    <table class="table table-bordered table-sm">
+      <tbody>
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.user.sei') %><%== t('common.flg_required') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+              <%= f.text_field :sei, class: 'form-control', required: true %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.user.mei') %><%== t('common.flg_required') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+              <%= f.text_field :mei, class: 'form-control', required: true %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.user.sei_kana') %><%== t('common.flg_required') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+              <%= f.text_field :sei_kana, class: 'form-control', required: true %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.user.mei_kana') %><%== t('common.flg_required') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+              <%= f.text_field :mei_kana, class: 'form-control', required: true %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.user.mobile') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+              <%= f.text_field :mobile, class: 'form-control' %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.user.email') %><%== t('common.flg_required') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+              <%= f.text_field :email, class: 'form-control', required: true %>
+            </div>
+          </td>
+        </tr>
+        <% if @user.new_record? %>
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.user.password') %><%== t('common.flg_required') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+              <%= f.password_field :password, class: 'form-control', required: true %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.user.password_confirmation') %><%== t('common.flg_required') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+              <%= f.password_field :password_confirmation, class: 'form-control', required: true %>
+            </div>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="form-actions">
+      <%= link_to t('buttons.cancel'), users_path, class: "btn btn-secondary" %>
+      <%= button_tag t('buttons.create'), type: 'submit', class: "btn btn-warning" %>
+      <% if @user.persisted? && @user.id != current_user.id %>
+      <%= link_to t('buttons.destroy').html_safe, user_path, method: :delete, class: 'btn btn-danger' %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<% end %>
+<%= javascript_tag do %>
+$(function() {
+'use strict';
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.getElementsByClassName('needs-validation');
+  // Loop over them and prevent submission
+  var validation = Array.prototype.filter.call(forms, function(form) {
+    form.addEventListener('submit', function(event) {
+      if (form.checkValidity() === false) {
+        $('#create_button').prop('disabled',false);
+        $('#cancel_button').removeClass('disabled');
+        $('#confirmButton').prop('disabled',false);
+        $('#yes_button').prop('disabled', false);
+        $('#no_button').prop('disabled', false);
+        $('#confirmModal').modal('hide');
+        $('#error_explanations_required').addClass('show');
+        window.scrollTo(0,0);
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      form.classList.add('was-validated');
+    }, false);
+  });
+
+  $( ".date" ).datetimepicker({
+    format: 'YYYY/MM/DD',
+    locale: 'ja'
+  });
+});
+<% end %>

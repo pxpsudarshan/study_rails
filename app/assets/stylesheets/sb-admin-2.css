@@ -1,0 +1,152 @@
+/*!
+ * Start Bootstrap - SB Admin 2 Bootstrap Admin Theme (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+.fc-day-sun {
+  background-color: rgba(254, 123, 123, 0.15);
+  background-color: var(--fc-sun-bg-color, rgba(254, 123, 123, 0.15));
+}
+.fc-day-sat {
+  background-color: rgba(89, 172, 255, 0.15);
+  background-color: var(--fc-sun-bg-color, rgba(89, 172, 255, 0.15));
+}
+
+
+/* .fc-unthemed td.fc-today { background: #edfeed !important; } */
+
+/*========================================================
+=            カスタムボタン設定    　　　　     =
+========================================================*/
+input[type="color" i] {
+    -webkit-appearance: square-button;
+    width: 40px;
+    height: 40px;
+    background-color: buttonface;
+    cursor: default;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(169, 169, 169);
+    border-image: initial;
+    padding: 1px 2px;
+}
+
+.btn-emerald, .btn-emerald:link, .btn-emerald:visited {
+  background: rgb(80, 216, 154);
+  color: #fff;
+  border: solid 1px #37b57c;
+  -moz-box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
+.btn-emerald:hover, .btn-emerald:focus {
+  background: rgb(49, 188, 124);
+  border: solid 1px #2ca26c;
+  color: #fff;
+}
+.btn-emerald:active {
+  background: rgb(39, 131, 89);
+  border: solid 1px #1e6f4a;
+  color: #fff;  }
+
+  /*========================================================
+  =            ページタイトルの設定    　　　　     =
+  ========================================================*/
+.page-header{
+  font-size: 24px;
+  color: black;
+  margin: 20px 0;
+  padding-bottom: 3px;
+  width: 450px;
+  background: #f44336; /* Old browsers */
+  background: -moz-linear-gradient(-45deg,  #f44336 0%, #ff9800 17%, #ffeb3b 32%, #4caf50 50%, #2196f3 67%, #3f51b5 84%, #9c27b0 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#f44336), color-stop(17%,#ff9800), color-stop(32%,#ffeb3b), color-stop(50%,#4caf50), color-stop(67%,#2196f3), color-stop(84%,#3f51b5), color-stop(100%,#9c27b0)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(-45deg,  #f44336 0%,#ff9800 17%,#ffeb3b 32%,#4caf50 50%,#2196f3 67%,#3f51b5 84%,#9c27b0 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(-45deg,  #f44336 0%,#ff9800 17%,#ffeb3b 32%,#4caf50 50%,#2196f3 67%,#3f51b5 84%,#9c27b0 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(-45deg,  #f44336 0%,#ff9800 17%,#ffeb3b 32%,#4caf50 50%,#2196f3 67%,#3f51b5 84%,#9c27b0 100%); /* IE10+ */
+  background: linear-gradient(135deg,  #f44336 0%,#ff9800 17%,#ffeb3b 32%,#4caf50 50%,#2196f3 67%,#3f51b5 84%,#9c27b0 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f44336', endColorstr='#9c27b0',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+.page-header-mobile{
+  font-size: 22px;
+  color: black;
+  margin: 20px 0;
+  padding-bottom: 3px;
+  background: #f44336; /* Old browsers */
+  background: -moz-linear-gradient(-45deg,  #f44336 0%, #ff9800 17%, #ffeb3b 32%, #4caf50 50%, #2196f3 67%, #3f51b5 84%, #9c27b0 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#f44336), color-stop(17%,#ff9800), color-stop(32%,#ffeb3b), color-stop(50%,#4caf50), color-stop(67%,#2196f3), color-stop(84%,#3f51b5), color-stop(100%,#9c27b0)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(-45deg,  #f44336 0%,#ff9800 17%,#ffeb3b 32%,#4caf50 50%,#2196f3 67%,#3f51b5 84%,#9c27b0 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(-45deg,  #f44336 0%,#ff9800 17%,#ffeb3b 32%,#4caf50 50%,#2196f3 67%,#3f51b5 84%,#9c27b0 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(-45deg,  #f44336 0%,#ff9800 17%,#ffeb3b 32%,#4caf50 50%,#2196f3 67%,#3f51b5 84%,#9c27b0 100%); /* IE10+ */
+  background: linear-gradient(135deg,  #f44336 0%,#ff9800 17%,#ffeb3b 32%,#4caf50 50%,#2196f3 67%,#3f51b5 84%,#9c27b0 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f44336', endColorstr='#9c27b0',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+.page-title{
+  display:block;
+  background: white;
+  padding-top:6px;
+  padding-bottom: 5px;
+  padding-left: 20px;
+  border-top: 1px solid #e6e6fa;
+}
+
+.page-title-mobile{
+  display:block;
+  background: white;
+  padding-top:6px;
+  padding-left: 10px;
+  padding-bottom: 5px;
+}
+
+/*========================================================
+=            権限エラーページの画像の設定    　　　　     =
+========================================================*/
+.img-access-denied img{
+    display: block;
+    width: 30%;
+    margin: 50px auto;
+}
+
+.mobile-img-access-denied img{
+    display: block;
+    width: 70%;
+    margin: 20px auto;
+}
+
+.bg-gray {
+  background-color: rgb(128, 128, 128);
+}
+
+.turbolinks-progress-bar {
+  visibility: hidden;
+  /*height: 5px;
+  background-color: red;*/
+}
+
+.subject-info-box {
+  float: left;
+  width: 200px;
+}
+.subject-info-box  select {
+    height: 200px !important;
+    padding: 0;
+}
+.subject-info-box  select option {
+   padding: 4px 10px 4px 10px;
+}
+.subject-info-box  select option:hover {
+   background: #EEEEEE;
+}
+
+.subject-info-arrows {
+  float: left;
+  width: 60px;
+}
+
+.subject-info-arrows input {
+    width: 50px;
+    margin-bottom: 5px;
+}

@@ -1,0 +1,318 @@
+<%= form_for @user, html: { class: 'needs-validation', novalidate: true, id: 'user', role: 'form' } do |f| %>
+<div class="container">
+    <div class="row  m-auto">
+        <div class="row mb-1">
+            <div class="col-sm-1 col-form-label">
+                <%= f.label :sei, "氏名", class: '' %>
+            </div>
+            <div class="col-sm-3">
+                <%= f.text_field :sei, placeholder: '(表示)02-10入力済', class: 'form-control' %>
+            </div>
+            <div class="col-sm-1 col-form-label">
+                <%= f.label :name_label, "勤務地", class: '' %>
+            </div>
+            <div class="col-sm">
+                <%= f.select :sei, options_for_select([
+                    ['北海道', 1],
+                    ['青森県', 2],
+                    ['岩手県', 3],
+                    ['宮城県', 4],
+                    ['秋田県', 5],
+                    ['山形県', 6],
+                    ['福島県', 7],
+                    ['茨城県', 8],
+                    ['栃木県', 9],
+                    ['群馬県', 10],
+                    ['埼玉県', 11],
+                    ['千葉県', 12],
+                    ['東京都', 13],
+                    ['神奈川県', 14],
+                    ['新潟県', 15],
+                    ['富山県', 16 ],
+                    ['石川県', 17],
+                    ['福井県', 18],
+                    ['山梨県', 19],
+                    ['長野県', 20],
+                    ['岐阜県', 21],
+                    ['静岡県', 22],
+                    ['愛知県', 23],
+                    ['三重県', 24],
+                    ['滋賀県', 25],
+                    ['京都府', 26],
+                    ['大阪府', 27],
+                    ['兵庫県', 28],
+                    ['奈良県', 29],
+                    ['和歌山県', 30],
+                    ['鳥取県', 31],
+                    ['島根県', 32],
+                    ['岡山県', 33],
+                    ['広島県', 34],
+                    ['山口県', 35],
+                    ['徳島県', 36],
+                    ['香川県', 37],
+                    ['愛媛県', 38],
+                    ['高知県', 39],
+                    ['福岡県', 40],
+                    ['佐賀県', 41],
+                    ['長崎県', 42],
+                    ['熊本県', 43],
+                    ['大分県', 44],
+                    ['宮崎県', 45],
+                    ['鹿児島県', 46],
+                    ['沖縄県', 47],
+                    ['海外', 48]], f.object.sei), {include_blank: false, include_hidden: false}, multiple: true, class: 'multiselect-workplace form-select' %>
+            </div>
+        </div>
+        <div class="row mb-1">
+            <div class="col-sm-1 mb-1 col-form-label">
+                <%= f.label :name_kana,"入社時期", class: ''%>
+            </div>
+            <div class="col-sm-auto  mb-1">
+                <%= select_year(Date.today, {:start_year => Date.current.year, :end_year => 2087, prompt: { year: '年' }}, class: "form-select")%>
+            </div>
+            <div class="col-sm-3 p-0 mb-1">
+                <%= f.select :name_kana, options_for_select([
+                    ['1月', 1],
+                    ['2月', 2],
+                    ['3月', 3],
+                    ['4月', 4],
+                    ['5月', 5],
+                    ['6月', 6],
+                    ['7月', 7],
+                    ['8月', 8],
+                    ['9月', 9],
+                    ['10月', 10],
+                    ['11月', 11],
+                    ['12月', 12]], f.object.name_kana), {include_blank: false, include_hidden: false}, multiple: true, class: 'multiselect-months form-select' %>
+            </div>
+            <div class="col-sm-1 col-form-label">
+                <%= f.label :name_kana, "年収", class: '' %>
+            </div>
+            <div class="col-sm-2 p-0">
+                <%= f.select :name_kana, options_for_select([
+                    ['300万円未満', 1],
+                    ['300万円以上', 2],
+                    ['400万円以上', 3],
+                    ['500万円以上', 4]
+                ], f.object.name_kana), {include_blank: true}, class: "form-select" %>
+            </div>
+            <div class="col-sm-1 col-form-label">
+                <%= f.label :name_kana,"職種", class: ''%>
+            </div>
+            <div class="col-sm">
+                <%= f.select :name_kana, options_for_select(occupation_list, f.object.name_kana), {include_blank: true}, class: 'dropdown-toggle form-select' %>
+            </div>
+        </div>
+        <div class="row mb-1">
+            <div class="action text-center">
+                <%= button_tag t('buttons.search').html_safe, type: 'submit', class: "w-25 btn-lg btn btn-secondary" %>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="container-fluid mb-3 form-control">
+       <div class="css-1m4cuuf e37uo190 ">
+            <h3> ⭕️⭕️⭕️⭕️⭕️⭕️株式会社</h3>
+            <div class="row  m-auto">
+                <p><b><br> 給料 </b></p>
+                <p>年収4,000,000円～10,000,000円<p>
+                <p> ■年間休日120日以上
+                    ■完全週休2日制（土日・祝日）
+                    ■社員寮、住宅手当あり
+                    ■育児・介護休暇(実績あり)
+                    ■産休・育休取得実績あり
+                    ■勤務開始時期調整します</p>
+            </div>
+            <div class="row  m-auto">
+                <div class="col">
+                    <button type="button" class="w-25 btn btn-primary" data-bs-toggle="modal" data-bs-target="#btn-detail">
+                        詳細
+                    </button>
+                </div>
+                <div class="col  text-end">
+                    <button type="button" class=" w-25 btn btn-primary" data-bs-toggle="modal" data-bs-target="#btn-apply">
+                        Apply
+                    </button>
+
+
+                </div>
+            </div>
+
+            <!-- The Modal -->
+            <div class="modal" id="btn-detail">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Modal Heading</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <p><b>未経験でも年収400万円以上！未経験歓迎のスマートフォン製造スタッフ</b><br>
+
+                            PR<br>
+
+                            【大手並みの充実した働き方】<br>
+                            ■昇給・賞与・昇格あり<br>
+                            ■年間休日120日以上<br>
+                            ■完全週休2日制（土日・祝日）<br>
+                            ■社員寮、住宅手当あり<br>
+                            ■育児・介護休暇(実績あり)<br>
+                            ■産休・育休取得実績あり<br>
+                            ■勤務開始時期調整します<br>
+                                </p>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal" id="btn-apply">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Modal Heading</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="recipient-name" class="col-form-label">志望動機:</label>
+                                    <textarea type="text" class="form-control" id="shibodouki-test"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="message-text" class="col-form-label">自己PR:</label>
+                                    <textarea class="form-control" id="jikoPR-text"></textarea>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">キャンセル</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">申請</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid mb-3 form-control">
+       <div class="css-1m4cuuf e37uo190 ">
+            <h3> ⭕️⭕️⭕️⭕️⭕️⭕️株式会社</h3>
+            <div class="row  m-auto">
+                <p><b><br> 給料 </b></p>
+                <p>年収4,000,000円～10,000,000円<p>
+                <p> ■年間休日120日以上
+                    ■完全週休2日制（土日・祝日）
+                    ■社員寮、住宅手当あり
+                    ■育児・介護休暇(実績あり)
+                    ■産休・育休取得実績あり
+                    ■勤務開始時期調整します</p>
+            </div>
+            <div class="row  m-auto">
+                <div class="col">
+                    <button type="button" class="w-25 btn btn-primary" data-bs-toggle="modal" data-bs-target="#btn-detail">
+                        詳細
+                    </button>
+                </div>
+                <div class="col  text-end">
+                    <button type="button" class=" w-25 btn btn-primary" data-bs-toggle="modal" data-bs-target="#btn-apply">
+                        Apply
+                    </button>
+
+
+                </div>
+            </div>
+
+            <!-- The Modal -->
+            <div class="modal" id="btn-detail">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Modal Heading</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <p><b>未経験でも年収400万円以上！未経験歓迎のスマートフォン製造スタッフ</b><br>
+
+                            PR<br>
+
+                            【大手並みの充実した働き方】<br>
+                            ■昇給・賞与・昇格あり<br>
+                            ■年間休日120日以上<br>
+                            ■完全週休2日制（土日・祝日）<br>
+                            ■社員寮、住宅手当あり<br>
+                            ■育児・介護休暇(実績あり)<br>
+                            ■産休・育休取得実績あり<br>
+                            ■勤務開始時期調整します<br>
+                                </p>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal" id="btn-apply">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Modal Heading</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="recipient-name" class="col-form-label">志望動機:</label>
+                                    <textarea type="text" class="form-control" id="shibodouki-test"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="message-text" class="col-form-label">自己PR:</label>
+                                    <textarea class="form-control" id="jikoPR-text"></textarea>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">キャンセル</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">申請</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<% end %>

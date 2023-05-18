@@ -1,0 +1,32 @@
+<%= paginate @users, remote: true %>
+<div style="white-space: nowrap; min-width: 800px;">
+<table class="table table-bordered table-hover table-sm">
+  <thead>
+    <tr class="table-success">
+      <th class="text-center"><%= t('buttons.show') %></th>
+      <th class="text-center"><%= t('activerecord.attributes.user.name') %></th>
+      <th class="text-center"><%= t('activerecord.attributes.user.name_kana') %></th>
+      <th class="text-center"><%= t('activerecord.attributes.user.mobile') %></th>
+      <th class="text-center"><%= t('activerecord.attributes.user.email') %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+    <tr class="details_row nested-fields">
+      <td class="text-center"><%= link_to t('buttons.edit').html_safe, edit_user_path(id: user.id), class: "btn btn-secondary btn-sm" %></td>
+      <td class="text-center"><%= user.name %></td>
+      <td class="text-center"><%= user.name_kana %></td>
+      <td class="text-center"><%= user.mobile %></td>
+      <td class="text-center"><%= user.email %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<strong><%= page_entries_info @users, :entry_name => '' %></strong>
+<%= paginate @users, remote: true %>
+<%= javascript_tag do %>
+  $(function() {
+    NProgress.done();
+  });
+<% end %>

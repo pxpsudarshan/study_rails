@@ -1,0 +1,23 @@
+user10876f18-55e1-445f-a7c0-de88491d0292:
+  id: '10876f18-55e1-445f-a7c0-de88491d0292'
+  email: 'webmugen@gmail.com'
+  encrypted_password: '$2a$10$c.GOdfozjMxSxlJHLDUA9OD/KFra.LZGpyjHCbJW6lWyANlWTRxou'
+  reset_password_token: 
+  reset_password_sent_at: 
+  remember_created_at: 
+  sign_in_count: 1
+  current_sign_in_at: 2021-12-02 10:32:42 +0900
+  last_sign_in_at: 2021-12-01 16:35:44 +0900
+  current_sign_in_ip:
+  last_sign_in_ip:
+  created_at: 2016-03-18 14:29:14 +0900
+  updated_at: 2021-12-02 10:32:42 +0900
+  deleted_at: 
+  created_by: 
+  updated_by: '10876f18-55e1-445f-a7c0-de88491d0292'
+  deleted_by: 
+  sei: 'Test'
+  mei: 'User'
+  sei_kana: 'Test'
+  mei_kana: 'User'
+  mobile: '080-1234-5678'

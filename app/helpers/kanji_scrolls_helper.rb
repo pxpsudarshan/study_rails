@@ -1,0 +1,2 @@
+module KanjiScrollsHelper
+end

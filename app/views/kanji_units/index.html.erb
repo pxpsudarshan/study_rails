@@ -1,0 +1,31 @@
+<%= form_for :kanji, url: kanji_units_path, html: { id: 'kanjis', role: 'form', method: :get }, remote: true do |f| %>
+<%# verbs = @gois.map{ |goi| [goi[:kanji_code], goi[:kanji_org]] } %>
+<%#= f.select :kanji, options_for_select(verbs,''), { include_blank: false }, class: 'form-select' %>
+
+      <select id="kanji_selectkanjiunit" name="kanji[selectkanjiunit]" class="form-select">
+      <option>ユニットシートをえらぶ</option>
+      <option value="1A">１A</option>
+      <option value="1B">１B</option>
+      <option value="2A">２A</option>
+      <option value="2B">２B</option>
+      <option value="3A">３A</option>
+      <option value="3B">３B</option>
+      <option value="4A">４A</option>
+      <option value="4B">４B</option>
+      <option value="5A">５A</option>
+      <option value="5B">５B</option>
+      <option value="12A">１２A</option>
+      <option value="12B">１２B</option>
+      <option value="13A">１３A</option>
+      <option value="13B">１３B</option>
+      <option value="14A">１４A</option>
+      <option value="14B">１４B</option>
+      <option value="15A">１５A</option>
+      <option value="15B">１５B</option>
+      </select>
+
+<%= f.submit 'next', class: 'btn btn-primary' %>
+<% end %>
+<div class="row">
+  <div class="col-md-12" id="kanji_unit"></div>
+</div>

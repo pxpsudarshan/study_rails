@@ -1,0 +1,89 @@
+<%= form_with model: @user, url: create_store_user_path, locale: true, id: 'new_store', class: 'needs-validation', novalidate: true, role: 'form' do |f| %>
+<div class="row">
+  <div class="col-md-12">
+    <div class="text-center">
+      <h2 class="border border-2 border-info rounded p-1">Language</h2>
+    </div>
+    <div class="p-3 text-center">
+      <h2>貴社用語集</h2>
+    </div>
+    <% if @user.errors.any? %>
+      <div id="error_explanations" class="alert fade show alert-danger">
+        <ul>
+          <% @user.errors.full_messages.each do |msg| %>
+          <li>
+            <%= content_tag(:div, msg) %>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+<div class="bg-blue bg-primary text-white p-4">
+  <h3 class="text-center p-2">外国人材に「知っておいてほしい」語集</h3>
+  <table id="stores_table" class=" table align-middle table-bordered border-dark bg-light" >
+    <thead>
+      <tr class="bg-secondary bg-opacity-50 align-middle ">
+        <th class="text-center"><%= t('common.id')%></th>
+        <th class="text-center"><%= t('activerecord.attributes.company_middle_stores.vocab_code') %></th>
+        <th class="text-center"><%= t('activerecord.attributes.company_middle_stores.vocab_read') %></th>
+        <th class="text-center"><%= t('activerecord.attributes.company_middle_stores.vocab_mean') %></th>
+        <th class="text-center"><%= t('activerecord.attributes.company_middle_stores.occupation') %></th>
+        <th class="text-center"><%= t('common.destroy') %></th>
+      </tr>
+    </thead>
+    <tbody id='store_details'>
+    <%= f.fields_for :company_middle_stores, @stores do |ft| %>
+      <% render 'company_middle_store_fields', f: ft %>
+    <% end %>
+    </tbody>
+  </table>
+  <%= link_to_add_association t('buttons.add_item').html_safe, f, :company_middle_stores,
+    'data-association-insertion-method'    => 'append' ,
+    'data-association-insertion-node'      => '#store_details', class: "invisible"
+  %>
+</div>
+<div class="p-3 text-center">
+  <%= f.submit t('buttons.done'), class: "btn btn-primary btn-lg w-25", id: 'button_done' %>
+</div>
+      </div>
+    </div>
+<% end %>
+<%= javascript_tag do %>
+  var cnt = 1;
+  function add_row(obj) {
+    var idx = obj.parentElement.parentNode.rowIndex;
+    if (idx === cnt)
+      $('.add_fields').click();
+  }
+
+  function update_stores() {
+    var cnt = 0;
+    $('#stores_table').find('tbody tr:visible').each(function (idx) {
+      cnt = idx + 1;
+      $(this).find("td:first").text(cnt);
+    });
+    return cnt;
+  }
+
+  $(function() {
+    var occupation = 0;
+    cnt = update_stores();
+    $('#stores_table').on('cocoon:before-insert', function(e, insertedItem) {
+      occupation = $('#stores_table').find('tbody tr:nth-child('+cnt+') td:nth-child(5) select').val();
+    });
+
+    $('#stores_table').on('cocoon:before-remove', function(e, insertedItem) {
+      cnt = update_stores();
+      if (cnt == 1) e.preventDefault();
+    });
+
+    $('#stores_table').on('cocoon:after-remove', function(e, insertedItem) {
+      cnt = update_stores();
+    });
+
+    $('#stores_table').on('cocoon:after-insert', function(e, insertedItem) {
+      cnt = update_stores();
+      $('#stores_table').find('tbody tr:nth-child('+cnt+') td:nth-child(5) select').val(occupation).change();
+    });
+  });
+<% end %>

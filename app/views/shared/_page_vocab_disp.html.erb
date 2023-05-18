@@ -1,0 +1,59 @@
+<% if @count != 0 %>
+
+
+<%= form_for @mycard, html: { id: 'mycard', role: 'form' }, remote: false do |f| %>
+<%= f.hidden_field :vocab_org %>
+<%= f.hidden_field :kanji_body %>
+<%= f.hidden_field :jlpt_level %>
+<%= f.radio_button :vocab_read, @gois[:vocab_read], {checked: true, class:"btn-check"} %>
+<%= f.label :vocab_read, value: @gois[:vocab_read], class:'btn btn-outline-primary' %>
+
+<%= f.radio_button :read_unit, @gois[:unit_sheet], {checked: true, class:"btn-check"} %>
+<%= f.label :read_unit, value: @gois[:unit_sheet], class:'btn btn-outline-primary' %>
+
+<%= f.radio_button :vocab_code, @gois[:vocab_code], {checked: true, class:"btn-check"} %>
+<%= f.label :vocab_code, value: @gois[:vocab_code], class:'btn btn-outline-primary' %>
+
+<%= f.submit 'まいかーど', class: 'btn btn-primary' %>
+
+<%= f.radio_button :mycard_ext, true, {disabled: true, checked: true, class:"btn-check"} %>
+<%= f.label :mycard_ext, value: @vocab_mycard, class:'btn btn-outline-primary' %>
+<% end %>
+
+<%= form_for :lang, url: lang_gois_path, html: { id: 'langs', role: 'form', method: :post }, remote: true do |f| %>
+<%= f.hidden_field :val, value: @gois[:vocab_read] %>
+どのくにのことばでえらびますか？
+          <select id="lang_selectlangid" name="lang[selectlangid]" class="form-select">
+          <option value="">Select nation</option>
+          <option value="CN"> Chinese </option>
+          <option value="VN"> Viet Nam </option>
+          <option value="ID"> Indonesia </option>
+          <option value="KR"> Korea   </option>
+          <option value="EN"> English </option>
+          <option value="RU"> Russian </option>
+          <option value="MM"> Myanmar </option>
+          <option value="MY"> Malaysia </option>
+          <option value="FR"> France </option>
+          <option value="PK"> Pakistan </option>
+          <option value="DE"> Germany </option>
+          <option value="NP"> Nepal </option>
+          <option value="TH"> Thailand </option>
+          <option value="NP"> Nepal </option>
+          </select>
+          <button type="submit"id="id_btn_langid_ext" class="btn btn-primary">Search</button>
+<% end %>
+<textarea id="id_lang_textarea_ex1" placeholder="まだありません。" rows="6" class="form-control"></textarea>
+
+<!--
+<a id="download" download="foreign.rtf" class="ui-btn ui-btn-c ui-btn-inline ui-corner-all ui-btn-icon-left " >Download（Only PC）</a><br>
+-->
+<p>
+  <button id="id_btn_lang_ext2" class="btn btn-primary">あなたのくにのことばでかく</button>
+  <textarea id="id_lang_textarea_ex2" rows="10" cols="10" class="form-control" placeholder="じぶんのくにのことばで"></textarea>
+</p>
+
+<% @gois[:vocab_kanji].each_with_index do |vocab, idx| %>
+<%= link_to vocab["kanji_code"], parts_kanji_kanji_units_path(kanji: { kanji: vocab["kanji_org"] }), remote: true, class: 'btn btn-primary' if vocab["kanji_org"] != 0 %>
+<% end %>
+
+<% end %>

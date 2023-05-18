@@ -1,0 +1,10 @@
+<% @cards.each do |card| %>
+  <% if @mode == 0 %>
+    <%= link_to card.vocab_code, page_mylang_vocab_mycards_path(vocab_code: card.vocab_code), class: 'btn btn-primary' %> <%= card.vocab_org %><br />
+  <% elsif @mode == 1 %>
+    <%= link_to card.vocab_read, page_mylang_vocab_mycards_path(vocab_code: card.vocab_code), class: 'btn btn-primary' %> <%= card.vocab_org %><br />
+  <% else %>
+    <%= link_to card.vocab_code, page_mylang_vocab_mycards_path(vocab_code: card.vocab_code), class: 'btn btn-primary' %> <%= card.vocab_org %>
+    <%= link_to card.vocab_read, page_mylang_vocab_mycards_path(vocab_code: card.vocab_code), class: 'btn btn-primary' %><br />
+  <% end %>
+<% end %>

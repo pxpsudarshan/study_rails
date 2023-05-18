@@ -1,0 +1,64 @@
+<p>
+  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePart" aria-expanded="false" aria-controls="collapsePart">
+    Select Parts
+  </button>
+</p>
+<div class="collapse" id="collapsePart">
+  <div class="card card-body">
+    <%= link_to 'part', parts_path, class: 'btn btn-primary' %>
+  </div>
+</div>
+
+<p>
+  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseVocab" aria-expanded="false" aria-controls="collapseVocab">
+    Select Vocabulary
+  </button>
+</p>
+<div class="collapse" id="collapseVocab">
+  <div class="card card-body">
+    <%= link_to 'goi', gois_path, class: 'btn btn-primary' %>
+  </div>
+  <div class="card card-body">
+    <%= link_to 'kuni', foreigns_path, class: 'btn btn-primary' %>
+  </div>
+</div>
+
+<p>
+  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseKanji" aria-expanded="false" aria-controls="collapseKanji">
+    Select Kanji
+  </button>
+</p>
+<div class="collapse" id="collapseKanji">
+  <div class="card card-body">
+    <%= link_to 'kanji', kanjis_path, class: 'btn btn-primary' %>
+  </div>
+  <div class="card card-body">
+    <%= link_to 'kanji_scroll', kanji_scrolls_path, class: 'btn btn-primary' %>
+  </div>
+  <div class="card card-body">
+    <%= link_to 'kanji_unit', kanji_units_path, class: 'btn btn-primary' %>
+  </div>
+</div>
+
+<p>
+  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapsemycard" aria-expanded="false" aria-controls="collapsemycard">
+    Select MyCard Review
+  </button>
+</p>
+<div class="collapse" id="collapsemycard">
+  <div class="card card-body">
+    One day.<br />
+    <%= link_to 'kanji kara', vocab_mycards_path(mode: 0, day: 1), class: 'btn btn-primary' %>
+    <%= link_to 'hiragana kara', vocab_mycards_path(mode: 1, day: 1), class: 'btn btn-primary' %>
+  </div>
+  <div class="card card-body">
+    Seven days.<br />
+    <%= link_to 'kanji kara', vocab_mycards_path(mode: 0, day: 7), class: 'btn btn-primary' %>
+    <%= link_to 'hiragana kara', vocab_mycards_path(mode: 1, day: 7), class: 'btn btn-primary' %>
+  </div>
+  <div class="card card-body">
+    Month over ago.<br />
+    <%= link_to 'kanji kara', vocab_mycards_path(mode: 0, day: 30), class: 'btn btn-primary' %>
+    <%= link_to 'hiragana kara', vocab_mycards_path(mode: 1, day: 30), class: 'btn btn-primary' %>
+  </div>
+</div>

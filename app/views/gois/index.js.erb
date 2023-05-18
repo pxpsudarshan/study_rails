@@ -1,0 +1,5 @@
+<% if @count == 1 %>
+$('#goi').html("<%= escape_javascript(render("page_vocab_disp")) %>");
+<% else %>
+$('#goi').html("<%= escape_javascript(render("page_vocab_double")) %>");
+<% end if @count != 0 %>

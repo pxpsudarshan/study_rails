@@ -1,0 +1,9 @@
+<% if target.errors.any? %>
+  <div id="error_explanation" class="alert alert-warning"></div>
+    <ul>
+      <% target.errors.full_messages.each do |msg| %>
+        <li><strong><%= msg %><strong></li>
+          <% end %>
+        </ul>
+      </div>
+<% end %>

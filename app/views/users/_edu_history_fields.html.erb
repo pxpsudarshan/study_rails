@@ -1,0 +1,42 @@
+<div class="row p-0" id="row_education_history">
+    <div class="col-md-1 col-form-label mb-1">
+        <%= f.label :occupation, "学歴", class: '' %>
+    </div>
+    <div class="col-md mb-1">
+        <div class="d-flex gap-3">
+            <%= f.select :visa_support, options_for_select([
+                ['大学(博士)', 1],
+                ['大学(修士)', 2],
+                ['大学(学部)', 3],
+                ['専門学校', 4],
+                ['高校 卒業', 5]
+            ], f.object.visa_support), {include_blank: true}, class: "form-select" %>
+            <%= f.date_field :created_at, as: :date, value: f.object.try(:strftime,"%m/%d/%Y"), class: 'form-control' %>
+        </div>
+    </div>
+    <div class="col-md mb-1">
+        <div class="d-flex gap-3">
+            <%= f.select :visa_support, options_for_select([
+                ['卒業', 1],
+                ['中退', 2],
+                ['休学', 3],
+                ['卒業予定', 4]
+            ], f.object.visa_support), {include_blank: true}, class: "form-select" %>
+            <%= f.select :visa_support, options_for_select(['日本', 'アメリカ'], f.object.visa_support), {include_blank: true}, class: 'form-select' %>
+        </div>
+    </div>
+</div>
+<div class="row p-0" id="institute_name0">
+    <div class="col-md-1 col-form-label mb-1">
+        <%= f.label :visa_support, "学校名", class: '' %>
+    </div>
+    <div class="col-md mb-1">
+        <%= f.text_field :visa_support, placeholder: '', class: 'form-control' %>
+    </div>
+    <div class="col-md-auto col-form-label mb-1">
+        <%= f.label :visa_support, "専攻", class: '' %>
+    </div>
+    <div class="col-md mb-1">
+        <%= f.text_field :visa_support, placeholder: '', class: 'form-control' %>
+    </div>
+</div>

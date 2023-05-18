@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= t('title.mesena') %></title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= javascript_include_tag "application", 'data-turbo-track': 'reload' %>
+  <%= favicon_link_tag "favicon.ico" %>
+  <%= stylesheet_link_tag "application", media: "all", 'data-turbo-track': 'reload' %>
+  <%= stylesheet_link_tag "login", media: "all", 'data-turbo-track': 'reload' %>
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+    <%= javascript_include_tag 'html5shiv' %>
+  <![endif]-->
+<style type="text/css">
+#v{
+    width:320px;
+    height:240px;
+}
+#outdiv
+{
+    width:320px;
+    height:240px;
+  border: solid;
+  border-width: 3px 3px 3px 3px;
+}
+#result{
+    border: solid;
+  border-width: 1px 1px 1px 1px;
+  padding:20px;
+}
+</style>
+
+<script type="text/javascript">
+var gCtx = null;
+var gCanvas = null;
+var c=0;
+var stype=0;
+var gUM=false;
+var webkit=false;
+var moz=false;
+var v=null;
+var vidhtml = '<video id="v" autoplay></video>';
+function captureToCanvas() {
+    if(stype!=1)
+        return;
+    if(gUM)
+    {
+        try{
+            gCtx.drawImage(v,0,0);
+            try{
+                qrcode.decode();
+            }
+            catch(e){
+                console.log(e);
+                setTimeout(captureToCanvas, 500);
+            };
+        }
+        catch(e){
+                console.log(e);
+                setTimeout(captureToCanvas, 500);
+        };
+    }
+}
+function initCanvas(w,h)
+{
+    gCanvas = document.getElementById("qr-canvas");
+    gCanvas.style.width = w + "px";
+    gCanvas.style.height = h + "px";
+    gCanvas.width = w;
+    gCanvas.height = h;
+    gCtx = gCanvas.getContext("2d");
+    gCtx.clearRect(0, 0, w, h);
+}
+
+function htmlEntities(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function read(a)
+{
+    var html="<br>";
+    if(a.indexOf("http://") === 0 || a.indexOf("https://") === 0)
+        html+="<a target='_blank' href='"+a+"'>"+a+"</a><br>";
+    html+="<b>"+htmlEntities(a)+"</b><br><br>";
+    document.getElementById("result").innerHTML=html;
+}
+
+function isCanvasSupported(){
+  var elem = document.createElement('canvas');
+  return !!(elem.getContext && elem.getContext('2d'));
+}
+
+function success(stream)
+{
+
+    v.srcObject = stream;
+    v.play();
+
+    gUM=true;
+    setTimeout(captureToCanvas, 500);
+}
+
+function error(error)
+{
+    gUM=false;
+    return;
+}
+
+function load()
+{
+  if(isCanvasSupported() && window.File && window.FileReader)
+  {
+      initCanvas(1920, 1080);
+      qrcode.callback = read;
+//    qrcode.setWebcam('gr-video');
+      setwebcam();
+  }
+  else
+  {
+//    document.getElementById("mainbody").innerHTML='<p id="mp1">QR code scanner for HTML5 capable browsers</p><br>'+
+//        '<br><p id="mp2">sorry your browser is not supported</p><br><br>'+
+//        '<p id="mp1">try <a href="http://www.mozilla.com/firefox"><img src="firefox.png"/></a> or <a href="http://chrome.google.com"><img src="chrome_logo.gif"/></a> or <a href="http://www.opera.com"><img src="Opera-logo.png"/></a></p>';
+  }
+}
+function setwebcam()
+{
+
+  var options = true;
+  if(navigator.mediaDevices && navigator.mediaDevices.enumerateDevices)
+  {
+    try{
+      navigator.mediaDevices.enumerateDevices()
+      .then(function(devices) {
+        devices.forEach(function(device) {
+        if (device.kind === 'videoinput') {
+          if(device.label.toLowerCase().search("back") >-1)
+          options={'deviceId': {'exact':device.deviceId}, 'facingMode':'environment'} ;
+        }
+        console.log(device.kind + ": " + device.label +" id = " + device.deviceId);
+        });
+        setwebcam2(options);
+      });
+    }
+    catch(e)
+    {
+      console.log(e);
+    }
+  }
+  else{
+    console.log("no navigator.mediaDevices.enumerateDevices" );
+    setwebcam2(options);
+  }
+
+}
+
+function setwebcam2(options)
+{
+  console.log(options);
+  document.getElementById("result").innerHTML="- scanning -";
+    if(stype==1)
+    {
+        setTimeout(captureToCanvas, 500);
+        return;
+    }
+    var n=navigator;
+    document.getElementById("outdiv").innerHTML = vidhtml;
+    v=document.getElementById("v");
+
+
+    if(n.mediaDevices && n.mediaDevices.getUserMedia)
+    {
+        n.mediaDevices.getUserMedia({video: options, audio: false}).
+            then(function(stream){
+                success(stream);
+            }).catch(function(error){
+                error(error)
+            });
+    }
+    else
+    if(n.getUserMedia)
+  {
+    webkit=true;
+        n.getUserMedia({video: options, audio: false}, success, error);
+  }
+    else
+    if(n.webkitGetUserMedia)
+    {
+        webkit=true;
+        n.webkitGetUserMedia({video:options, audio: false}, success, error);
+    }
+
+//    document.getElementById("qrimg").style.opacity=0.2;
+//    document.getElementById("webcamimg").style.opacity=1.0;
+
+    stype=1;
+    setTimeout(captureToCanvas, 500);
+}
+</script>
+</head>
+<body class="text-center" onLoad="load();">
+  <main class="form-signin w-100 m-auto">
+  <%= bootstrap_flash %>
+  <%= yield %>
+  <%= render partial: "shared/footer" %>
+  <div id="outdiv"><video id="v" autoplay=""></video></div>
+  <div id="result">- scanning -</div>
+  <canvas id="qr-canvas" width="1920" height="1080" style="display: none; width: 1920px; height: 1080px;"></canvas>
+  </main>
+  <%= javascript_include_tag 'application', 'data-turbo-track': 'reload' %>
+</body>
+</html>

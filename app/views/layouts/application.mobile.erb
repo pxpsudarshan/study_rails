@@ -1,0 +1,56 @@
+<html>
+<head>
+  <title><%= t('title.title') %></title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="turbolinks-cache-control" content="no-cache">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= favicon_link_tag "favicon.ico" %>
+  <%= favicon_link_tag 'icon.png', :rel => 'apple-touch-icon', :type => 'image/png' %>
+  <%= stylesheet_link_tag "application", media: "all", 'data-turbo-track': 'reload' %>
+  <%= stylesheet_link_tag "sb-admin-2", media: "all", 'data-turbo-track': 'reload' %>
+  <%= yield :stylesheet %>
+  <%= javascript_include_tag "application", 'data-turbo-track': 'reload' %>
+  <%= javascript_include_tag "locales/#{locales}/common.messages" %>
+  <%= individual_mobile_javascript_include_tag %>
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+    <%= javascript_include_tag 'html5shiv' %>
+  <![endif]-->
+</head>
+<body>
+  <nav class="navbar navbar-expand-md navbar-light static-top bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="<%= menus_path %>"><%= t('title.header') %></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <!--
+    /.navbar-header -->
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav me-auto mb-2 mb-md-0">
+        <li class="nav-item"><%= link_to t('navbar.calendar').html_safe, users_path, class: "nav-link" %></li>
+      </ul>
+      <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+        <li class="nav-item"><%= link_to t('navbar.logout').html_safe, destroy_user_session_path, method: 'delete', class: "nav-link" %></li>
+        <!-- /.dropdown -->
+      </ul>
+    </div>
+  </div>
+    <!-- /.navbar-static-side -->
+  </nav>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="page-header-mobile"><span class="page-title-mobile"><%= page_title_mobile.html_safe %></span></h1>
+      </div>
+    </div>
+    <%= bootstrap_flash %>
+    <%= yield %>
+    <%= render partial: "shared/footer" %>
+  </div>
+</body>
+</html>

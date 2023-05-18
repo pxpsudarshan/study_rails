@@ -1,0 +1,2 @@
+module VocabMycardsHelper
+end

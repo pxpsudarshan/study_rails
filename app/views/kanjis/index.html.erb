@@ -1,0 +1,10 @@
+<%= form_for :kanji, url: kanjis_path, html: { id: 'kanjis', role: 'form', method: :get }, remote: true do |f| %>
+<%= f.text_field :kanji, class: 'form-control' %>
+<%= f.submit 'next', class: 'btn btn-primary' %>
+<% end %>
+<div class="row">
+  <div class="col-md-12" id="kanji"></div>
+</div>
+<div class="row">
+  <div class="col-md-12" id="kanji_unit"></div>
+</div>

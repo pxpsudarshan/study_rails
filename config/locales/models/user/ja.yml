@@ -1,0 +1,36 @@
+ja:
+  activerecord:
+    attributes:
+      user:
+        name:                     '名前'
+        name_kana:                '名前カナ'
+        sei:                      '姓'
+        mei:                      '名'
+        sei_kana:                 '姓カナ'
+        mei_kana:                 '名カナ'
+        lang_id:                  '言語'
+        jp_level:                 '日本語能力試験'
+
+        company_name:             '貴社名'
+        business_type:            '業種'
+        company_url:              '貴社url'
+        department:               '部署名'
+        name_label:               'お名前'
+        name_furigana:            '（フリガナ)'
+        mobile:                   'お電話番号'
+        new_password:             'パスワード'
+        confirm_password:         'パスワード確認'
+
+      company_middle_stores:
+        occupation:               '職種'
+        vocab_code:               '語彙'
+        vocab_read:               '読み方'
+        vocab_mean:               '説明'
+
+      job_profile:
+        ad_title:                 '求人広告タイトル'
+        location:                 '勤務地'
+        visa_support:             '就労ビザ取得サポート'
+        occupation:               '職種'
+        salary:                   '給与'
+        employment_sts:           '雇用形態'

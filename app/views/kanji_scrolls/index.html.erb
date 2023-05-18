@@ -1,0 +1,11 @@
+<%= form_for :kanji, url: kanji_scrolls_path, html: { id: 'kanjis', role: 'form', method: :get }, remote: true do |f| %>
+<% verbs = @gois.map{ |goi| [goi[:kanji_code], goi[:kanji_org]] } %>
+<%= f.select :kanji, options_for_select(verbs,''), { include_blank: false }, class: 'form-select' %>
+<%= f.submit 'next', class: 'btn btn-primary' %>
+<% end %>
+<div class="row">
+  <div class="col-md-12" id="kanji_scroll"></div>
+</div>
+<div class="row">
+  <div class="col-md-12" id="kanji_unit"></div>
+</div>

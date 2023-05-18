@@ -1,0 +1,154 @@
+ja:
+  devise:
+    registrations:
+      form_company:
+        sign_up:      '企業用のアカウント登録'
+      form:
+        sign_up:      '学生用のアカウント登録'
+    shared:
+      links:
+        sign_up:      '学生用のアカウント登録'
+        sign_up_company: '企業用のアカウント登録'
+  common:
+    flg_required:     '<i class="fas fa-asterisk red"></i>'
+    flg_enabled:      &flg_enabled "可"
+    flg_disabled:     &flg_disabled "不可"
+    flg_req:          &flg_required "要"
+    flg_not_req:      &flg_not_required "不要"
+    flg_allow:        &flg_allow "許可する"
+    flg_disallow:     &flg_disallow "許可しない"
+    flg_use:          &flg_use "使用する"
+    flg_not_use:      &flg_not_use "使用しない"
+    kabushiki:        '株式会社'
+    kabushiki_kana:   'カブシキガイシャ'
+    yugen:            '有限会社'
+    yugen_kana:       'ユウゲンガイシャ'
+    company_type:     '会社種別'
+    nashi:            'なし'
+    type_position:    '会社種別表記順'
+    mae:              '前'
+    ato:              '後'
+    select:           '選択'
+    ari:              'あり'
+    nashi:            'なし'
+    id:               'No'
+    edit:             '編集'
+    valid:            '有効'
+    invalid:          '無効'
+    sjis:             'Shift_JIS'
+    destroy:          '削除'
+
+  title:
+    header:           '翰林日本語学院'
+    title:            '翰林日本語学院'
+  navbar:
+    logout:           '<i class="fas fa-sign-out-alt"></i> ログアウト'
+    user:             '学生マスタ'
+    profile:          '<i class="fas fa-user"></i> プロファイル'
+    store:            '貴社用語集'
+    job_profile:      '求人企業プロファイル'
+    student_profile:  '求職申込登録'
+    job_search:       '仕事検索'
+  buttons:
+    home:             '<i class="fas fa-home"></i> メインメニュー'
+    menu:             'メニュー'
+    new:              '<i class="far fa-save"></i> 新規登録'
+    show:             '詳細'
+    add:              '<i class="fas fa-plus"></i> 行追加'
+    edit:             '<i class="fas fa-edit"></i> 編集'
+    destroy:          '<i class="fas fa-trash-alt"></i> 削除'
+    destroy-icon:     '<i class="fas fa-trash-alt"></i>'
+    save:             '更新'
+    copy:             '<i class="fas fa-file-alt"></i> 複製'
+    back:             '戻る'
+    cancel:           'キャンセル'
+    create:           '登録'
+    'yes':            'はい'
+    'no':             'いいえ'
+    search:           '<i class="fas fa-search"></i> 検索'
+    download:         '<i class="fas fa-cloud-download-alt"></i> CSV出力'
+    change_password:  'パスワード変更'
+    open_search:      '検索表示'
+    return_to_list:   '一覧に戻る'
+    return_to_main:   '前の画面に戻る'
+    list:             '<i class="fas fa-home"></i>一覧'
+    close:            '閉じる'
+    submit:           '送信'
+    add_item:         '追加'
+    done:             '完了'
+    excel_upload:     'Excel入力'
+    add_plus:         '<i class="bi bi-plus-circle"></i>'
+    btn_apply:         'Apply'
+
+  label:
+    nodata:           '該当無し'
+    not_yet:          '未'
+    already:          '済'
+    from_to:          '〜'
+    'on':             'ON'
+    'off':            'OFF'
+    remember_me:      '保存'
+    input_error:      "this.setCustomValidity('入力エラー')"
+    date_range:       '日時'
+
+  message:
+    search_result:    '%{count}件見つかりました'
+    search_none:      'データが見つかりません'
+    select_tehai:     '手配人数を入力してください。'
+    create_confirm_t: '登録確認'
+    create_confirm:   'この内容を登録します。よろしいですか？'
+    destroy_confirm_t: '削除確認'
+    destroy_confirm:  'この内容を削除します。よろしいですか？'
+    complete_form:    '必須項目を入力してください'
+    save_confirm_t:   '更新確認'
+    save_confirm:     'この内容を更新します。よろしいですか？'
+    destroy:          '削除'
+    number:           'No'
+    change_password:  'パスワードの変更をお願いします'
+    new_password:     '新規パスワード'
+    change_new_password:  '新規パスワード確認'
+    upload_error:       '%{msg}は正常にアップロードできませんでした。'
+    filename_wrong:     'ファイル名が異常です。'
+    delete_error:       '%{msg}は正常に削除できませんでした。'
+    registration_completed: '登録が完了しました。'
+    success_completed:  '登録が完了しました。'
+    access_rejected:    'アクセス権限がありません'
+    creating:           '作成中'
+    updating:           '更新中'
+    deleting:           '削除中'
+    select_file:        'ファイルを選択してください。'
+  layouts:
+    devise:
+      specification:  'ファイルレイアウト'
+  exception:
+    save_error:       'マスタ登録中にエラーが発生しました'
+    delete_error:     'マスタ削除中にエラーが発生しました'
+    invalid_date:     'フォーマットが不正です'
+    invalid_password: 'はアルファベット大文字、小文字、数字をそれぞれ最低1文字以上含める必要があります。'
+    create_error:     '登録中にエラーが発生しました。'
+  display_condition:
+    number:           "件毎に表示"
+    search:           "検索"
+
+  time:
+    formats:
+      only_time: "%H:%M"
+      kintone_job: '%Y/%m/%d %H:%M:%S'
+  page_title:
+    users:
+      index:          '<i class="fas fa-user"></i> 学生一覧'
+      show:           '<i class="fas fa-user"></i> 学生詳細'
+      new:            '<i class="fas fa-user"></i> 学生新規登録'
+      create:         '<i class="fas fa-user"></i> 学生新規登録'
+      edit:           '<i class="fas fa-user"></i> 学生編集'
+      update:         '<i class="fas fa-user"></i> 学生編集'
+      new_store:      '<i class="fas fa-address-card"></i> 語彙入力'
+      create_store:   '<i class="fas fa-address-card"></i> 語彙入力'
+      new_job_profile: '<i class="fas fa-address-card"></i> 求人企業プロファイル登録'
+      create_job_profile: '<i class="fas fa-address-card"></i> 求人企業プロファイル登録'
+      new_student_profile: '<i class="fas fa-address-card"></i> 外国人材プロファイル登録'
+      create_student_profile: '<i class="fas fa-address-card"></i> 外国人材プロファイル登録'
+      new_job_search: '<i class="fas fa-address-card"></i> 仕事検索'
+      create_job_search: '<i class="fas fa-address-card"></i> 仕事検索'
+    errors:
+      limit_access:   '<i class="fas fa-exclamation-triangle"></i> 権限エラー'

@@ -1,0 +1,15 @@
+<% stroke = 0 %>
+<% max_num = 5 %>
+<% num = 1 %>
+<% @goi.each_with_index do |part, idx| %>
+  <% if part.parts_stroke != stroke %>
+    <% stroke = part.parts_stroke %>
+    <br /><%= stroke %><br />
+  <% end %>
+  <%= link_to part.parts_code, part_parts_path(kanji: { kanji: part.parts_org }), class: 'btn btn-primary' %>
+  <% if num == max_num %>
+    <% num = 1 %><br />
+  <% else %>
+    <% num += 1 %>
+  <% end %>
+<% end %>

@@ -1,0 +1,17 @@
+ja:
+  views:
+    pagination:
+      first:      '<i class="fa fa-angle-double-left"></i> 最初'
+      last:       '最後 <i class="fa fa-angle-double-right"></i>'
+      previous:   '<i class="fa fa-angle-left"></i> 前'
+      next:       '次 <i class="fa fa-angle-right"></i>'
+      truncate:   '...'
+  helpers:
+    page_entries_info:
+      one_page:
+        display_entries:
+          zero: "データが見つかりません"
+          one: "<strong>1件を表示</strong>"
+          other: "<strong>全%{count}件を表示</strong>"
+      more_pages:
+        display_entries: "<strong>全%{total}件中&nbsp;%{first}&nbsp;〜&nbsp;%{last}件を表示</strong>"

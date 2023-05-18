@@ -1,0 +1,84 @@
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'form-horizontal' }) do |f| %>
+<%= f.hidden_field :company_flg %>
+<%= recaptcha_v3(action: 'signup') %>
+<%= render "devise/shared/error_messages", resource: resource %>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="row text-center">
+        <h2 class="border border-info rounded">学生様</h2>
+      </div>
+      <div class="form-group mb-1 row">
+        <div class="col-sm col-form-label">
+          <%= f.label :name_label %>
+        </div>
+        <div class="col-sm-10 d-flex gap-3">
+          <%= f.text_field :sei, autofocus: true, placeholder: '姓', class: 'form-control' %>
+          <%= f.text_field :mei, autofocus: true, placeholder: '名', class: 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group mb-1 row">
+        <div class="col-sm col-form-label">
+          <%= f.label :name_furigana %>
+        </div>
+        <div class="col-sm-10 d-flex gap-3">
+          <%= f.text_field :sei_kana, autofocus: true, placeholder: '姓カナ', class: 'form-control' %>
+          <%= f.text_field :mei_kana, autofocus: true, placeholder: '名カナ', class: 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group mb-1 row">
+        <div class="col-sm col-form-label col-form-label">
+          <%= f.label :mobile %>
+        </div>
+        <div class="col-sm-10">
+          <%= f.text_field :mobile, autofocus: true, class: 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group mb-1 row">
+        <div class="col-sm col-form-label">
+          <%= f.label :email %>
+        </div>
+        <div class="col-sm-10">
+          <%= f.email_field :email, autofocus: true, class: 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group mb-1 row">
+        <div class="col-sm col-form-label">
+          <%= f.label :lang_id %>
+        </div>
+        <div class="col-sm-10">
+          <%= f.select :lang_id, options_for_select(['EN', 'JP', 'RU', 'CH'], f.object.lang_id), {include_blank: true}, class: 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group mb-1 row">
+        <div class="col-sm col-form-label">
+          <%= f.label :jp_level %>
+        </div>
+        <div class="col-sm-10">
+          <%= f.select :jp_level, options_for_select(['N1', 'N2', 'N3', 'N4', 'N5', 'Other'], f.object.jp_level), {include_blank: true}, class: 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group mb-1 row">
+        <div class="col-sm col-form-label">
+          <%= f.label :password %>
+        </div>
+        <div class="col-sm-10">
+          <%= f.password_field :password, placeholder: 'パスワード', autocomplete: "off", class: 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group mb-1 row">
+        <div class="col-sm col-form-label">
+          <%= f.label :password_confirmation %>
+        </div>
+        <div class="col-sm-10">
+          <%= f.password_field :password_confirmation, placeholder: 'パスワード確認', autocomplete: "off", class: 'form-control' %>
+        </div>
+      </div>
+      <div class="actions text-center">
+        <%= f.submit t('.sign_up'), class: 'w-50 btn btn-lg btn-primary ' %>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
+<p class="mt-5 mb-3 text-center"><%= render "devise/shared/links" %></p>
