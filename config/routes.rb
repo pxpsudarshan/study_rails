@@ -66,6 +66,8 @@ Rails.application.routes.draw do
       # new added start
       get :new_student_profile
       get :new_job_search
+      post :get_job_search
+      post :submit_job_search
       # new added end
     end
   end

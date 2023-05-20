@@ -1,15 +1,15 @@
-<%= form_for @user, html: { class: 'needs-validation', novalidate: true, id: 'user', role: 'form' } do |f| %>
 <div class="container">
     <div class="row  m-auto">
+      <%= form_for @user, url: get_job_search_user_path, method: :post, html: { class: 'needs-validation', novalidate: true, id: 'user', role: 'form' } do |f| %>
         <div class="row mb-1">
-            <div class="col-sm-1 col-form-label">
+            <div class="col-sm-1 col-form-label mw-25">
                 <%= f.label :sei, "氏名", class: '' %>
             </div>
             <div class="col-sm-3">
                 <%= f.text_field :sei, placeholder: '(表示)02-10入力済', class: 'form-control' %>
             </div>
             <div class="col-sm-1 col-form-label">
-                <%= f.label :name_label, "勤務地", class: '' %>
+                <%= f.label :sei, "勤務地", class: '' %>
             </div>
             <div class="col-sm">
                 <%= f.select :sei, options_for_select([
@@ -70,7 +70,7 @@
             <div class="col-sm-auto  mb-1">
                 <%= select_year(Date.today, {:start_year => Date.current.year, :end_year => 2087, prompt: { year: '年' }}, class: "form-select")%>
             </div>
-            <div class="col-sm-3 p-0 mb-1">
+            <div class="col-sm-3 mb-1">
                 <%= f.select :name_kana, options_for_select([
                     ['1月', 1],
                     ['2月', 2],
@@ -88,7 +88,7 @@
             <div class="col-sm-1 col-form-label">
                 <%= f.label :name_kana, "年収", class: '' %>
             </div>
-            <div class="col-sm-2 p-0">
+            <div class="col-sm-2">
                 <%= f.select :name_kana, options_for_select([
                     ['300万円未満', 1],
                     ['300万円以上', 2],
@@ -105,214 +105,110 @@
         </div>
         <div class="row mb-1">
             <div class="action text-center">
-                <%= button_tag t('buttons.search').html_safe, type: 'submit', class: "w-25 btn-lg btn btn-secondary" %>
+              <%= submit_tag "Search", :class=>"btn btn-primary" %>
             </div>
         </div>
-    </div>
-    <br>
-    <div class="container-fluid mb-3 form-control">
-       <div class="css-1m4cuuf e37uo190 ">
-            <h3> ⭕️⭕️⭕️⭕️⭕️⭕️株式会社</h3>
-            <div class="row  m-auto">
-                <p><b><br> 給料 </b></p>
-                <p>年収4,000,000円～10,000,000円<p>
-                <p> ■年間休日120日以上
-                    ■完全週休2日制（土日・祝日）
-                    ■社員寮、住宅手当あり
-                    ■育児・介護休暇(実績あり)
-                    ■産休・育休取得実績あり
-                    ■勤務開始時期調整します</p>
+      <% end %>
+      <% if @SubmitStatus.present? %>
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong> おめでとうございます!</strong> 脂肪完了いたしました。
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      <% end %>
+      <% if @results.present? %>
+      <div class="container-fluid mb-3 ">
+        <% @results["vacancies"].each do |vacancy| %>
+          <div class="card mb-3">
+            <div class="card-header">
+              <h5 class="card-title"><%= @company_name_md = vacancy["company"] %> </h5>
+              <h6 class="card-subtitle mb-2 text-muted"><%= vacancy["position"] %></h6>
             </div>
-            <div class="row  m-auto">
-                <div class="col">
-                    <button type="button" class="w-25 btn btn-primary" data-bs-toggle="modal" data-bs-target="#btn-detail">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2 text-muted">Location: <%= vacancy["location"] %></h6>
+              <p class="card-text"><%= vacancy["company"] %> <%= vacancy["description"] %></p>
+              <h6 class="card-subtitle mb-2 text-muted">Requirements:</h6>
+              <ul>
+                <% vacancy["requirements"].each do |requirement| %>
+                  <li><%= requirement %></li>
+                <% end %>
+              </ul>
+              <h6 class="card-subtitle mb-2 text-muted">Responsibilities:</h6>
+              <ul>
+                <% vacancy["responsibilities"].each do |responsibility| %>
+                  <li><%= responsibility %></li>
+                <% end %>
+              </ul>
+              <p class="card-text"><%= vacancy["info"] %> : <%= vacancy["email"] %></p>
+              <p class="card-text">Application deadline: <%= vacancy["deadline"] %> </p>
+            </div>
+            <div class="card-footer">
+              <div class="row  m-auto">
+                  <div class="col">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#btn-detail" data-company="<%= vacancy["company"] %>" data-description="<%= vacancy["description"] %>" data-requirements="<%= vacancy["requirements"].join(", ") %>" data-responsibilities="<%= vacancy["responsibilities"].join(", ") %>">
                         詳細
                     </button>
-                </div>
-                <div class="col  text-end">
-                    <button type="button" class=" w-25 btn btn-primary" data-bs-toggle="modal" data-bs-target="#btn-apply">
-                        Apply
-                    </button>
-
-
-                </div>
+                  </div>
+                  <div class="col  text-end">
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#btn-apply">
+                          Apply
+                      </button>
+                  </div>
+              </div>
             </div>
-
-            <!-- The Modal -->
-            <div class="modal" id="btn-detail">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h4 class="modal-title">Modal Heading</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        <p><b>未経験でも年収400万円以上！未経験歓迎のスマートフォン製造スタッフ</b><br>
-
-                            PR<br>
-
-                            【大手並みの充実した働き方】<br>
-                            ■昇給・賞与・昇格あり<br>
-                            ■年間休日120日以上<br>
-                            ■完全週休2日制（土日・祝日）<br>
-                            ■社員寮、住宅手当あり<br>
-                            ■育児・介護休暇(実績あり)<br>
-                            ■産休・育休取得実績あり<br>
-                            ■勤務開始時期調整します<br>
-                                </p>
-                    </div>
-
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                    </div>
-
-                    </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+    </div>
+    <div class="modal fade" id="btn-detail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><span id="modal-company"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-            </div>
-
-
-            <div class="modal" id="btn-apply">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-
-                        <!-- Modal Header -->
-                        <div class="modal-header">
-                            <h4 class="modal-title">Modal Heading</h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-
-                        <!-- Modal body -->
-                        <div class="modal-body">
-                            <form>
-                                <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">志望動機:</label>
-                                    <textarea type="text" class="form-control" id="shibodouki-test"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="message-text" class="col-form-label">自己PR:</label>
-                                    <textarea class="form-control" id="jikoPR-text"></textarea>
-                                </div>
-                            </form>
-                        </div>
-
-
-                        <!-- Modal footer -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">キャンセル</button>
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">申請</button>
-                        </div>
-
-                    </div>
+                <div class="modal-body">
+                    <h6 class="card-subtitle mb-2 text-muted"></h6>
+                    <p class="card-text">Description: <span id="modal-description"></span></p>
+                    <h6 class="card-subtitle mb-2 text-muted">Requirements:</h6>
+                    <ul id="modal-requirements"></ul>
+                    <h6 class="card-subtitle mb-2 text-muted">Responsibilities:</h6>
+                    <ul id="modal-responsibilities"></ul>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="container-fluid mb-3 form-control">
-       <div class="css-1m4cuuf e37uo190 ">
-            <h3> ⭕️⭕️⭕️⭕️⭕️⭕️株式会社</h3>
-            <div class="row  m-auto">
-                <p><b><br> 給料 </b></p>
-                <p>年収4,000,000円～10,000,000円<p>
-                <p> ■年間休日120日以上
-                    ■完全週休2日制（土日・祝日）
-                    ■社員寮、住宅手当あり
-                    ■育児・介護休暇(実績あり)
-                    ■産休・育休取得実績あり
-                    ■勤務開始時期調整します</p>
+    <div class="modal" id="btn-apply">
+      <div class="modal-dialog">
+        <%= form_for @user, url: submit_job_search_user_path, method: :post, html: { class: 'needs-validation', novalidate: true, id: 'user', role: 'form' } do |f| %>
+        <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">サブミットして下さい</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <!-- Modal body -->
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">志望動機:</label>
+                <%= f.text_area :sei, :size=>"20x4", class: 'form-control' %>
+              </div>
+              <div class="form-group">
+                <label for="message-text" class="col-form-label">自己PR:</label>
+                  <%= f.text_area :sei, :size=>"20x4", class: 'form-control' %>
+              </div>
             </div>
-            <div class="row  m-auto">
-                <div class="col">
-                    <button type="button" class="w-25 btn btn-primary" data-bs-toggle="modal" data-bs-target="#btn-detail">
-                        詳細
-                    </button>
-                </div>
-                <div class="col  text-end">
-                    <button type="button" class=" w-25 btn btn-primary" data-bs-toggle="modal" data-bs-target="#btn-apply">
-                        Apply
-                    </button>
-
-
-                </div>
-            </div>
-
-            <!-- The Modal -->
-            <div class="modal" id="btn-detail">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h4 class="modal-title">Modal Heading</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        <p><b>未経験でも年収400万円以上！未経験歓迎のスマートフォン製造スタッフ</b><br>
-
-                            PR<br>
-
-                            【大手並みの充実した働き方】<br>
-                            ■昇給・賞与・昇格あり<br>
-                            ■年間休日120日以上<br>
-                            ■完全週休2日制（土日・祝日）<br>
-                            ■社員寮、住宅手当あり<br>
-                            ■育児・介護休暇(実績あり)<br>
-                            ■産休・育休取得実績あり<br>
-                            ■勤務開始時期調整します<br>
-                                </p>
-                    </div>
-
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                    </div>
-
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="modal" id="btn-apply">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-
-                        <!-- Modal Header -->
-                        <div class="modal-header">
-                            <h4 class="modal-title">Modal Heading</h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-
-                        <!-- Modal body -->
-                        <div class="modal-body">
-                            <form>
-                                <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">志望動機:</label>
-                                    <textarea type="text" class="form-control" id="shibodouki-test"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="message-text" class="col-form-label">自己PR:</label>
-                                    <textarea class="form-control" id="jikoPR-text"></textarea>
-                                </div>
-                            </form>
-                        </div>
-
-
-                        <!-- Modal footer -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">キャンセル</button>
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">申請</button>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">キャンセル</button>
+            <%= submit_tag "申請", :class=>"btn btn-primary" %>
+          </div>
         </div>
+      <% end %>
+      </div>
     </div>
-</div>
-<% end %>
+  </div>

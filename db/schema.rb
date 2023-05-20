@@ -15,7 +15,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_13_180200) do
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  create_table "active_storage_attachments", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
+  create_table "active_storage_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
     t.uuid "record_id", null: false
@@ -37,7 +37,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_13_180200) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "active_storage_variant_records", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
+  create_table "active_storage_variant_records", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
@@ -58,7 +58,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_13_180200) do
     t.index ["user_id", "occupation"], name: "index_company_major_stores_on_user_id_occupation_idx"
   end
 
-  create_table "company_middle_stores", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
+  create_table "company_middle_stores", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
     t.string "company_code"
     t.integer "occupation"
@@ -80,10 +80,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_13_180200) do
     t.integer "employment_sts", comment: "勤務形態"
     t.string "ad_title", comment: "広告タイトル"
     t.integer "salary", default: 0, null: false, comment: "給与"
-    t.integer "location", comment: "勤務地", array: true
+    t.jsonb "location", comment: "勤務地"
     t.integer "year", default: 0, null: false, comment: "勤務希望時期年"
     t.jsonb "month", comment: "勤務希望時期月"
     t.integer "visa_support", comment: "ビザサポート"
+    t.integer "visa_type", comment: "ビザ種別"
     t.text "job_description", comment: "職務内容"
     t.text "desire_qualification", comment: "希望職種"
     t.uuid "created_by"
@@ -93,8 +94,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_13_180200) do
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.datetime "deleted_at"
     t.string "company_name"
-    t.integer "visa_type"
     t.index ["user_id", "occupation"], name: "index_job_profiles_user_id_occupation_idx"
+  end
+
+  create_table "kanji_stores", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.serial "kanji_org", null: false
+    t.string "kanji_code", null: false
+    t.integer "kanji_no"
+    t.jsonb "kanji_vocab"
+    t.string "unit_sheet"
+    t.jsonb "kanji_parts"
+    t.text "parts_body"
+    t.uuid "created_by", null: false
+    t.uuid "updated_by", null: false
+    t.uuid "deleted_by"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["kanji_org"], name: "index_kanji_stores_on_kanji_org", unique: true
   end
 
   create_table "matching_bases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -192,6 +209,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_13_180200) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.string "lang_id", default: "EN", null: false
+    t.boolean "mycard_sign", default: false, null: false
     t.index ["user_id"], name: "index_student_profiles_on_user_id"
   end
 

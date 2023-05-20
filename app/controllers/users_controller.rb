@@ -120,6 +120,56 @@ class UsersController < ApplicationController
 
   end
 
+  def submit_job_search
+    @SubmitStatus = "done"
+    @results = {}
+    # Pass the @results variable to the view
+    render 'new_job_search'
+  end
+  
+  def get_job_search
+    @results = {
+      "vacancies" => [
+        {
+          "company" => "A 株式会社",
+          "position" => "Software Engineer",
+          "location" => "New York",
+          "description" => "is seeking a skilled Software Engineer to join our dynamic team. As a Software Engineer, you will be responsible for developing and maintaining high-quality software applications. This role requires strong programming skills, problem-solving abilities, and a passion for technology.",
+          "requirements" => ["Bachelor's degree in Computer Science", "2+ years of experience in software development", "Proficiency in Java and JavaScript"],
+          "responsibilities" => ["Design, develop, and test software applications", "Collaborate with cross-functional teams to define project requirements", "Debug and resolve software defects"],
+          "info" => "To apply for this position, please send your resume and cover letter to",
+          "email" => "A@gmail.com",
+          "deadline" => "2023-07-31"
+        },
+        {
+          "company" => "B 株式会社",
+          "position" => "Data Analyst",
+          "location" => "San Francisco",
+          "description" => "is seeking a skilled Software Engineer to join our dynamic team. As a Software Engineer, you will be responsible for developing and maintaining high-quality software applications. This role requires strong programming skills, problem-solving abilities, and a passion for technology.",
+          "requirements" => ["Bachelor's degree in Statistics or related field", "Experience with data analysis tools (e.g., Python, R)", "Strong analytical and problem-solving skills"],
+          "responsibilities" => ["Design, develop, and test software applications", "Collaborate with cross-functional teams to define project requirements", "Debug and resolve software defects"],
+          "info" => "To apply for this position, please send your resume and cover letter to",
+          "email" => "B@gmail.com",
+          "deadline" => "2023-09-31"
+        },
+        {
+          "company" => "C 株式会社",
+          "position" => "Marketing Manager",
+          "location" => "London",
+          "description" => "is seeking a skilled Software Engineer to join our dynamic team. As a Software Engineer, you will be responsible for developing and maintaining high-quality software applications. This role requires strong programming skills, problem-solving abilities, and a passion for technology.",
+          "requirements" => ["Bachelor's degree in Marketing or related field", "5+ years of experience in marketing", "Excellent communication and leadership skills"],
+          "responsibilities" => ["Design, develop, and test software applications", "Collaborate with cross-functional teams to define project requirements", "Debug and resolve software defects"],
+          "info" => "To apply for this position, please send your resume and cover letter to",
+          "email" => "C@gmail.com",
+          "deadline" => "2023-10-31"
+        }
+      ]
+    }
+
+    # Pass the @results variable to the view
+    render 'new_job_search'
+  end
+
   # new_job_search ADD END
   #Add 20230513
   def new_student_profile
