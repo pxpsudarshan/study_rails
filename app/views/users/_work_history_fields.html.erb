@@ -1,29 +1,31 @@
-<div  class="row mb-1">
-     <div class="col-md-1 col-form-label">
-        <%= f.label :name_label, "職歴", class: '' %>
-    </div>
-    <div class="col-md-2">
-        <%= f.select :lang_id, options_for_select(['日本', 'アメリカ'], f.object.lang_id), {include_blank: true}, class: 'form-select' %>
-    </div>
-    <div class="col-md-auto col-form-label">
-        <%= f.label :name_label, "勤務先", class: '' %>
-    </div>
-    <div class="col-md">
-        <%= f.text_field :lang_id, placeholder: '', class: 'form-control' %>
-    </div>
-    <div class="col-md-auto col-form-label">
-        <%= f.label :name_label, "職業", class: '' %>
-    </div>
-    <div class="col-sm-4 d-flex gap-2">
-        <%= f.text_field :lang_id, placeholder: '', class: 'form-control' %>
-        <div class="w-auto form-control">
-            <%= select_year(Date.today, {:start_year => 1988, :end_year => 2087}, class: "border-0")%>
-            <%# <span>年</span> %>
+ <div class="form-control mb-1">
+    <div  class="row mb-1">
+        <div class="col-md-1 col-form-label">
+            <%= f.label :name_label, "職歴", class: '' %>
         </div>
-        <p class="col-form-label ext-center">~</p>
-        <div class="w-auto form-control">
-            <%= select_year(Date.today, {:start_year => 1988, :end_year => 2087}, class: "border-0")%>
-            <%# <span>年</span> %>
+        <div class="col-md-2">
+            <%= f.select :lang_id, options_for_select(['日本', 'アメリカ'], f.object.lang_id), {include_blank: true}, class: 'form-select' %>
         </div>
-    </div>    
+        <div class="col-md-auto col-form-label">
+            <%= f.label :name_label, "勤務先", class: '' %>
+        </div>
+        <div class="col-md">
+            <%= f.text_field :lang_id, placeholder: '', class: 'form-control' %>
+        </div>
+        <div class="col-md-auto col-form-label">
+            <%= f.label :name_label, "職業", class: '' %>
+        </div>
+        <div class="col-sm-4 d-flex gap-2">
+            <%= f.text_field :lang_id, placeholder: '', class: 'form-control' %>
+            <div class="w-auto form-control">
+                <%= select_year(Date.today, {:start_year => 1988, :end_year => 2087}, class: "border-0")%>
+                <%# <span>年</span> %>
+            </div>
+            <p class="col-form-label ext-center">~</p>
+            <div class="w-auto form-control">
+                <%= select_year(Date.today, {:start_year => 1988, :end_year => 2087}, class: "border-0")%>
+                <%# <span>年</span> %>
+            </div>
+        </div>    
+    </div>
 </div>
