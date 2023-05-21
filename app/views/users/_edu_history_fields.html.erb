@@ -1,44 +1,39 @@
 <div class="form-control mb-1">
     <div class="row ">
-        <div class="col-md-1 col-form-label mb-1">
-            <%= f.label :occupation, "学歴", class: '' %>
+        <div class="col-sm-auto mb-1">
+            <%= f.date_field :created_at, as: :date, value: f.object.try(:strftime,"%m/%d/%Y"), class: 'form-control' %>
         </div>
-        <div class="col-md mb-1">
-            <div class="d-flex gap-3">
+        <div class="col-sm-3 mb-1">
+            <%= f.text_field :lang_id, placeholder: '学校名', class: 'form-control' %>
+        </div>
+            <div class="col-sm mb-1">
                 <%= f.select :lang_id, options_for_select([
+                    ['-', 0],
                     ['大学(博士)', 1],
                     ['大学(修士)', 2],
                     ['大学(学部)', 3],
                     ['専門学校', 4],
                     ['高校 卒業', 5]
-                ], f.object.lang_id), {include_blank: true}, class: "form-select" %>
-                <%= f.date_field :created_at, as: :date, value: f.object.try(:strftime), class: 'form-control' %>
+                ], f.object.lang_id), {}, class: "form-select"%>
             </div>
-        </div>
-        <div class="col-md mb-1">
+        <div class="col-sm-auto mb-1">
             <div class="d-flex gap-3">
                 <%= f.select :lang_id, options_for_select([
+                    ['-', 0],
                     ['卒業', 1],
                     ['中退', 2],
                     ['休学', 3],
                     ['卒業予定', 4]
-                ], f.object.lang_id), {include_blank: true}, class: "form-select" %>
-                <%= f.select :lang_id, options_for_select(['日本', 'アメリカ'], f.object.lang_id), {include_blank: true}, class: 'form-select' %>
+                ], f.object.lang_id), {}, class: "form-select" %>
+                <%= f.select :lang_id, options_for_select([
+                    ['-', 0],
+                    ['日本', 1],
+                    ['アメリカ', 2]
+                ], f.object.lang_id), {}, class: "form-select" %>
             </div>
         </div>
-    </div>
-    <div class="row" id="institute_name0">
-        <div class="col-md-1 col-form-label mb-1">
-            <%= f.label :lang_id, "学校名", class: '' %>
-        </div>
-        <div class="col-md mb-1">
-            <%= f.text_field :lang_id, placeholder: '', class: 'form-control' %>
-        </div>
-        <div class="col-md-auto col-form-label mb-1">
-            <%= f.label :lang_id, "専攻", class: '' %>
-        </div>
-        <div class="col-md mb-1">
-            <%= f.text_field :lang_id, placeholder: '', class: 'form-control' %>
+        <div class="col-sm-3 mb-1">
+            <%= f.text_field :lang_id, placeholder: '専攻', class: 'form-control' %>
         </div>
     </div>
 </div>

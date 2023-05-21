@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_13_180200) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_21_172322) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -202,15 +202,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_13_180200) do
     t.boolean "visa_support", default: false, null: false
     t.integer "visa_type", default: 0, null: false
     t.text "job_description"
-    t.text "desire_qualification"
+    t.text "lang_id"
     t.uuid "created_by", null: false
     t.uuid "updated_by", null: false
     t.uuid "deleted_by"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
-    t.string "lang_id", default: "EN", null: false
-    t.boolean "mycard_sign", default: false, null: false
     t.index ["user_id"], name: "index_student_profiles_on_user_id"
   end
 

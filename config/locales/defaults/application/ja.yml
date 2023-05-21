@@ -150,5 +150,7 @@ ja:
       create_student_profile: '<i class="fas fa-address-card"></i> 外国人材プロファイル登録'
       new_job_search: '<i class="fas fa-address-card"></i> 仕事検索'
       create_job_search: '<i class="fas fa-address-card"></i> 仕事検索'
+      get_job_search: '<i class="fas fa-address-card"></i> 仕事検索結果'
+      submit_job_search: '<i class="fas fa-address-card"></i> 仕事検索結果'
     errors:
       limit_access:   '<i class="fas fa-exclamation-triangle"></i> 権限エラー'
