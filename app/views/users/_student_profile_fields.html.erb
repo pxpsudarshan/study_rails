@@ -1,12 +1,11 @@
-<div class="row mb-1"  id="skill_level0">
-    <div class="col-sm-1 col-form-label">
-        <span class="">1.</span>
-    </div>
-    <div class="col-sm ">
-        <%= f.select :visa_support, options_for_select([['上級(N1-N2合格)', 0], ['中級(N3-N4合格)', 1], ['初級', 2]], f.object.visa_support), {include_blank: true}, class: 'form-select' %>
-    </div>
 
-    <div class="col-sm">
-        <%= f.select :visa_support, options_for_select([['ネイティブレベル', 0], ['上級', 1], ['中級', 2], ['初級', 3]], f.object.visa_support), {include_blank: true}, class: 'form-select' %>
+<div class="row mb-1 d-flex" >
+    <div class="col ">
+        <%= f.select :lang_id, options_for_select([['上級(N1-N2合格)', 0], ['中級(N3-N4合格)', 1], ['初級', 2]], f.object.lang_id), {include_blank: true}, class: 'form-select' %>
+    </div>
+   
+    <div class="col">
+        <%= f.select :lang_id, options_for_select([['ネイティブレベル', 0], ['上級', 1], ['中級', 2], ['初級', 3]], f.object.lang_id), {include_blank: true}, class: 'form-select' %>
     </div>
 </div>
+
