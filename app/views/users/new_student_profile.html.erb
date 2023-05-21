@@ -110,8 +110,24 @@
     <div class="row mb-1">
         <h3 class="text-center">職歴(最近のものから順番に)</h3>
     </div>
+    <div class="row">
+
+    </div>
+    <div class="row">
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
     <div class="mb-1"  id="work_history">
-        
         <%= f.fields_for :student_profiles, @student_profiles do |ft| %>
             <% render 'work_history_fields', f: ft %>
         <% end %>
@@ -135,7 +151,7 @@
         </div>
         <div  class="col-md" id="skill_row">
             <div class="row mb-1 d-flex">
-                
+
                 <div class="col col-form-label" id="lbluselang0">
                     <%= f.label :lang_id, "使用言語", class: '' %>
                 </div>
@@ -152,7 +168,7 @@
                 <%= link_to_add_association t('buttons.add_plus').html_safe, f, :student_profiles,
                     'data-association-insertion-method'    => 'append' ,
                     'data-association-insertion-node'      => '#skill_level', class: "btn btn-primary border-2 rounded-circle"
-                %> 
+                %>
             </div>
         </div>
     </div>
