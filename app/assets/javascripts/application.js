@@ -383,10 +383,10 @@ $(document).ready(function() {
   $('#user_sign_in_count').on('change', function(){
     if ($('#user_sign_in_count').val() == 'はい'){
       $('#zairyu_shikaku').removeClass()
-      $('#zairyu_shikaku').addClass('visible row mb-1')
+      $('#zairyu_shikaku').addClass('row mb-1')
     }else{
       $('#zairyu_shikaku').removeClass()
-      $('#zairyu_shikaku').addClass('invisible row mb-1')
+      $('#zairyu_shikaku').addClass('d-none row mb-1')
     }
   });
 });
