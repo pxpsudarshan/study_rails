@@ -25,7 +25,7 @@
             <%= f.select :lang_id, options_for_select(['EN', 'JP', 'RU', 'CH'], f.object.lang_id), {include_blank: true}, class: 'form-control' %>
         </div>
         <div class="col-md-auto col-form-label">
-            <%= f.label :lang_id, "生年月日", class: '' %>
+            <%= f.label :created_at, "生年月日", class: '' %>
         </div>
         <div class="col-md">
             <%= f.date_field :created_at, as: :date, value: f.object.try(:strftime,"%m/%d/%Y"), class: 'form-control' %>
@@ -123,10 +123,12 @@
     </div>
     <div class="row mb-2">
         <div class="col-sm mb-1">
-            <div class="row p-0">
+            <div class="row">
                 <div class="col-sm-2 col-form-label">
                     <%= f.label :name_label, "スキル" %>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-sm">
                     <%= f.text_area :sei, :size=>"20x4", class: 'form-control' %>
                 </div>

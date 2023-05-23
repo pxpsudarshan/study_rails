@@ -3,10 +3,10 @@
         <div class="col-sm-auto mb-1">
             <%= f.date_field :created_at, as: :date, value: f.object.try(:strftime,"%m/%d/%Y"), class: 'form-control' %>
         </div>
-        <div class="col-sm-3 mb-1">
+        <div class="col-sm mb-1">
             <%= f.text_field :lang_id, placeholder: '学校名', class: 'form-control' %>
         </div>
-            <div class="col-sm mb-1">
+            <div class="col-sm-2 mb-1">
                 <%= f.select :lang_id, options_for_select([
                     ['-', 0],
                     ['大学(博士)', 1],
@@ -32,7 +32,7 @@
                 ], f.object.lang_id), {}, class: "form-select" %>
             </div>
         </div>
-        <div class="col-sm-3 mb-1">
+        <div class="col-sm-2 mb-1">
             <%= f.text_field :lang_id, placeholder: '専攻', class: 'form-control' %>
         </div>
     </div>
