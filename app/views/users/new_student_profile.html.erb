@@ -75,8 +75,8 @@
             <div class="w-50 col-form-label text-end">
                 <%= f.label :name_label, "就職希望時期", class: '' %>
             </div>
-             <div class="w-50 mb-1 d-flex form-control">
-                <%= select_year(Date.today, {:start_year => Date.current.year, :end_year => 2087, prompt: { year: '年' }}, class: "border-0 p-0 form-select")%>
+             <div class="w-50 p-0 mb-1 d-flex form-control">
+                <%= select_year(Date.today, {:start_year => Date.current.year, :end_year => 2087, prompt: { year: '年' }}, class: "border-0 text-end form-select")%>
                 <%= f.select :name_kana, options_for_select([
                     ['1月', 1],
                     ['2月', 2],
@@ -89,7 +89,7 @@
                     ['9月', 9],
                     ['10月', 10],
                     ['11月', 11],
-                    ['12月', 12]], f.object.name_kana), {include_blank: false, include_hidden: false}, class: "border-0 p-0 form-select" %>
+                    ['12月', 12]], f.object.name_kana), {include_blank: false, include_hidden: false}, class: "border-0 text-end form-select" %>
             </div>
         </div>
     </div>
