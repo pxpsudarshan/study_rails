@@ -8,7 +8,7 @@
             <%= f.label :name_label, "氏名", class: '' %>
         </div>
         <div class="col-md">
-            <%= f.text_field :sei, placeholder: '(表示)02-10入力済', class: 'form-control' %>
+            <%= f.text_field :sei, placeholder: '(表示)02-10入力済', class: 'form-control', disabled: true %>
         </div>
         <div class="col-md-auto col-form-label">
             <%= f.label :name_label, "呼び名(カタカナ)", class: '' %>
@@ -55,41 +55,40 @@
         </div>
     </div>
     <div class="row mb-2">
-        <div class="col-sm-7">
+        <div class="col-md-6">
             <div class=" d-none row mb-1" id="zairyu_shikaku">
-                <div class="col-sm-2 col-form-label">
+                <div class="col-md-2 col-form-label">
                     <%= f.label :name_label, "在留資格", class: '' %>
                 </div>
-                <div class="col-sm-6">
-                    <%= f.select :lang_id, options_for_select(['', ''], f.object.lang_id), {include_blank: true}, class: 'form-control' %>
+                <div class="col-md-6">
+                     <%= f.select :lang_id, options_for_select([
+                        ['留学生', 0],
+                        ['技術・人文知識・国際業務', 1],
+                        ['介護（※１）', 2],
+                        ['医療', 3],
+                        ['技能実習', 4],
+                        ['高度専門職', 5]
+                        ], f.object.lang_id), {include_blank: false}, class: 'form-select' %>
                 </div>
                 <div class="col-md-auto col-form-label">
                     <%= f.label :name_label, "期限", class: '' %>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-md-3">
                     <%= f.date_field :created_at, as: :date, value: f.object.try(:strftime,"%m/%d/%Y"), class: 'form-control' %>
                 </div>
             </div>
         </div>
-        <div class="col-sm d-flex gap-3">
-            <div class="w-50 col-form-label text-end">
-                <%= f.label :name_label, "就職希望時期", class: '' %>
-            </div>
-             <div class="w-50 p-0 mb-1 d-flex form-control">
-                <%= select_year(Date.today, {:start_year => Date.current.year, :end_year => 2087, prompt: { year: '年' }}, class: "border-0 text-end form-select")%>
-                <%= f.select :name_kana, options_for_select([
-                    ['1月', 1],
-                    ['2月', 2],
-                    ['3月', 3],
-                    ['4月', 4],
-                    ['5月', 5],
-                    ['6月', 6],
-                    ['7月', 7],
-                    ['8月', 8],
-                    ['9月', 9],
-                    ['10月', 10],
-                    ['11月', 11],
-                    ['12月', 12]], f.object.name_kana), {include_blank: false, include_hidden: false}, class: "border-0 text-end form-select" %>
+        <div class="col-md">
+            <div class="row">
+                <div class="col-md-auto text-end w-50 col-form-label mb-1">
+                    <%= f.label :name_label, "就職希望時期", class: '' %>
+                </div>
+                <div class="col-md-auto  w-50 d-flex  mb-1">
+                    <div class="w-auto form-control">
+                    <%= select_year(Date.today, {:start_year => 2010, :end_year => 2040},field_name: '年' , class: "border-0")%>
+                    <%= select_month(Date.today, {:field_name => 'start', :prefix => 'timer'}, class: "border-0")%>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -101,7 +100,7 @@
         <% render 'edu_history_fields', f: ft %>
         <% end %>
     </div>
-    <div class="row-sm-auto mb-2" >
+    <div class="row-md-auto mb-2" >
         <%= link_to_add_association t('buttons.add_plus').html_safe, f, :student_profiles, partial: 'edu_history_fields',
             'data-association-insertion-method'    => 'append' ,
             'data-association-insertion-node'      => '#edu_history', class: "btn btn-primary border-2 rounded-circle"
@@ -115,21 +114,21 @@
             <% render 'work_history_fields', f: ft %>
         <% end %>
     </div>
-    <div class="row-sm-auto mb-2" >
+    <div class="row-md-auto mb-2" >
         <%= link_to_add_association t('buttons.add_plus').html_safe, f, :student_profiles, partial: 'work_history_fields',
             'data-association-insertion-method'    => 'append' ,
             'data-association-insertion-node'      => '#work_history', class: "btn btn-primary border-2 rounded-circle"
         %>
     </div>
     <div class="row mb-2">
-        <div class="col-sm mb-1">
+        <div class="col-md mb-1">
             <div class="row">
-                <div class="col-sm-2 col-form-label">
+                <div class="col-md-2 col-form-label">
                     <%= f.label :name_label, "スキル" %>
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm">
+                <div class="col-md">
                     <%= f.text_area :sei, :size=>"20x4", class: 'form-control' %>
                 </div>
             </div>
@@ -149,7 +148,7 @@
                     <% render 'student_profile_fields', f: ft %>
                 <% end %>
             </div>
-            <div class="row-sm-auto mb-2" >
+            <div class="row-md-auto mb-2" >
                 <%= link_to_add_association t('buttons.add_plus').html_safe, f, :student_profiles,
                     'data-association-insertion-method'    => 'append' ,
                     'data-association-insertion-node'      => '#skill_level', class: "btn btn-primary border-2 rounded-circle"

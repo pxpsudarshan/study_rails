@@ -2,16 +2,16 @@
     <div class="row  m-auto">
       <%= form_for @user, url: get_job_search_user_path, method: :post, html: { class: 'needs-validation', novalidate: true, id: 'user', role: 'form' } do |f| %>
         <div class="row mb-1">
-            <div class="col-sm-1 col-form-label mw-25">
+            <div class="col-md-1 col-form-label mw-25">
                 <%= f.label :sei, "氏名", class: '' %>
             </div>
-            <div class="col-sm-3">
-                <%= f.text_field :sei, placeholder: '(表示)02-10入力済', class: 'form-control' %>
+            <div class="col-md-3">
+                <%= f.text_field :sei, placeholder: '(表示)02-10入力済', class: 'form-control', disabled: true %>
             </div>
-            <div class="col-sm-1 col-form-label">
+            <div class="col-md-1 col-form-label">
                 <%= f.label :sei, "勤務地", class: '' %>
             </div>
-            <div class="col-sm">
+            <div class="col-md">
                 <%= f.select :sei, options_for_select([
                     ['北海道', 1],
                     ['青森県', 2],
@@ -64,13 +64,13 @@
             </div>
         </div>
         <div class="row mb-1">
-            <div class="col-sm-1 mb-1 col-form-label">
+            <div class="col-md-1 mb-1 col-form-label">
                 <%= f.label :name_kana,"入社時期", class: ''%>
             </div>
-            <div class="col-sm-auto  mb-1">
+            <div class="col-md-auto  mb-1">
                 <%= select_year(Date.today, {:start_year => Date.current.year, :end_year => 2087, prompt: { year: '年' }}, class: "form-select")%>
             </div>
-            <div class="col-sm-3 mb-1">
+            <div class="col-md-3 mb-1">
                 <%= f.select :name_kana, options_for_select([
                     ['1月', 1],
                     ['2月', 2],
@@ -85,10 +85,10 @@
                     ['11月', 11],
                     ['12月', 12]], f.object.name_kana), {include_blank: false, include_hidden: false}, multiple: true, class: 'multiselect-months form-select' %>
             </div>
-            <div class="col-sm-1 col-form-label">
+            <div class="col-md-1 col-form-label">
                 <%= f.label :name_kana, "年収", class: '' %>
             </div>
-            <div class="col-sm-2">
+            <div class="col-md-2">
                 <%= f.select :name_kana, options_for_select([
                     ['300万円未満', 1],
                     ['300万円以上', 2],
@@ -96,10 +96,10 @@
                     ['500万円以上', 4]
                 ], f.object.name_kana), {include_blank: true}, class: "form-select" %>
             </div>
-            <div class="col-sm-1 col-form-label">
+            <div class="col-md-1 col-form-label">
                 <%= f.label :name_kana,"職種", class: ''%>
             </div>
-            <div class="col-sm">
+            <div class="col-md">
                 <%= f.select :name_kana, options_for_select(occupation_list, f.object.name_kana), {include_blank: true}, class: 'dropdown-toggle form-select' %>
             </div>
         </div>
