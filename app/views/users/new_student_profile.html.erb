@@ -8,7 +8,7 @@
             <%= f.label :name_label, "氏名", class: '' %>
         </div>
         <div class="col-md">
-            <%= f.text_field :sei, placeholder: '(表示)02-10入力済', class: 'form-control', disabled: true %>
+            <%= text_field_tag :sei, f.object.name, class: 'form-control', disabled: true %>
         </div>
         <div class="col-md-auto col-form-label">
             <%= f.label :name_label, "呼び名(カタカナ)", class: '' %>
