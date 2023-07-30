@@ -38,6 +38,12 @@
 //= require nprogress
 //= require nprogress-turbolinks
 
+
+//= link kaisha/menus.js
+//= link kaisha/comps.js
+//= link kaisha/job_profiles.js
+//= link kaisha/company_stores.js
+
 dayjs.locale("ja");
 dayjs.extend(window.dayjs_plugin_advancedFormat);
 dayjs.extend(window.dayjs_plugin_localizedFormat);
@@ -378,44 +384,3 @@ $(document).ready(function() {
   });
 });
 
-/* 在留資格・期間表示・非表示*/
-$(document).ready(function() {
-  $('#user_sign_in_count').on('change', function(){
-    if ($('#user_sign_in_count').val() == 'はい'){
-      $('#zairyu_shikaku').removeClass()
-      $('#zairyu_shikaku').addClass('row mb-1')
-    }else{
-      $('#zairyu_shikaku').removeClass()
-      $('#zairyu_shikaku').addClass('d-none row mb-1')
-    }
-  });
-});
-
-$(document).ready(function() {
-  var myModal = new bootstrap.Modal(document.getElementById('btn-detail'));
-
-  $('#btn-detail').on('show.bs.modal', function (event) {
-      var button = $(event.relatedTarget);
-      var companyName = button.data('company');
-      var description = button.data('description');
-      var requirements = button.data('requirements');
-      var responsibilities = button.data('responsibilities');
-
-      $('#modal-company').text(companyName);
-      $('#modal-description').text(description);
-
-      var requirementsList = requirements.split(", ");
-      var requirementsHtml = '';
-      requirementsList.forEach(function (requirement) {
-          requirementsHtml += '<li>' + requirement + '</li>';
-      });
-      $('#modal-requirements').html(requirementsHtml);
-
-      var responsibilitiesList = responsibilities.split(", ");
-      var responsibilitiesHtml = '';
-      responsibilitiesList.forEach(function (responsibility) {
-          responsibilitiesHtml += '<li>' + responsibility + '</li>';
-      });
-      $('#modal-responsibilities').html(responsibilitiesHtml);
-  });
-});

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_21_172322) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_04_122930) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -74,27 +74,94 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_21_172322) do
     t.index ["user_id"], name: "index_company_middle_stores_on_user_id"
   end
 
-  create_table "job_profiles", id: { type: :uuid, default: -> { "gen_random_uuid()" }, comment: "連番" }, force: :cascade do |t|
-    t.uuid "user_id", null: false, comment: "企業ID"
-    t.integer "occupation", default: 0, null: false, comment: "職種"
-    t.integer "employment_sts", comment: "勤務形態"
-    t.string "ad_title", comment: "広告タイトル"
-    t.integer "salary", default: 0, null: false, comment: "給与"
-    t.jsonb "location", comment: "勤務地"
-    t.integer "year", default: 0, null: false, comment: "勤務希望時期年"
-    t.jsonb "month", comment: "勤務希望時期月"
-    t.integer "visa_support", comment: "ビザサポート"
-    t.integer "visa_type", comment: "ビザ種別"
-    t.text "job_description", comment: "職務内容"
-    t.text "desire_qualification", comment: "希望職種"
-    t.uuid "created_by"
-    t.uuid "updated_by"
+  create_table "company_store_contents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "company_store_id", null: false
+    t.string "company_code"
+    t.string "occupation"
+    t.string "vocab_code"
+    t.string "vocab_read"
+    t.string "vocab_mean"
+    t.uuid "created_by", null: false
+    t.uuid "updated_by", null: false
     t.uuid "deleted_by"
-    t.datetime "created_at", default: -> { "now()" }, null: false
-    t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.index ["company_store_id"], name: "index_company_store_contents_on_company_store_id"
+  end
+
+  create_table "company_stores", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "comp_id", null: false
+    t.uuid "created_by", null: false
+    t.uuid "updated_by", null: false
+    t.uuid "deleted_by"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["comp_id"], name: "index_company_stores_on_comp_id"
+  end
+
+  create_table "comps", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet "current_sign_in_ip"
+    t.inet "last_sign_in_ip"
+    t.string "sei"
+    t.string "mei"
+    t.string "sei_kana"
+    t.string "mei_kana"
+    t.string "mobile"
+    t.string "business_type"
     t.string "company_name"
-    t.index ["user_id", "occupation"], name: "index_job_profiles_user_id_occupation_idx"
+    t.string "company_url"
+    t.string "department"
+    t.string "company_code"
+    t.uuid "created_by", null: false
+    t.uuid "updated_by", null: false
+    t.uuid "deleted_by"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["reset_password_token"], name: "index_comps_on_reset_password_token", unique: true
+  end
+
+  create_table "job_profile_contents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "job_profile_id", null: false
+    t.integer "employment_sts"
+    t.integer "occupation", default: 0, null: false
+    t.string "ad_title"
+    t.integer "salary", default: 0, null: false
+    t.integer "location", default: [], null: false, array: true
+    t.boolean "visa_support", default: false, null: false
+    t.integer "visa_type", default: 0, null: false
+    t.integer "year", default: 1970, null: false
+    t.integer "month", default: [], null: false, array: true
+    t.text "job_description"
+    t.text "desire_qualification"
+    t.uuid "created_by", null: false
+    t.uuid "updated_by", null: false
+    t.uuid "deleted_by"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["job_profile_id"], name: "index_job_profile_contents_on_job_profile_id"
+  end
+
+  create_table "job_profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "comp_id", null: false
+    t.uuid "created_by", null: false
+    t.uuid "updated_by", null: false
+    t.uuid "deleted_by"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["comp_id"], name: "index_job_profiles_on_comp_id"
   end
 
   create_table "kanji_stores", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -145,6 +212,69 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_21_172322) do
     t.index ["parts_org"], name: "index_parts_stores_on_parts_org", unique: true
   end
 
+  create_table "profile_languages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "profile_id", null: false
+    t.integer "native_lang"
+    t.integer "jp_level"
+    t.integer "use_lang"
+    t.integer "use_lang_level"
+    t.uuid "created_by", null: false
+    t.uuid "updated_by", null: false
+    t.uuid "deleted_by"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["profile_id"], name: "index_profile_languages_on_profile_id"
+  end
+
+  create_table "profile_works", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "profile_id", null: false
+    t.integer "work_country"
+    t.string "work_place"
+    t.string "work_type"
+    t.date "start_date"
+    t.date "end_date"
+    t.uuid "created_by", null: false
+    t.uuid "updated_by", null: false
+    t.uuid "deleted_by"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["profile_id"], name: "index_profile_works_on_profile_id"
+  end
+
+  create_table "profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.string "call_name"
+    t.integer "kokuseki"
+    t.date "birthday"
+    t.integer "sex"
+    t.boolean "injapan_flg", default: false, null: false
+    t.text "address"
+    t.integer "visa_type"
+    t.date "visa_end_date"
+    t.date "desired_work_date"
+    t.integer "jp_school_type"
+    t.date "jp_school_date"
+    t.integer "jp_school_end"
+    t.string "jp_school_senko"
+    t.string "jp_school_name"
+    t.integer "school_type"
+    t.date "school_date"
+    t.integer "school_end"
+    t.string "school_senko"
+    t.string "school_name"
+    t.text "skill"
+    t.uuid "created_by", null: false
+    t.uuid "updated_by", null: false
+    t.uuid "deleted_by"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.string "address_country"
+    t.index ["user_id"], name: "index_profiles_on_user_id"
+  end
+
   create_table "read_stores", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.serial "read_org", null: false
     t.string "read_code", null: false
@@ -158,6 +288,34 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_21_172322) do
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
     t.index ["read_org"], name: "index_read_stores_on_read_org", unique: true
+  end
+
+  create_table "store_contents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "store_id", null: false
+    t.string "user_code"
+    t.string "jlpt_class"
+    t.string "vocab_code"
+    t.string "vocab_read"
+    t.string "vocab_mean"
+    t.integer "use"
+    t.uuid "created_by", null: false
+    t.uuid "updated_by", null: false
+    t.uuid "deleted_by"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["store_id"], name: "index_store_contents_on_store_id"
+  end
+
+  create_table "stores", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.uuid "created_by", null: false
+    t.uuid "updated_by", null: false
+    t.uuid "deleted_by"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["user_id"], name: "index_stores_on_user_id"
   end
 
   create_table "student_major_stores", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -297,9 +455,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_21_172322) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "company_major_stores", "users"
   add_foreign_key "company_middle_stores", "users"
-  add_foreign_key "job_profiles", "users"
+  add_foreign_key "company_store_contents", "company_stores"
+  add_foreign_key "company_stores", "comps"
+  add_foreign_key "job_profile_contents", "job_profiles"
+  add_foreign_key "job_profiles", "comps"
   add_foreign_key "matching_bases", "users", column: "company_id"
   add_foreign_key "matching_bases", "users", column: "student_id"
+  add_foreign_key "profile_languages", "profiles"
+  add_foreign_key "profile_works", "profiles"
+  add_foreign_key "profiles", "users"
+  add_foreign_key "store_contents", "stores"
+  add_foreign_key "stores", "users"
   add_foreign_key "student_major_stores", "users"
   add_foreign_key "student_middle_stores", "users"
   add_foreign_key "student_profiles", "users"

@@ -8,21 +8,12 @@ class User < ApplicationRecord
 
   has_one_attached :avatar
 
-  has_many :vocab_mycards
+  has_one :profile, dependent: :destroy
+  accepts_nested_attributes_for :profile, allow_destroy: true
 
-  has_many :job_profiles, dependent: :destroy
-  accepts_nested_attributes_for :job_profiles, allow_destroy: true
-  #Add Student_profile 20230513
-  has_many :student_profiles, dependent: :destroy
-  accepts_nested_attributes_for :student_profiles, allow_destroy: true
-  #Add Student_profile 20230513
-  has_many :company_middle_stores, dependent: :destroy
-  accepts_nested_attributes_for :company_middle_stores, allow_destroy: true
+  has_one :store, dependent: :destroy
 
-  validates :company_name, presence: true, if: :company?
-  validates :business_type, presence: true, if: :company?
-  validates :company_url, presence: true, if: :company?
-  validates :department, presence: true, if: :company?
+  has_many :vocab_mycards, dependent: :destroy
 
   validates :sei, presence: true
   validates :mei, presence: true
@@ -39,10 +30,6 @@ class User < ApplicationRecord
 
   validates_as_paranoid
   validates_uniqueness_of_without_deleted :email
-
-  def company?
-    company_flg == true
-  end
 
   def password_complexity
     if password.present? and !password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)./)

@@ -1,0 +1,155 @@
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name, company_flg: true), html: { class: 'form-horizontal' }) do |f| %>
+<div class="row text-center align-middle mb-3">
+  <div class="col-sm-7">
+    <h2 class="border border-2 border-info rounded p-2 ">外国人材の採用をご検討している法人様</h2>
+  </div>
+  <div class="col-sm-3">
+      <h4 class="p-2"></h4>
+  </div>
+  <div class="col-sm-1">
+      <%= image_tag 'icon.png', class: 'mb-4 col-sm-10' %>
+  </div>
+</div>
+<div class="row bg-secondary p-2 bg-opacity-25">
+  <div class="col-sm-2">
+    <h2>求人検索</h2>
+  </div>
+  <div class="col d-flex gap-3">
+    <div class="col-form-label">
+      <%= f.label :company_name, '貴社名' %>
+    </div>
+    <div class="col-sm">
+      <%= f.text_field :company_name, autofocus: true, class: 'form-control', disabled: 'disabled' %>
+    </div>
+  </div>
+  <div class="col d-flex gap-3">
+    <div class="col-form-label">
+      <%= f.label :name, '職種' %>
+    </div>
+    <div class="col-sm">
+      <%= f.select(:company_name, [['すべて', 0],
+      ['経営', 1],
+      ['管理', 2],
+      ['営業', 3],
+      ['人事', 4],
+      ['コンサルタント', 5],
+      ['IT技術職', 6],
+      ['マーケテェング', 7],
+      ['プロジェクト管理', 8],
+      ['機械', 9],
+      ['専門職など', 10]], {}, :class => "form-select") %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-3 text-center">
+    <h2 class="border border-4 m-2 ml-0 p-1 ">検索条件</h2>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-7 d-flex gap-3">
+    <div class="col-form-label">
+      <%= f.label :name, '適合率(外国人材習得語彙-貴社語彙)' %>
+    </div>
+    <div class="col-sm">
+      <%= f.select(:company_name, [['10', 0],
+      ['20', 1],
+      ['30', 2],
+      ['40', 3],
+      ['50', 4],
+      ['60', 5],
+      ['70', 6],
+      ['80', 7],
+      ['90', 8],
+      ['100', 9]], {}, :class => "form-select") %>
+    </div>
+    <span class="align-bottom mt-3">% 以上</span>
+  </div>
+  <div class="col-sm-5 d-flex gap-3 mb-3">
+    <div class="col-form-label">
+      <%= f.label :name, '検索範囲' %>
+    </div>
+    <div class="col-sm">
+      <%= f.select(:company_name, [['全ユーザ検索', 0],
+      ['貴社求人申込者検索', 1]], {}, :class => "form-select") %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col"></div>
+  <div class="col text-center px-auto mb-3"><button type="button" id="search-data" class="btn btn-primary btn-lg w-25">検索</button></div>
+  <div class="col"></div>
+</div>
+<div class="row bg-success bg-opacity-25 p-3" id="table-title">
+  <table id="datatable" class="cell-border dataTable">
+    <div class="row">
+      <div class="col-sm-3 text-center bg-white m-0 px-0">
+        <h2 class="border border-4 m-0">検索結果</h2>
+      </div>
+      <div class="col-sm text-center align-middle">
+        <h4>該当者情報</h4>
+      </div>
+      <div class="col-sm-3" id="custom-paging">
+      </div>
+    </div>
+  </table>
+  <div class="row">
+    <div class="col-sm">
+
+    </div>
+    <div class="col-sm-4 text-center mt-2">
+        <button type="submit" class="btn btn-primary btn-lg mb-2">詳細情報を希望する</button>
+        <h6>ビズポート社より貴社様にご連絡致します。</h6>
+    </div>
+  </div>
+</div>
+<% end %>
+<%= javascript_tag do %>
+
+$(document).ready(function() {
+  $('#table-title').hide();
+  $('#search-data').on('click', function() {
+    $('#table-title').show();
+    var data = [{color: "red", value: "#f00"},{color: "green", value: "#0f0"}]
+    createDatatable(data)
+
+    // $.ajax({
+    //   url: '/users/sign_up?company_flg=true&dataTable=true',
+    //   type: 'GET',
+    //   dataType: 'json',
+    //   success: function(data) {
+    //     createDatatable(data);
+    //   }
+    });
+  });
+
+function createDatatable(data) {
+  $('#datatable').DataTable({
+    "searching": false,
+    "paging": true,
+    "info": true,
+    "ordering": true,
+    retrieve: true,
+    data: data,
+    columns: [
+      { // first column
+        render: function (data, type, full, meta) {
+          return '<input type="checkbox" width="60px" height="60px" class="w-100" name="id[]" value="' + $('<div/>').text(data).html() + '">';
+        }
+      },
+      { title: '居住地', data: 'color' },
+      { title: '現在の在留資格', data: 'color' },
+      { title: '最終学歴', data: 'color' },
+      { title: '現在の職業', data: 'color' },
+      { title: '年齢', data: 'color' },
+      { title: '国籍', data: 'color' },
+      { title: '性別', data: 'color' }
+    ],
+    columnDefs: [
+      { orderable: false, targets: 0 }
+    ],
+  order: [[1, 'asc']]
+  });
+}
+
+<% end %>

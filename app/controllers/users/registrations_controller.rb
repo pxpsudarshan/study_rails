@@ -8,7 +8,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # GET /resource/sign_up
   def new
     super do
-      resource.company_flg = true if params[:company_flg].present?
+#      resource.company_flg = true if params[:company_flg].present?
     end
   end
 
@@ -46,7 +46,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
     devise_parameter_sanitizer.permit(:sign_up, keys: [
-      :company_flg, :company_name, :business_type, :company_url, :department, 
       :sei, :mei, :sei_kana, :mei_kana, :mobile,
       :lang_id, :jp_level
     ])

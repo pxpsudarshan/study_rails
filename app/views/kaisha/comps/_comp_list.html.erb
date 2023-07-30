@@ -1,0 +1,32 @@
+<%= paginate @comps, remote: true %>
+<div style="white-space: nowrap; min-width: 800px;">
+<table class="table table-bordered table-hover table-sm">
+  <thead>
+    <tr class="table-success">
+      <th class="text-center"><%= t('buttons.show') %></th>
+      <th class="text-center"><%= t('activerecord.attributes.comp.name') %></th>
+      <th class="text-center"><%= t('activerecord.attributes.comp.name_kana') %></th>
+      <th class="text-center"><%= t('activerecord.attributes.comp.mobile') %></th>
+      <th class="text-center"><%= t('activerecord.attributes.comp.email') %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @comps.each do |comp| %>
+    <tr class="details_row nested-fields">
+      <td class="text-center"><%= link_to t('buttons.edit').html_safe, edit_kaisha_comp_path(id: comp.id), class: "btn btn-secondary btn-sm" %></td>
+      <td class="text-center"><%= comp.name %></td>
+      <td class="text-center"><%= comp.name_kana %></td>
+      <td class="text-center"><%= comp.mobile %></td>
+      <td class="text-center"><%= comp.email %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<strong><%= page_entries_info @comps, :entry_name => '' %></strong>
+<%= paginate @comps, remote: true %>
+<%= javascript_tag do %>
+  $(function() {
+    NProgress.done();
+  });
+<% end %>

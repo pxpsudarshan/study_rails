@@ -1,0 +1,15 @@
+current directory: /Users/apple/Documents/GitHub/study_rails/path/ruby/3.1.0/gems/bootsnap-1.16.0/ext/bootsnap
+/Users/apple/.rbenv/versions/3.1.2/bin/ruby -I /Users/apple/.rbenv/versions/3.1.2/lib/ruby/3.1.0 -r ./siteconf20230730-7198-eo1xc7.rb extconf.rb
+creating Makefile
+
+current directory: /Users/apple/Documents/GitHub/study_rails/path/ruby/3.1.0/gems/bootsnap-1.16.0/ext/bootsnap
+make DESTDIR\= clean
+
+current directory: /Users/apple/Documents/GitHub/study_rails/path/ruby/3.1.0/gems/bootsnap-1.16.0/ext/bootsnap
+make DESTDIR\=
+compiling bootsnap.c
+linking shared-object bootsnap/bootsnap.bundle
+
+current directory: /Users/apple/Documents/GitHub/study_rails/path/ruby/3.1.0/gems/bootsnap-1.16.0/ext/bootsnap
+make DESTDIR\= install
+/usr/bin/install -c -m 0755 bootsnap.bundle ./.gem.20230730-7198-198o7i/bootsnap

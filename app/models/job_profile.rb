@@ -1,17 +1,8 @@
 class JobProfile < ApplicationRecord
   acts_as_paranoid
   records_with_operator_on :create, :update, :destroy
-  belongs_to :user
+  belongs_to :comp
 
-#  validates :ad_title, presence: true
-  validates :occupation, presence: true
-  validates :location, presence: true
-  validates :visa_support, inclusion: [true, false]
-  validates :year, presence: true
-  validates :month, presence: true
-  validates :visa_type, presence: true
-#  validates :employment_sts, presence: true
-  validates :salary, presence: true
-  validates :job_description, presence: true
-
+  has_many :job_profile_contents, dependent: :destroy
+  accepts_nested_attributes_for :job_profile_contents, allow_destroy: true
 end

@@ -1,0 +1,16 @@
+current directory: /Users/apple/Documents/GitHub/study_rails/path/ruby/3.1.0/gems/debug-1.8.0/ext/debug
+/Users/apple/.rbenv/versions/3.1.2/bin/ruby -I /Users/apple/.rbenv/versions/3.1.2/lib/ruby/3.1.0 -r ./siteconf20230730-7198-bg2ym8.rb extconf.rb
+creating Makefile
+
+current directory: /Users/apple/Documents/GitHub/study_rails/path/ruby/3.1.0/gems/debug-1.8.0/ext/debug
+make DESTDIR\= clean
+
+current directory: /Users/apple/Documents/GitHub/study_rails/path/ruby/3.1.0/gems/debug-1.8.0/ext/debug
+make DESTDIR\=
+compiling debug.c
+compiling iseq_collector.c
+linking shared-object debug/debug.bundle
+
+current directory: /Users/apple/Documents/GitHub/study_rails/path/ruby/3.1.0/gems/debug-1.8.0/ext/debug
+make DESTDIR\= install
+/usr/bin/install -c -m 0755 debug.bundle ./.gem.20230730-7198-juwm92/debug
