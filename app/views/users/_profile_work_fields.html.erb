@@ -10,19 +10,19 @@
       <div class="col-md mb-1">
           <%= f.text_field :work_place, placeholder: '勤務先', class: 'form-control', required: true %>
       </div>
-      <div class="col-md-4 d-flex gap-2">
+      <div class="col-md-4 d-flex gap-2 mb-1">
         <div class="">
           <%= f.text_field :work_type, placeholder: '職業', class: 'form-control', required: true %>
         </div>
-        <div class="w-50">
+        <div class="w-50 mb-1">
         <%= f.date_select :start_date, {discard_day: true, discard_month: true}, class: 'form-control', required: true %>
         </div>
-        <p class="col-form-label text-center">~</p>
-        <div class="w-50">
+        <p class="col-form-label text-center mb-1">~</p>
+        <div class="w-50 mb-1">
         <%= f.date_select :end_date, {discard_day: true, discard_month: true}, class: 'form-control', required: true %>
         </div>
       </div>  
-      <div class="col-md-auto mb-1 text-center text-nowrap">
+      <div class="col-md-auto mb-1 text-nowrap mb-1">
         <%= link_to_remove_association t('buttons.destroy').html_safe, f, class: "btn btn-danger btn-delete-work" %>
       </div>
     </div>

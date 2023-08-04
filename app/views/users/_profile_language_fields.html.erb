@@ -1,11 +1,11 @@
 <div class="row mb-1 nested-fields-skill d-flex" >
-    <div class="col ">
-        <%= f.select :use_lang, options_for_select([['上級(N1-N2合格)', 0], ['中級(N3-N4合格)', 1], ['初級', 2]], f.object.use_lang), {include_blank: true}, class: 'form-select', required: true %>
+    <div class="col mb-1">
+        <%= f.select :use_lang, options_for_select([['日本語(N1合格)', 0], ['日本語(N2合格)', 1], ['日本語(N3合格)', 2], ['日本語(N4合格)', 3], ['日本語(N5合格)', ]], f.object.use_lang), {include_blank: true}, class: 'form-select', required: true %>
     </div>
-    <div class="col">
+    <div class="col mb-1">
         <%= f.select :use_lang_level, options_for_select([['ネイティブレベル', 0], ['上級', 1], ['中級', 2], ['初級', 3]], f.object.use_lang_level), {include_blank: true}, class: 'form-select', required: true %>
     </div>
-    <div class="col-auto text-center text-nowrap">
+    <div class="col-auto mb-1 text-center text-nowrap">
         <%= link_to_remove_association t('buttons.destroy').html_safe, f, class: "btn btn-danger btn-delete-skill" %>
     </div>
 </div>

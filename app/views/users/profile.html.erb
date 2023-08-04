@@ -80,12 +80,15 @@
         </div>
     </div>
     <div class="row mb-2">
-        <div class="col-md-6">
+        <div class="col-md-1">
+          <div class="col-md col-form-label">
+              在留資格
+          </div>
+        </div>
+        <div class="col-md-5">
             <div class=" d-none row mb-1" id="zairyu_shikaku">
-                <div class="col-md-2 col-form-label">
-                    在留資格
-                </div>
-                <div class="col-md-5">
+                
+                <div class="col-md">
                      <%= up.select :visa_type, options_for_select([
                         ['留学生', 1],
                         ['技術・人文知識・国際業務', 2],
@@ -98,7 +101,7 @@
                 <div class="col-md-auto col-form-label">
                     期限
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-auto">
                     <%= up.date_field :visa_end_date, as: :date, value: up.object.try(:strftime,"%m/%d/%Y"), class: 'form-control', required: true %>
                 </div>
             </div>
