@@ -81,13 +81,12 @@
     </div>
     <div class="row mb-2">
         <div class="col-md-1">
-          <div class="col-md col-form-label">
+          <div class="d-none col-md col-form-label" id="zairyu_shikaku_label">
               在留資格
           </div>
         </div>
         <div class="col-md-5">
             <div class=" d-none row mb-1" id="zairyu_shikaku">
-                
                 <div class="col-md">
                      <%= up.select :visa_type, options_for_select([
                         ['留学生', 1],
@@ -242,10 +241,17 @@ $(document).on('click', '.btn-delete-work', function(e) {
 function switch_zairyu(obj) {
   if (obj.value == 'true') {
     $('#zairyu_shikaku').removeClass()
+    $('#zairyu_shikaku_label').removeClass()
     $('#zairyu_shikaku').addClass('row mb-1')
+
+    $('#zairyu_shikaku_label').addClass('col-md col-form-label')
   } else {
     $('#zairyu_shikaku').removeClass()
+    $('#zairyu_shikaku_label').removeClass()
+
     $('#zairyu_shikaku').addClass('d-none row mb-1')
+    $('#zairyu_shikaku_label').addClass('d-none col-md col-form-label')
+
   }
 }
 $(function() {
