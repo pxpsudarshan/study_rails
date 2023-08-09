@@ -29,7 +29,7 @@
 <body>
   <nav class="navbar navbar-expand-md navbar-light static-top bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="<%= menus_path %>"><%= t('title.header') %></a>
+    <a class="navbar-brand" href="<%= current_user.present? ? menus_path : kaisha_menus_path %>"><%= t('title.header') %></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -38,9 +38,15 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse">
       <ul class="navbar-nav me-auto mb-2 mb-md-0">
+        <% if current_comp.present? %>
+        <li class="nav-item"><%= link_to t('navbar.comp').html_safe, kaisha_comps_path, class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to t('navbar.company_store').html_safe, new_kaisha_company_store_path, class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to t('navbar.job_profile').html_safe, new_kaisha_job_profile_path, class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to t('navbar.offer').html_safe, kaisha_offers_path, class: "nav-link" %></li>
+        <% else %>
         <li class="nav-item"><%= link_to t('navbar.user').html_safe, users_path, class: "nav-link" %></li>
-        <li class="nav-item"><%= link_to t('navbar.store').html_safe, new_store_user_path(current_user), class: "nav-link" %></li>
-        <li class="nav-item"><%= link_to t('navbar.job_profile').html_safe, new_job_profile_user_path(current_user), class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to t('navbar.store').html_safe, new_store_path, class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to t('navbar.job').html_safe, jobs_path, class: "nav-link" %></li>
         <li class="nav-item"><%= link_to t('navbar.student_profile').html_safe, new_student_profile_user_path(current_user), class: "nav-link" %></li>
         <li class="nav-item"><%= link_to t('navbar.job_search').html_safe, new_job_search_user_path(current_user), class: "nav-link" %></li>
         <li class="nav-item"></li>
@@ -48,12 +54,15 @@
       <ul class="navbar-nav ms-auto mb-2 mb-md-0">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" href="#">
-            <%== current_user.name %>
+            <%== current_user.present? ? current_user.name : current_comp.name %>
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu dropdown-menu-end">
-            <li><%= link_to t('navbar.profile').html_safe, edit_user_path(current_user.id), class: "dropdown-item" %></li>
-            <li><%= link_to t('navbar.logout').html_safe, destroy_user_session_path, method: 'delete', class: "dropdown-item" %></li>
+            <li><%= link_to t('navbar.edit').html_safe, current_user.present? ? edit_user_path(current_user.id) : edit_kaisha_comp_path(current_comp.id), class: "dropdown-item" %></li>
+            <% if current_user.present? %>
+            <li><%= link_to t('navbar.profile').html_safe, profile_user_path(current_user.id), class: "dropdown-item" %></li>
+            <% end %>
+            <li><%= link_to t('navbar.logout').html_safe, current_user.present? ? destroy_user_session_path : destroy_comp_session_path, method: 'delete', class: "dropdown-item" %></li>
           </ul>
         </li>
       </ul>
@@ -62,11 +71,13 @@
     <!-- /.navbar-static-side -->
   </nav>
   <main class="container-fluid">
+<!--
     <div class="row">
       <div class="col-auto me-auto">
-        <h1 class="page-header"><span class="page-title"><%= page_title.html_safe %></span></h1>
+        <h1 class="page-header"><span class="page-title"><%#= page_title.html_safe %></span></h1>
       </div>
     </div>
+-->
     <%= bootstrap_flash %>
     <%= yield %>
     <%= render partial: "shared/footer" %>

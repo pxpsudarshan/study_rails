@@ -2,11 +2,19 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :set_response_headers, except: [ ]
   helper_method :occupation_list
-  before_action :authenticate_user!
+  before_action :authenticate_users
   before_action :force_tablet_html
 #  has_mobile_fu
   before_action do
     RecordWithOperator.operator = current_user || User.first
+  end
+
+  def authenticate_users
+    if controller_path.split('/').first.to_s == 'kaisha'
+      authenticate_comp!
+    else
+      authenticate_user!
+    end
   end
 
   def force_tablet_html
@@ -51,5 +59,19 @@ class ApplicationController < ActionController::Base
 
   def occupation_list
     OCCUPATION_MAP.map{ |k,v| [v, k] }
+  end
+
+  protected
+#  def after_sign_out_path_for(resource_or_scope)
+#  end
+
+  def after_sign_in_path_for(resource)
+    if current_user.present?
+#      login_flg = current_user.user_info.login_flg
+#      unless login_flg
+#        sign_out User.find(current_user.id)
+#      end
+    end
+    stored_location_for(resource) || (current_user.present? ? menus_path : kaisha_menus_path)
   end
 end

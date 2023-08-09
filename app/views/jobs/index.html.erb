@@ -1,0 +1,145 @@
+<div class="container">
+  <div class="row text-center align-middle mb-3">
+    <div class="col-sm-3">
+      <h2 class="border border-2 border-info rounded p-2 ">求職検索</h2>
+    </div>
+    <div class="col-sm-3">
+      <h3 class="">求職情報入力</h3>
+    </div>
+  </div>
+    <div class="row  m-auto">
+      <%= form_for :search, url: jobs_path, method: :get, remote: true, html: { id: 'job', role: 'form' } do |f| %>
+        <div class="row mb-1">
+            <div class="col-md-1 col-form-label mw-25">
+                <%= f.label :sei, "氏名", class: '' %>
+            </div>
+            <div class="col-md-3">
+              <%= text_field_tag :sei, current_user.name_kana, class: 'form-control', disabled: true %>
+            </div>
+            <div class="col-md-1 col-form-label">
+                <%= f.label :location, "勤務地", class: '' %>
+            </div>
+            <div class="col-md">
+                <%= f.select :location, options_for_select(pref_array, ''), {include_blank: false, include_hidden: false}, multiple: true, class: 'form-select' %>
+            </div>
+        </div>
+        <div class="row mb-1">
+            <div class="col-md-1 mb-1 col-form-label">
+                <%= f.label :year,"入社時期", class: ''%>
+            </div>
+            <div class="col-md-auto  mb-1">
+              <% year = (Date.current.year..(Date.current+10.year).year).map{ |date| [date.to_s+('年'), date] } %>
+              <%= f.select :year, options_for_select(year, ''), {include_blank: false}, class: "form-select" %>
+            </div>
+            <div class="col-md-3 mb-1">
+              <%= f.select :month, options_for_select([
+                ['1月', 1],
+                ['2月', 2],
+                ['3月', 3],
+                ['4月', 4],
+                ['5月', 5],
+                ['6月', 6],
+                ['7月', 7],
+                ['8月', 8],
+                ['9月', 9],
+                ['10月', 10],
+                ['11月', 11],
+                ['12月', 12]
+              ], ''), {include_blank: false, include_hidden: false}, multiple: true, class: "form-select" %>
+            </div>
+            <div class="col-md-1 col-form-label">
+                <%= f.label :salary, "年収", class: '' %>
+            </div>
+            <div class="col-md-2">
+                <%= f.select :salary, options_for_select([
+                    ['300万円未満', 1],
+                    ['300万円以上', 2],
+                    ['400万円以上', 3],
+                    ['500万円以上', 4]
+                ], ''), {include_blank: true}, class: "form-select" %>
+            </div>
+            <div class="col-md-1 col-form-label">
+                <%= f.label :occupation,"職種", class: ''%>
+            </div>
+            <div class="col-md">
+                <%= f.select :occupation, options_for_select(occupation_list, ''), {include_blank: false}, class: 'form-select' %>
+            </div>
+        </div>
+        <div class="row mb-1">
+            <div class="action text-center">
+              <%= button_tag "検索", class: "btn btn-primary" %>
+            </div>
+        </div>
+      <% end %>
+
+<div class="row">
+  <div class="col-md-12" id="job_list">
+    <%= render 'job_list' %>
+  </div>
+</div>
+
+
+      <% if @SubmitStatus.present? %>
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong> おめでとうございます!</strong> 脂肪完了いたしました。
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      <% end %>
+    </div>
+
+    <div class="modal fade" id="btn-detail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><span id="modal-company"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6 class="card-subtitle mb-2 text-muted"></h6>
+                    <p class="card-text">Description: <span id="modal-description"></span></p>
+                    <h6 class="card-subtitle mb-2 text-muted">Requirements:</h6>
+                    <ul id="modal-requirements"></ul>
+                    <h6 class="card-subtitle mb-2 text-muted">Responsibilities:</h6>
+                    <ul id="modal-responsibilities"></ul>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal" id="btn-apply">
+      <div class="modal-dialog">
+        <%= form_for :user, url: jobs_path, html: { class: 'needs-validation', novalidate: true, id: 'user', role: 'form' } do |f| %>
+        <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">サブミットして下さい</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <!-- Modal body -->
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">志望動機:</label>
+                <%= f.text_area :sei, :size=>"20x4", class: 'form-control' %>
+              </div>
+              <div class="form-group">
+                <label for="message-text" class="col-form-label">自己PR:</label>
+                  <%= f.text_area :sei, :size=>"20x4", class: 'form-control' %>
+              </div>
+            </div>
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">キャンセル</button>
+            <%= submit_tag "申請", :class=>"btn btn-primary" %>
+          </div>
+        </div>
+      <% end %>
+      </div>
+    </div>
+
+
+  </div>

@@ -1,0 +1,69 @@
+    <thead>
+      <tr>
+        <th class="text-center col-sm-4 bg-success bg-opacity-25"colspan="2">マッチング項目</th>
+        <th class="bg-info bg-opacity-25">求人広告内容</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th class="bg-success bg-opacity-25">職種</th>
+        <td>
+        <%= f.select :occupation, options_for_select(occupation_list, f.object.occupation), {include_blank: false}, class: 'dropdown-toggle form-select' %>
+        </td>
+        <td rowspan="6"><%= f.text_area :job_description, placeholder: "", class: "form-control", rows:"20" %></td>
+      </tr>
+      <tr>
+        <th class="bg-success bg-opacity-25">勤務地</th>
+        <td>
+        <%= render 'prefecture_select_box', f: f %> 
+        </td>
+      </tr>
+      <tr>
+        <th class="bg-success bg-opacity-25">入社予定時期</th>
+        <td class="">
+          <% year = (Date.current.year..(Date.current+10.year).year).map{ |date| [date.to_s+('年'), date] } %>
+          <%= f.select :year, options_for_select(year, f.object.year), {include_blank: true}, class: "form-select" %>
+          <%= f.select :month, options_for_select([
+            ['1月', 1],
+            ['2月', 2],
+            ['3月', 3],
+            ['4月', 4],
+            ['5月', 5],
+            ['6月', 6],
+            ['7月', 7],
+            ['8月', 8],
+            ['9月', 9],
+            ['10月', 10],
+            ['11月', 11],
+            ['12月', 12]
+          ], f.object.month), {include_blank: false, include_hidden: false}, multiple: true, class: "form-select" %>
+          </td>
+      </tr>
+      <tr>
+        <th class="bg-success bg-opacity-25">年収</th>
+        <td>
+          <%= f.select :salary, options_for_select([
+            ['300万円未満', 1],
+            ['300万円以上~400万円未満', 2],
+            ['400万円以上~500万円未満', 3],
+            ['500万円以上', 4]
+          ], f.object.salary), {include_blank: true}, class: "form-select" %>
+          </td>
+      </tr>
+      <tr>
+        <th class="col-sm-2  bg-success bg-opacity-25">就労ビザ取得サポート</th>
+        <td>
+        <%= f.select :visa_support, options_for_select([['あり', true],['なし', false]], f.object.visa_support), {include_blank: true}, class: 'form-select' %>
+          </td>
+      </tr>
+      <tr>
+        <th class="bg-success bg-opacity-25">サポートするビザ種別</th>
+        <td>
+          <%= f.select :visa_type, options_for_select([
+            ['技術・人文知識・国際業務', 1],
+            ['高度専門職', 2],
+            ['特定活動(告示46号)', 3],
+            ['特定技能', 4]], f.object.visa_type), {include_blank: true}, class: "form-select" %>
+          </td>
+      </tr>
+    </tbody>

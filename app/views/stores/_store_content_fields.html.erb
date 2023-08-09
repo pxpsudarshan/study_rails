@@ -1,0 +1,23 @@
+<tr class="nested-fields">
+  <td class="text-center">
+    <%= f.options[:child_index].to_i + 1 %>
+  </td>
+  <td class="text-center">
+    <%= f.text_field :vocab_code, class: 'form-control', onfocus: "add_row(this)" %>
+  </td>
+  <td class="text-center">
+    <%= f.text_field :vocab_read, class: 'form-control' %>
+  </td>
+  <td class="text-justify text-break">
+    <%= f.text_field :vocab_mean, class: 'form-control' %>
+  </td>
+  <td class="text-center">
+    <%= f.select :use, options_for_select([['', 0],
+      ['現在の仕事', 1],
+      ['前の仕事', 2],
+      ['現在の学校', 3],
+      ['以前の学校', 4],
+      ['日本での生活', 5]], f.object.use), {include_blank: false}, class: 'form-select' %>
+  </td>
+  <td class="text-center text-nowrap"><%= link_to_remove_association t('buttons.destroy').html_safe, f, class: "btn btn-danger" %></td>
+</tr>

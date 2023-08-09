@@ -1,0 +1,2 @@
+module Kaisha::StoresHelper
+end

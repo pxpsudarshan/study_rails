@@ -1,0 +1,252 @@
+<%= form_for @user, url: update_profile_user_path, html: { class: 'needs-validation', novalidate: true, id: 'profile', role: 'form' } do |f| %>
+<% if @user.errors.any? %>
+<div class="row">
+  <div class="col-md-12">
+    <div id="error_explanations" class="alert fade show alert-danger">
+      <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+        <li>
+          <%= content_tag(:div, msg) %>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+<% end %>
+<div class="row text-center">
+  <div class="col-md-12">
+    <div id="error_explanations_required" class="alert text-center fade alert-danger">
+      必須項目を入力してください。
+    </div>
+  </div>
+</div>
+
+<div class="gap-3">
+    <%= f.fields_for :profile do |up| %>
+    <div class="row mb-1">
+        <div class="col-md-1 col-form-label">
+            氏名
+        </div>
+        <div class="col-md">
+            <%= text_field_tag :name, f.object.name, class: 'form-control', disabled: true %>
+        </div>
+        <div class="col-md-auto col-form-label">
+            呼び名(カタカナ)
+        </div>
+        <div class="col-md">
+            <%= up.text_field :call_name, placeholder: '', class: 'form-control', required: true %>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-md-1 col-form-label">
+            国籍
+        </div>
+        <div class="col-md">
+            <%= up.select :kokuseki, options_for_select([['EN',1],['JP',2],['RU',3],['CH',4]], up.object.kokuseki), {include_blank: true}, class: 'form-select', required: true %>
+        </div>
+        <div class="col-md-auto col-form-label">
+            生年月日
+        </div>
+        <div class="col-md">
+            <%= up.date_field :birthday, as: :date, value: up.object.try(:strftime,"%m/%d/%Y"), class: 'form-control', required: true %>
+            </div>
+        <div class="col-md-auto col-form-label">
+            性別
+        </div>
+        <div class="col-md">
+            <%= up.select :sex, options_for_select([['男性', 1], ['女性', 2], ['答えたくない', 3]], up.object.sex), {include_blank: true}, class: 'form-select', required: true %>
+        </div>
+        <div class="col-md-auto col-form-label">
+            現在日本に在住
+        </div>
+        <div class="col-md">
+            <%= up.select :injapan_flg, options_for_select([['はい',true],['いいえ',false]], up.object.injapan_flg), {include_blank: true}, class: 'form-select injapanflg', required: true %>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1 col-form-label mb-1">
+            現住所
+        </div>
+        <div class="col-md-3 mb-1">
+            <%= up.select :address_country, options_for_select([['日本',1],['アメリカ',2]], up.object.address_country), {include_blank: true}, class: 'form-select', required: true %>
+        </div>
+        <div class="col-md mb-1">
+            <%= up.text_field :address, placeholder: '', class: 'form-control', required: true %>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-md-6">
+            <div class=" d-none row mb-1" id="zairyu_shikaku">
+                <div class="col-md-2 col-form-label">
+                    在留資格
+                </div>
+                <div class="col-md-6">
+                     <%= up.select :visa_type, options_for_select([
+                        ['留学生', 1],
+                        ['技術・人文知識・国際業務', 2],
+                        ['介護（※１）', 3],
+                        ['医療', 4],
+                        ['技能実習', 5],
+                        ['高度専門職', 6]
+                        ], up.object.visa_type), {include_blank: true}, class: 'form-select', required: true %>
+                </div>
+                <div class="col-md-auto col-form-label">
+                    期限
+                </div>
+                <div class="col-md-3">
+                    <%= up.date_field :visa_end_date, as: :date, value: up.object.try(:strftime,"%m/%d/%Y"), class: 'form-control', required: true %>
+                </div>
+            </div>
+        </div>
+        <div class="col-md">
+            <div class="row">
+                <div class="col-md-auto text-end w-50 col-form-label mb-1">
+                    就職希望時期
+                </div>
+                <div class="col-md-auto  w-50 d-flex  mb-1">
+                  <%= up.date_select :desired_work_date, {discard_day: true}, class: 'form-control', required: true %>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-1" >
+        <h3 class="text-center">学歴(最近のものから順番に)</h3>
+    </div>
+    <div class="mb-1"  id="edu_history">
+      <div class="mb-1">
+        <div class="row ">
+          <div class="col-md-auto mb-1">
+            <%= up.date_field :jp_school_date, as: :date, value: up.object.try(:strftime,"%m/%d/%Y"), class: 'form-control', required: true %>
+          </div>
+          <div class="col-md mb-1">
+            <%= up.text_field :jp_school_name, placeholder: '学校名', class: 'form-control', required: true %>
+          </div>
+          <div class="col-md-2 mb-1">
+            <%= up.select :jp_school_type, options_for_select(
+            [['大学(博士)', 1],['大学(修士)', 2],['大学(学部)', 3],['専門学校', 4],['高校 卒業', 5]], up.object.jp_school_type), {include_blank: true}, class: "form-select", required: true %>
+          </div>
+          <div class="col-md-auto mb-1">
+            <div class="d-flex gap-3">
+              <%= up.select :jp_school_end, options_for_select([['卒業', 1],['中退', 2],['休学', 3],['卒業予定', 4]], up.object.jp_school_end), {include_blank: true}, class: "form-select", required: true %>
+            </div>
+          </div>
+          <div class="col-md-2 mb-1">
+            <%= up.text_field :jp_school_senko, placeholder: '専攻', class: 'form-control', required: true %>
+          </div>
+        </div>
+      </div>
+      <div class="mb-1">
+        <div class="row ">
+          <div class="col-md-auto mb-1">
+            <%= up.date_field :school_date, as: :date, value: up.object.try(:strftime,"%m/%d/%Y"), class: 'form-control', required: true %>
+          </div>
+          <div class="col-md mb-1">
+            <%= up.text_field :school_name, placeholder: '学校名', class: 'form-control', required: true %>
+          </div>
+          <div class="col-md-2 mb-1">
+            <%= up.select :school_type, options_for_select(
+            [['大学(博士)', 1],['大学(修士)', 2],['大学(学部)', 3],['専門学校', 4],['高校 卒業', 5]], up.object.school_type), {include_blank: true}, class: "form-select", required: true %>
+          </div>
+          <div class="col-md-auto mb-1">
+            <div class="d-flex gap-3">
+              <%= up.select :school_end, options_for_select([['卒業', 1],['中退', 2],['休学', 3],['卒業予定', 4]], up.object.school_end), {include_blank: true}, class: "form-select", required: true %>
+            </div>
+          </div>
+          <div class="col-md-2 mb-1">
+            <%= up.text_field :school_senko, placeholder: '専攻', class: 'form-control', required: true %>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="row mb-1">
+        <h3 class="text-center">職歴(最近のものから順番に)</h3>
+    </div>
+    <div class="mb-1"  id="work_history">
+      <%= up.fields_for :profile_works do |pw| %>
+        <% render 'profile_work_fields', f: pw %>
+      <% end %>
+    </div>
+    <div class="row-md-auto mb-2" >
+        <%= link_to_add_association t('buttons.add_plus').html_safe, up, :profile_works,
+            'data-association-insertion-method'    => 'append' ,
+            'data-association-insertion-node'      => '#work_history', class: "btn btn-primary border-2 rounded-circle"
+        %>
+    </div>
+    <div class="row mb-2">
+        <div class="col-md mb-1">
+            <div class="row">
+                <div class="col-md-2 col-form-label">
+                    スキル
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <%= up.text_area :skill, size: "20x4", class: 'form-control' %>
+                </div>
+            </div>
+        </div>
+        <div  class="col-md" id="skill_row">
+            <div class="row mb-1 d-flex">
+
+                <div class="col col-form-label" id="lbluselang0">
+                    使用言語
+                </div>
+                <div class="col col-form-label">
+                    レベル
+                </div>
+            </div>
+            <div class="mb-1"  id="skill_level">
+              <%= up.fields_for :profile_languages do |pl| %>
+                <% render 'profile_language_fields', f: pl %>
+              <% end %>
+            </div>
+            <div class="row-md-auto mb-2" >
+                <%= link_to_add_association t('buttons.add_plus').html_safe, up, :profile_languages,
+                    'data-association-insertion-method'    => 'append' ,
+                    'data-association-insertion-node'      => '#skill_level', class: "btn btn-primary border-2 rounded-circle"
+                %>
+      </div>
+    </div>
+  </div>
+  <% end %>
+  <div class="action text-center">
+    <%= button_tag t('buttons.create'), type: 'submit', class: "w-50 btn btn-lg btn-primary" %>
+  </div>
+</div>
+<% end %>
+<%= javascript_tag do %>
+function switch_zairyu(obj) {
+  if (obj.value == 'true') {
+    $('#zairyu_shikaku').removeClass()
+    $('#zairyu_shikaku').addClass('row mb-1')
+  } else {
+    $('#zairyu_shikaku').removeClass()
+    $('#zairyu_shikaku').addClass('d-none row mb-1')
+  }
+}
+$(function() {
+  switch_zairyu(document.getElementById('user_profile_attributes_injapan_flg'));
+ 
+  $('.injapanflg').on('change', function() {
+    switch_zairyu(this);
+  });
+
+'use strict';
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.getElementsByClassName('needs-validation');
+  // Loop over them and prevent submission
+  var validation = Array.prototype.filter.call(forms, function(form) {
+    form.addEventListener('submit', function(event) {
+      if (form.checkValidity() === false) {
+        $('#error_explanations_required').addClass('show');
+        window.scrollTo(0,0);
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      form.classList.add('was-validated');
+    }, false);
+  });
+});
+<% end %>

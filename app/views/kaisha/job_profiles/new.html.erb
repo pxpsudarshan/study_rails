@@ -1,0 +1,65 @@
+  <div class="row text-center align-middle mb-3">
+    <div class="col-sm-12 mt-3">
+      <h2 class="border border-1 border-info rounded p-2 ">外国人材の採用をご検討している法人様</h2>
+    </div>
+  </div>
+  <div class="form-group mb-3 row">
+    <div class="col-sm col-form-label px-0">
+    </div>
+    <div class="col-sm col-form-label text-center px-0">
+      <h3>求人情報入力</h3>
+    </div>
+    <div class="col-sm col-form-label px-0">
+    </div>
+  </div>
+  <%= form_for :import, url: excel_upload_kaisha_job_profiles_path, html: { class: 'form-horizontal', role: 'form' } do |f| %>
+  <div class="row mb-3">
+    <div class="col-sm-2 col-form-label">
+      <%= f.label :excel_file, 'Excelファイル名' %>
+    </div>
+    <div class="col-sm-5">
+      <div class="input-group">
+        <%= f.file_field :excel_file, accept: '.xlsx,.XLSX', class: 'form-control' %>
+        <%= button_tag t('buttons.excel_upload').html_safe, class: 'btn btn-success' %>
+      </div>
+    </div>
+  </div>
+  <% end %>
+  <div class="row">
+    <div class="col-sm col-form-label">
+      <h4>または以下を入力 ↓</h4>
+    </div>
+  </div>
+  <%= form_with model: [:kaisha, @job_profile], locale: true, class: 'needs-validation', novalidate: true, id: 'job', role: 'form' do |f| %>
+  <% if @job_profile.errors.any? %>
+  <div class="row">
+    <div class="col-md-12">
+      <div id="error_explanations" class="alert fade show alert-danger">
+        <ul>
+          <% @job_profile.errors.full_messages.each do |msg| %>
+          <li>
+            <%= content_tag(:div, msg) %>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <% end %>
+  <div class="row mb-3">
+    <div class="col-sm-2 col-form-label">
+      <%= label_tag :company_name, '貴社名' %>
+    </div>
+    <div class="col-sm-6">
+      <%= text_field_tag :company_name, f.object.comp.company_name, class: 'form-control', disabled: true %>
+    </div>
+  </div>
+  <table class="table table-bordered cell-border" id="job_table">
+    <%= f.fields_for :job_profile_contents, @job_profile_contents do |ft| %>
+      <% render 'job_profile_content_fields', f: ft %>
+    <% end %>
+  </table>
+  <div class="p-3 text-center">
+    <%= f.submit '完了', class: 'btn btn-primary btn-lg w-25' %>
+  </div>
+  <% end %>

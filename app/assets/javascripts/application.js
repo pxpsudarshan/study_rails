@@ -371,15 +371,11 @@ $(document).ready(function() {
   $('.multiselect-workplace').select2({
       width: '100%',
     });
-});
-$(document).ready(function() {
   $('.multiselect-months').select2({
      width: '100%',
   });
-});
 
 /* 在留資格・期間表示・非表示*/
-$(document).ready(function() {
   $('#user_sign_in_count').on('change', function(){
     if ($('#user_sign_in_count').val() == 'はい'){
       $('#zairyu_shikaku').removeClass()
@@ -389,11 +385,8 @@ $(document).ready(function() {
       $('#zairyu_shikaku').addClass('invisible row mb-1')
     }
   });
-});
 
-$(document).ready(function() {
   var myModal = new bootstrap.Modal(document.getElementById('btn-detail'));
-
   $('#btn-detail').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget);
       var companyName = button.data('company');

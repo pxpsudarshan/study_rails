@@ -1,0 +1,2 @@
+module Kaisha::OffersHelper
+end

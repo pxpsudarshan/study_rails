@@ -1,0 +1,46 @@
+<% if @offers.present? %>
+<%= paginate @offers, remote: true %>
+<div class="row p-3">
+  <table class="cell-border">
+    <div class="row">
+      <div class="col-sm-3 text-center bg-white m-0 px-0">
+        <h2 class="border border-4 m-0">検索結果</h2>
+      </div>
+      <div class="col-sm text-center align-middle">
+        <h4>該当者情報</h4>
+      </div>
+      <div class="col-sm-3" id="custom-paging">
+      </div>
+    </div>
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm">
+    <table class="table table-bordered table-hover table-sm">
+      <thead>
+        <tr class="table-success">
+          <th class="text-center"><%= t('activerecord.attributes.user.name') %></th>
+          <th class="text-center"><%= t('activerecord.attributes.user.name_kana') %></th>
+          <th class="text-end"><%= '達成率' %></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @offers.each do |user| %>
+        <tr class="details_row nested-fields">
+          <td class="text-center"><%= user.name %></td>
+          <td class="text-center"><%= user.name_kana %></td>
+          <td class="text-end"><%= @stud_rates[user.id] %>％</td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>    
+</div>
+<strong><%= page_entries_info @offers, :entry_name => '' %></strong>
+<div class="row">
+  <div class="col-sm-12 text-end mt-2">
+    <button type="submit" class="btn btn-primary btn-lg mb-2">詳細情報を希望する</button>
+    <h6>ビズポート社より貴社様にご連絡致します。</h6>
+  </div>
+</div>
+<% end %>

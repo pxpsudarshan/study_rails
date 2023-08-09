@@ -1,0 +1,41 @@
+      <% @jobs.each do |job| %>
+        <div class="container-fluid mb-3 ">
+          <div class="card mb-3">
+            <div class="card-header">
+              <h5 class="card-title"><%= job.job_profile.comp.company_name %> </h5>
+              <h6 class="card-subtitle mb-2 text-muted"><%= "position" %></h6>
+            </div>
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2 text-muted">Location: <%= pref_array(job.location) %></h6>
+              <p class="card-text"><%= job.ad_title %> <%= job.job_description %></p>
+              <h6 class="card-subtitle mb-2 text-muted">Requirements:</h6>
+              <ul>
+                <% #vacancy["requirements"].each do |requirement| %>
+                  <li><%= job.desire_qualification %></li>
+                <% #end %>
+              </ul>
+              <h6 class="card-subtitle mb-2 text-muted">Responsibilities:</h6>
+              <ul>
+                <% #vacancy["responsibilities"].each do |responsibility| %>
+                  <li><%= :responsibility %></li>
+                <% #end %>
+              </ul>
+              <p class="card-text"><%= "info" %> : <%= job.job_profile.comp.email %></p>
+              <p class="card-text">Application deadline: <%= "deadline" %> </p>
+            </div>
+            <div class="card-footer">
+              <div class="row  m-auto">
+                  <div class="col">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#btn-detail" data-company="<%= "company" %>" data-description="<%= "description" %>" data-requirements="<%= "requirements" %>" data-responsibilities="<%= "responsibilities" %>">詳細
+                    </button>
+                  </div>
+                  <div class="col  text-end">
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#btn-apply">
+                          Apply
+                      </button>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end if @jobs.present? %>
