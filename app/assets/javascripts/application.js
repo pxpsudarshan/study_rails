@@ -38,6 +38,12 @@
 //= require nprogress
 //= require nprogress-turbolinks
 
+//= link kaisha/menus.js
+//= link kaisha/comps.js
+//= link kaisha/job_profiles.js
+//= link kaisha/company_stores.js
+//= link profiles.js
+
 dayjs.locale("ja");
 dayjs.extend(window.dayjs_plugin_advancedFormat);
 dayjs.extend(window.dayjs_plugin_localizedFormat);
@@ -371,21 +377,13 @@ $(document).ready(function() {
   $('.multiselect-workplace').select2({
       width: '100%',
     });
-  $('.multiselect-months').select2({
+
+    $('.multiselect-months').select2({
      width: '100%',
   });
+});
 
-/* 在留資格・期間表示・非表示*/
-  $('#user_sign_in_count').on('change', function(){
-    if ($('#user_sign_in_count').val() == 'はい'){
-      $('#zairyu_shikaku').removeClass()
-      $('#zairyu_shikaku').addClass('visible row mb-1')
-    }else{
-      $('#zairyu_shikaku').removeClass()
-      $('#zairyu_shikaku').addClass('invisible row mb-1')
-    }
-  });
-
+$(document).ready(function() {
   var myModal = new bootstrap.Modal(document.getElementById('btn-detail'));
   $('#btn-detail').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget);

@@ -14,6 +14,11 @@
   </div>
 </div>
 <% end %>
+<div class="row text-center align-middle mb-3">
+  <div class="col-sm-12 mt-3">
+    <h2 class="border border-1 border-info rounded p-2 ">求職申込登録</h2>
+  </div>
+</div>
 <div class="row text-center">
   <div class="col-md-12">
     <div id="error_explanations_required" class="alert text-center fade alert-danger">
@@ -21,7 +26,6 @@
     </div>
   </div>
 </div>
-
 <div class="gap-3">
     <%= f.fields_for :profile do |up| %>
     <div class="row mb-1">
@@ -76,12 +80,14 @@
         </div>
     </div>
     <div class="row mb-2">
-        <div class="col-md-6">
+        <div class="col-md-1">
+          <div class="d-none col-md col-form-label" id="zairyu_shikaku_label">
+              在留資格
+          </div>
+        </div>
+        <div class="col-md-5">
             <div class=" d-none row mb-1" id="zairyu_shikaku">
-                <div class="col-md-2 col-form-label">
-                    在留資格
-                </div>
-                <div class="col-md-6">
+                <div class="col-md">
                      <%= up.select :visa_type, options_for_select([
                         ['留学生', 1],
                         ['技術・人文知識・国際業務', 2],
@@ -94,17 +100,17 @@
                 <div class="col-md-auto col-form-label">
                     期限
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-auto">
                     <%= up.date_field :visa_end_date, as: :date, value: up.object.try(:strftime,"%m/%d/%Y"), class: 'form-control', required: true %>
                 </div>
             </div>
         </div>
         <div class="col-md">
             <div class="row">
-                <div class="col-md-auto text-end w-50 col-form-label mb-1">
+                <div class="col-md-2 text-end w-50 col-form-label mb-1">
                     就職希望時期
                 </div>
-                <div class="col-md-auto  w-50 d-flex  mb-1">
+                <div class="col-md  w-50 d-flex  mb-1">
                   <%= up.date_select :desired_work_date, {discard_day: true}, class: 'form-control', required: true %>
                 </div>
             </div>
@@ -207,9 +213,9 @@
                     'data-association-insertion-method'    => 'append' ,
                     'data-association-insertion-node'      => '#skill_level', class: "btn btn-primary border-2 rounded-circle"
                 %>
-      </div>
+            </div>
+        </div>
     </div>
-  </div>
   <% end %>
   <div class="action text-center">
     <%= button_tag t('buttons.create'), type: 'submit', class: "w-50 btn btn-lg btn-primary" %>
@@ -217,21 +223,43 @@
 </div>
 <% end %>
 <%= javascript_tag do %>
+ $(document).on('click', '.btn-delete-skill', function(e) {
+  e.preventDefault();
+  var row = $(this).closest('.nested-fields-skill');
+  if (row.index() !== 0) {
+    row.remove();
+  }
+});
+
+$(document).on('click', '.btn-delete-work', function(e) {
+  e.preventDefault();
+  var row = $(this).closest('.nested-fields-work');
+  if (row.index() !== 0) {
+    row.remove();
+  }
+});
+
 function switch_zairyu(obj) {
   if (obj.value == 'true') {
     $('#zairyu_shikaku').removeClass()
+    $('#zairyu_shikaku_label').removeClass()
     $('#zairyu_shikaku').addClass('row mb-1')
+    $('#zairyu_shikaku_label').addClass('col-md col-form-label')
   } else {
     $('#zairyu_shikaku').removeClass()
+    $('#zairyu_shikaku_label').removeClass()
     $('#zairyu_shikaku').addClass('d-none row mb-1')
+    $('#zairyu_shikaku_label').addClass('d-none col-md col-form-label')
   }
 }
-$(function() {
-  switch_zairyu(document.getElementById('user_profile_attributes_injapan_flg'));
+
+switch_zairyu(document.getElementById('user_profile_attributes_injapan_flg'));
  
-  $('.injapanflg').on('change', function() {
-    switch_zairyu(this);
-  });
+$('.injapanflg').on('change', function() {
+  switch_zairyu(this);
+});
+
+$(function() {
 
 'use strict';
   // Fetch all the forms we want to apply custom Bootstrap validation styles to

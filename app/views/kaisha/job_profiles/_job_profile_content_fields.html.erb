@@ -22,7 +22,7 @@
         <th class="bg-success bg-opacity-25">入社予定時期</th>
         <td class="">
           <% year = (Date.current.year..(Date.current+10.year).year).map{ |date| [date.to_s+('年'), date] } %>
-          <%= f.select :year, options_for_select(year, f.object.year), {include_blank: true}, class: "form-select" %>
+          <%= f.select :year, options_for_select(year, f.object.year), {include_blank: true}, class: "form-select mb-1" %>
           <%= f.select :month, options_for_select([
             ['1月', 1],
             ['2月', 2],
@@ -36,7 +36,7 @@
             ['10月', 10],
             ['11月', 11],
             ['12月', 12]
-          ], f.object.month), {include_blank: false, include_hidden: false}, multiple: true, class: "form-select" %>
+          ], f.object.month), {include_blank: false, include_hidden: false}, multiple: true, class: "multiselect-months" %>
           </td>
       </tr>
       <tr>

@@ -13,7 +13,7 @@
     </div>
   </div>
   <%= form_for :import, url: excel_upload_kaisha_job_profiles_path, html: { class: 'form-horizontal', role: 'form' } do |f| %>
-  <div class="row mb-3">
+  <!-- <div class="row mb-3">
     <div class="col-sm-2 col-form-label">
       <%= f.label :excel_file, 'Excelファイル名' %>
     </div>
@@ -29,7 +29,7 @@
     <div class="col-sm col-form-label">
       <h4>または以下を入力 ↓</h4>
     </div>
-  </div>
+  </div> -->
   <%= form_with model: [:kaisha, @job_profile], locale: true, class: 'needs-validation', novalidate: true, id: 'job', role: 'form' do |f| %>
   <% if @job_profile.errors.any? %>
   <div class="row">
