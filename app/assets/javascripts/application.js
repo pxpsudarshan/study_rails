@@ -38,12 +38,6 @@
 //= require nprogress
 //= require nprogress-turbolinks
 
-//= link kaisha/menus.js
-//= link kaisha/comps.js
-//= link kaisha/job_profiles.js
-//= link kaisha/company_stores.js
-//= link profiles.js
-
 dayjs.locale("ja");
 dayjs.extend(window.dayjs_plugin_advancedFormat);
 dayjs.extend(window.dayjs_plugin_localizedFormat);
