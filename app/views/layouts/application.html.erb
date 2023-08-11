@@ -47,8 +47,7 @@
         <li class="nav-item"><%= link_to t('navbar.user').html_safe, users_path, class: "nav-link" %></li>
         <li class="nav-item"><%= link_to t('navbar.store').html_safe, new_store_path, class: "nav-link" %></li>
         <li class="nav-item"><%= link_to t('navbar.job').html_safe, jobs_path, class: "nav-link" %></li>
-        <li class="nav-item"><%= link_to t('navbar.student_profile').html_safe, new_student_profile_user_path(current_user), class: "nav-link" %></li>
-        <li class="nav-item"><%= link_to t('navbar.job_search').html_safe, new_job_search_user_path(current_user), class: "nav-link" %></li>
+        <% end %>
         <li class="nav-item"></li>
       </ul>
       <ul class="navbar-nav ms-auto mb-2 mb-md-0">
