@@ -1,6 +1,34 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: { registrations: "users/registrations", sessions: 'users/sessions' }
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  devise_for :comps, controllers: { passwords: "kaisha/passwords" , registrations: "kaisha/registrations", sessions: "kaisha/sessions" }
+  devise_for :users, controllers: { registrations: "users/registrations" }
+
+  namespace :kaisha do
+    root 'menus#index'
+    resources :menus do
+    end
+
+    resources :company_stores do
+    end
+
+    resources :offers do
+    end
+
+    resources :job_profiles do
+      collection do
+        post :excel_upload
+      end
+    end
+
+    resources :comps do
+      member do
+#        get :new_store
+#        patch :create_store
+#        get :new_job_profile
+#        patch :create_job_profile
+      end
+    end
+  end
+
   resources :menus do
 #    collection do
 #      get :goi
@@ -51,24 +79,17 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :job_profiles do
-    collection do
-      post :excel_upload
-    end
+  resources :stores do
+  end
+
+  resources :jobs do
   end
 
   resources :users do
     member do
-      get :new_store
-      patch :create_store
-      get :new_job_profile
-      patch :create_job_profile
-      # new added start
-      get :new_student_profile
-      get :new_job_search
-      post :get_job_search
-      post :submit_job_search
-      # new added end
+      get :profile
+      post :update_profile
+      patch :update_profile
     end
   end
 
