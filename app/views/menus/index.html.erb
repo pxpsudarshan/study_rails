@@ -45,6 +45,11 @@
     Select MyCard Review
   </button>
 </p>
+<p>
+  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapsequizes" aria-expanded="false" aria-controls="collapsequizes">
+    Quizes
+  </button>
+</p>
 <div class="collapse" id="collapsemycard">
   <div class="card card-body">
     One day.<br />
@@ -62,3 +67,37 @@
     <%= link_to 'hiragana kara', vocab_mycards_path(mode: 1, day: 30), class: 'btn btn-primary' %>
   </div>
 </div>
+<div class="collapse" id="collapsequizes">
+  <% @quizData.each_with_index do |data, index| %>
+    <% @dataOption = data.nation_vocab["EN"] %>
+    <% correct_answer = @dataOption.join(", ") %>
+    <% incorrect_answers = @quizData.map { |d| d.nation_vocab["EN"] }.flatten.uniq - @dataOption %>
+    <% shuffled_options = ([correct_answer] + incorrect_answers.sample(3)).shuffle %>
+    
+    <div class="card card-body mb-1">
+      <%= "#{index + 1}. What is the meaning of #{data.vocab_code}" %><br />
+      <% shuffled_options.each_with_index do |option, option_index| %>
+        <label>
+          <input type="radio" name="answer_<%= index %>" value="<%= option %>" class="quiz-option" data-correct="<%= correct_answer %>" />
+          <%= option %>   
+        </label><br />
+      <% end %>
+    </div>
+  <% end %>
+</div>
+<script>
+  const options = document.querySelectorAll('.quiz-option');
+
+  options.forEach(option => {
+    option.addEventListener('change', function() {
+      const correctAnswer = this.getAttribute('data-correct');
+      if (this.value === correctAnswer) {
+        this.parentElement.classList.remove('text-danger');
+        this.parentElement.classList.add('text-success');
+      } else {
+        this.parentElement.classList.remove('text-success');
+        this.parentElement.classList.add('text-danger');
+      }
+    });
+  });
+</script>
