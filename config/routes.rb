@@ -10,9 +10,6 @@ Rails.application.routes.draw do
     resources :company_stores do
     end
 
-    resources :offers do
-    end
-
     resources :job_profiles do
       collection do
         post :excel_upload
@@ -34,7 +31,7 @@ Rails.application.routes.draw do
 #      get :goi
 #    end
   end
-
+  
   resources :gois do
     collection do
       get :vocab_double
@@ -82,9 +79,6 @@ Rails.application.routes.draw do
   resources :stores do
   end
 
-  resources :jobs do
-  end
-
   resources :users do
     member do
       get :profile
@@ -97,6 +91,20 @@ Rails.application.routes.draw do
     collection do
       get :page_mylang
       get :vocab
+    end
+  end
+
+  resources :quizes do
+    collection do
+      get :quiz
+      post :result
+      post :next_ques
+    end
+  end
+
+  resources :quizes do
+    member do
+      post 'update_mycard_level'
     end
   end
 

@@ -1,0 +1,165 @@
+<% max_questions = 20 %>
+<% @quizData = @quizData.take(max_questions) %>
+<% @total_count = @quizData.length %>
+
+<% if @total_count < 5 %>
+  <div class="alert alert-warning">
+    You need at least 5 questions to start the quiz.
+  </div>
+<% else %>
+  <% @quizData.each_with_index do |data, index| %>
+    <% @dataOption = data.nation_vocab["EN"] %>
+    <% correct_answer = @dataOption.join(", ") %>
+    <% incorrect_answers = @quizData.map { |d| d.nation_vocab["EN"] }.flatten.uniq - @dataOption %>
+    <% shuffled_options = ([correct_answer] + incorrect_answers.sample(3)).shuffle %>
+    
+    <div class="card card-body mb-1 ">
+      <h3><%= "Question #{index+1} of #{@total_count}" %></h3>
+      <form id="quiz-form-<%= index %>" action="" method="POST">
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>  
+      <div class="d-flex">
+        <%= "#{index + 1}. What is the meaning of #{data.vocab_code}" %>
+        <%= content_tag :span, "(#{data.vocab_read})", class: "hiraText d-none" %> <br /><br />
+      </div>
+      <% shuffled_options.each_with_index do |option, option_index| %>
+        <label class="options">
+          <input type="radio" name="answer_<%= index %>" value="<%= option %>" class="quiz-option" data-correct="<%= correct_answer %>" />
+          <%= option %>   
+        </label><br />
+
+      <% end %>
+      <!-- Add the hidden input field here -->
+      <%= hidden_field_tag "vocab_org_#{index}", data.vocab_org %>
+      <% if index == max_questions - 1 || index == @quizData.length - 1 %>
+        <div class="d-flex gap-2">
+          <%= link_to 'Show result', quizes_path, class: 'btn btn-primary', id:'submit-quiz', remote: true %>
+          <%= link_to 'Try Again', quizes_path, class: 'btn btn-primary' %>
+        </div>
+      <% else %>
+        <div class="d-flex gap-2">
+          <%= link_to 'Next', quizes_path , class: 'btn btn-primary next-question', remote: true %>
+          <div id="html"></div>
+        </div>
+      <% end %>
+      </form>
+    </div>
+  <% end %>
+<% end %>
+<!-- Your result view -->
+<div class=" card card-body result-container">
+  <p>Percentage of mycards with level 1: <%= @percentage_level_1 %>%</p>
+  <div class="d-flex gap-2">
+    <%= link_to 'Try Again', quizes_path, class: 'btn btn-primary' %>
+  </div>  
+</div>
+
+<script>
+
+  $(document).ready(function() {
+    $(".result-container").hide();
+    const options = document.querySelectorAll('.quiz-option');
+
+    options.forEach(option => {
+      option.addEventListener('change', function() {
+        const selectedOption = this.value;
+        const correctAnswer = this.getAttribute('data-correct');
+        const vocabReadSpan = this.closest('.card').querySelector('.hiraText');
+        vocabReadSpan.classList.remove('d-none');
+        
+        if (selectedOption === correctAnswer) {
+          this.parentElement.classList.remove('text-danger');
+          this.parentElement.classList.add('text-success');
+        } else {
+          this.parentElement.classList.remove('text-success');
+          this.parentElement.classList.add('text-danger');
+        }
+      });
+    });
+
+  });
+</script>
+<script>
+
+  $(document).ready(function() {
+    
+    var currentIndex = '';
+    var indexParam = <%= params[:index].to_i %>;
+    var totalQuestions = <%= @quizData.length %>;
+
+    if(!indexParam){
+      currentIndex = <%= params[:index].to_i %>;
+    }else{
+      currentIndex = 0;
+    }
+    
+    $(".next-question").click(function() {
+
+      var vocabOrg = $("input[name='vocab_org_" + currentIndex + "']").val();
+      var correctOption = $("input[name='answer_" + currentIndex + "']").data("correct");
+      var selectedOption = $("input[name='answer_" + currentIndex + "']:checked").val();
+      if(!selectedOption){
+        selectedOption = "";
+      }
+      var mycardLevel = selectedOption === correctOption ? 1 : 0;
+
+      $.ajax({
+        url: '<%= url_for(action: :next_ques) %>',
+        dataType: 'json',
+        method: 'post',
+        data: {
+          authenticity_token: '<%= form_authenticity_token %>',
+          vocab_org: vocabOrg,
+          index: currentIndex,
+          mycard_level: mycardLevel,
+          correct_option: correctOption,
+          selected_answer: selectedOption
+        },
+        success: function(data) {
+        },
+        error: function(xhr, status, error) {
+          alert('An error occurred while submitting your answer');
+        }
+      });
+
+      currentIndex++;
+      if (currentIndex < totalQuestions) {
+        showQuestion(currentIndex);
+      }
+    });
+
+    $("#submit-quiz").click(function() {
+      $.ajax({
+        url: '<%= url_for(action: :result) %>',
+        dataType: 'json',
+        method: 'post',
+        data: {
+        },
+        success: function(data) {
+          $(".card").hide();
+
+          var resultContainer = $(".result-container");
+          resultContainer.show();
+      
+          var content = '<div class="Content-result" style="text-align:center">';
+          content += '<h1>Result:</h1>';
+          content += data.correct + ' of ' + data.total + '<p><b>' + data.percentage + '%</b></p>';
+          content += '<p>' + data.message + '</p>';
+          content += '</div>';
+      
+          resultContainer.html(content);
+        },
+        error: function(xhr, status, error) {
+          alert('An error occurred while submitting your result');
+        }
+      });
+    });
+
+    showQuestion(currentIndex);
+    function showQuestion(index) {
+      $(".card").hide();
+      $(".card:eq(" + index + ")").show();
+    }
+    
+  });
+  </script>
+
