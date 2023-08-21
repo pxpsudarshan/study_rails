@@ -32,8 +32,7 @@
       <%= hidden_field_tag "vocab_org_#{index}", data.vocab_org %>
       <% if index == max_questions - 1 || index == @quizData.length - 1 %>
         <div class="d-flex gap-2">
-          <%= link_to 'Show result', quizes_path, class: 'btn btn-primary', id:'submit-quiz', remote: true %>
-          <%= link_to 'Try Again', quizes_path, class: 'btn btn-primary' %>
+          <%= link_to 'Next', quizes_path, class: 'btn btn-primary', id:'submit-quiz', remote: true %>
         </div>
       <% else %>
         <div class="d-flex gap-2">
@@ -140,7 +139,7 @@
       resultContainer.show();
       
       var percentage_level_1 = (totalCorrectAnswer / totalCountOfQuestion) * 100;
-      var roundedPercentage = parseFloat(percentage_level_1.toFixed(2));
+      var roundedPercentage = parseFloat(percentage_level_1.toFixed(0));
 
       var msgForStudy = '';
 
@@ -169,7 +168,8 @@
       content += '<h1>Result:</h1>';
       content += totalCorrectAnswer + ' of ' + <%= @total_count %> + '<p><b>' + roundedPercentage + '%</b></p>';
       content += '<p>'+ msgForStudy + '</p>';
-      content += '<%= link_to 'Try Again', quizes_path, class: 'btn btn-primary' %>';
+      content += '<%= link_to 'Try Again', quizes_path, class: 'btn btn-primary ' %>   ';
+      content += '<%= link_to 'Back', menus_path, class: 'btn btn-primary' %>';
       content += '</div>';
 
       resultContainer.html(content);
