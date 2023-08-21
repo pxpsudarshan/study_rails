@@ -97,7 +97,6 @@ Rails.application.routes.draw do
   resources :quizes do
     collection do
       get :quiz
-      post :result
       post :next_ques
     end
   end

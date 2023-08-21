@@ -47,10 +47,6 @@
 <% end %>
 <!-- Your result view -->
 <div class=" card card-body result-container">
-  <p>Percentage of mycards with level 1: <%= @percentage_level_1 %>%</p>
-  <div class="d-flex gap-2">
-    <%= link_to 'Try Again', quizes_path, class: 'btn btn-primary' %>
-  </div>  
 </div>
 
 <script>
@@ -58,9 +54,28 @@
   $(document).ready(function() {
     $(".result-container").hide();
     const options = document.querySelectorAll('.quiz-option');
+    const firstClickedOptions = [];
+    var totalCorrectAnswer = 0;
+    var totalCountOfQuestion = <%= @total_count %>;
+    var currentIndex = '';
+    var indexParam = <%= params[:index].to_i %>;
+    var totalQuestions = <%= @quizData.length %>;
 
-    options.forEach(option => {
+    if(!indexParam){
+      currentIndex = <%= params[:index].to_i %>;
+    }else{
+      currentIndex = 0;
+    }
+    
+    options.forEach((option) => {
+      firstClickedOptions[currentIndex] = ''; // Initialize to empty string
       option.addEventListener('change', function() {
+        
+        if (!firstClickedOptions[currentIndex]) {
+          firstClickedOptions[currentIndex] = $("input[name='answer_" + currentIndex + "']:checked").val();
+          console.log('First clicked option for question ' + currentIndex+1 + ': ' + firstClickedOptions[currentIndex]);
+        }
+
         const selectedOption = this.value;
         const correctAnswer = this.getAttribute('data-correct');
         const vocabReadSpan = this.closest('.card').querySelector('.hiraText');
@@ -75,32 +90,22 @@
         }
       });
     });
-
-  });
-</script>
-<script>
-
-  $(document).ready(function() {
-    
-    var currentIndex = '';
-    var indexParam = <%= params[:index].to_i %>;
-    var totalQuestions = <%= @quizData.length %>;
-
-    if(!indexParam){
-      currentIndex = <%= params[:index].to_i %>;
-    }else{
-      currentIndex = 0;
-    }
     
     $(".next-question").click(function() {
 
       var vocabOrg = $("input[name='vocab_org_" + currentIndex + "']").val();
       var correctOption = $("input[name='answer_" + currentIndex + "']").data("correct");
-      var selectedOption = $("input[name='answer_" + currentIndex + "']:checked").val();
+      var selectedOption = firstClickedOptions[currentIndex];
       if(!selectedOption){
         selectedOption = "";
       }
       var mycardLevel = selectedOption === correctOption ? 1 : 0;
+      console.log(mycardLevel);
+      if(mycardLevel == 1){
+        totalCorrectAnswer = totalCorrectAnswer + 1;
+      }
+      console.log( selectedOption)
+      console.log('totalCorrectAnswer: ' + totalCorrectAnswer );
 
       $.ajax({
         url: '<%= url_for(action: :next_ques) %>',
@@ -128,30 +133,46 @@
     });
 
     $("#submit-quiz").click(function() {
-      $.ajax({
-        url: '<%= url_for(action: :result) %>',
-        dataType: 'json',
-        method: 'post',
-        data: {
-        },
-        success: function(data) {
-          $(".card").hide();
 
-          var resultContainer = $(".result-container");
-          resultContainer.show();
+      $(".card").hide();
+
+      var resultContainer = $(".result-container");
+      resultContainer.show();
       
-          var content = '<div class="Content-result" style="text-align:center">';
-          content += '<h1>Result:</h1>';
-          content += data.correct + ' of ' + data.total + '<p><b>' + data.percentage + '%</b></p>';
-          content += '<p>' + data.message + '</p>';
-          content += '</div>';
-      
-          resultContainer.html(content);
-        },
-        error: function(xhr, status, error) {
-          alert('An error occurred while submitting your result');
-        }
-      });
+      var percentage_level_1 = (totalCorrectAnswer / totalCountOfQuestion) * 100;
+      var roundedPercentage = parseFloat(percentage_level_1.toFixed(2));
+
+      var msgForStudy = '';
+
+      switch (true) {
+          case roundedPercentage < 25:
+              msgForStudy = "You scored below 25%. Keep practicing!";
+              break;
+          case roundedPercentage < 50:
+              msgForStudy = "You scored between 25% and 50%. Keep working on it!";
+              break;
+          case roundedPercentage < 75:
+              msgForStudy = "You scored between 50% and 75%. You're making progress!";
+              break;
+          case roundedPercentage < 90:
+              msgForStudy = "You scored between 75% and 90%. Great job!";
+              break;
+          case roundedPercentage <= 100:
+              msgForStudy = "You scored 90% or above. Excellent work!";
+              break;
+          default:
+              msgForStudy = "Invalid percentage. Please check your inputs.";
+              break;
+      }
+
+      var content = '<div class="Content-result" style="text-align:center">';
+      content += '<h1>Result:</h1>';
+      content += totalCorrectAnswer + ' of ' + <%= @total_count %> + '<p><b>' + roundedPercentage + '%</b></p>';
+      content += '<p>'+ msgForStudy + '</p>';
+      content += '<%= link_to 'Try Again', quizes_path, class: 'btn btn-primary' %>';
+      content += '</div>';
+
+      resultContainer.html(content);
     });
 
     showQuestion(currentIndex);
@@ -161,5 +182,4 @@
     }
     
   });
-  </script>
-
+</script>
