@@ -10,6 +10,9 @@ Rails.application.routes.draw do
     resources :company_stores do
     end
 
+    resources :offers do
+    end
+
     resources :job_profiles do
       collection do
         post :excel_upload
@@ -77,6 +80,9 @@ Rails.application.routes.draw do
   end
 
   resources :stores do
+  end
+
+  resources :jobs do
   end
 
   resources :users do

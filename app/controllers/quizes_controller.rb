@@ -18,10 +18,7 @@ class QuizesController < ApplicationController
     mycard_level = params[:mycard_level]
   
     # Find and update all records (including soft-deleted ones) that match the condition
-    @questionUpdate = VocabMycard.unscoped.where(vocab_org: vocab_org).update_all(mycard_level: mycard_level)
-  
-    # Optionally, if you want to retrieve the updated records
-    @updated_cards = VocabMycard.where(vocab_mycard_org: vocab_org)
+    @questionUpdate = VocabMycard.unscoped.where(vocab_org: vocab_org, user_id: current_user.id).update_all(mycard_level: mycard_level)  
 
   end  
 end
