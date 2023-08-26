@@ -16,7 +16,7 @@
         <% incorrect_answers = @quizData.map { |d| d.nation_vocab["EN"] }.flatten.uniq - @dataOption %>
         <% shuffled_options = ([correct_answer] + incorrect_answers.sample(3)).shuffle %>
         
-        <div class="card card-body mb-1 rounded-3 p-md-5 mx-md-4 text-black">
+        <div class="card card-body mb-1 rounded-3 p-md-5 mx-md-4 text-black" style="margin-top: 5%">
           <div class="text-start ms-20">
             <div class='text-end'><h4><%= "Question #{index+1} of #{@total_count}" %></h4></div>
             <form id="quiz-form-<%= index %>" action="" method="POST">
@@ -38,13 +38,21 @@
               </div>
 
               <!-- Add the hidden input field here -->
-              <div class="pt-3">
+              <div class="pt-3 d-flex">
                 <%= hidden_field_tag "vocab_org_#{index}", data.vocab_org %>
-
-                  <div class="d-flex gap-2">
-                    <%= link_to 'Next', quizes_path , class: 'btn btn-primary next-question', remote: true %>
-                    <div id="html"></div>
+                <div class="d-flex gap-2">
+                  <%= link_to 'Next', quizes_path , class: 'btn btn-primary next-question', remote: true %>
+                  <%# <div class="timer">
+                      <div class="time_left_txt">Time Left</div>
+                      <div class="timer_sec">15</div>
+                  </div> %>
+                  <div class="time_line"></div>
+                  <div class="text-end timer" id="timer">
+                    <h6 class="time_left_txt">Time left</h6>
+                    <h6 class="timer_sec " id="time">00</h6>
+                    <%# <h6 id="time" >5</h6>%>
                   </div>
+                </div>
               </div>
             </form>
           </div>
@@ -61,6 +69,8 @@
 <script>
 
   $(document).ready(function() {
+
+
     $(".result-container").hide();
     const options = document.querySelectorAll('.quiz-option');
     const firstClickedOptions = [];
@@ -100,6 +110,11 @@
     });
     
     $(".next-question").click(function() {
+      clearInterval(interval);
+      triggerNextQuestion();
+    });
+
+    function triggerNextQuestion() {
 
       var vocabOrg = $("input[name='vocab_org_" + currentIndex + "']").val();
       var correctOption = $("input[name='answer_" + currentIndex + "']").data("correct");
@@ -131,14 +146,18 @@
         }
       });
 
-      currentIndex++;
-      if (currentIndex < totalQuestions) {
-        showQuestion(currentIndex);
-      }else{
+    currentIndex++;
+    if (currentIndex < totalQuestions) {
+      // countDownTimer(); // Reset and start timer for the new question
+      showQuestion(currentIndex);
+      // interval = setInterval(countDown, 1000);
+      // timer = 5;
+
+    }else{
+        
         btnSubmit(currentIndex);
       }
-
-    });
+    };
 
     function btnSubmit(currentIndex)  {
 
@@ -190,6 +209,124 @@
       $(".card:eq(" + index + ")").show();
     };
 
-  });
+    // let counter = 5;
+
+    // let time = document.querySelector("#time");
+    // let index = 0;
+    // let timer = 5;
+    // let interval = 0;
+
+    // let countDown = ()=>{
+    //   if(timer === 0){
+    //     clearInterval(interval);
+    //     triggerNextQuestion();
+    //   }else{
+    //     timer--;
+    //     time.innerText = timer;
+    //     console(timer)
+    //  }
+    // };
+
+    // setInterval(countDown, 1000);
+
+
+  
+
+    // countDownTimer();
+
+    // function countDownTimer(){
+    
+    
+
+    //   let countDown = setInterval(function() {
+    //     // Display 'counter' wherever you want to display it.
+    //     if (counter <= 0) {
+    //       clearInterval(inerval);          
+    //       triggerNextQuestion();          
+    //     } else {
+    //       document.querySelector('#timees').innerHTML = counter;
+    //     }
+    //     counter--;
+    //   }, 1000);
+
+    // };
+    
+
+    // let time = document.querySelector("#timees");
+    // let index = 0;
+    // let timer = 5;
+    // let interval = 0;
+
+    // let countDown = ()=>{
+    //   if(timer === 0){
+    //     clearInterval(interval);
+    //     triggerNextQuestion();
+    //   }else{
+    //     timer--;
+    //     document.querySelector('#timees').textContent = timer;
+
+    //  }
+    // };
+
+    // setInterval(countDown, 1000);
+
+
+    const time_line = document.querySelector(".time_line");
+    const timeText = document.querySelector(".timer .time_left_txt");
+    const timeCount = document.querySelector(".timer .timer_sec");
+
+    let timeValue =  15;
+    let que_count = 0;
+    let que_numb = 1;
+    let userScore = 0;
+    let counterTime;
+    let counterLine;
+    let widthValue = 0;
+    
+    startTimer(timeValue); //calling startTimer function
+    startTimerLine(widthValue); //calling startTimerLine function
+    timeText.textContent = "Time Left"; //change the text of timeText to Time Left
+
+    function startTimer(time){
+        counterTime = setInterval(timer, 1000);
+        function timer(){
+            timeCount.textContent = time; //changing the value of timeCount with time value
+            time--; //decrement the time value
+            if(time < 9){ //if timer is less than 9
+                let addZero = timeCount.textContent; 
+                timeCount.textContent = "0" + addZero; //add a 0 before time value
+            }
+            if(time < 0){ //if timer is less than 0
+                clearInterval(counterTime); //clear counter
+                timeText.textContent = "Time Off"; //change the time text to time off
+                const allOptions = option_list.children.length; //getting all option items
+                let correcAns = questions[que_count].answer; //getting correct answer from array
+                for(i=0; i < allOptions; i++){
+                    if(option_list.children[i].textContent == correcAns){ //if there is an option which is matched to an array answer
+                        option_list.children[i].setAttribute("class", "option correct"); //adding green color to matched option
+                        option_list.children[i].insertAdjacentHTML("beforeend", tickIconTag); //adding tick icon to matched option
+                        console.log("Time Off: Auto selected correct answer.");
+                    }
+                }
+                for(i=0; i < allOptions; i++){
+                    option_list.children[i].classList.add("disabled"); //once user select an option then disabled all options
+                }
+                next_btn.classList.add("show"); //show the next button if user selected any option
+            }
+        }
+    }
+
+    function startTimerLine(time){
+        counterLine = setInterval(timer, 29);
+        function timer(){
+            time += 1; //upgrading time value with 1
+            time_line.style.width = time + "px"; //increasing width of time_line with px by time value
+            if(time > 549){ //if time value is greater than 549
+                clearInterval(counterLine); //clear counterLine
+            }
+        }
+    }
+    });
+
   
 </script>
