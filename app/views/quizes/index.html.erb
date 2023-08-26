@@ -32,7 +32,7 @@
                   </h3>
                 </div>
                 <div class="progress">
-                  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                  <div class="progress-bar progress-bar-animated bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
                     <span id="countdown_<%= index %>">20</span>
                   </div>
                 </div>
@@ -84,7 +84,7 @@
     options.forEach((option) => {
       firstClickedOptions[currentIndex] = ''; // Initialize to empty string
       option.addEventListener('change', function() {
-        
+         
         if (!firstClickedOptions[currentIndex]) {
           firstClickedOptions[currentIndex] = $("input[name='answer_" + currentIndex + "']:checked").val();
           console.log('First clicked option for question ' + currentIndex+1 + ': ' + firstClickedOptions[currentIndex]);
@@ -102,6 +102,7 @@
           this.parentElement.classList.remove('text-success');
           this.parentElement.classList.add('text-danger');
         }
+        clearInterval(countdownInterval);
       });
     });
     
@@ -207,21 +208,43 @@
       var percentageRemaining = (barPercentage / 20) * 100;      
       $(".progress-bar").css("width", percentageRemaining + "%");
       $(".progress-bar").attr("aria-valuenow", percentageRemaining);
+  
+      switch (true) {
+        case percentageRemaining < 25:
+          $(".progress-bar").addClass("bg-danger");
+            break;
+        case percentageRemaining < 50:
+          $(".progress-bar").addClass("bg-warning");
+            break;
+        case percentageRemaining < 75:
+            $(".progress-bar").addClass("bg-info");
+            break;
+        case percentageRemaining < 90:
+           $(".progress-bar").addClass("bg-success");
+            break;
+        case percentageRemaining <= 100:
+            $(".progress-bar").addClass("bg-success");
+            break;
+        default:
+            $(".progress-bar").addClass("width", percentageRemaining + "%");
+            break;
+      }
     }
-
+    
     function startCountdown() {
         var countdown = 20; // Initial countdown value in seconds
         clearInterval(countdownInterval);
         countdownInterval = setInterval(function() { 
-            countdown--;
+            
             progrssBarAnimation(countdown);
 
-            if (countdown < 0) {
+            if (countdown < 1) {
               progrssBarAnimation(20); 
               triggerNextQuestion();
             } else {
                 $('#countdown_' + currentIndex).text(countdown);     
             }
+            countdown--;
         }, 1000);
     }
 
