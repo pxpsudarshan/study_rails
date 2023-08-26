@@ -1,47 +1,64 @@
+<%= stylesheet_link_tag "quizes", media: "all", 'data-turbo-track': 'reload' %>
 <% max_questions = 20 %>
 <% @quizData = @quizData.take(max_questions) %>
 <% @total_count = @quizData.length %>
 
-<% if @total_count < 5 %>
-  <div class="alert alert-warning">
-    You need at least 5 questions to start the quiz.
-  </div>
-<% else %>
-  <% @quizData.each_with_index do |data, index| %>
-    <% @dataOption = data.nation_vocab["EN"] %>
-    <% correct_answer = @dataOption.join(", ") %>
-    <% incorrect_answers = @quizData.map { |d| d.nation_vocab["EN"] }.flatten.uniq - @dataOption %>
-    <% shuffled_options = ([correct_answer] + incorrect_answers.sample(3)).shuffle %>
-    
-    <div class="card card-body mb-1 ">
-      <h3><%= "Question #{index+1} of #{@total_count}" %></h3>
-      <form id="quiz-form-<%= index %>" action="" method="POST">
-      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>  
-      <div class="d-flex">
-        <%= "#{index + 1}. What is the meaning of #{data.vocab_code}" %>
-        <%= content_tag :span, "(#{data.vocab_read})", class: "hiraText d-none" %> <br /><br />
+<div class="row d-flex justify-content-center align-items-center ">
+  <div class="col-xl-8">
+    <% if @total_count < 5 %>
+      <div class="alert alert-warning">
+        You need at least 5 questions to start the quiz.
       </div>
-      <% shuffled_options.each_with_index do |option, option_index| %>
-        <label class="options">
-          <input type="radio" name="answer_<%= index %>" value="<%= option %>" class="quiz-option" data-correct="<%= correct_answer %>" />
-          <%= option %>   
-        </label><br />
-
+    <% else %>
+      <% @quizData.each_with_index do |data, index| %>
+        <% @dataOption = data.nation_vocab["EN"] %>
+          <% correct_answer = @dataOption.join(", ") %>
+          <% incorrect_answers = @quizData.map { |d| d.nation_vocab["EN"] }.flatten.uniq - @dataOption %>
+          <% shuffled_options = ([correct_answer] + incorrect_answers.sample(3)).shuffle %>
+        
+          <div class="card card-body mb-1 rounded-3 p-md-5 mx-md-4 text-black" style="margin-top: 5%">
+            <div class="text-start ms-20">
+              <div class='text-end'>
+                <h5>
+                  <%= "Question #{index+1} of #{@total_count}" %>
+                </h5>
+              </div>
+              <form id="quiz-form-<%= index %>" action="" method="POST">
+                <%= hidden_field_tag :authenticity_token, form_authenticity_token %>  
+                <div class="d-flex">
+                  <h3 style="user-select: none;">
+                    <%= "#{index + 1}. What is the meaning of #{data.vocab_code}" %>
+                    <%= content_tag :span, "(#{data.vocab_read})", class: "hiraText d-none" %>
+                  </h3>
+                </div>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                    <span id="countdown_<%= index %>">20</span>
+                  </div>
+                </div>
+                <div class="pt-2">
+                  <% shuffled_options.each_with_index do |option, option_index| %>
+                    <label class="options radiocontainer">
+                      <input type="radio" name="answer_<%= index %>" value="<%= option %>" class="quiz-option" data-correct="<%= correct_answer %>" />
+                      <%= option %>
+                      <span class="checkmark"></span>
+                    </label>
+                  <% end %>
+                </div>
+      
+                <!-- Add the hidden input field here -->
+                <div class="pt-3">
+                  <%= hidden_field_tag "vocab_org_#{index}", data.vocab_org %>
+                  <div class="d-flex gap-2">
+                    <%= link_to 'Next', quizes_path , class: 'btn btn-primary next-question', remote: true %>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
       <% end %>
-      <!-- Add the hidden input field here -->
-      <%= hidden_field_tag "vocab_org_#{index}", data.vocab_org %>
-        <div class="d-flex gap-2">
-          <%= link_to 'Next', quizes_path , class: 'btn btn-primary next-question', remote: true %>
-        </div>
-      </form>
-    </div>
-  <% end %>
-  <div class=" card card-body result-container min-vh-100 justify-content-center align-items-center">
-  </div>
-<% end %>
-<div class="progress">
-  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-    <span id="countdown">5</span>
+      <div class=" card card-body result-container" style="margin-top: 10%"></div>
+    <% end %>
   </div>
 </div>
 <!-- Your result view -->
@@ -57,15 +74,12 @@
     var indexParam = <%= params[:index].to_i %>;
     var totalQuestions = <%= @quizData.length %>;
 
-    var countdownElement = $('#countdown');
-    var countdownInterval;
-
-
     if(!indexParam){
       currentIndex = <%= params[:index].to_i %>;
     }else{
       currentIndex = 0;
     }
+    var countdownInterval;
     
     options.forEach((option) => {
       firstClickedOptions[currentIndex] = ''; // Initialize to empty string
@@ -92,7 +106,7 @@
     });
     
     $(".next-question").click(function() {
-      progrssBarAnimation(5);
+      progrssBarAnimation(20);
       triggerNextQuestion();
     });
 
@@ -190,30 +204,30 @@
     }
 
     function progrssBarAnimation(barPercentage) {
-      var percentageRemaining = (barPercentage / 5) * 100;      
+      var percentageRemaining = (barPercentage / 20) * 100;      
       $(".progress-bar").css("width", percentageRemaining + "%");
       $(".progress-bar").attr("aria-valuenow", percentageRemaining);
     }
 
     function startCountdown() {
-        var countdown = 5; // Initial countdown value in seconds
+        var countdown = 20; // Initial countdown value in seconds
         clearInterval(countdownInterval);
         countdownInterval = setInterval(function() { 
             countdown--;
             progrssBarAnimation(countdown);
 
             if (countdown < 0) {
-              progrssBarAnimation(5); 
+              progrssBarAnimation(20); 
               triggerNextQuestion();
             } else {
-                countdownElement.text(countdown);     
+                $('#countdown_' + currentIndex).text(countdown);     
             }
         }, 1000);
     }
 
     function resetCountdown() {
         clearInterval(countdownInterval);
-        countdownElement.text(5);
+        $('#countdown_' + currentIndex).text(20);
         startCountdown();
     }
     
