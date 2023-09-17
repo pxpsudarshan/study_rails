@@ -1,10 +1,43 @@
-<% @cards.each do |card| %>
-  <% if @mode == 0 %>
-    <%= link_to card.vocab_code, page_mylang_vocab_mycards_path(vocab_code: card.vocab_code), class: 'btn btn-primary' %> <%= card.vocab_org %><br />
-  <% elsif @mode == 1 %>
-    <%= link_to card.vocab_read, page_mylang_vocab_mycards_path(vocab_code: card.vocab_code), class: 'btn btn-primary' %> <%= card.vocab_org %><br />
-  <% else %>
-    <%= link_to card.vocab_code, page_mylang_vocab_mycards_path(vocab_code: card.vocab_code), class: 'btn btn-primary' %> <%= card.vocab_org %>
-    <%= link_to card.vocab_read, page_mylang_vocab_mycards_path(vocab_code: card.vocab_code), class: 'btn btn-primary' %><br />
+<style>
+.card:hover{
+     transform: scale(1.05);
+     box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+
+.underline{
+  text-decoration: none;
+  color: black;
+}
+</style>
+<div class="m-auto w-75 row">
+  <% if @message != "" %>
+        <%= @message %>
   <% end %>
+<% @cards.each do |card| %>
+  <div class="col-sm-3 mt-1" style="min-width: 150px;">
+    <div class="card rounded-0" style="height: 160px; overflow: auto;">
+      <div class="card-body text-center">
+        <p class="card-text"><%= card.vocab_read %>
+        </p>
+        <hr class="m-1" >
+        <%= link_to card.vocab_code, page_mylang_vocab_mycards_path(vocab_code: card.vocab_code), class: 'underline d-inline-block w-100 fs-2 link-opacity-50-hover ink-dark' %>
+        <%
+          lang_id = current_user.lang_id
+          text = []
+          text = card.vocab_store.nation_vocab[lang_id] if card.vocab_store.nation_vocab.present? && card.vocab_store.nation_vocab[lang_id].present?
+        %>
+        <hr class="m-1" >
+        <p class="card-text">
+        <% if text.length > 1 %>
+          <% text.each_with_index do |txt, index| %>
+            <%= txt %><%= index < text.length - 1 ? ',' : '' %>
+          <% end %>
+        <% else %>
+          <%= text.first %>
+        <% end %>
+        </p>
+      </div>
+    </div>
+  </div>
 <% end %>
+</div>

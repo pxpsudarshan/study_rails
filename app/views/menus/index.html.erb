@@ -1,90 +1,125 @@
-<p>
-  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePart" aria-expanded="false" aria-controls="collapsePart">
+<ul class="dropdown-menu position-relative d-block w-75 m-auto">
+  <li class="dropdown-item" data-bs-toggle="collapse" data-bs-target="#collapsePart" aria-expanded="false" aria-controls="collapsePart">
     Select Parts
-  </button>
-</p>
-<div class="collapse" id="collapsePart">
-  <div class="card card-body">
-    <%= link_to 'part', parts_path, class: 'btn btn-primary' %>
-  </div>
-</div>
+  </li>
+  <hr class="m-1">
 
-<p>
-  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseVocab" aria-expanded="false" aria-controls="collapseVocab">
+  <div class="collapse" id="collapsePart">
+    <div class="card card-body p-0" style="margin: 0 3%;">
+      <ul class="dropdown-menu position-relative d-block w-100 m-auto">
+        <li class="dropdown-item">
+          <%= link_to 'part', parts_path, class: 'text-decoration-none d-inline-block w-100 text-reset w-100' %>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <li class="dropdown-item" data-bs-toggle="collapse" data-bs-target="#collapseVocab" aria-expanded="false" aria-controls="collapseVocab">
     Select Vocabulary
-  </button>
-</p>
-<div class="collapse" id="collapseVocab">
-  <div class="card card-body">
-    <%= link_to 'goi', gois_path, class: 'btn btn-primary' %>
-  </div>
-  <div class="card card-body">
-    <%= link_to 'kuni', foreigns_path, class: 'btn btn-primary' %>
-  </div>
-</div>
+  </li>
+  <hr class="m-1">
 
-<p>
-  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseKanji" aria-expanded="false" aria-controls="collapseKanji">
+  <div class="collapse" id="collapseVocab">
+    <div class="card card-body p-0" style="margin: 0 3%;">
+      <ul class="dropdown-menu position-relative d-block w-100 m-auto">
+        <li class="dropdown-item">
+          <%= link_to 'goi', gois_path, class: 'text-decoration-none d-inline-block w-100 text-reset' %>
+        </li>
+        <hr class="m-1">
+        <li class="dropdown-item">
+          <%= link_to 'kuni', foreigns_path, class: 'text-decoration-none d-inline-block w-100 text-reset' %>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <li class="dropdown-item" data-bs-toggle="collapse" data-bs-target="#collapseKanji" aria-expanded="false" aria-controls="collapseKanji" >
     Select Kanji
-  </button>
-</p>
-<div class="collapse" id="collapseKanji">
-  <div class="card card-body">
-    <%= link_to 'kanji', kanjis_path, class: 'btn btn-primary' %>
-  </div>
-  <div class="card card-body">
-    <%= link_to 'kanji_scroll', kanji_scrolls_path, class: 'btn btn-primary' %>
-  </div>
-  <div class="card card-body">
-    <%= link_to 'kanji_unit', kanji_units_path, class: 'btn btn-primary' %>
-  </div>
-</div>
+  </li>
+  <hr class="m-1">
 
-<p>
-  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapsemycard" aria-expanded="false" aria-controls="collapsemycard">
+  <div class="collapse" id="collapseKanji">
+    <div class="card card-body p-0" style="margin: 0 3%;">
+      <ul class="dropdown-menu position-relative d-block w-100 m-auto">
+        <li class="dropdown-item">
+          <%= link_to 'kanji', kanjis_path, class: 'text-decoration-none d-inline-block w-100 text-reset' %>
+        </li>
+        <hr class="m-1">
+        <li class="dropdown-item">
+          <%= link_to 'kanji_scroll', kanji_scrolls_path, class: 'text-decoration-none d-inline-block w-100 text-reset' %>
+        </li>
+        <hr class="m-1">
+        <li class="dropdown-item">
+          <%= link_to 'kanji_unit', kanji_units_path, class: 'text-decoration-none d-inline-block w-100 text-reset' %>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <li class="dropdown-item" data-bs-toggle="collapse" data-bs-target="#collapseJlpt" aria-expanded="false" aria-controls="collapseJlpt" >
+    Jlpt
+  </li>
+  <hr class="m-1">
+
+  <div class="collapse" id="collapseJlpt">
+    <div class="card card-body p-0" style="margin: 0 3%;">
+      <ul class="dropdown-menu position-relative d-block w-100 m-auto">
+        <li class="dropdown-item">
+          <%= link_to 'jlpt N5', jlpts_path(jlpt: 5), class: 'text-decoration-none d-inline-block w-100 text-reset' %>
+        </li>
+        <hr class="m-1">
+        <li class="dropdown-item">
+          <%= link_to 'jlpt N4', jlpts_path(jlpt: 4), class: 'text-decoration-none d-inline-block w-100 text-reset' %>
+        </li>
+        <hr class="m-1">
+        <li class="dropdown-item">
+          <%= link_to 'jlpt N3', jlpts_path(jlpt: 3), class: 'text-decoration-none d-inline-block w-100 text-reset' %>
+        </li>
+        <hr class="m-1">
+        <li class="dropdown-item">
+          <%= link_to 'jlpt N2', jlpts_path(jlpt: 2), class: 'text-decoration-none d-inline-block w-100 text-reset' %>
+        </li>
+        <hr class="m-1">
+        <li class="dropdown-item">
+          <%= link_to 'jlpt N1', jlpts_path(jlpt: 1), class: 'text-decoration-none d-inline-block w-100 text-reset' %>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <li class="dropdown-item" data-bs-toggle="collapse" data-bs-toggle="collapse" data-bs-target="#collapsemycard" aria-expanded="false" aria-controls="collapsemycard">
     Select MyCard Review
-  </button>
-</p>
-<div class="collapse" id="collapsemycard">
-  <div class="card card-body">
-    One day.<br />
-    <%= link_to 'kanji kara', vocab_mycards_path(mode: 0, day: 1), class: 'btn btn-primary' %>
-    <%= link_to 'hiragana kara', vocab_mycards_path(mode: 1, day: 1), class: 'btn btn-primary' %>
+  </li>
+  <hr class="m-1">
+  <div class="collapse" id="collapsemycard">
+    <div class="card card-body p-0" style="margin: 0 3%;">
+      <ul class="dropdown-menu position-relative d-block w-100 m-auto">
+        <li class="dropdown-item">
+          <%= link_to 'One day', vocab_mycards_path(mode: 0, day: 1), class: 'text-decoration-none d-inline-block w-100 text-reset' %>
+        </li>
+        <hr class="m-1">
+        <li class="dropdown-item">
+          <%= link_to 'One week', vocab_mycards_path(mode: 0, day: 7), class: 'text-decoration-none d-inline-block w-100 text-reset' %>
+        </li>
+        <hr class="m-1">
+        <li class="dropdown-item">
+          <%= link_to 'One month', vocab_mycards_path(mode: 0, day: 30), class: 'text-decoration-none d-inline-block w-100 text-reset' %>
+        </li>
+      </ul>
+    </div>
   </div>
-  <div class="card card-body">
-    Seven days.<br />
-    <%= link_to 'kanji kara', vocab_mycards_path(mode: 0, day: 7), class: 'btn btn-primary' %>
-    <%= link_to 'hiragana kara', vocab_mycards_path(mode: 1, day: 7), class: 'btn btn-primary' %>
-  </div>
-  <div class="card card-body">
-    Month over ago.<br />
-    <%= link_to 'kanji kara', vocab_mycards_path(mode: 0, day: 30), class: 'btn btn-primary' %>
-    <%= link_to 'hiragana kara', vocab_mycards_path(mode: 1, day: 30), class: 'btn btn-primary' %>
-  </div>
-</div>
-<p>
-  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapsequiz" aria-expanded="false" aria-controls="collapsequiz">
-    Quiz
-  </button>
-</p>
-<div class="collapse" id="collapsequiz">
-  <div class="card card-body mb-1">
-    <%= link_to 'Start Quiz', quizes_path, class: 'btn btn-primary' %>
-  </div>
-</div>
-<script>
-  const options = document.querySelectorAll('.quiz-option');
 
-  options.forEach(option => {
-    option.addEventListener('change', function() {
-      const correctAnswer = this.getAttribute('data-correct');
-      if (this.value === correctAnswer) {
-        this.parentElement.classList.remove('text-danger');
-        this.parentElement.classList.add('text-success');
-      } else {
-        this.parentElement.classList.remove('text-success');
-        this.parentElement.classList.add('text-danger');
-      }
-    });
-  });
-</script>
+  <li class="dropdown-item" data-bs-toggle="collapse" data-bs-toggle="collapse" data-bs-target="#collapsequiz" aria-expanded="false" aria-controls="collapsequiz">
+    Quiz
+  </li>
+
+  <div class="collapse" id="collapsequiz">
+    <div class="card card-body mb-1 p-0" style="margin: 0 3%;">
+      <ul class="dropdown-menu position-relative d-block w-100 m-auto">
+        <li class="dropdown-item">
+          <%= link_to 'Start Quiz', quizes_path, class: 'text-decoration-none d-inline-block w-100 text-reset'  %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</ul>

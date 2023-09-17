@@ -11,11 +11,11 @@
       </div>
     <% else %>
       <% @quizData.each_with_index do |data, index| %>
-        <% @dataOption = data.nation_vocab["EN"] %>
+        <% @dataOption = data.vocab_store.nation_vocab["EN"] %>
           <% correct_answer = @dataOption.join(", ") %>
-          <% incorrect_answers = @quizData.map { |d| d.nation_vocab["EN"] }.flatten.uniq - @dataOption %>
+          <% incorrect_answers = @quizData.map { |d| d.vocab_store.nation_vocab["EN"] }.flatten.uniq - @dataOption %>
           <% shuffled_options = ([correct_answer] + incorrect_answers.sample(3)).shuffle %>
-        
+
           <div class="card card-body mb-1 rounded-3 p-md-5 mx-md-4 text-black" style="margin-top: 5%">
             <div class="text-start ms-20">
               <div class='text-end'>
@@ -24,7 +24,7 @@
                 </h5>
               </div>
               <form id="quiz-form-<%= index %>" action="" method="POST">
-                <%= hidden_field_tag :authenticity_token, form_authenticity_token %>  
+                <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
                 <div class="d-flex">
                   <h3 style="user-select: none;">
                     <%= "#{index + 1}. What is the meaning of #{data.vocab_code}" %>
@@ -45,7 +45,7 @@
                     </label>
                   <% end %>
                 </div>
-      
+
                 <!-- Add the hidden input field here -->
                 <div class="pt-3">
                   <%= hidden_field_tag "vocab_org_#{index}", data.vocab_org %>
@@ -80,21 +80,20 @@
       currentIndex = 0;
     }
     var countdownInterval;
-    
+
     options.forEach((option) => {
       firstClickedOptions[currentIndex] = ''; // Initialize to empty string
       option.addEventListener('change', function() {
-         
+
         if (!firstClickedOptions[currentIndex]) {
           firstClickedOptions[currentIndex] = $("input[name='answer_" + currentIndex + "']:checked").val();
-          console.log('First clicked option for question ' + currentIndex+1 + ': ' + firstClickedOptions[currentIndex]);
         }
 
         const selectedOption = this.value;
         const correctAnswer = this.getAttribute('data-correct');
         const vocabReadSpan = this.closest('.card').querySelector('.hiraText');
         vocabReadSpan.classList.remove('d-none');
-        
+
         if (selectedOption === correctAnswer) {
           this.parentElement.classList.remove('text-danger');
           this.parentElement.classList.add('text-success');
@@ -105,7 +104,7 @@
         clearInterval(countdownInterval);
       });
     });
-    
+
     $(".next-question").click(function() {
       progrssBarAnimation(20);
       triggerNextQuestion();
@@ -119,7 +118,6 @@
         selectedOption = "";
       }
       var mycardLevel = selectedOption === correctOption ? 1 : 0;
-      console.log(mycardLevel);
       if(mycardLevel == 1){
         totalCorrectAnswer = totalCorrectAnswer + 1;
       }
@@ -159,7 +157,7 @@
 
       var resultContainer = $(".result-container");
       resultContainer.show();
-      
+
       var percentage_level_1 = (totalCorrectAnswer / totalCountOfQuestion) * 100;
       var roundedPercentage = parseFloat(percentage_level_1.toFixed(0));
 
@@ -167,19 +165,19 @@
 
       switch (true) {
           case roundedPercentage < 25:
-              msgForStudy = "You scored below 25%. Keep practicing!";
+              msgForStudy = "Keep practicing!";
               break;
           case roundedPercentage < 50:
-              msgForStudy = "You scored between 25% and 50%. Keep working on it!";
+              msgForStudy = "Keep working on it!";
               break;
           case roundedPercentage < 75:
-              msgForStudy = "You scored between 50% and 75%. You're making progress!";
+              msgForStudy = "You're making progress!";
               break;
           case roundedPercentage < 90:
-              msgForStudy = "You scored between 75% and 90%. Great job!";
+              msgForStudy = "Great job!";
               break;
           case roundedPercentage <= 100:
-              msgForStudy = "You scored 90% or above. Excellent work!";
+              msgForStudy = "Excellent work!";
               break;
           default:
               msgForStudy = "Invalid percentage. Please check your inputs.";
@@ -205,7 +203,7 @@
     }
 
     function progrssBarAnimation(barPercentage) {
-      var percentageRemaining = (barPercentage / 20) * 100;      
+      var percentageRemaining = (barPercentage / 20) * 100;
       $(".progress-bar").css("width", percentageRemaining + "%");
       $(".progress-bar").attr("aria-valuenow", percentageRemaining);
 
@@ -233,21 +231,21 @@
             break;
       }
     }
-    
+
     function startCountdown() {
         var countdown = 20; // Initial countdown value in seconds
         clearInterval(countdownInterval);
-        countdownInterval = setInterval(function() { 
-            
+        countdownInterval = setInterval(function() {
+          countdown--;
+
             progrssBarAnimation(countdown);
 
-            if (countdown < 1) {
-              progrssBarAnimation(20); 
+            if (countdown < 0) {
+              progrssBarAnimation(20);
               triggerNextQuestion();
             } else {
-                $('#countdown_' + currentIndex).text(countdown);     
+                $('#countdown_' + currentIndex).text(countdown);
             }
-            countdown--;
         }, 1000);
     }
 
@@ -256,6 +254,6 @@
         $('#countdown_' + currentIndex).text(20);
         startCountdown();
     }
-    
+
   });
 </script>

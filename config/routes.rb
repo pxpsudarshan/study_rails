@@ -34,7 +34,7 @@ Rails.application.routes.draw do
 #      get :goi
 #    end
   end
-  
+
   resources :gois do
     collection do
       get :vocab_double
@@ -97,6 +97,12 @@ Rails.application.routes.draw do
     collection do
       get :page_mylang
       get :vocab
+    end
+  end
+
+  resources :jlpts do
+    collection do
+      get :page_mylang
     end
   end
 

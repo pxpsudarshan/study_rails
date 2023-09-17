@@ -4,12 +4,14 @@ class VocabMycardsController < ApplicationController
     @mode = params[:mode].present? ? params[:mode].to_i : -1
     vocab_code = params[:vocab_code]
     @cards = []
+    @message = ""
     if vocab_code.present?
-      @cards = current_user.vocab_mycards.where(vocab_code: vocab_code).order(created_at: :desc)
+      @cards = current_user.vocab_mycards.joins(:vocab_store).where(vocab_code: vocab_code).order(created_at: :desc)
+      # @cards = current_user.vocab_mycards.where(vocab_code: vocab_code).order(created_at: :desc)
     else
       card = current_user.vocab_mycards.order(created_at: :desc).first
       if card.present?
-        top_date = card.created_at.to_date
+        top_date = Date.today
         case day
         when 1
           prev_date = top_date - 1.day
@@ -18,14 +20,19 @@ class VocabMycardsController < ApplicationController
         else
           prev_date = top_date - 1.month
         end
-        @cards = current_user.vocab_mycards.where("DATE(created_at) BETWEEN ? AND ?", prev_date, top_date).order(created_at: :desc)
+        @cards = current_user.vocab_mycards.joins(:vocab_store).where("DATE(vocab_mycards.created_at) BETWEEN ? AND ?", prev_date, top_date).order(created_at: :desc)
+        # @cards = current_user.vocab_mycards.where("DATE(created_at) BETWEEN ? AND ?", prev_date, top_date).order(created_at: :desc)
       end
     end if current_user.mycard_sign
+
+    if !@cards.present?
+      @message = "NO DATA OR ACCESS DENIED"
+    end
   end
 
   def page_mylang
     vocab_code = params[:vocab_code]
-    @vocab_stores = VocabStore.where(vocab_code: vocab_code).order(:vocab_org)
+    @vocab_stores = VocabStore.where(vocab_code: vocab_code).order(:vocab_org)  
   end
 
   def create
