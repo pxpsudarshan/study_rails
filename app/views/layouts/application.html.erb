@@ -9,7 +9,6 @@
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
   <%= favicon_link_tag "favicon.ico" %>
-  <%= favicon_link_tag 'icon.png', :rel => 'apple-touch-icon', :type => 'image/png' %>
   <%= stylesheet_link_tag "application", media: "all", 'data-turbo-track': 'reload' %>
   <%= stylesheet_link_tag "sb-admin-2", media: "all", 'data-turbo-track': 'reload' %>
   <%= yield :stylesheet %>
@@ -17,13 +16,12 @@
   <%= javascript_include_tag "locales/#{locales}/common.messages" %>
   <%= individual_javascript_include_tag %>
   <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-  <!-- 20230811 削除ーST --> 
-  <%# <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"> %>
   <!--[if lt IE 9]>
     <%= javascript_include_tag 'html5shiv' %>
   <![endif]-->
 </head>
 <body>
+  <% if controller_name != 'mains' %>
   <nav class="navbar navbar-expand-md navbar-light static-top bg-light">
   <div class="container-fluid">
     <a class="navbar-brand" href="<%= current_user.present? ? menus_path : kaisha_menus_path %>"><%= t('title.header') %></a>
@@ -36,12 +34,12 @@
     <div class="collapse navbar-collapse">
       <ul class="navbar-nav me-auto mb-2 mb-md-0">
         <% if current_comp.present? %>
-        <li class="nav-item"><%= link_to t('navbar.comp').html_safe, kaisha_comps_path, class: "nav-link" %></li>
+        <!--<li class="nav-item"><%#= link_to t('navbar.comp').html_safe, kaisha_comps_path, class: "nav-link" %></li>-->
         <li class="nav-item"><%= link_to t('navbar.company_store').html_safe, new_kaisha_company_store_path, class: "nav-link" %></li>
-        <li class="nav-item"><%= link_to t('navbar.job_profile').html_safe, new_kaisha_job_profile_path, class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to t('navbar.job_profile').html_safe, kaisha_job_profiles_path, class: "nav-link" %></li>
         <li class="nav-item"><%= link_to t('navbar.offer').html_safe, kaisha_offers_path, class: "nav-link" %></li>
         <% else %>
-        <li class="nav-item"><%= link_to t('navbar.user').html_safe, users_path, class: "nav-link" %></li>
+        <!--<li class="nav-item"><%#= link_to t('navbar.user').html_safe, users_path, class: "nav-link" %></li>-->
         <li class="nav-item"><%= link_to t('navbar.store').html_safe, new_store_path, class: "nav-link" %></li>
         <li class="nav-item"><%= link_to t('navbar.job').html_safe, jobs_path, class: "nav-link" %></li>
         <% end %>
@@ -66,14 +64,8 @@
   </div>
     <!-- /.navbar-static-side -->
   </nav>
+  <% end %>
   <main class="container-fluid">
-<!--
-    <div class="row">
-      <div class="col-auto me-auto">
-        <h1 class="page-header"><span class="page-title"><%#= page_title.html_safe %></span></h1>
-      </div>
-    </div>
--->
     <%= bootstrap_flash %>
     <%= yield %>
     <%= render partial: "shared/footer" %>

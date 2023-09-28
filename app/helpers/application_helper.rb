@@ -44,6 +44,118 @@ module ApplicationHelper
     avatar.attached? ? url_for(avatar.variant(resize_to_fit: [32, 32])) : 'thumb/missing.png'
   end
 
+  def embedded_svg filename, options={}
+    file = File.read(Rails.root.join('app', 'assets', 'images', filename))
+    doc = Nokogiri::HTML::DocumentFragment.parse file
+    svg = doc.at_css 'svg'
+    if options[:class].present?
+      svg['class'] = options[:class]
+    end
+    doc.to_html.html_safe
+  end
+
+  def get_age(dob)
+    now = Date.current
+    years = now - dob.year.years
+    months = now.month - dob.month
+    years = years - 1.year if months < 0
+    months = 11 + months if months < 0
+    if now < dob
+      result = '0歳'
+    elsif months != 0
+      result = years.year.to_s+'歳'+months.to_s+'ヵ月'
+    else
+      result = years.year.to_s+'歳'
+    end
+    result
+  end
+
+  def occupation_array(id = 0)
+    id = id.to_i
+    out = ''
+    ocs = occupation_list
+    ocs.each do |element|
+      text, value = option_text_and_value(element)
+      out = text if id == value
+    end if id != 0
+    id == 0 ? ocs : out
+
+  end
+
+  def country_array(id = 0)
+    id = id.to_i
+    out = ''
+    countries = [
+      ['日本',1],
+      ['アメリカ',2]
+    ]
+    countries.each do |element|
+      text, value = option_text_and_value(element)
+      out = text if id == value
+    end if id != 0
+    id == 0 ? countries : out
+  end
+
+  def kokuseki_array(id = 0)
+    out = ''
+    kokusekis = [
+      ['EN',1],
+      ['JP',2],
+      ['RU',3],
+      ['CH',4]
+    ]
+    kokusekis.each do |element|
+      text, value = option_text_and_value(element)
+      out = text if id == value
+    end if id != 0
+    id == 0 ? kokusekis : out
+  end
+
+  def sex_array(id = 0)
+    out = ''
+    sexs = [
+      ['男性', 1],
+      ['女性', 2],
+      ['答えたくない', 3]
+    ]
+    sexs.each do |element|
+      text, value = option_text_and_value(element)
+      out = text if id == value
+    end if id != 0
+    id == 0 ? sexs : out
+  end
+
+  def school_type_array(id = 0)
+    out = ''
+    types = [
+      ['大学(博士)', 1],
+      ['大学(修士)', 2],
+      ['大学(学部)', 3],
+      ['専門学校', 4],
+      ['高校 卒業', 5]
+    ]
+    types.each do |element|
+      text, value = option_text_and_value(element)
+      out = text if id == value
+    end if id != 0
+    id == 0 ? types : out
+  end
+
+  def school_end_array(id = 0)
+    out = ''
+    ends = [
+      ['卒業', 1],
+      ['中退', 2],
+      ['休学', 3],
+      ['卒業予定', 4]
+    ]
+    ends.each do |element|
+      text, value = option_text_and_value(element)
+      out = text if id == value
+    end if id != 0
+    id == 0 ? ends : out
+  end
+
   def pref_array(id = 0)
     arr = []
     prefs = [

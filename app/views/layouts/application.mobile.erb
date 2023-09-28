@@ -8,7 +8,6 @@
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
   <%= favicon_link_tag "favicon.ico" %>
-  <%= favicon_link_tag 'icon.png', :rel => 'apple-touch-icon', :type => 'image/png' %>
   <%= stylesheet_link_tag "application", media: "all", 'data-turbo-track': 'reload' %>
   <%= stylesheet_link_tag "sb-admin-2", media: "all", 'data-turbo-track': 'reload' %>
   <%= yield :stylesheet %>
@@ -32,7 +31,7 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse">
       <ul class="navbar-nav me-auto mb-2 mb-md-0">
-        <li class="nav-item"><%= link_to t('navbar.calendar').html_safe, users_path, class: "nav-link" %></li>
+        <!--<li class="nav-item"><%#= link_to t('navbar.calendar').html_safe, users_path, class: "nav-link" %></li>-->
       </ul>
       <ul class="navbar-nav ms-auto mb-2 mb-md-0">
         <li class="nav-item"><%= link_to t('navbar.logout').html_safe, destroy_user_session_path, method: 'delete', class: "nav-link" %></li>

@@ -101,6 +101,22 @@ input[type="color" i] {
   padding-bottom: 5px;
 }
 
+
+.mainpage {
+  display: flex;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #f5f5f5;
+  height: 100%;
+}
+
+.mainpage .contents {
+  max-width: 1100px;
+  padding: 15px;
+}
+
+
 /*========================================================
 =            権限エラーページの画像の設定    　　　　     =
 ========================================================*/

@@ -14,11 +14,6 @@
   </div>
 </div>
 <% end %>
-<div class="row text-center align-middle mb-3">
-  <div class="col-sm-12 mt-3">
-    <h2 class="border border-1 border-info rounded p-2 ">求職申込登録</h2>
-  </div>
-</div>
 <div class="row text-center">
   <div class="col-md-12">
     <div id="error_explanations_required" class="alert text-center fade alert-danger">
@@ -47,7 +42,7 @@
             国籍
         </div>
         <div class="col-md">
-            <%= up.select :kokuseki, options_for_select([['EN',1],['JP',2],['RU',3],['CH',4]], up.object.kokuseki), {include_blank: true}, class: 'form-select', required: true %>
+            <%= up.select :kokuseki, options_for_select(kokuseki_array, up.object.kokuseki), {include_blank: true}, class: 'form-select', required: true %>
         </div>
         <div class="col-md-auto col-form-label">
             生年月日
@@ -59,7 +54,7 @@
             性別
         </div>
         <div class="col-md">
-            <%= up.select :sex, options_for_select([['男性', 1], ['女性', 2], ['答えたくない', 3]], up.object.sex), {include_blank: true}, class: 'form-select', required: true %>
+            <%= up.select :sex, options_for_select(sex_array, up.object.sex), {include_blank: true}, class: 'form-select', required: true %>
         </div>
         <div class="col-md-auto col-form-label">
             現在日本に在住
@@ -73,7 +68,7 @@
             現住所
         </div>
         <div class="col-md-3 mb-1">
-            <%= up.select :address_country, options_for_select([['日本',1],['アメリカ',2]], up.object.address_country), {include_blank: true}, class: 'form-select', required: true %>
+            <%= up.select :address_country, options_for_select(country_array, up.object.address_country), {include_blank: true}, class: 'form-select', required: true %>
         </div>
         <div class="col-md mb-1">
             <%= up.text_field :address, placeholder: '', class: 'form-control', required: true %>
@@ -130,11 +125,11 @@
           </div>
           <div class="col-md-2 mb-1">
             <%= up.select :jp_school_type, options_for_select(
-            [['大学(博士)', 1],['大学(修士)', 2],['大学(学部)', 3],['専門学校', 4],['高校 卒業', 5]], up.object.jp_school_type), {include_blank: true}, class: "form-select", required: true %>
+            school_type_array, up.object.jp_school_type), {include_blank: true}, class: "form-select", required: true %>
           </div>
           <div class="col-md-auto mb-1">
             <div class="d-flex gap-3">
-              <%= up.select :jp_school_end, options_for_select([['卒業', 1],['中退', 2],['休学', 3],['卒業予定', 4]], up.object.jp_school_end), {include_blank: true}, class: "form-select", required: true %>
+              <%= up.select :jp_school_end, options_for_select(school_end_array, up.object.jp_school_end), {include_blank: true}, class: "form-select", required: true %>
             </div>
           </div>
           <div class="col-md-2 mb-1">
@@ -152,11 +147,11 @@
           </div>
           <div class="col-md-2 mb-1">
             <%= up.select :school_type, options_for_select(
-            [['大学(博士)', 1],['大学(修士)', 2],['大学(学部)', 3],['専門学校', 4],['高校 卒業', 5]], up.object.school_type), {include_blank: true}, class: "form-select", required: true %>
+            school_type_array, up.object.school_type), {include_blank: true}, class: "form-select", required: true %>
           </div>
           <div class="col-md-auto mb-1">
             <div class="d-flex gap-3">
-              <%= up.select :school_end, options_for_select([['卒業', 1],['中退', 2],['休学', 3],['卒業予定', 4]], up.object.school_end), {include_blank: true}, class: "form-select", required: true %>
+              <%= up.select :school_end, options_for_select(school_end_array, up.object.school_end), {include_blank: true}, class: "form-select", required: true %>
             </div>
           </div>
           <div class="col-md-2 mb-1">
@@ -175,9 +170,9 @@
       <% end %>
     </div>
     <div class="row-md-auto mb-2" >
-        <%= link_to_add_association t('buttons.add_plus').html_safe, up, :profile_works,
+        <%= link_to_add_association t('buttons.add').html_safe, up, :profile_works,
             'data-association-insertion-method'    => 'append' ,
-            'data-association-insertion-node'      => '#work_history', class: "btn btn-primary border-2 rounded-circle"
+            'data-association-insertion-node'      => '#work_history'
         %>
     </div>
     <div class="row mb-2">
@@ -209,9 +204,9 @@
               <% end %>
             </div>
             <div class="row-md-auto mb-2" >
-                <%= link_to_add_association t('buttons.add_plus').html_safe, up, :profile_languages,
+                <%= link_to_add_association t('buttons.add').html_safe, up, :profile_languages,
                     'data-association-insertion-method'    => 'append' ,
-                    'data-association-insertion-node'      => '#skill_level', class: "btn btn-primary border-2 rounded-circle"
+                    'data-association-insertion-node'      => '#skill_level'
                 %>
             </div>
         </div>
@@ -254,7 +249,7 @@ function switch_zairyu(obj) {
 }
 
 switch_zairyu(document.getElementById('user_profile_attributes_injapan_flg'));
- 
+
 $('.injapanflg').on('change', function() {
   switch_zairyu(this);
 });

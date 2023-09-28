@@ -29,12 +29,15 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :mains do
+  end
+
   resources :menus do
 #    collection do
 #      get :goi
 #    end
   end
-
+  
   resources :gois do
     collection do
       get :vocab_double
@@ -121,5 +124,5 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
-  root 'menus#index'
+  root 'mains#index'
 end

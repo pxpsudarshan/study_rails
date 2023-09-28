@@ -1,5 +1,5 @@
 <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'form-horizontal text-center w-25 m-auto' }) do |f| %>
-  <%= image_tag 'icon.png', class: 'mb-4' %>
+  <%= embedded_svg 'niho_logo.svg', class: 'mb-4' %>
   <h1 class="h3 mb-3 fw-normal"><%= t('.sign_in') %></h1>
   <%= render "kaisha/shared/error_messages", resource: resource %>
   <div class="form-floating">

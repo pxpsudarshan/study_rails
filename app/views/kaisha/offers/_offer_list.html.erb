@@ -19,16 +19,26 @@
     <table class="table table-bordered table-hover table-sm">
       <thead>
         <tr class="table-success">
-          <th class="text-center"><%= t('activerecord.attributes.user.name') %></th>
-          <th class="text-center"><%= t('activerecord.attributes.user.name_kana') %></th>
+          <th class="text-center"><%= '国籍' %></th>
+          <th class="text-center"><%= '現住所' %></th>
+          <th class="text-center"><%= '性別' %></th>
+          <th class="text-center"><%= '年齢' %></th>
+          <th class="text-center"><%= '最終学歴' %></th>
           <th class="text-end"><%= '達成率' %></th>
         </tr>
       </thead>
       <tbody>
       <% @offers.each do |user| %>
         <tr class="details_row nested-fields">
-          <td class="text-center"><%= user.name %></td>
-          <td class="text-center"><%= user.name_kana %></td>
+          <td class="text-center"><%= kokuseki_array(user.profile.kokuseki) %></td>
+          <td class="text-center"><%= country_array(user.profile.address_country) %></td>
+          <td class="text-center"><%= sex_array(user.profile.sex) %></td>
+          <td class="text-center"><%= get_age(user.profile.birthday) %></td>
+          <% if user.profile.jp_school_name.present? %>
+          <td class="text-center"><%= school_type_array(user.profile.jp_school_type) %> / <%= school_end_array(user.profile.jp_school_end) %></td>
+          <% else %>
+          <td class="text-center"><%= user.profile.school_type %> / <%= user.profile.school_end %></td>
+          <% end %>
           <td class="text-end"><%= @stud_rates[user.id] %>％</td>
         </tr>
       <% end %>

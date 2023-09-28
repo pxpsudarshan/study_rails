@@ -47,13 +47,14 @@
 <!--
 <a id="download" download="foreign.rtf" class="ui-btn ui-btn-c ui-btn-inline ui-corner-all ui-btn-icon-left " >Download（Only PC）</a><br>
 -->
+<!--
 <p>
   <button id="id_btn_lang_ext2" class="btn btn-primary">あなたのくにのことばでかく</button>
   <textarea id="id_lang_textarea_ex2" rows="10" cols="10" class="form-control" placeholder="じぶんのくにのことばで"></textarea>
 </p>
-
+-->
 <% @gois[:vocab_kanji].each_with_index do |vocab, idx| %>
 <%= link_to vocab["kanji_code"], parts_kanji_kanji_units_path(kanji: { kanji: vocab["kanji_org"] }), remote: true, class: 'btn btn-primary' if vocab["kanji_org"] != 0 %>
-<% end %>
+<% end if @gois[:vocab_kanji].present? %>
 
 <% end %>

@@ -1,6 +1,6 @@
 class Kaisha::OffersController < ApplicationController
   def index
-    if params[:search].present?
+    if params[:search].present? && current_comp.company_store.present?
       comp_arr = []
       comp = current_comp.company_store.company_store_contents
       comp = comp.where(occupation: params[:search][:occupation]) if params[:search][:occupation].present? && params[:search][:occupation].to_i != 0
@@ -43,7 +43,7 @@ class Kaisha::OffersController < ApplicationController
       b = []
       a.each { |k,v| b << k }
 
-      @offers = User.in_order_of(:id, b)
+      @offers = User.joins(:profile).in_order_of(:id, b)
       @offers = @offers.page(params[:page]).per(params[:per])
     end
 

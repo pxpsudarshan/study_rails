@@ -1,14 +1,65 @@
 ja:
-  devise:
+  kaisha:
+    passwords:
+      edit:
+        change_my_password: パスワードを変更する
+        change_your_password: パスワードを変更
+        confirm_new_password: 確認用新しいパスワード
+        new_password: 新しいパスワード
+      new:
+        forgot_your_password: 'パスワードを忘れましたか？'
+        send_me_reset_password_instructions: 'パスワードの再設定方法を送信する'
+      no_token: このページにはアクセスできません。パスワード再設定メールのリンクからアクセスされた場合には、URL をご確認ください。
+      send_instructions: パスワードの再設定について数分以内にメールでご連絡いたします。
+      send_paranoid_instructions: メールアドレスが登録済みの場合、パスワード再設定用のメールが数分以内に送信されます。
+      updated: パスワードが正しく変更されました。
+      updated_not_active: パスワードが正しく変更されました。
+    sessions:
+      already_signed_out: 既にログアウト済みです。
+      new:
+        sign_in:      '企業ログイン'
+      signed_in: ログインしました。
+      signed_out: ログアウトしました。
     registrations:
-      form_company:
+      form:
         sign_up:      '企業用のアカウント登録'
+    shared:
+      links:
+        sign_up: '企業用のアカウント登録'
+        sign_in: '企業ログイン'
+        forgot_your_password: 'パスワードを忘れましたか？'
+  users:
+    passwords:
+      edit:
+        change_my_password: パスワードを変更する
+        change_your_password: パスワードを変更
+        confirm_new_password: 確認用新しいパスワード
+        new_password: 新しいパスワード
+      new:
+        forgot_your_password: 'パスワードを忘れましたか？'
+        send_me_reset_password_instructions: 'パスワードの再設定方法を送信する'
+      no_token: このページにはアクセスできません。パスワード再設定メールのリンクからアクセスされた場合には、URL をご確認ください。
+      send_instructions: パスワードの再設定について数分以内にメールでご連絡いたします。
+      send_paranoid_instructions: メールアドレスが登録済みの場合、パスワード再設定用のメールが数分以内に送信されます。
+      updated: パスワードが正しく変更されました。
+      updated_not_active: パスワードが正しく変更されました。
+    sessions:
+      already_signed_out: 既にログアウト済みです。
+      new:
+        sign_in:      '学生ログイン'
+      signed_in: ログインしました。
+      signed_out: ログアウトしました。
+    registrations:
       form:
         sign_up:      '学生用のアカウント登録'
     shared:
       links:
-        sign_up:      '学生用のアカウント登録'
         sign_up_company: '企業用のアカウント登録'
+        sign_up:      '学生用のアカウント登録'
+        sign_in:      '学生ログイン'
+        sign_in_company: '企業ログイン'
+        forgot_your_password: 'パスワードを忘れましたか？'
+  
   common:
     flg_required:     '<i class="fas fa-asterisk red"></i>'
     flg_enabled:      &flg_enabled "可"
@@ -44,11 +95,14 @@ ja:
   navbar:
     logout:           '<i class="fas fa-sign-out-alt"></i> ログアウト'
     user:             '学生マスタ'
+    comp:             '企業マスタ'
     profile:          '<i class="fas fa-user"></i> プロファイル'
-    store:            '貴社用語集'
-    job_profile:      '求人企業プロファイル'
-    student_profile:  '求職申込登録'
-    job_search:       '仕事検索'
+    edit:             '<i class="fas fa-edit"></i> 編集'
+    company_store:    '貴社用語集'
+    store:            '学生用語集'
+    job_profile:      '企業プロファイル'
+    job:              '求職検索'
+    offer:            '求人検索'
   buttons:
     home:             '<i class="fas fa-home"></i> メインメニュー'
     menu:             'メニュー'
@@ -77,8 +131,6 @@ ja:
     add_item:         '追加'
     done:             '完了'
     excel_upload:     'Excel入力'
-    add_plus:         '<i class="bi bi-plus-circle"></i>'
-    btn_apply:         'Apply'
 
   label:
     nodata:           '該当無し'
@@ -146,9 +198,5 @@ ja:
       create_store:   '<i class="fas fa-address-card"></i> 語彙入力'
       new_job_profile: '<i class="fas fa-address-card"></i> 求人企業プロファイル登録'
       create_job_profile: '<i class="fas fa-address-card"></i> 求人企業プロファイル登録'
-      new_student_profile: '<i class="fas fa-address-card"></i> 外国人材プロファイル登録'
-      create_student_profile: '<i class="fas fa-address-card"></i> 外国人材プロファイル登録'
-      new_job_search: '<i class="fas fa-address-card"></i> 仕事検索'
-      create_job_search: '<i class="fas fa-address-card"></i> 仕事検索'
     errors:
       limit_access:   '<i class="fas fa-exclamation-triangle"></i> 権限エラー'

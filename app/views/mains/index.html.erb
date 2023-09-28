@@ -1,0 +1,55 @@
+<div class="mainpage">
+  <div class="contents w-100 m-auto">
+    <div class="text-center">
+      <p><%= embedded_svg 'niho_logo.svg', class: 'mb-4' %></p>
+    </div>
+    <div class="row">
+    <!-- First Card -->
+    <div class="col-md-auto w-50">
+      <div class="m-1 card border-5 border-student rounded-0">
+        <div class="card-body">
+          <!-- Top Section -->
+          <div class="align-top">
+            <h4 class="font-ja">私は日本語学習者です。</h4>
+            <small class="font-en">I am a Japanese Learner. </small>
+          </div>
+          <!-- Content Section -->
+          <div class="aligned-div">
+            <div class="left-content">
+              <p class="card-text">
+                <small class="font-ja">私は日本企業への就職を希望しています。</small><br>
+                <small class="font-en">I am a Job Seeker for Japanese Company. </small>
+              </p>
+            </div>
+            <div class="right-content">
+              <%= link_to 'Entrance', menus_path, class: 'col-md-auto btn btn-student rounded-0' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Second Card -->
+    <div class="col-md-auto w-50">
+      <div class="m-1 card border-5 border-company rounded-0">
+        <div class="card-body">
+          <!-- Top Section -->
+          <div class="align-top">
+            <h4 class="font-ja">外国人材を求める日本企業です。</h4>
+            <small class="font-en">We are Japanese company that seeks talents from all over the world </small>
+          </div>
+          <!-- Content Section -->
+          <div class="aligned-div">
+            <div class="left-content">
+              <!-- Left content is empty -->
+            </div>
+            <div class="right-content">
+              <%= link_to 'Entrance', kaisha_menus_path, class: 'btn rounded-0 btn-company' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>

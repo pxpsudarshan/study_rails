@@ -5,6 +5,7 @@ class GoisController < ApplicationController
       vocab_code = ''
       jlpt_level = ''
       gois = ReadStore.where(read_code: goi).order(:read_org).select(:read_org, :read_vocab, :vocab_code, :read_code, :vocab_org).first
+      @count = 0
       if gois.present?
           logger.info("count "+gois.read_vocab.count.to_s)
 

@@ -1,5 +1,5 @@
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: 'form-horizontal' }) do |f| %>
-  <%= image_tag 'icon.png', class: 'mb-4' %>
+  <%= embedded_svg 'niho_logo.svg', class: 'mb-4' %>
   <h1 class="h3 mb-3 fw-normal"><%= t('.change_your_password') %></h1>
   <%= render "users/shared/error_messages", resource: resource %>
   <%= f.hidden_field :reset_password_token %>

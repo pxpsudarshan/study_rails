@@ -7,7 +7,7 @@
             </div>
             <div class="card-body">
               <h6 class="card-subtitle mb-2 text-muted">Location: <%= pref_array(job.location) %></h6>
-              <p class="card-text"><%= job.ad_title %> <%= job.job_description %></p>
+              <p class="card-text"><%= job.ad_title %> <%= simple_format(job.job_description) %></p>
               <h6 class="card-subtitle mb-2 text-muted">Requirements:</h6>
               <ul>
                 <% #vacancy["requirements"].each do |requirement| %>
@@ -20,7 +20,7 @@
                   <li><%= :responsibility %></li>
                 <% #end %>
               </ul>
-              <p class="card-text"><%= "info" %> : <%= job.job_profile.comp.email %></p>
+              <p class="card-text"><%= "info" %> : <%#= job.job_profile.comp.email %></p>
               <p class="card-text">Application deadline: <%= "deadline" %> </p>
             </div>
             <div class="card-footer">

@@ -2,15 +2,30 @@ ja:
   activerecord:
     attributes:
       user:
+        email:                    'メール'
         name:                     '名前'
         name_kana:                '名前カナ'
+        name_label:               'お名前'
+        name_furigana:            '（フリガナ)'
         sei:                      '姓'
         mei:                      '名'
         sei_kana:                 '姓カナ'
         mei_kana:                 '名カナ'
         lang_id:                  '言語'
         jp_level:                 '日本語能力試験'
+        mobile:                   'お電話番号'
+        new_password:             'パスワード'
+        confirm_password:         'パスワード確認'
+        password:                 'パスワード'
+        password_confirmation:    'パスワード確認'
 
+      comp:
+        email:                    'メール'
+        name:                     '名前'
+        sei:                      '姓'
+        mei:                      '名'
+        sei_kana:                 '姓カナ'
+        mei_kana:                 '名カナ'
         company_name:             '貴社名'
         business_type:            '業種'
         company_url:              '貴社url'
@@ -20,17 +35,28 @@ ja:
         mobile:                   'お電話番号'
         new_password:             'パスワード'
         confirm_password:         'パスワード確認'
+        password:                 'パスワード'
+        password_confirmation:    'パスワード確認'
 
-      company_middle_stores:
+      company_store_contents:
         occupation:               '職種'
         vocab_code:               '語彙'
         vocab_read:               '読み方'
         vocab_mean:               '説明'
 
-      job_profile:
-        ad_title:                 '求人広告タイトル'
+      job_profile_contents:
+        job_description:          '求人広告タイトル'
         location:                 '勤務地'
         visa_support:             '就労ビザ取得サポート'
         occupation:               '職種'
         salary:                   '給与'
         employment_sts:           '雇用形態'
+        year:                     '入社予定時期「年」'
+        month:                    '入社予定時期「月」'
+        visa_type:                'サポートするビザ種別'
+
+      store_contents:
+        use:                      '使用場所'
+        vocab_code:               '語彙'
+        vocab_read:               '読み方'
+        vocab_mean:               '説明'

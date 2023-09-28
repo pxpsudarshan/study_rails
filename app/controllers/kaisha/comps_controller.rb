@@ -1,5 +1,5 @@
 class Kaisha::CompsController < ApplicationController
-  before_action :parent, except: [:index, :new]
+  before_action :parent, except: [:index, :new, :create]
 
   def index
     @comps = Comp.all

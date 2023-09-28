@@ -1,0 +1,30 @@
+<%= paginate @jobs, remote: true %>
+<div style="white-space: nowrap; min-width: 800px;">
+<table class="table table-bordered table-hover table-sm">
+  <thead>
+    <tr class="table-success">
+      <th class="text-center"><%= t('buttons.show') %></th>
+      <th class="text-center"><%= t('activerecord.attributes.job_profile_contents.occupation') %></th>
+      <th class="text-center"><%= t('activerecord.attributes.job_profile_contents.location') %></th>
+      <th class="text-center"><%= t('activerecord.attributes.job_profile_contents.job_description') %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @jobs.each do |jpc| %>
+    <tr class="details_row nested-fields">
+      <td class="text-center"><%= link_to t('buttons.edit').html_safe, edit_kaisha_job_profile_path(id: jpc.id), class: "btn btn-secondary btn-sm" %></td>
+      <td class="text-center"><%= occupation_array(jpc.occupation) %></td>
+      <td class="text-center"><%= pref_array(jpc.location) %></td>
+      <td class="text-start"><%= simple_format(jpc.job_description) %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<strong><%= page_entries_info @jobs, :entry_name => '' %></strong>
+<%= paginate @jobs, remote: true %>
+<%= javascript_tag do %>
+  $(function() {
+    NProgress.done();
+  });
+<% end %>

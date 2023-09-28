@@ -1,5 +1,5 @@
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: 'form-horizontal w-50 text-center margin-auto' }) do |f| %>
-  <%= image_tag 'icon.png', class: 'mb-4' %>
+  <%= embedded_svg 'niho_logo.svg', class: 'mb-4' %>
   <h1 class="h3 mb-3 fw-normal text-center"><%= t('.forgot_your_password') %></h1>
   <%= render "users/shared/error_messages", resource: resource %>
   <div class="form-floating text-center">
