@@ -372,7 +372,18 @@ $(document).ready(function() {
       width: '100%',
     });
 
-    $('.multiselect-months').select2({
+  $('.multiselect-months').select2({
      width: '100%',
   });
+
+  hsize = $(window).height();
+  $('.form-signin').css("height", hsize + "px");
+  $('.mainpage').css("height", hsize + "px");
+  $('.my-image').css("height", hsize + 80  + "px");
+});
+
+$(window).resize(function () {
+  hsize = $(window).height();
+  $('.mainpage').css("height", hsize + "px");
+  $('.my-image').css("height", hsize + 80  + "px");
 });

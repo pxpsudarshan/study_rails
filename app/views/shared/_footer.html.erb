@@ -1,3 +1,73 @@
-<div class="container">
-  <div class="credit text-muted">&copy; 2009-2023 翰林日本語学院 - All Rights Reserved</div>
+<!-- Footer -->
+<footer>
+<nav class="aligned-div navbar fixed-bottom m-auto navbar-expand-lg navbar-light" >
+  <div class="left-content">
+    <div class="collapse navbar-collapse m-auto" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link" data-bs-toggle="modal" data-bs-target="#agrenmentModal" href="#">利用規約</a>
+        <a class="nav-item nav-link" data-bs-toggle="modal" data-bs-target="#privicyModal" href="#">プライバシーポリシー</a>
+        <a class="nav-item nav-link" data-bs-toggle="modal" data-bs-target="#contractModal"  href="#">特定商取引に基づいて表示</a>
+      </div>
+    </div>
+  </div>
+  <div class="right-content">
+    <div class="navbar-nav hide-text">
+      <a href="#" class="nav-item nav-link" href="#">© 2009-2018 翰林日本語学院 - All Rights Reserved R2事業再構築</a>
+    </div>
+  </div>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+</nav>
+</footer>
+<!-- モーダルダイアログ利用契約 -->
+<div class="modal" id="agrenmentModal" tabindex="-1" aria-labelledby="agrenmentModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="agrenmentModalLabel">利用規約</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <%= render partial: "shared/agrenment" %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- モーダルダイアロプライバシ＆ポリシ -->
+<div class="modal" id="privicyModal" tabindex="-1" aria-labelledby="privicyModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="privicyModalLabel">プライバシーポリシー</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <%= render partial: "shared/privacy" %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- モーダルダイアロぐ特定商取引に基づいて表示 -->
+<div class="modal" id="contractModal" tabindex="-1" aria-labelledby="contractModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="contractModalLabel">特定商取引に基づいて表示</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <%= render partial: "shared/contract" %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>

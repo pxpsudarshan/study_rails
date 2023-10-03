@@ -2,11 +2,11 @@
   <%= embedded_svg 'niho_logo.svg', class: 'mb-4' %>
   <h1 class="h3 mb-3 fw-normal"><%= t('.sign_in') %></h1>
   <%= render "users/shared/error_messages", resource: resource %>
-  <div class="form-floating">
+  <div class="form-floating w-75 m-auto">
     <%= f.email_field :email, placeholder: 'name@example.com', class: 'form-control', required: false %>
     <%= f.label :email %>
   </div>
-  <div class="form-floating">
+  <div class="form-floating w-75 m-auto">
     <%= f.password_field :password, placeholder: 'パスワード', class: 'form-control', required: false %>
     <%= f.label :password %>
   </div>

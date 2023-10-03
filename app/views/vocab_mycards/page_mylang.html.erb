@@ -1,6 +1,7 @@
+<div class="m-auto w-50">
 <% @vocab_stores.each do |data| %>
-<%= link_to data['vocab_code'], gois_path(goi: {goi: data['vocab_read']}), class: 'btn btn-primary', remote: true %><br />
-<%= link_to data['vocab_read'], gois_path(goi: {goi: data['vocab_read']}), class: 'btn btn-primary', remote: true %><br />
+<%= link_to data['vocab_code'], gois_path(goi: {goi: data['vocab_read']}), class: 'btn btn-primary rounded-0 m-1', remote: true %><br />
+<%= link_to data['vocab_read'], gois_path(goi: {goi: data['vocab_read']}), class: 'btn btn-primary rounded-0 m-1', remote: true %><br />
 <%
     lang_id = current_user.lang_id
     text = []
@@ -17,4 +18,5 @@
 </div>
 <div class="row">
   <div class="col-md-12" id="kanji_unit"></div>
+</div>
 </div>

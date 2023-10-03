@@ -1,12 +1,15 @@
+<%= image_tag('backphoto_02.jpg', class: 'my-image', alt: 'background Image') %>
+
 <div class="mainpage">
+
   <div class="contents w-100 m-auto">
-    <div class="text-center">
-      <p><%= embedded_svg 'niho_logo.svg', class: 'mb-4' %></p>
+    <div class="text-center" style="margin-bottom: 50px;">
+      <%= embedded_svg 'niho_logo.svg', class: 'position-relative mb-4' %>
     </div>
-    <div class="row">
+    <div class="row" style="margin-bottom: 150px;">
     <!-- First Card -->
     <div class="col-md-auto w-50">
-      <div class="m-1 card border-5 border-student rounded-0">
+      <div class="m-1 card border-student rounded-0">
         <div class="card-body">
           <!-- Top Section -->
           <div class="align-top">
@@ -31,7 +34,7 @@
   
     <!-- Second Card -->
     <div class="col-md-auto w-50">
-      <div class="m-1 card border-5 border-company rounded-0">
+      <div class="m-1 card border-company rounded-0">
         <div class="card-body">
           <!-- Top Section -->
           <div class="align-top">
@@ -53,3 +56,4 @@
   </div>
   </div>
 </div>
+<%= render partial: "shared/footer" %>

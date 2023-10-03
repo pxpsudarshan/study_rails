@@ -14,6 +14,8 @@ body {
 .form-signin {
   max-width: 1100px;
   padding: 15px;
+  position: relative;
+  overflow: scroll;
 }
 
 .form-signin .form-floating:focus-within {
@@ -23,4 +25,54 @@ body {
 .margin-auto {
   margin-left: auto;
   margin-right: auto;
+}
+
+.aligned-div {
+  display: flex;
+  justify-content: space-between;
+  align-self: flex-end;
+}
+
+.left-content {
+  text-align: left;
+}
+
+.right-content {
+  text-align: right;
+}
+
+.my-image{
+  position: absolute;
+  width: fit-content;
+  opacity: .8;
+  height: 900px;
+  width: 100%;
+  overflow: hidden;
+}
+
+select,
+input[type="email"], 
+input[type="password"], 
+input[type="text"], 
+textarea {
+  border: none;
+  outline: none;
+  border-bottom: 2px solid #201d1d;
+  border-radius: 0 !important;
+  background-color: rgba(245, 245, 245, 1);
+  opacity: .8;
+}
+@media only screen
+and (max-width : 600px) {
+.w-50{
+  width:100% !important;
+}
+.hide-text{
+  display: none;
+}
+}
+
+.card{
+  background-color: rgba(245, 245, 245, 1);
+  opacity: .8;
 }

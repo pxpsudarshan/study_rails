@@ -1,13 +1,14 @@
-<%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'form-horizontal text-center w-25 m-auto' }) do |f| %>
-  <%= embedded_svg 'niho_logo.svg', class: 'mb-4' %>
+<div class="card w-50 m-auto border-3 rounded-0 border-dark">
+<%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'form-horizontal text-center' }) do |f| %>
+  <%= embedded_svg 'niho_logo.svg', class: 'm-4 mb-4' %>
   <h1 class="h3 mb-3 fw-normal"><%= t('.sign_in') %></h1>
   <%= render "users/shared/error_messages", resource: resource %>
-  <div class="form-floating">
+  <div class="form-floating w-75 m-auto">
     <%= f.email_field :email, placeholder: 'name@example.com', class: 'form-control', required: false %>
     <%= f.label :email %>
   </div>
-  <div class="form-floating">
-    <%= f.password_field :password, placeholder: 'パスワード', class: 'form-control', required: false %>
+  <div class="form-floating w-75 m-auto">
+    <%= f.password_field :password, placeholder: 'スワード', class: 'form-control', required: false %>
     <%= f.label :password %>
   </div>
   <% if devise_mapping.rememberable? -%>
@@ -17,6 +18,7 @@
     <% end %>
   </div>
   <% end %>
-  <%= f.submit t('.sign_in'), class: 'w-100 btn btn-lg btn-primary' %>
+  <%= f.submit t('.sign_in'), class: 'w-75 m-auto btn btn-lg btn-dark rounded-0' %>
 <% end %>
 <p class="mt-5 mb-3 text-center"><%= render "users/shared/links" %></p>
+</div>

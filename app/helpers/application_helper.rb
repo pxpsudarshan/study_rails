@@ -54,6 +54,22 @@ module ApplicationHelper
     doc.to_html.html_safe
   end
 
+  def embedded_jpg(filename, options = {})
+    # Read the JPEG file from the assets folder
+    file_path = Rails.root.join('app', 'assets', 'images', filename)
+    file_content = File.read(file_path)
+
+    # Create an HTML image tag with the specified options
+    img_tag = "<img src='#{file_path}'"
+    img_tag += " class='#{options[:class]}'" if options[:class].present?
+    img_tag += " alt='#{options[:alt]}'" if options[:alt].present?
+    img_tag += " />"
+
+    # Return the HTML image tag as an HTML-safe string
+    img_tag.html_safe
+  end
+
+
   def get_age(dob)
     now = Date.current
     years = now - dob.year.years

@@ -1,5 +1,4 @@
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'form-horizontal' }) do |f| %>
-<%= recaptcha_v3(action: 'signup') %>
 <%= render "kaisha/shared/error_messages", resource: resource %>
 <div class="container">
   <div class="row">
@@ -100,7 +99,7 @@
         </div>
       </div>
       <div class="actions text-center">
-        <%= f.submit t('.sign_up'), class: 'w-50 btn btn-lg btn-primary ' %>
+        <%= f.submit t('.sign_up'), class: 'w-50 m-auto btn btn-lg btn-dark rounded-0 ' %>
       </div>
     </div>
   </div>

@@ -116,6 +116,81 @@ input[type="color" i] {
   padding: 15px;
 }
 
+.btn-student {
+  max-width: 100px;
+  color: #fff;
+  background-color: #c8a772;
+  border-color: #c8a772;
+  float: right;
+}
+.border-student {
+  border-color: #c8a772;
+  border-width: 5px !important;
+}
+.btn-company {
+  max-width: 100px;
+  color: #fff;
+  background-color: #30a7df;
+  border-color: #30a7df;
+  float: right;
+}
+.border-company {
+  border-color: #30a7df;
+  border-width: 5px !important;
+}
+.font-en{
+  font-family: Avenir;
+}
+.font-ja{
+  font-family: hiragino kaku gothic std;
+}
+.mainpage .card-body{
+  height: 250px;
+  display: grid;
+  overflow: auto;
+}
+@media only screen
+and (max-width : 800px) {
+.w-50{
+  width:100% !important;
+}
+.hide-text{
+  display: none;
+}
+}
+.aligned-div {
+  display: flex;
+  justify-content: space-between;
+  align-self: flex-end;
+}
+
+.left-content {
+  text-align: left;
+}
+
+.right-content {
+  text-align: right;
+}
+
+.align-top {
+  align-self: flex-start;
+}
+
+.my-image{
+  position: absolute;
+  width: fit-content;
+  opacity: .7;
+  height: 900px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.card{
+  background-color: rgba(245, 245, 245, 1);
+  opacity: .8;
+}
+
+
 
 /*========================================================
 =            権限エラーページの画像の設定    　　　　     =
