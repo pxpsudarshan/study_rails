@@ -377,13 +377,18 @@ $(document).ready(function() {
   });
 
   hsize = $(window).height();
-  $('.form-signin').css("height", hsize + "px");
+  $('.form-signin').css("height", hsize - 100 + "px");
   $('.mainpage').css("height", hsize + "px");
-  $('.my-image').css("height", hsize + 80  + "px");
+  $('.my-image').css("height", hsize + "px");
+  setInterval(function() {
+    $('.alert-success').addClass("hidden");
+  }, 1000);
+
 });
 
 $(window).resize(function () {
   hsize = $(window).height();
+  $('.form-signin').css("height", hsize - 100 + "px");
   $('.mainpage').css("height", hsize + "px");
-  $('.my-image').css("height", hsize + 80  + "px");
+  $('.my-image').css("height", hsize + "px");
 });

@@ -190,6 +190,21 @@ and (max-width : 800px) {
   opacity: .8;
 }
 
+.alert-success {
+  position: absolute;
+  width: 100%;
+  z-index: 2222;
+  top: 0;
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 2s linear;
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 2s, opacity 2s linear;
+}
 
 
 /*========================================================

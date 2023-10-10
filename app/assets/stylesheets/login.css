@@ -9,17 +9,27 @@ body {
   padding-top: 40px;
   padding-bottom: 40px;
   background-color: #f5f5f5;
+  overflow: hidden;
 }
 
 .form-signin {
   max-width: 1100px;
   padding: 15px;
   position: relative;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .form-signin .form-floating:focus-within {
   z-index: 2;
+}
+
+.alert-danger {
+  position: absolute;
+  z-index: 2222;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
 }
 
 .margin-auto {
@@ -39,6 +49,11 @@ body {
 
 .right-content {
   text-align: right;
+}
+
+a {
+color: #101111;
+text-decoration: none;
 }
 
 .my-image{
@@ -70,9 +85,21 @@ and (max-width : 600px) {
 .hide-text{
   display: none;
 }
+.alert-danger{
+  width: 95%;
+}
 }
 
 .card{
   background-color: rgba(245, 245, 245, 1);
   opacity: .8;
+}
+
+.border-student {
+  border-color: #c8a772;
+  border-width: 5px !important;
+}
+.border-company {
+  border-color: #30a7df;
+  border-width: 5px !important;
 }
