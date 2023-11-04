@@ -5,16 +5,19 @@
 <%= f.hidden_field :vocab_org %>
 <%= f.hidden_field :kanji_body %>
 <%= f.hidden_field :jlpt_level %>
-<% f.radio_button :vocab_read, @gois[:vocab_read], {checked: true, class:"btn-check"} %>
-<%= f.label :vocab_read, value: @gois[:vocab_read], class:'rounded-0 m-1 btn btn-outline-primary text-dark' %>
+<%= f.radio_button :vocab_read, @gois[:vocab_read], {checked: true, class:"btn-check"} %>
+<%= f.label :vocab_read, value: @gois[:vocab_read], class:'rounded-0 m-1 btn btn-outline-primary' %>
 
-<% f.radio_button :vocab_code, @gois[:vocab_code], {checked: true, class:"btn-check"} %>
-<%= f.label :vocab_code, value: @gois[:vocab_code], class:'rounded-0 m-1 btn btn-outline-primary text-dark' %>
+<%= f.radio_button :read_unit, @gois[:unit_sheet], {checked: true, class:"btn-check"} %>
+<%= f.label :read_unit, value: @gois[:unit_sheet], class:'rounded-0 m-1 btn btn-outline-primary' %>
 
-<%= f.submit 'まいかーど', class: 'btn btn-primary rounded-0 m-1' %>
+<%= f.radio_button :vocab_code, @gois[:vocab_code], {checked: true, class:"btn-check"} %>
+<%= f.label :vocab_code, value: @gois[:vocab_code], class:'rounded-0 m-1 btn btn-outline-primary' %>
+
+<%= f.submit 'まいかーど', class: 'rounded-0 m-1 btn btn-primary' %>
 
 <%= f.radio_button :mycard_ext, true, {disabled: true, checked: true, class:"btn-check"} %>
-<%= f.label :mycard_ext, value: @vocab_mycard, class:'btn btn-primary rounded-0 m-1' %>
+<%= f.label :mycard_ext, value: @vocab_mycard, class:'rounded-0 m-1 btn btn-outline-primary' %>
 <% end %>
 
 <%= form_for :lang, url: lang_gois_path, html: { id: 'langs', role: 'form', method: :post }, remote: true do |f| %>
@@ -37,7 +40,7 @@
           <option value="TH"> Thailand </option>
           <option value="NP"> Nepal </option>
           </select>
-          <button type="submit"id="id_btn_langid_ext" class="btn btn-primary rounded-0 m-1">Search</button>
+          <button type="submit"id="id_btn_langid_ext" class="rounded-0 m-1 btn btn-primary">Search</button>
 <% end %>
 <textarea id="id_lang_textarea_ex1" placeholder="まだありません。" rows="6" class="form-control"></textarea>
 
@@ -46,12 +49,12 @@
 -->
 <!--
 <p>
-  <button id="id_btn_lang_ext2" class="btn btn-primary">あなたのくにのことばでかく</button>
+  <button id="id_btn_lang_ext2" class="rounded-0 m-1 btn btn-primary">あなたのくにのことばでかく</button>
   <textarea id="id_lang_textarea_ex2" rows="10" cols="10" class="form-control" placeholder="じぶんのくにのことばで"></textarea>
 </p>
 -->
 <% @gois[:vocab_kanji].each_with_index do |vocab, idx| %>
-<%= link_to vocab["kanji_code"], parts_kanji_kanji_units_path(kanji: { kanji: vocab["kanji_org"] }), remote: true, class: 'btn btn-primary rounded-0 m-1' if vocab["kanji_org"] != 0 %>
+<%= link_to vocab["kanji_code"], parts_kanji_kanji_units_path(kanji: { kanji: vocab["kanji_org"] }), remote: true, class: 'rounded-0 m-1 btn btn-primary' if vocab["kanji_org"] != 0 %>
 <% end if @gois[:vocab_kanji].present? %>
 </div>
 <% end %>
