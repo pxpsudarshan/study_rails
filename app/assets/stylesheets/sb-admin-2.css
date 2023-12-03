@@ -261,3 +261,6 @@ and (max-width : 800px) {
     width: 50px;
     margin-bottom: 5px;
 }
+.btn-text-line-height{
+  line-height: 1!important;
+}
