@@ -1,3 +1,4 @@
+
 <ul class="dropdown-menu inherit d-block w-75 m-auto">
   <li class="dropdown-item" data-bs-toggle="collapse" data-bs-target="#collapsePart" aria-expanded="false" aria-controls="collapsePart">
     Select Parts
@@ -126,30 +127,3 @@
 <ul class="dropdown-menu inherit d-block w-75 m-auto">
   <canvas id="myChart"></canvas>
 </ul>
-<script>
-  const ctx = document.getElementById('myChart');
-
-  new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-      labels: ['left to study', 'Progress'],
-      datasets: [{
-        label: '# of Votes',
-        data: [90, 10],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      responsive: true, 
-      maintainAspectRatio: true,
-      scales: {
-          x: {
-              beginAtZero: true
-          },
-          y: {
-              beginAtZero: true
-          }
-      }
-    }
-  });
-</script>
