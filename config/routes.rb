@@ -121,6 +121,12 @@ Rails.application.routes.draw do
       get :skill
     end
   end
+  resources :specified_quizes do
+    collection do
+      get :specified_quiz
+      post :next_ques
+    end
+  end
 
   resources :quizes do
     member do

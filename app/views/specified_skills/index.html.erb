@@ -6,7 +6,7 @@
       <div class="card mb-1">
         <ul class="list-group list-group-flush text-left ">
           <% @grouped_data.each_with_index do |(classify_c_value, records), index| %>
-            <%= link_to quizes_path(classify_c: classify_c_value), class: 'text-decoration-none d-inline-block w-100 text-reset' do %>
+            <%= link_to specified_quizes_path(classify_c: classify_c_value), class: 'text-decoration-none d-inline-block w-100 text-reset' do %>
               <li class="list-group-item dropdown-item">
                 <h2><%= "#{index + 1}. #{classify_c_value}" %></h2>
                 <p class="mb-0"><%= records.first.classify_c_eng %></p>

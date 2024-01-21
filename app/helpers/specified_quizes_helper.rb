@@ -1,0 +1,2 @@
+module SpecifiedQuizesHelper
+end
