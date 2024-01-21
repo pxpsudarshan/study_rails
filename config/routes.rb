@@ -116,6 +116,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :specified_skills do
+    collection do
+      get :skill
+    end
+  end
+
   resources :quizes do
     member do
       post 'update_mycard_level'
