@@ -8,12 +8,12 @@
       <div class="alert alert-warning">
         You need at least 5 questions to start the quiz.
       </div>
-    <% else %>S
+    <% else %>
       <% @quizData.each_with_index do |data, index| %>
         <% @dataOption = data.judge_flag == 't' %>
         <% correct_answer = @dataOption ? 'true' : 'false' %>
         <% incorrect_answers = @quizData.map { |d| d.judge_flag.to_s }.flatten.uniq - [correct_answer] %>
-        <% shuffled_options = ([correct_answer] + incorrect_answers.sample(3)).shuffle %>
+        <% shuffled_options = ([correct_answer] + incorrect_answers.sample(3)) %>
         
         <div class="card card-body mb-1 rounded-3 p-md-5 mx-md-4 text-black" style="margin-top: 5%">
           <div class="text-start ms-20">
