@@ -1,4 +1,5 @@
 module ApplicationHelper
+  require 'base64'
 
   def path_to_current_javascript
     controller.class.to_s.gsub('::', '/').underscore.sub(/_controller$/, '')
@@ -230,4 +231,10 @@ module ApplicationHelper
     end if id != 0
     id == 0 ? prefs : arr.join(', ')
   end
+
+  def strict_decode64(str)
+    decoded_str = str.force_encoding('UTF-8').unpack1("m0")
+    decoded_str.force_encoding('UTF-8')
+  end
+
 end

@@ -26,8 +26,10 @@
             <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
             <div class="d-flex">
               <h3 style="user-select: none;">
-                <%= "#{index + 1}. #{data.src_txt}" %>
+                <%= "#{index + 1}." %><%= "#{strict_decode64(data.src_hex)}".html_safe %>
+                <br />
                 <%= content_tag :span, "(#{data.src_eng})", class: "hiraText d-none" %>
+                <br/>
               </h3>
             </div>
             <div class="progress">
@@ -50,6 +52,11 @@
               <%= hidden_field_tag "src_eng_#{index}", data.src_eng %>
               <div class="d-flex gap-2">
                 <%= link_to 'Next', specified_quizes_path(classify_c: @classify_c_value), class: 'btn btn-primary next-question', remote: true %>
+              </div>
+              <br >
+              <div  class= "newKana d-none">
+                  <%= "#{strict_decode64(data.explain_hex)}".html_safe %><br/>
+                  <%= content_tag :span, "#{data.explain_en}"%>
               </div>
             </div>
           </form>
@@ -92,6 +99,8 @@
         const correctAnswer = this.getAttribute('data-correct');
         const vocabReadSpan = this.closest('.card').querySelector('.hiraText');
         vocabReadSpan.classList.remove('d-none');
+        const vocabReadSpanKana = this.closest('.card').querySelector('.newKana');
+        vocabReadSpanKana.classList.remove('d-none');
 
         if (selectedOption === correctAnswer) {
           this.parentElement.classList.remove('text-danger');
