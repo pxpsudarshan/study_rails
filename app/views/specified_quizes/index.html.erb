@@ -40,8 +40,8 @@
             <div class="pt-2">
               <% shuffled_options.each_with_index do |option, option_index| %>
                 <label class="options radiocontainer">
-                  <input type="radio" name="answer_<%= index %>" value="<%= option %>" class="quiz-option" data-correct="<%= correct_answer %>" />
-                  <%= option %>
+                  <input type="radio" name="answer_<%= index %>" value="<%= option_index.zero? ? 'true' : 'false' %>" class="quiz-option" data-correct="<%= correct_answer %>" />
+                  <%= option_index.zero? ? 'true' : 'false' %>
                   <span class="checkmark"></span>
                 </label>
               <% end %>
