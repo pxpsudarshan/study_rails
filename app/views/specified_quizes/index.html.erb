@@ -10,11 +10,11 @@
       </div>
     <% else %>
       <% @quizData.each_with_index do |data, index| %>
-        <% @dataOption = data.judge_flag == 't' %>
-        <% correct_answer = @dataOption ? 'true' : 'false' %>
-        <% incorrect_answers = @quizData.map { |d| d.judge_flag.to_s }.flatten.uniq - [correct_answer] %>
-        <% shuffled_options = ([correct_answer] + incorrect_answers.sample(3)) %>
-        
+        <% @dataOption = data.judge_flag == false %>
+        <% correct_answer = @dataOption ? false : true %>
+        <% incorrect_answers = [@dataOption ? 'true' : 'false'] %>
+        <% shuffled_options = ([correct_answer] + incorrect_answers.sample(1)) %>
+
         <div class="card card-body mb-1 rounded-3 p-md-5 mx-md-4 text-black" style="margin-top: 5%">
           <div class="text-start ms-20">
             <div class='text-end'>
@@ -30,7 +30,7 @@
                 <br />
                 <%= content_tag :span, "(#{data.src_eng})", class: "hiraText d-none" %>
                 <br/>
-              </h3>
+                </h3>
             </div>
             <div class="progress">
               <div class="progress-bar progress-bar-animated bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
