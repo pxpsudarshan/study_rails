@@ -1,14 +1,14 @@
-<div class="container">
+<div class="container w-75 m-auto">
   <h1 class="text-left mt-5 mb-3">特定技能試験問題</h1>
-  <hr class="m-5 mx-0 border border-secondary border-2 opacity-75">
+  <hr class="mx-0 border border-secondary border-2 opacity-75">
   <div class="row justify-content-center">
     <div class="col">
-      <div class="card mb-1">
+      <div class="card mb-1 ">
         <ul class="list-group list-group-flush text-left ">
           <% @grouped_data.each_with_index do |(classify_c_value, records), index| %>
             <%= link_to specified_quizes_path(classify_c: classify_c_value), class: 'text-decoration-none d-inline-block w-100 text-reset' do %>
               <li class="list-group-item dropdown-item">
-                <h2><%= "#{index + 1}. #{classify_c_value}" %></h2>
+                <h6><%= "#{index + 1}. #{classify_c_value}" %></h6>
                 <p class="mb-0"><%= records.first.classify_c_eng %></p>
               </li>
             <% end %>
