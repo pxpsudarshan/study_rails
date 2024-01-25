@@ -97,10 +97,6 @@
 
         const selectedOption = this.value;
         const correctAnswer = this.getAttribute('data-correct');
-        const vocabReadSpan = this.closest('.card').querySelector('.hiraText');
-        vocabReadSpan.classList.remove('d-none');
-        const vocabReadSpanKana = this.closest('.card').querySelector('.newKana');
-        vocabReadSpanKana.classList.remove('d-none');
 
         if (selectedOption === correctAnswer) {
           this.parentElement.classList.remove('text-danger');
@@ -108,6 +104,10 @@
         } else {
           this.parentElement.classList.remove('text-success');
           this.parentElement.classList.add('text-danger');
+          const vocabReadSpan = this.closest('.card').querySelector('.hiraText');
+          vocabReadSpan.classList.remove('d-none');
+          const vocabReadSpanKana = this.closest('.card').querySelector('.newKana');
+          vocabReadSpanKana.classList.remove('d-none');
         }
         clearInterval(countdownInterval);
       });
