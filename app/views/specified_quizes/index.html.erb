@@ -58,6 +58,11 @@
                   <%= "#{strict_decode64(data.explain_hex)}".html_safe %><br/>
                   <%= content_tag :span, "#{data.explain_en}"%>
               </div>
+                <div class="card-body text-center">
+                  <p class="card-text"><%= data.key_word %></p>
+                  <hr class="m-1" >
+                </div>
+      
             </div>
           </form>
         </div>
@@ -65,6 +70,7 @@
       <% end %>
         <div class=" card card-body result-container" style="margin-top: 10%"></div>
     <% end %>
+
   </div>
 </div>
     <!-- Your result view -->
@@ -194,11 +200,11 @@
 
       var content = '<div class="Content-result" style="text-align:center">';
       content += '<h1>Result:</h1>';
-      content += totalCorrectAnswer + ' of ' + <%= @total_count %> + '<p><b>' + roundedPercentage + '%</b></p>';
+      content += '<%= @total_correct_answer %> of <%= @total_count %><p><b>' + roundedPercentage + '%</b></p>';
       content += '<p>'+ msgForStudy + '</p>';
-      content += '<%= link_to 'Try Again', quizes_path, class: 'btn btn-primary ' %>   ';
-      content += '<%= link_to 'Back', menus_path, class: 'btn btn-primary' %>';
-      content += '</div>';
+      content += '<%= link_to("Try Again", quizes_path, class: "btn btn-primary") %> ';
+      content += '<%= link_to("Back", menus_path, class: "btn btn-primary") %>';
+      content += '</div>';      
 
       resultContainer.html(content);
     };

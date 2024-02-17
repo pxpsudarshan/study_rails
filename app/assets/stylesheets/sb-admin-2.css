@@ -207,6 +207,17 @@ and (max-width : 800px) {
   transition: visibility 0s 2s, opacity 2s linear;
 }
 
+.student-line {
+  height: 10px;
+  background-color: #c8a772;
+  position: relative;
+  opacity: 0.7;
+}
+
+.top-ten {
+  top: -10px;
+}
+
 .inherit {
   position: inherit;
 }

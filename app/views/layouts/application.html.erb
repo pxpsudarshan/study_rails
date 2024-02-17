@@ -23,32 +23,34 @@
 </head>
 <body>
   <% if controller_name != 'mains' %>
-  <nav class="navbar navbar-expand-md navbar-light static-top bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="<%= current_user.present? ? menus_path : kaisha_menus_path %>"><%= t('title.header') %></a>
+  <nav class="navbar navbar-expand-md p-0">
+  <div class="container-fluid bg-dark bg-gradient">
+      <a class="navbar-brand active p-0" href="<%= current_user.present? ? menus_path : kaisha_menus_path %>">
+        <%= image_tag("niho_logo_newWhite.svg", class: "d-inline-block mt-3", alt: "NIHO", style:"position: relative;z-index: 3;") %>
+      </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <!--
-    /.navbar-header -->
+
+    <!-- navbar-header -->
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse">
       <ul class="navbar-nav me-auto mb-2 mb-md-0">
         <% if current_comp.present? %>
-        <!--<li class="nav-item"><%#= link_to t('navbar.comp').html_safe, kaisha_comps_path, class: "nav-link" %></li>-->
-        <li class="nav-item"><%= link_to t('navbar.company_store').html_safe, new_kaisha_company_store_path, class: "nav-link" %></li>
-        <li class="nav-item"><%= link_to t('navbar.job_profile').html_safe, kaisha_job_profiles_path, class: "nav-link" %></li>
-        <li class="nav-item"><%= link_to t('navbar.offer').html_safe, kaisha_offers_path, class: "nav-link" %></li>
+          <!-- <li class="nav-item"><%#= link_to t('navbar.comp').html_safe, kaisha_comps_path, class: "nav-link" %></li> -->
+          <li class="nav-item"><%= link_to t('navbar.company_store').html_safe, new_kaisha_company_store_path, class: "nav-link text-white" %></li>
+          <li class="nav-item"><%= link_to t('navbar.job_profile').html_safe, kaisha_job_profiles_path, class: "nav-link text-white" %></li>
+          <li class="nav-item"><%= link_to t('navbar.offer').html_safe, kaisha_offers_path, class: "nav-link text-white" %></li>
         <% else %>
-        <!--<li class="nav-item"><%#= link_to t('navbar.user').html_safe, users_path, class: "nav-link" %></li>-->
-        <li class="nav-item"><%= link_to t('navbar.store').html_safe, new_store_path, class: "nav-link" %></li>
-        <li class="nav-item"><%= link_to t('navbar.job').html_safe, jobs_path, class: "nav-link" %></li>
+          <!--<li class="nav-item"><%#= link_to t('navbar.user').html_safe, users_path, class: "nav-link text-white" %></li>-->
+          <li class="nav-item"><%= link_to t('navbar.store').html_safe, new_store_path, class: "nav-link text-white" %></li>
+          <li class="nav-item"><%= link_to t('navbar.job').html_safe, jobs_path, class: "nav-link text-white" %></li>
         <% end %>
         <li class="nav-item"></li>
       </ul>
       <ul class="navbar-nav ms-auto mb-2 mb-md-0">
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" href="#">
+          <a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" aria-expanded="false" href="#">
             <%== current_user.present? ? current_user.name : current_comp.name %>
             <span class="caret"></span>
           </a>
@@ -63,8 +65,9 @@
       </ul>
     </div>
   </div>
-    <!-- /.navbar-static-side -->
+    <!-- /.navb ar-static-side -->
   </nav>
+  <hr class="m-0 student-line top-ten"></hr>
   <% end %>
   <main class="overflow-hidden">
     <%= bootstrap_flash %>
