@@ -58,10 +58,18 @@
                   <%= "#{strict_decode64(data.explain_hex)}".html_safe %><br/>
                   <%= content_tag :span, "#{data.explain_en}"%>
               </div>
-                <div class="card-body text-center">
-                  <p class="card-text"><%= data.key_word %></p>
-                  <hr class="m-1" >
-                </div>
+
+                <%# カンマで分割して配列に格納する %>
+                <% array_of_items = data.key_word.split(",") if data.key_word.present? %>
+
+                <%# 配列の要素を表示する %>
+                <% if array_of_items.present? %>
+                  <div  class= "explainText d-none">
+                    <% array_of_items.each do |item| %>
+                      <p class=" rounded-0 m-1 btn btn-outline-primary text-dark"><%= item %></p>
+                    <% end %>
+                  </div>
+                <% end %>
       
             </div>
           </form>
@@ -114,6 +122,8 @@
           vocabReadSpan.classList.remove('d-none');
           const vocabReadSpanKana = this.closest('.card').querySelector('.newKana');
           vocabReadSpanKana.classList.remove('d-none');
+          const vocabReadSpan1 = this.closest('.card').querySelector('.explainText');
+          vocabReadSpan1.classList.remove('d-none');          
         }
         clearInterval(countdownInterval);
       });
