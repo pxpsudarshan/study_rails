@@ -39,6 +39,8 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    @user.mycard_sign = true
+    @user.entry_no = Time.current.to_i
     begin
       ActiveRecord::Base.transaction() do
         if @user.save

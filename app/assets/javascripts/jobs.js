@@ -24,4 +24,9 @@ $(document).ready(function() {
       });
       $('#modal-responsibilities').html(responsibilitiesHtml);
   });
+
+  $('#btn-apply').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    $('#job_id').val(button.data('id'));
+  });
 });

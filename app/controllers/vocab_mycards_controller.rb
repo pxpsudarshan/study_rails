@@ -1,14 +1,23 @@
 class VocabMycardsController < ApplicationController
   def index
-    day = params[:day].to_i
-    @mode = params[:mode].present? ? params[:mode].to_i : -1
+    # @mode = params[:mode].present? ? params[:mode].to_i : -1
     vocab_code = params[:vocab_code]
     @cards = []
     @message = ""
     if vocab_code.present?
-      @cards = current_user.vocab_mycards.joins(:vocab_store).where(vocab_code: vocab_code).order(created_at: :desc)
+      #Extrating only kanji characters
+      puts "hello before#{vocab_code}"
+      vocab_code = vocab_code.scan(/\p{Han}/).join
+      puts "hello#{vocab_code}"
+      # @cards = current_user.vocab_mycards.joins(:vocab_store).where(vocab_code: vocab_code).order(created_at: :desc)
+      @cards = current_user.vocab_mycards
+                           .joins(:vocab_store)
+                           .where('vocab_mycards.vocab_code ~* ?', "[#{vocab_code}]")
+                           .order(created_at: :desc)
+
       # @cards = current_user.vocab_mycards.where(vocab_code: vocab_code).order(created_at: :desc)
-    else
+    elsif params[:day].present?
+      day = params[:day].to_i
       card = current_user.vocab_mycards.order(created_at: :desc).first
       if card.present?
         top_date = Date.today
@@ -20,13 +29,15 @@ class VocabMycardsController < ApplicationController
         else
           prev_date = top_date - 1.month
         end
-        @cards = current_user.vocab_mycards.joins(:vocab_store).where("DATE(vocab_mycards.created_at) BETWEEN ? AND ?", prev_date, top_date).order(created_at: :desc)
+        # @cards = current_user.vocab_mycards.joins(:vocab_store).where("DATE(vocab_mycards.created_at) BETWEEN ? AND ?", prev_date, top_date).order(created_at: :desc)
         # @cards = current_user.vocab_mycards.where("DATE(created_at) BETWEEN ? AND ?", prev_date, top_date).order(created_at: :desc)
       end
-    end if current_user.mycard_sign
+    else
+      @cards = current_user.vocab_mycards.joins(:vocab_store).order(created_at: :desc)
+    end
 
     if !@cards.present?
-      @message = "NO DATA OR ACCESS DENIED"
+      @message = "NO DATA"
     end
   end
 
@@ -37,6 +48,7 @@ class VocabMycardsController < ApplicationController
 
   def create
     @mycard = current_user.vocab_mycards.new(mycard_params)
+    @mycard.mycard_check = 1
     if @mycard.save
       redirect_to vocab_mycards_path(vocab_code: @mycard.vocab_code), flash: {success: 'created'}
     else

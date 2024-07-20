@@ -11,6 +11,9 @@ Rails.application.routes.draw do
     end
 
     resources :offers do
+      collection do
+        post :mail_request
+      end
     end
 
     resources :job_profiles do
@@ -86,6 +89,9 @@ Rails.application.routes.draw do
   end
 
   resources :jobs do
+    collection do
+      post :apply
+    end
   end
 
   resources :users do
@@ -113,6 +119,18 @@ Rails.application.routes.draw do
     collection do
       get :quiz
       post :next_ques
+    end
+  end
+
+  resources :specified_skills do
+  end
+
+  resources :specified_conversations do
+    collection do
+      get :audio_c
+      get :audio_d
+      get :case_name
+      get :get_case_name
     end
   end
 

@@ -1,0 +1,60 @@
+<script id="lang" data-lang="<%= @lang %>"></script>
+<div class="container w-75 m-auto">
+<div class="row mt-5 mb-3">
+  <div class="col">
+    <h1 class="text-left">会話</h1>
+  </div>
+
+  <div class="col">
+  <%= form_for :title_nation, url: audio_d_specified_conversations_path, html: { id: 'title_nations', role: 'form', method: :get }, class: "d-flex", remote: true do |form| %>
+      <% unique_titles = Set.new %>
+      <% audio = @audio_c.each_with_object([]) do |audio, arr| %>
+        <% title = title_nation(audio) %>
+        <% unless unique_titles.include?(title) %>
+          <% unique_titles.add(title) %>
+          <% arr << [title, audio.title_sort] %>
+        <% end %>
+      <% end %>
+      <%= hidden_field_tag :audio_b_id, @audio_c.first.audio_b_id %>
+      <%= form.select :title_nation, options_for_select(audio, ''), { include_blank: false}, { class: 'form-select m-1 mr-sm-2 w-auto', style: 'border-radius: 0;', onchange: 'optionChange(this);'  } %>
+      <% first_item = @audio_c.first.title_sort %>
+      <% filtered_audio_case = @audio_c.select { |audio_case| audio_case.title_sort == first_item } %>
+
+      <% audio_case = filtered_audio_case.map { |audio_case| [case_name_nation(audio_case), audio_case.id] }.uniq %>
+      <%= form.select :case_name_nation, options_for_select(audio_case, ''), { include_blank: false}, { class: 'form-select m-1 mr-sm-2 w-auto', style: 'border-radius: 0;' } %>
+
+      <%= form.radio_button :language, 'JP', id: 'jpn_radio', class: 'btn-check visually-hidden', autocomplete: 'off', checked: true %>
+      <label class="btn btn-primary m-1 mr-sm-2" style="border-radius: 0;" for="jpn_radio">Jpn</label>
+
+      <%= form.radio_button :language, 'EN', id: 'eng_radio', class: 'btn-check visually-hidden', autocomplete: 'off' %>
+      <label class="btn btn-primary m-1 mr-sm-2" style="border-radius: 0;" for="eng_radio">Eng</label>
+
+      <button type="submit" class="btn btn-info m-1 mr-sm-2" style="border-radius: 0; margin-left: 5px;" >
+        <i class="fas fa-search"></i>
+      </button>
+      <style>
+      @media (max-width: 500px) {
+        .d-flex {
+          display: contents !important;
+        }
+      }
+      .btn-primary {
+        background-color: aliceblue;
+        color: black;
+      }
+
+      .btn-primary:hover {
+        background-color: #007bff; /* Change to desired hover color */
+      }
+    
+      .btn-primary.active {
+        background-color: #007bff; /* Change to desired selected color */
+      }
+      </style>      
+    <% end %>
+    </div>
+    </div>
+    <hr class="mx-0 border border-secondary border-2 opacity-75">
+    <div class="col">
+      <div id="audio_d"></div>
+    </div>

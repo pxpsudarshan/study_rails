@@ -1,5 +1,6 @@
 <%= form_for :kanji, url: url, html: { id: 'gois', role: 'form', method: :get }, remote: true do |f| %>
 <% verbs = @gois.map{ |goi| [goi[:vocab_code], goi[:vocab_org]] } %>
+<%= hidden_field_tag :goi, @goi %>
 <div class="m-auto w-50">
 <%= f.select :vocab_org, options_for_select(verbs,''), { include_blank: false }, class: 'form-select' %>
 <%= f.submit 'next', class: 'btn btn-primary rounded-0 m-1' %>

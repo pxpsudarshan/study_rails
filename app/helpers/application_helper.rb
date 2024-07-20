@@ -54,21 +54,16 @@ module ApplicationHelper
     doc.to_html.html_safe
   end
 
-  def embedded_jpg(filename, options = {})
-    # Read the JPEG file from the assets folder
-    file_path = Rails.root.join('app', 'assets', 'images', filename)
-    file_content = File.read(file_path)
-
-    # Create an HTML image tag with the specified options
-    img_tag = "<img src='#{file_path}'"
-    img_tag += " class='#{options[:class]}'" if options[:class].present?
-    img_tag += " alt='#{options[:alt]}'" if options[:alt].present?
-    img_tag += " />"
-
-    # Return the HTML image tag as an HTML-safe string
-    img_tag.html_safe
+  def get_url(id, language)
+    file_name = "#{id}_#{language}.mp3"
+    file_path = Rails.root.join('public', 'audio', file_name)
+    return "/audio/#{file_name}" if File.exist?(file_path)
+    nil  # Return nil if the file doesn't exist
   end
-
+  
+  def get_media(media)
+    media.attached? ? url_for(media) : nil
+  end
 
   def get_age(dob)
     now = Date.current
@@ -229,5 +224,46 @@ module ApplicationHelper
       arr << text if id.include?(value)
     end if id != 0
     id == 0 ? prefs : arr.join(', ')
+  end
+
+  def strict_decode64(str)
+    decoded_str = str.force_encoding('UTF-8').unpack1("m0")
+    decoded_str.force_encoding('UTF-8')
+  end
+
+  def src_nation(data)
+    out = data.src_eng
+    if data.src_nation.present?
+      out = data.src_nation[current_user.lang_id] if data.src_nation[current_user.lang_id].present?
+    end
+    out
+  end
+
+  def title_nation(data)
+    out = data.title_nation['EN']
+    out = data.title_nation[current_user.lang_id] if data.title_nation[current_user.lang_id].present?
+    out
+  end
+
+  def case_name_nation(data)
+    out = data.case_name_nation['EN']
+    out = data.case_name_nation[current_user.lang_id] if data.case_name_nation[current_user.lang_id].present?
+    out
+  end
+
+  def question_nation(data)
+    out = data.question_eng
+    if data.question_nation.present?
+      out = data.question_nation[current_user.lang_id] if data.question_nation[current_user.lang_id].present?
+    end
+    out
+  end
+
+  def explain_nation(data)
+    out = data.explain_eng
+    if data.explain_nation.present?
+      out = data.explain_nation[current_user.lang_id] if data.explain_nation[current_user.lang_id].present?
+    end
+    out
   end
 end

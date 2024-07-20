@@ -79,6 +79,7 @@
 </div>
 
 
+
       <% if @SubmitStatus.present? %>
       <div class="alert alert-success alert-dismissible fade show" role="alert">
         <strong> おめでとうございます!</strong> 脂肪完了いたしました。
@@ -113,7 +114,8 @@
 
     <div class="modal" id="btn-apply">
       <div class="modal-dialog">
-        <%= form_for :user, url: jobs_path, html: { class: 'needs-validation', novalidate: true, id: 'user', role: 'form' } do |f| %>
+        <%= form_for :job, url: apply_jobs_path, html: { class: 'needs-validation', novalidate: true, id: 'user', role: 'form' } do |f| %>
+        <%= f.hidden_field :id %>
         <div class="modal-content">
           <!-- Modal Header -->
           <div class="modal-header">
@@ -122,19 +124,21 @@
           </div>
           <!-- Modal body -->
           <div class="modal-body">
+<!--
             <div class="form-group">
               <label for="recipient-name" class="col-form-label">志望動機:</label>
-                <%= f.text_area :sei, :size=>"20x4", class: 'form-control' %>
-              </div>
-              <div class="form-group">
-                <label for="message-text" class="col-form-label">自己PR:</label>
-                  <%= f.text_area :sei, :size=>"20x4", class: 'form-control' %>
-              </div>
+                <%#= f.text_area :sei, :size=>"20x4", class: 'form-control' %>
             </div>
+            <div class="form-group">
+              <label for="message-text" class="col-form-label">自己PR:</label>
+                <%#= f.text_area :sei, :size=>"20x4", class: 'form-control' %>
+            </div>
+-->            
+          </div>
           <!-- Modal footer -->
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">キャンセル</button>
-            <%= submit_tag "申請", :class=>"btn btn-primary" %>
+            <%= f.submit "申請", class: "btn btn-primary" %>
           </div>
         </div>
       <% end %>

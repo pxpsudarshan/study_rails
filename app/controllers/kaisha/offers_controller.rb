@@ -52,4 +52,12 @@ class Kaisha::OffersController < ApplicationController
       format.js
     end
   end
+
+  def mail_request
+    redirect_to kaisha_offers_path, flash: {alert: 'Please select.'} and return if params[:offer].blank?
+    ids = params[:offer][:ids]
+    email = 'h.renji@hotmail.com,ogadaisuke0303@gmail.com'
+    entry_no = User.find(ids).map(&:entry_no).join(', ')
+    Kaisha::KaishaMailer.notify(email, current_comp.email, current_comp.company_name, current_comp.business_type, entry_no).deliver_now
+  end
 end

@@ -1,8 +1,8 @@
+
 <ul class="dropdown-menu inherit d-block w-75 m-auto">
   <li class="dropdown-item" data-bs-toggle="collapse" data-bs-target="#collapsePart" aria-expanded="false" aria-controls="collapsePart">
     Select Parts
   </li>
-  <hr class="m-1">
 
   <div class="collapse" id="collapsePart">
     <div class="card card-body p-0" style="margin: 0 3%;">
@@ -13,11 +13,11 @@
       </ul>
     </div>
   </div>
+  <hr class="m-1">
 
   <li class="dropdown-item" data-bs-toggle="collapse" data-bs-target="#collapseVocab" aria-expanded="false" aria-controls="collapseVocab">
     Select Vocabulary
   </li>
-  <hr class="m-1">
 
   <div class="collapse" id="collapseVocab">
     <div class="card card-body p-0" style="margin: 0 3%;">
@@ -32,11 +32,11 @@
       </ul>
     </div>
   </div>
+  <hr class="m-1">
 
   <li class="dropdown-item" data-bs-toggle="collapse" data-bs-target="#collapseKanji" aria-expanded="false" aria-controls="collapseKanji" >
     Select Kanji
   </li>
-  <hr class="m-1">
 
   <div class="collapse" id="collapseKanji">
     <div class="card card-body p-0" style="margin: 0 3%;">
@@ -55,11 +55,11 @@
       </ul>
     </div>
   </div>
+  <hr class="m-1">
 
   <li class="dropdown-item" data-bs-toggle="collapse" data-bs-target="#collapseJlpt" aria-expanded="false" aria-controls="collapseJlpt" >
     Jlpt
   </li>
-  <hr class="m-1">
 
   <div class="collapse" id="collapseJlpt">
     <div class="card card-body p-0" style="margin: 0 3%;">
@@ -86,40 +86,60 @@
       </ul>
     </div>
   </div>
+  <hr class="m-1">
 
   <li class="dropdown-item" data-bs-toggle="collapse" data-bs-toggle="collapse" data-bs-target="#collapsemycard" aria-expanded="false" aria-controls="collapsemycard">
     Select MyCard Review
   </li>
-  <hr class="m-1">
   <div class="collapse" id="collapsemycard">
     <div class="card card-body p-0" style="margin: 0 3%;">
       <ul class="dropdown-menu inherit d-block w-100 m-auto">
         <li class="dropdown-item">
-          <%= link_to 'One day', vocab_mycards_path(mode: 0, day: 1), class: 'text-decoration-none d-inline-block w-100 text-reset' %>
-        </li>
-        <hr class="m-1">
-        <li class="dropdown-item">
-          <%= link_to 'One week', vocab_mycards_path(mode: 0, day: 7), class: 'text-decoration-none d-inline-block w-100 text-reset' %>
-        </li>
-        <hr class="m-1">
-        <li class="dropdown-item">
-          <%= link_to 'One month', vocab_mycards_path(mode: 0, day: 30), class: 'text-decoration-none d-inline-block w-100 text-reset' %>
+          <%= link_to 'select', vocab_mycards_path, class: 'text-decoration-none d-inline-block w-100 text-reset' %>
         </li>
       </ul>
     </div>
   </div>
+  <hr class="m-1">
 
   <li class="dropdown-item" data-bs-toggle="collapse" data-bs-toggle="collapse" data-bs-target="#collapsequiz" aria-expanded="false" aria-controls="collapsequiz">
     Quiz
   </li>
-
   <div class="collapse" id="collapsequiz">
     <div class="card card-body mb-1 p-0" style="margin: 0 3%;">
       <ul class="dropdown-menu inherit d-block w-100 m-auto">
         <li class="dropdown-item">
           <%= link_to 'Start Quiz', quizes_path, class: 'text-decoration-none d-inline-block w-100 text-reset'  %>
         </li>
+        <% @tokutei_as.each do |tokutei_a| %>
+            <hr class="m-1">
+            <li class="dropdown-item">
+              <%= link_to "#{tokutei_a.src_eng}", specified_skills_path(id: tokutei_a.id), class: 'text-decoration-none d-inline-block w-100 text-reset'  %>
+            </li>
+        <% end %>
       </ul>
     </div>
   </div>
+  <hr class="m-1">
+
+   <li class="dropdown-item" data-bs-toggle="collapse" data-bs-target="#collapseConversation" aria-expanded="false" aria-controls="collapseConvertion">
+  Conversation
+  </li>
+
+  <div class="collapse" id="collapseConversation">
+  <div class="card card-body p-0" style="margin: 0 3%;">
+    <ul class="dropdown-menu inherit d-block w-100 m-auto">
+      <% @audio_as.each_with_index do |audio_a, index| %>
+        <% if index > 0 %> <hr class="m-1"> <% end %>
+        <li class="dropdown-item">
+            <%= link_to "#{title_nation(audio_a)}", specified_conversations_path(id: audio_a.id), class: 'text-decoration-none d-inline-block w-100 text-reset' %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
 </ul>
+<!--  <ul class="dropdown-menu inherit d-block w-75 m-auto">-->
+<!--  <canvas id="myChart"></canvas>-->
+<!--  </ul>-->

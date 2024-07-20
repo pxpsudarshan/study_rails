@@ -1,0 +1,244 @@
+<% content_for :stylesheet do %>
+<%= stylesheet_link_tag "quizes", media: "all", 'data-turbo-track': 'reload' %>
+<% end %>
+<div class="row d-flex justify-content-center align-items-center ">
+  <div class="col-xl-8">
+    <% if @total_count < 5 %>
+    <div class="alert alert-warning">
+      You need at least 5 questions to start the quiz.
+    </div>
+    <% else %>
+      <% @datas.each_with_index do |data, index| %>
+        <% if data.answer_option.present? %>
+          <% correct_answer = data.correct_answer %>
+          <% shuffled_options = data.answer_option.shuffle %>
+        <% else %>
+          <% correct_answer = data.correct_answer == "t" ? true : false %>
+          <% shuffled_options = [true,false] %>
+        <% end %>
+        <div class="card card-body mb-1 rounded-3 p-md-5 mx-md-4 text-black" style="margin-top: 5%">
+          <div class="text-start ms-20">
+            <div class='text-end'>
+              <h5>
+               <%= "Question #{index+1} of #{@total_count}" %>
+              </h5>
+            </div>
+              <div class="d-flex">
+                <h3 style="user-select: none;">
+                  <%= "#{index + 1}." %><%= "#{strict_decode64(data.question_jp_hex)}".html_safe %>
+                  <br />
+                  <%= content_tag :span, "(#{question_nation(data)})", class: "hiraText d-none" %>
+                  <br/>
+                </h3>
+              </div>
+              <div class="progress">
+                <div class="progress-bar progress-bar-animated bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                  <span id="countdown_<%= index %>">20</span>
+                </div>
+              </div>
+              <div class="pt-2">
+                <% shuffled_options.each do |option| %>
+                  <label class="options radiocontainer">
+                    <input type="radio" name="answer_<%= index %>" value="<%= option %>" class="quiz-option" data-correct="<%= correct_answer %>" />
+                    <%= option %>
+                    <span class="checkmark"></span>
+                  </label>
+                <% end %>
+              </div>
+
+              <!-- Add the hidden input field here -->
+              <div class="pt-3">
+                <div class="d-flex gap-2">
+                  <button  class="btn btn-primary next-question">Next</button>
+                </div>
+                <br >
+                <div  class= "newKana d-none">
+                  <%= "#{strict_decode64(data.explain_jp_hex)}".html_safe %><br/>
+                  <%= content_tag :span, "#{explain_nation(data)}"%>
+                </div>
+
+                <%# カンマで分割して配列に格納する %>
+                <% array_of_items = data.key_word&.split(",") || [] %>
+
+                <%# 配列の要素を表示する %>
+                <div  class= "explainText d-none">
+                  <% array_of_items.each do |item| %>
+                    <p class=" rounded-0 m-1 btn btn-outline-primary text-dark"><%= item %></p>
+                  <% end %>
+                </div>
+              </div>
+          </div>
+        </div>
+      <% end %>
+      <div class=" card card-body result-container" style="margin-top: 10%"></div>
+    <% end %>
+
+  </div>
+</div>
+<%= javascript_tag do %>
+  $(document).ready(function() {
+    $(".result-container").hide();
+    const options = document.querySelectorAll('.quiz-option');
+    const firstClickedOptions = [];
+    var totalCorrectAnswer = 0;
+    var totalCountOfQuestion = <%= @total_count %>;
+    var currentIndex = 0;
+    var totalQuestions = <%= @datas.length %>;
+    var countdownInterval;
+
+    options.forEach((option) => {
+      firstClickedOptions[currentIndex] = ''; // Initialize to empty string
+      option.addEventListener('change', function() {
+
+        if (!firstClickedOptions[currentIndex]) {
+          firstClickedOptions[currentIndex] = $("input[name='answer_" + currentIndex + "']:checked").val();
+        }
+
+        const selectedOption = this.value;
+        const correctAnswer = this.getAttribute('data-correct');
+
+        if (selectedOption === correctAnswer) {
+          this.parentElement.classList.remove('text-danger');
+          this.parentElement.classList.add('text-success');
+        } else {
+          this.parentElement.classList.remove('text-success');
+          this.parentElement.classList.add('text-danger');
+          const vocabReadSpan = this.closest('.card').querySelector('.hiraText');
+          vocabReadSpan.classList.remove('d-none');
+          const vocabReadSpanKana = this.closest('.card').querySelector('.newKana');
+          vocabReadSpanKana.classList.remove('d-none');
+          const vocabReadSpan1 = this.closest('.card').querySelector('.explainText');
+          vocabReadSpan1.classList.remove('d-none');          
+        }
+        clearInterval(countdownInterval);
+      });
+    });
+
+    $(".next-question").click(function() {
+      progressBarAnimation(20);
+      triggerNextQuestion();
+    });
+
+    function triggerNextQuestion() {
+      var vocabOrg = $("input[name='vocab_org_" + currentIndex + "']").val();
+      var correctOptionstr = $("input[name='answer_" + currentIndex + "']").data("correct").toString();
+      var selectedOptionstr = firstClickedOptions[currentIndex];
+      if(selectedOptionstr === correctOptionstr) {
+        totalCorrectAnswer = totalCorrectAnswer + 1;
+      }
+
+      currentIndex++;
+      if (currentIndex < totalQuestions) {
+        showQuestion(currentIndex);
+      } else {
+        $('.progress').hide();
+        clearInterval(countdownInterval);
+        btnSubmit(currentIndex);
+      }
+    }
+
+    function btnSubmit(currentIndex) {
+      $(".card").hide();
+
+      var resultContainer = $(".result-container");
+      resultContainer.show();
+
+      var percentage_level_1 = (totalCorrectAnswer / totalCountOfQuestion) * 100;
+      var roundedPercentage = parseFloat(percentage_level_1.toFixed(0));
+
+      var msgForStudy = '';
+
+      switch (true) {
+          case roundedPercentage < 25:
+              msgForStudy = "Keep practicing!";
+              break;
+          case roundedPercentage < 50:
+              msgForStudy = "Keep working on it!";
+              break;
+          case roundedPercentage < 75:
+              msgForStudy = "You're making progress!";
+              break;
+          case roundedPercentage < 90:
+              msgForStudy = "Great job!";
+              break;
+          case roundedPercentage <= 100:
+              msgForStudy = "Excellent work!";
+              break;
+          default:
+              msgForStudy = "Invalid percentage. Please check your inputs.";
+              break;
+      }
+
+      var content = '<div class="Content-result" style="text-align:center">';
+      content += '<h1>Result:</h1>';
+      content += totalCorrectAnswer + ' of ' + <%= @total_count %> + '<p><b>' + roundedPercentage + '%</b></p>';
+      content += '<p>'+ msgForStudy + '</p>';
+      content += '<a class="btn btn-primary m-1" href="<%= url_for specified_skills_url(id: @id) %>">Try Again</a>';
+      content += '<%= link_to "Menu", menus_path, class: "btn btn-primary" %>';
+      content += '</div>';
+
+      resultContainer.html(content);
+    };
+
+    showQuestion(currentIndex);
+    function showQuestion(index) {
+      resetCountdown();
+      $(".card").hide();
+      $(".card:eq(" + index + ")").show();
+    }
+
+    function progressBarAnimation(barPercentage) {
+      var percentageRemaining = (barPercentage / 20) * 100;
+      $(".progress-bar").css("width", percentageRemaining + "%");
+      $(".progress-bar").attr("aria-valuenow", percentageRemaining);
+
+      // Remove existing classes
+      $(".progress-bar").removeClass("bg-danger bg-warning bg-info");
+
+      switch (true) {
+        case percentageRemaining < 25:
+          $(".progress-bar").addClass("bg-danger");
+            break;
+        case percentageRemaining < 50:
+          $(".progress-bar").addClass("bg-warning");
+            break;
+        case percentageRemaining < 75:
+            $(".progress-bar").addClass("bg-info");
+            break;
+        case percentageRemaining < 90:
+           $(".progress-bar").addClass("bg-success");
+            break;
+        case percentageRemaining <= 100:
+            $(".progress-bar").addClass("bg-success");
+            break;
+        default:
+            $(".progress-bar").addClass("width", percentageRemaining + "%");
+            break;
+      }
+    }
+
+    function startCountdown() {
+        var countdown = 20; // Initial countdown value in seconds
+        clearInterval(countdownInterval);
+        countdownInterval = setInterval(function() {
+          countdown--;
+
+            progressBarAnimation(countdown);
+
+            if (countdown < 0) {
+              progressBarAnimation(20);
+              triggerNextQuestion();
+            } else {
+                $('#countdown_' + currentIndex).text(countdown);
+            }
+        }, 1000);
+    }
+
+    function resetCountdown() {
+        clearInterval(countdownInterval);
+        $('#countdown_' + currentIndex).text(20);
+        startCountdown();
+    }
+
+  });
+  <% end %>

@@ -372,7 +372,7 @@ $(document).ready(function() {
       width: '100%',
     });
 
-  $('.multiselect-months').select2({
+    $('.multiselect-months').select2({
      width: '100%',
   });
 

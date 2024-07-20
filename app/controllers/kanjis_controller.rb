@@ -18,13 +18,14 @@ class KanjisController < ApplicationController
           vocab_org:  vocab_org,
         }
         @gois << arr
-      end
+      end if vocab.present?
       @count = @gois.length
     end if params[:kanji].present?
   end
 
   def kanji_vocab
     if params[:kanji][:vocab_org].present?
+        puts "helllo vocab #{params[:kanji][:vocab_org]}"
         vocab_org = params[:kanji][:vocab_org]
         vocab = VocabStore.find_by(vocab_org: vocab_org)
         vocab_code = vocab["vocab_code"]

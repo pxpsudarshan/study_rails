@@ -27,34 +27,23 @@ class ApplicationController < ActionController::Base
     response.headers['Expires']       = 'Thu, 01 Dec 1994 16:00:00 GMT'
   end
 
-  module OccupationType
-    ALL     = 0
-    KEIEI   = 1
-    KANRI   = 2
-    EIGYO   = 3
-    JINJI   = 4
-    CONSULT = 5
-    IT      = 6
-    MARKET  = 7
-    PROJECT = 8
-    KIKAI   = 9
-    SENMON  = 10
-  end
-
-  include OccupationType
-
   OCCUPATION_MAP = {
-    ALL     => '全て',
-    KEIEI   => '経営',
-    KANRI   => '管理',
-    EIGYO   => '営業',
-    JINJI   => '人事',
-    CONSULT => 'コンサルタント',
-    IT      => 'IT技術職',
-    MARKET  => 'マーケテェング',
-    PROJECT => 'プロジェクト管理',
-    KIKAI   => '機械',
-    SENMON  => '専門職など',
+    0     => '全て',
+    1     => ' 管理的職業',
+    2     => ' 研究・技術の職業',
+    3     => ' 法務・経営・文化芸術等の専門的職業',
+    4     => ' 医療・看護・保健の職業',
+    5     => ' 保育・教育の職業',
+    6     => ' 事務的職業',
+    7     => ' 販売・営業の職業',
+    8     => ' 福祉・介護の職業',
+    9     => ' サービスの職業',
+    10     => ' 警備・保安の職業',
+    11     => ' 農林漁業の職業',
+    12     => ' 製造・修理・塗装・製図等の職業',
+    13     => ' 配送・輸送・機械運転の職業',
+    14     => ' 建設・土木・電気工事の職業',
+    15     => ' 運搬・清掃・包装・選別等の職業',
   }
 
   def occupation_list

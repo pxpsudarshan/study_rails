@@ -43,8 +43,8 @@ body {
 }
 
 a {
-color: #101111;
-text-decoration: none;
+  color: #101111;
+  text-decoration: none;
 }
 
 .my-image{
@@ -57,9 +57,9 @@ text-decoration: none;
 }
 
 select,
-input[type="email"], 
-input[type="password"], 
-input[type="text"], 
+input[type="email"],
+input[type="password"],
+input[type="text"],
 textarea {
   border: none;
   outline: none;

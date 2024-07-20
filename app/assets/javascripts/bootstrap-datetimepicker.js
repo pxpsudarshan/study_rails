@@ -495,7 +495,7 @@
             selectMonth: function(t) {
                 var a = e(t.target).closest("tbody").find("span").index(e(t.target));
                 i = i.month(a),
-                p === h ? (_(r = r.clone().year(i.year()).month(i.month())),
+                p === h ? (_(r.clone().year(i.year()).month(i.month())),
                 n.inline || ee()) : (j(-1),
                 U()),
                 B("M")
@@ -503,7 +503,7 @@
             selectYear: function(t) {
                 var a = parseInt(e(t.target).text(), 10) || 0;
                 i = i.year(a),
-                p === h ? (_(r = r.clone().year(i.year())),
+                p === h ? (_(r.clone().year(i.year())),
                 n.inline || ee()) : (j(-1),
                 U()),
                 B("YYYY")
@@ -511,7 +511,7 @@
             selectDecade: function(t) {
                 var a = parseInt(e(t.target).data("selection"), 10) || 0;
                 i = i.year(a),
-                p === h ? (_(r = r.clone().year(i.year())),
+                p === h ? (_(r.clone().year(i.year())),
                 n.inline || ee()) : (j(-1),
                 U()),
                 B("YYYY")
@@ -548,7 +548,7 @@
                 N(e, "s") && _(e)
             },
             togglePeriod: function() {
-                _(r = r.clone().add(r.hour() >= 12 ? -12 : 12, "h"))
+                _(r.clone().add(r.hour() >= 12 ? -12 : 12, "h"))
             },
             togglePicker: function(t) {
                 var a, r = e(t.target), i = r.closest("ul"), o = i.find(".show"), s = i.find(".collapse:not(.show)");
@@ -580,15 +580,16 @@
             selectHour: function(t) {
                 var a = parseInt(e(t.target).text(), 10);
                 s || (r.hour() >= 12 ? 12 !== a && (a += 12) : 12 === a && (a = 0)),
-                _(r = r.clone().hour(a)),
+                _(r.clone().hour(a)),
                 ne.showPicker.call(c)
             },
             selectMinute: function(t) {
-                _(r = r.clone().minute(parseInt(e(t.target).text(), 10))),
+            console.log('select min '+r);
+                _(r.clone().minute(parseInt(e(t.target).text(), 10))),
                 ne.showPicker.call(c)
             },
             selectSecond: function(t) {
-                _(r = r.clone().second(parseInt(e(t.target).text(), 10))),
+                _(r.clone().second(parseInt(e(t.target).text(), 10))),
                 ne.showPicker.call(c)
             },
             clear: te,

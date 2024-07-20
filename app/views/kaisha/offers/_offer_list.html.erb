@@ -1,5 +1,4 @@
 <% if @offers.present? %>
-<%= paginate @offers, remote: true %>
 <div class="row p-3">
   <table class="cell-border">
     <div class="row">
@@ -14,11 +13,15 @@
     </div>
   </table>
 </div>
+<%= form_for :offer, url: mail_request_kaisha_offers_path, html: { class: 'needs-validation', novalidate: true, role: 'form' } do |f| %>
+<%= paginate @offers, remote: true %>
 <div class="row">
   <div class="col-sm">
     <table class="table table-bordered table-hover table-sm">
       <thead>
         <tr class="table-success">
+          <th class="text-center"><%= '選択' %></th>
+          <th class="text-center"><%= 'エントリー番号' %></th>
           <th class="text-center"><%= '国籍' %></th>
           <th class="text-center"><%= '現住所' %></th>
           <th class="text-center"><%= '性別' %></th>
@@ -28,8 +31,11 @@
         </tr>
       </thead>
       <tbody>
+
       <% @offers.each do |user| %>
         <tr class="details_row nested-fields">
+          <td class="text-center"><%= f.check_box :ids, { multiple: true, class: 'form-check-input'}, user.id, false %></td>
+          <td class="text-center"><%= user.entry_no %></td>
           <td class="text-center"><%= kokuseki_array(user.profile.kokuseki) %></td>
           <td class="text-center"><%= country_array(user.profile.address_country) %></td>
           <td class="text-center"><%= sex_array(user.profile.sex) %></td>
@@ -49,8 +55,9 @@
 <strong><%= page_entries_info @offers, :entry_name => '' %></strong>
 <div class="row">
   <div class="col-sm-12 text-end mt-2">
-    <button type="submit" class="btn btn-primary btn-lg mb-2">詳細情報を希望する</button>
+    <%= f.submit '詳細情報を希望する', class: 'btn btn-primary btn-lg mb-2' %>
     <h6>ビズポート社より貴社様にご連絡致します。</h6>
   </div>
 </div>
+<% end %>
 <% end %>
