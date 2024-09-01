@@ -2,13 +2,12 @@ class VocabMycardsController < ApplicationController
   def index
     # @mode = params[:mode].present? ? params[:mode].to_i : -1
     vocab_code = params[:vocab_code]
+    @vocab_code = vocab_code
     @cards = []
     @message = ""
     if vocab_code.present?
       #Extrating only kanji characters
-      puts "hello before#{vocab_code}"
       vocab_code = vocab_code.scan(/\p{Han}/).join
-      puts "hello#{vocab_code}"
       # @cards = current_user.vocab_mycards.joins(:vocab_store).where(vocab_code: vocab_code).order(created_at: :desc)
       @cards = current_user.vocab_mycards
                            .joins(:vocab_store)
@@ -16,21 +15,26 @@ class VocabMycardsController < ApplicationController
                            .order(created_at: :desc)
 
       # @cards = current_user.vocab_mycards.where(vocab_code: vocab_code).order(created_at: :desc)
-    elsif params[:day].present?
-      day = params[:day].to_i
+    elsif params[:selected_item].present?
+      day = params[:selected_item].to_i
       card = current_user.vocab_mycards.order(created_at: :desc).first
       if card.present?
         top_date = Date.today
         case day
         when 1
           prev_date = top_date - 1.day
-        when 7
+        when 2
           prev_date = top_date - 7.day
-        else
+        when 3
           prev_date = top_date - 1.month
+        else
+          prev_date = top_date - 1.year
         end
         # @cards = current_user.vocab_mycards.joins(:vocab_store).where("DATE(vocab_mycards.created_at) BETWEEN ? AND ?", prev_date, top_date).order(created_at: :desc)
-        # @cards = current_user.vocab_mycards.where("DATE(created_at) BETWEEN ? AND ?", prev_date, top_date).order(created_at: :desc)
+        @cards = current_user.vocab_mycards
+                  .joins(:vocab_store)
+                  .where("DATE(vocab_mycards.created_at) BETWEEN ? AND ?", prev_date, top_date)
+                  .order(created_at: :desc)
       end
     else
       @cards = current_user.vocab_mycards.joins(:vocab_store).order(created_at: :desc)

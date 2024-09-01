@@ -1,73 +1,80 @@
 <style>
-.card:hover{
-     transform: scale(1.05);
-     box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
-}
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
+  }
 
-.underline{
-  text-decoration: none;
-  color: black;
-}
+  .underline {
+    text-decoration: none;
+    color: black;
+  }
 </style>
+
 <div class="m-auto w-75 row">
-  <% if @message != "" %>
-        <%= @message %>
-  <% end %>
-<div class="container">
-  <div class="row justify-content-end mt-2">
-    <div class="col-md-3 d-flex">
-    <%= form_for :search, url: vocab_mycards_path, method: :get, remote: true, html: { id: 'job', role: 'form', class: 'd-flex flex-row w-100 align-items-center' } do |f| %>
-      <% options = [['-', 1],['one day', 1], ['one week', 2], ['one month', 3]] %>
-      <div class="mb-1">
-        <%= f.select :case_name_nation, options_for_select(options, ''), { include_blank: false }, { class: 'form-select m-1 mr-sm-2 w-auto', style: 'border-radius: 0;' } %>
-      </div>
-    
-      <div class="d-flex justify-content-end align-items-center mb-1">
-        <%= button_tag(type: "submit", class: "btn btn-info m-1 mr-sm-2", style: "border-radius: 0; margin-left: 5px;") do %>
-          <i class="fas fa-search"></i>
-        <% end %>
-      </div>
-    <% end %>
-    
-    </div>
-  </div>
-</div>
-
-
-<% last_date = nil %>
-<% @cards.each do |card| %>
-  <% current_date = card.created_at.strftime('%Y-%m-%d') %>
+  <% if not @vocab_code.present? %>
+  <div class="container">
+    <div class="row justify-content-end mt-2">
+      <div class="col-md-3 d-flex">
+      <%= form_with url: vocab_mycards_path, method: :get, remote: true, id: 'job', role: 'form', class: 'd-flex flex-row w-100 align-items-center' do |f| %>
   
-  <% if last_date != current_date %>
-    <div style="width: 100%;background: lightblue;text-align: center; margin: 10px;">
-      <%= current_date %>
-    </div>
-    <% last_date = current_date %>
-  <% end %>
-  <div class="col-sm-3 mt-1" style="min-width: 150px;">
-    <div class="card rounded-0" style="height: 160px; overflow: auto;">
-      <div class="card-body text-center">
-        <p class="card-text"><%= card.vocab_read %>
-        </p>
-        <hr class="m-1" >
-        <%= link_to card.vocab_code, page_mylang_vocab_mycards_path(vocab_code: card.vocab_code), class: 'underline d-inline-block w-100 fs-2 link-opacity-50-hover ink-dark' %>
-        <%
-          lang_id = current_user.lang_id
-          text = []
-          text = card.vocab_store.nation_vocab[lang_id] if card.vocab_store.nation_vocab.present? && card.vocab_store.nation_vocab[lang_id].present?
-        %>
-        <hr class="m-1" >
-        <p class="card-text">
-        <% if text.length > 1 %>
-          <% text.each_with_index do |txt, index| %>
-            <%= txt %><%= index < text.length - 1 ? ',' : '' %>
+        <% options = [['-', 0], ['one day', 1], ['one week', 2], ['one month', 3]] %>
+        
+        <div class="mb-1">
+          <%= f.select :selected_item, options_for_select(options, params[:selected_item]), 
+                       { include_blank: false }, 
+                       class: 'form-select m-1 mr-sm-2 w-auto', style: 'border-radius: 0;' %>
+        </div>
+        <div class="d-flex justify-content-end align-items-center mb-1">
+          <%= button_tag(type: "submit", class: "btn btn-info m-1 mr-sm-2", style: "border-radius: 0; margin-left: 5px;") do %>
+            <i class="fas fa-search"></i>
           <% end %>
-        <% else %>
-          <%= text.first %>
-        <% end %>
-        </p>
+        </div>
+      <% end %>
       </div>
     </div>
   </div>
-<% end %>
+  <% end %>
+
+  <% if @message.present? %>
+    <%= @message %>
+  <% end %>
+
+<div class="row">
+  <div class="col-md-12" id="test"></div>
+</div>
+  <% last_date = nil %>
+  <% @cards.each do |card| %>
+    <% current_date = card.created_at.strftime('%Y-%m-%d') %>
+    <% if last_date != current_date %>
+      <div style="width: 100%; background: lightblue; text-align: center; margin: 10px;">
+        <%= current_date %>
+      </div>
+      <% last_date = current_date %>
+    <% end %>
+    <div class="col-sm-3 mt-1" style="min-width: 150px;">
+      <div class="card rounded-0" style="height: 160px; overflow: auto;">
+        <div class="card-body text-center">
+          <p class="card-text"><%= card.vocab_read %></p>
+          <hr class="m-1">
+          <%= link_to card.vocab_code, page_mylang_vocab_mycards_path(vocab_code: card.vocab_code), class: 'underline d-inline-block w-100 fs-2 link-opacity-50-hover ink-dark' %>
+          <% lang_id = current_user.lang_id %>
+          <% if card.vocab_store.nation_vocab.present? %>
+            <% text = card.vocab_store.nation_vocab[lang_id] %>
+            <% text = card.vocab_store.nation_vocab['EN'] if text.blank? %>
+          <% end %>
+
+          <hr class="m-1">
+          <p class="card-text">
+            <% if text&.length.to_i > 1 %>
+              <% text.each_with_index do |txt, index| %>
+                <%= txt %><%= index < text.length - 1 ? ',' : '' %>
+              <% end %>
+            <% else %>
+              <%= text&.first %>
+            <% end %>
+          </p>
+        </div>
+      </div>
+    </div>
+  <% end %>
 </div>

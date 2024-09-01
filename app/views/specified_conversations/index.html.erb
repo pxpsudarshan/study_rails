@@ -4,6 +4,10 @@
   <div class="row justify-content-center">
     <div class="col">
       <div class="card mb-1 ">
+        <%= link_to speech_audio_specified_conversations_path, class: 'text-decoration-none d-inline-block w-100 text-reset' do %>
+          <h2>speech</h2><br>
+        <% end %>
+
         <ul class="list-group list-group-flush text-left ">
         <% @audio_b.each_with_index do |audio_b_value, index| %>
           <%= link_to audio_c_specified_conversations_path(id: audio_b_value.id), class: 'text-decoration-none d-inline-block w-100 text-reset' do %>
@@ -17,3 +21,79 @@
     </div>
   </div>
 </div>
+
+<button id="start-recording">Start Recording</button>
+<button id="stop-recording" disabled>Stop Recording</button>
+
+<script>
+  const startButton = document.getElementById('start-recording');
+  const stopButton = document.getElementById('stop-recording');
+  let mediaRecorder;
+  let audioChunks = [];
+
+  startButton.onclick = async () => {
+    // Request permission to access the microphone
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+    // Initialize the MediaRecorder with the audio stream
+    mediaRecorder = new MediaRecorder(stream);
+
+    // Handle the data available event to collect audio chunks
+    mediaRecorder.ondataavailable = (event) => audioChunks.push(event.data);
+
+    // Handle the stop event to process and send audio
+    mediaRecorder.onstop = async () => {
+      const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+
+    mediaRecorder.addEventListener('result', function (event) {
+      var text = '';
+
+      for (var i = 0; i < event.results.length; i++) {
+          text += event.results[i][0].transcript;
+      }
+      console.log(text)
+    }, false);
+
+
+    #   // Prepare FormData to send to the server
+    #   const formData = new FormData();
+    #   formData.append('audio', audioBlob, 'recording.webm');
+
+    #   // Get CSRF token from the meta tag
+    #   const csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+    #   // Send AJAX POST request
+    #   $.ajax({
+    #     url: '/specified_conversations/speech_audio',
+    #     type: 'POST', // Use POST for file uploads
+    #     data: formData,
+    #     processData: false, // Necessary for sending FormData
+    #     contentType: false, // Necessary for sending FormData
+    #     headers: {
+    #       'X-CSRF-Token': csrfToken // Include CSRF token in the header
+    #     },
+    #     success: function (data) {
+    #       console.log('Transcription:', data.transcription);
+    #     },
+    #     error: function (jqXHR, textStatus, errorThrown) {
+    #       console.error('Error:', errorThrown);
+    #     }
+    #   });
+
+    #   // Clear the audio chunks array after sending
+    #   audioChunks = [];
+    # };
+
+    // Start recording
+    mediaRecorder.start();
+    startButton.disabled = true;
+    stopButton.disabled = false;
+  };
+
+  stopButton.onclick = () => {
+    // Stop recording
+    mediaRecorder.stop();
+    startButton.disabled = false;
+    stopButton.disabled = true;
+  };
+</script>

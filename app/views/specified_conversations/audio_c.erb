@@ -28,10 +28,34 @@
 
       <%= form.radio_button :language, 'EN', id: 'eng_radio', class: 'btn-check visually-hidden', autocomplete: 'off' %>
       <label class="btn btn-primary m-1 mr-sm-2" style="border-radius: 0;" for="eng_radio">Eng</label>
-
+      
       <button type="submit" class="btn btn-info m-1 mr-sm-2" style="border-radius: 0; margin-left: 5px;" >
         <i class="fas fa-search"></i>
       </button>
+      <%= form_for :title_nation, url: audio_d_specified_conversations_path, method: :get, local: true, html: { multipart: true } do |form| %>
+        <div>
+          <%= form.file_field :audio %>
+        </div>
+        <div>
+          <%= form.submit "Transcribe" %>
+        </div>
+        <% if @transcript %>
+        <h3>Transcription:</h3>
+        <p><%= @transcript %></p>
+      <% end %>
+      <% end %>
+      
+      <%= form_with url: specified_conversations_path, method: :post, local: true do |form| %>
+        <div>
+          <%= form.submit "Start Speech Recognition" %>
+        </div>
+      <% end %>
+
+      <% if @transcription %>
+        <h3>Transcription:</h3>
+        <p><%= @transcription %></p>
+      <% end %>
+
       <style>
       @media (max-width: 500px) {
         .d-flex {
@@ -58,3 +82,11 @@
     <div class="col">
       <div id="audio_d"></div>
     </div>
+<script>
+  function handleClick(value) {
+    console.log("Value from application helper: " + value);
+    // You can use the value in any way you want here
+    document.getElementById('display-value').innerText = value;
+  }
+</script>
+

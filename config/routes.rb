@@ -125,12 +125,19 @@ Rails.application.routes.draw do
   resources :specified_skills do
   end
 
+  resources :specified_vocabs do
+    collection do
+      get :vocab_word
+    end
+  end
+
   resources :specified_conversations do
     collection do
       get :audio_c
       get :audio_d
       get :case_name
       get :get_case_name
+      get :speech_audio
     end
   end
 
