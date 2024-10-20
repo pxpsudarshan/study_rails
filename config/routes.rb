@@ -137,7 +137,6 @@ Rails.application.routes.draw do
       get :audio_d
       get :case_name
       get :get_case_name
-      get :speech_audio
     end
   end
 

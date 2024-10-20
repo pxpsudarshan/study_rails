@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_05_11_035757) do
+ActiveRecord::Schema[7.0].define(version: 2024_10_20_133435) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -532,8 +532,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_11_035757) do
     t.integer "special_mycard_level", default: 0
   end
 
-  create_table "specified_vocab_as", id: false, force: :cascade do |t|
-    t.uuid "id", default: -> { "public.gen_random_uuid()" }, null: false, comment: "各エントリの一意識別子"
+  create_table "specified_vocab_as", id: { type: :uuid, default: -> { "gen_random_uuid()" }, comment: "各エントリの一意識別子" }, force: :cascade do |t|
     t.uuid "department_id", null: false, comment: "部署ID"
     t.string "title", null: false, comment: "タイトル"
     t.integer "sort", comment: "ソート順"
@@ -541,15 +540,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_11_035757) do
     t.text "src_jpn", comment: "日本語のソース"
     t.text "src_eng", comment: "英語のソース"
     t.jsonb "src_nation", comment: "各国のソース"
-    t.datetime "created_at", default: -> { "now()" }, null: false, comment: "エントリ作成時のタイムスタンプ"
-    t.datetime "updated_at", default: -> { "now()" }, null: false, comment: "エントリが最後に更新された時のタイムスタンプ"
+    t.uuid "created_by", null: false
+    t.uuid "updated_by", null: false
+    t.uuid "deleted_by"
+    t.datetime "created_at", null: false, comment: "エントリ作成時のタイムスタンプ"
+    t.datetime "updated_at", null: false, comment: "エントリが最後に更新された時のタイムスタンプ"
     t.datetime "deleted_at", comment: "エントリが削除された時のタイムスタンプ"
-    t.uuid "created_by", null: false, comment: "エントリを作成したユーザーのID"
-    t.uuid "updated_by", null: false, comment: "エントリを最後に更新したユーザーのID"
-    t.uuid "deleted_by", comment: "エントリを削除したユーザーのID"
   end
 
-  create_table "specified_vocab_bs", id: { type: :uuid, default: -> { "uuid_generate_v4()" }, comment: "各エントリの一意識別子" }, force: :cascade do |t|
+  create_table "specified_vocab_bs", id: { type: :uuid, default: -> { "gen_random_uuid()" }, comment: "各エントリの一意識別子" }, force: :cascade do |t|
     t.uuid "specified_vocab_a_id", comment: "関連する指定語彙AのID"
     t.string "word", limit: 100, null: false, comment: "語彙（漢字、かな、またはその両方）"
     t.string "reading", limit: 100, comment: "語彙の読み方（かな）"
@@ -559,12 +558,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_11_035757) do
     t.string "jlpt", limit: 50, comment: "語彙の難易度レベル（例：初級、中級、上級）"
     t.integer "frequency_count", comment: "語彙の使用頻度"
     t.string "category", limit: 100, comment: "語彙のカテゴリまたはコンテキスト（例：宿泊、観光、ホスピタリティ）"
-    t.datetime "created_at", default: -> { "now()" }, null: false, comment: "エントリ作成時のタイムスタンプ"
-    t.datetime "updated_at", default: -> { "now()" }, null: false, comment: "エントリが最後に更新された時のタイムスタンプ"
+    t.uuid "created_by", null: false
+    t.uuid "updated_by", null: false
+    t.uuid "deleted_by"
+    t.datetime "created_at", null: false, comment: "エントリ作成時のタイムスタンプ"
+    t.datetime "updated_at", null: false, comment: "エントリが最後に更新された時のタイムスタンプ"
     t.datetime "deleted_at", comment: "エントリが削除された時のタイムスタンプ"
-    t.uuid "created_by", null: false, comment: "エントリを作成したユーザーのID"
-    t.uuid "updated_by", null: false, comment: "エントリを最後に更新したユーザーのID"
-    t.uuid "deleted_by", comment: "エントリを削除したユーザーのID"
   end
 
   create_table "store_contents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
