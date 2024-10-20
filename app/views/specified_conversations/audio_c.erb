@@ -32,30 +32,6 @@
       <button type="submit" class="btn btn-info m-1 mr-sm-2" style="border-radius: 0; margin-left: 5px;" >
         <i class="fas fa-search"></i>
       </button>
-      <%= form_for :title_nation, url: audio_d_specified_conversations_path, method: :get, local: true, html: { multipart: true } do |form| %>
-        <div>
-          <%= form.file_field :audio %>
-        </div>
-        <div>
-          <%= form.submit "Transcribe" %>
-        </div>
-        <% if @transcript %>
-        <h3>Transcription:</h3>
-        <p><%= @transcript %></p>
-      <% end %>
-      <% end %>
-      
-      <%= form_with url: specified_conversations_path, method: :post, local: true do |form| %>
-        <div>
-          <%= form.submit "Start Speech Recognition" %>
-        </div>
-      <% end %>
-
-      <% if @transcription %>
-        <h3>Transcription:</h3>
-        <p><%= @transcription %></p>
-      <% end %>
-
       <style>
       @media (max-width: 500px) {
         .d-flex {
