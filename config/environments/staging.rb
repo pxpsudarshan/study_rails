@@ -69,8 +69,15 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
 
   config.log_formatter = ::Logger::Formatter.new
-  config.logger = Logger.new("log/development.log", 5, 10 * 1024 * 1024)
-  config.action_mailer.default_url_options = { protocol: 'http', host: 'study.kanrin.biz', port: 3000 }
+
+  if ENV["RAILS_LOG_TO_STDOUT"].present?
+    logger           = ActiveSupport::Logger.new(STDOUT)
+    logger.formatter = config.log_formatter
+    config.logger    = ActiveSupport::TaggedLogging.new(logger)
+  end
+
+  config.logger = ActiveSupport::Logger.new("log/development.log", 5, 10 * 1024 * 1024)
+  config.action_mailer.default_url_options = { protocol: 'https', host: 'study.kanrin.biz', port: 443 }
 
   config.action_mailer.delivery_method = :sendmail
   config.hosts << "study.kanrin.biz"

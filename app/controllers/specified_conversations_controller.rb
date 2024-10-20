@@ -33,7 +33,7 @@ class SpecifiedConversationsController < ApplicationController
       @audio_d = audio_c.audio_ds.where(lang: @selected_language).order(:sort)
     end
   end
-  
+
   def set_lang
     @lang = current_user.lang_id
   end

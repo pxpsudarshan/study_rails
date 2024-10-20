@@ -25,7 +25,6 @@ class KanjisController < ApplicationController
 
   def kanji_vocab
     if params[:kanji][:vocab_org].present?
-        puts "helllo vocab #{params[:kanji][:vocab_org]}"
         vocab_org = params[:kanji][:vocab_org]
         vocab = VocabStore.find_by(vocab_org: vocab_org)
         vocab_code = vocab["vocab_code"]

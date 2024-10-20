@@ -63,7 +63,6 @@ class PartsController < ApplicationController
         @mycard = current_user.vocab_mycards.where(vocab_code: vocab_code).first if vocab.present?
         @vocab_mycard = @mycard.present? ? '⭐️' : '☆'
         @mycard = current_user.vocab_mycards.new(jlpt_level: jlpt_level, kanji_body: vocab_code.split("").join(",") , vocab_org: vocab_org) if @mycard.blank?
-
     end if params[:kanji].present?
   end
 end

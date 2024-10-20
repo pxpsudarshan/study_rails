@@ -1,0 +1,1 @@
+exclude: "ActiveRecord::SchemaMigration, ActiveRecord::InternalMetadata, ActiveStorage::VariantRecord, ActiveStorage::Blob, ActiveStorage::Attachment"

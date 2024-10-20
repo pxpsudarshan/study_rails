@@ -1,0 +1,12 @@
+azure420833bb-ea87-49e3-b7d6-68994a94a17c:
+  id: '420833bb-ea87-49e3-b7d6-68994a94a17c'
+  access_key: '260f0506e5ed4594abfebb05efcc5ca1'
+  subdomain: 'https://japaneast.tts.speech.microsoft.com'
+  enable_check_auth: true
+  created_by: '10876f18-55e1-445f-a7c0-de88491d0292'
+  updated_by: '10876f18-55e1-445f-a7c0-de88491d0292'
+  deleted_by: 
+  created_at: 2024-10-20 00:00:00 +0900
+  updated_at: 2024-10-20 00:00:00 +0900
+  deleted_at: 
+

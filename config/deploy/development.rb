@@ -6,13 +6,13 @@ set :stage, :development
 set :rails_env, "development"
 set :application, 'niho_dev'
 set :branch, 'main'
-set :default_env, { 'PASSENGER_INSTANCE_REGISTRY_DIR' => '/tmp/nihodev' }
+#set :default_env, { 'PASSENGER_INSTANCE_REGISTRY_DIR' => '/tmp/nihodev' }
 
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, -> { "/home/rails/#{fetch(:application)}" }
-role :app_dev, %w(rails@ni-ho.com)
-role :web_dev, %w(rails@ni-ho.com)
-server 'ni-ho.com', user: 'rails', roles: %w(app_dev web_dev)
+role :app_dev, %w(rails@study.kanrin.biz)
+role :web_dev, %w(rails@study.kanrin.biz)
+server 'study.kanrin.biz', user: 'rails', roles: %w(app_dev web_dev)
 
 # server 'example.com', user: 'deploy', roles: %w{app db web}, my_property: :my_value
 # server 'example.com', user: 'deploy', roles: %w{app web}, other_property: :other_value

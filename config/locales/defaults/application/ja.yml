@@ -90,8 +90,10 @@ ja:
     destroy:          '削除'
 
   title:
-    header:           '翰林日本語学院'
-    title:            '翰林日本語学院'
+    # header:           '翰林日本語学院'
+    # title:            '翰林日本語学院'
+    header:           'NIHO'
+    title:            'NIHO'    
   navbar:
     logout:           '<i class="fas fa-sign-out-alt"></i> ログアウト'
     user:             '学生マスタ'

@@ -1,7 +1,6 @@
 class SpecifiedVocabsController < ApplicationController
   def index
     @specific_vocab = SpecifiedVocabA.order(:sort)
-    puts "haweo #{@specific_vocab.inspect}"
   end
 
   def vocab_word

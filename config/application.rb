@@ -17,7 +17,15 @@ module RailsTest
     # in config/environments, which are processed later.
     #
     # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("extras")
+
+    #config.autoload_lib(ignore: %w(assets tasks))
+    config.autoload_paths << "#{Rails.root}/lib"
+#    config.eager_load_paths << "#{Rails.root}/lib"
+
+#    %w(assets tasks).each do |subdir|
+#      Rails.autoloaders.main.ignore("#{Rails.root}/lib/#{subdir}")
+#    end
+
     config.time_zone = 'Tokyo'
     config.active_record.time_zone_aware_attributes = false
     config.active_record.default_timezone = :local

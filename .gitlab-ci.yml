@@ -1,0 +1,62 @@
+default:
+  image: ruby:3.1.2
+
+  cache:
+    key: "ruby-312"
+    paths:
+    - vendor/ruby
+
+  before_script:
+    - source ./scripts/prepare_build.sh
+    - 'which ssh-agent || ( apt-get install openssh-client git -y )'
+    - source ./scripts/prepare_ssh.sh
+    - gem install bundler -N --version $BUNDLER_VERSION  # Bundler is not installed with the image
+    - '[ "$USE_BUNDLE_INSTALL" != "true" ] || retry bundle install --without production --jobs 3 "${FLAGS[@]}"' # Install dependencies into ./vendor
+    - '[ "$USE_DB" != "true" ] || bundle exec rake db:drop db:create db:schema:load db:migrate'
+    - chmod 0755 bin/*
+
+variables:
+  RAILS_ENV: "test"
+  POSTGRES_DB: niho_test
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+  USE_DB: "false"
+  USE_BUNDLE_INSTALL: "true"
+  BUNDLER_VERSION: '2.3.7'
+
+stages:
+  - deploy
+
+.use-db: &use-db
+  services:
+    - postgres:13.5
+
+development:
+  stage: deploy
+  <<: *use-db
+  environment:
+    name: development
+    url: https://study.kanrin.biz/
+  variables:
+    USE_DB: "false"
+    RAILS_ENV: "development"
+  script:
+    - bundle exec cap $RAILS_ENV deploy
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE == "push"
+      when: on_success
+
+production:
+  stage: deploy
+  <<: *use-db
+  environment:
+    name: production
+    url: https://www.ni-ho.com/
+  variables:
+    USE_DB: "false"
+    RAILS_ENV: "production"
+  script:
+    - bundle exec cap $RAILS_ENV deploy
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE == "push"
+  when: manual

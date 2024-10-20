@@ -63,6 +63,8 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
   gem 'rails-erd' #, '1.4.5'                 # brew install graphviz
+  gem "capistrano", "~> 3.17", require: false
+  gem "capistrano-rails", "~> 1.6", require: false
 end
 
 group :test do
@@ -101,6 +103,4 @@ gem 'ed25519', '>= 1.2', '< 2.0'
 gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0'
 gem 'recaptcha'
 gem 'creek'
-gem 'google-cloud-speech'
-gem 'vosk', '~> 0.3.32'
-gem 'ffi', '~> 1.15'
+gem 'faraday'
