@@ -5,16 +5,14 @@
     <div class="col">
       <div class="card mb-1 ">
         <ul class="list-group list-group-flush text-left ">
-        <% if @specific_vocab.present? %>
-            <% @specific_vocab.each.with_index(1) do |data, index| %>
-              <%= link_to vocab_word_specified_vocabs_path(id: data.id), class: 'text-decoration-none d-inline-block w-100 text-reset' do %>
-                <li class="list-group-item dropdown-item">
-                  <h6><%= "#{index}. #{data.src_jpn}" %></h6>
-                  <p class="mb-0"><%= src_nation(data) %></p>
-                </li>
-              <% end %>
+          <% @specific_vocab.each.with_index(1) do |data, index| %>
+            <%= link_to vocab_word_specified_vocabs_path(id: data.id), class: 'text-decoration-none d-inline-block w-100 text-reset' do %>
+              <li class="list-group-item dropdown-item">
+                <h6><%= "#{index}. #{data.src_jpn}" %></h6>
+                <p class="mb-0"><%= src_nation(data) %></p>
+              </li>
             <% end %>
-        <% end %>      
+          <% end %>
         </ul>
       </div>
     </div>
