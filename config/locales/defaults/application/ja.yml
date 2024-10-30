@@ -100,6 +100,7 @@ ja:
     comp:             '企業マスタ'
     profile:          '<i class="fas fa-user"></i> プロファイル'
     edit:             '<i class="fas fa-edit"></i> 編集'
+    master:             '<i class="fas fa-cogs"></i> マスターメンテ'
     company_store:    '貴社用語集'
     store:            '学生用語集'
     job_profile:      '企業プロファイル'

@@ -55,6 +55,7 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-end">
             <li><%= link_to t('navbar.edit').html_safe, current_user.present? ? edit_user_path(current_user.id) : edit_kaisha_comp_path(current_comp.id), class: "dropdown-item" %></li>
+            <li><%= link_to t('navbar.master').html_safe, masters_path, class: "dropdown-item" %></li>
             <% if current_user.present? %>
             <li><%= link_to t('navbar.profile').html_safe, profile_user_path(current_user.id), class: "dropdown-item" %></li>
             <% end %>

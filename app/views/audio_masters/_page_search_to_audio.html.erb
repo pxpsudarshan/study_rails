@@ -1,0 +1,17 @@
+<div class="row justify-content-center">
+  <div class="col">
+    <div class="card mb-1 ">
+      <ul class="list-group list-group-flush text-left ">
+        <% @audio_d.each_with_index do |audio, index| %>
+          <li class="list-group-item dropdown-item" style="<%= audio.customer_flag ? 'text-align: end;' : '' %>">
+            <h6><%= audio.content %></h6>
+            <audio controls>
+              <source src="<%= get_media(audio.mpg) %>" type="audio/mpeg" />
+            </audio>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>

@@ -40,6 +40,18 @@ Rails.application.routes.draw do
 #      get :goi
 #    end
   end
+
+  resources :masters do
+  end
+
+  resources :audio_masters do
+    collection do
+      get :audio_a
+      get :audio_b
+      get :audio_c
+      get :audio_d
+    end
+  end
   
   resources :gois do
     collection do
