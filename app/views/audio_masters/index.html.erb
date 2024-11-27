@@ -4,7 +4,6 @@
     <%= text_field_tag :sei, @count, class: 'form-control', disabled: true %>
     <%= f.submit 'next', class: 'btn btn-primary' %>
 <% end %> -->
-
 <div class="tabs m-auto w-50">
   <!-- Tab Navigation -->
   <ul class="nav nav-tabs" id="tab-navigation" role="tablist">
@@ -27,9 +26,10 @@
     <!-- Tab 1 Content -->
     <div class="tab-pane fade show active" id="tab-1" role="tabpanel">
         <%= form_with(url: audio_masters_path, method: :post) do |f| %>
+        <%= hidden_field_tag :active_tab, 'tab-1' %>
             <% @audio_a.each_with_index do |data, index| %>
                 <div class="form-group">
-                    <%= label_tag "audio_a[#{index}][title_nation]", "Field #{index + 1}" %>
+                    <%= label_tag "audio_a[#{index}][title_nation]", "Enter AudioA value" %>
                     <%= text_field_tag "audio_a[#{index}][title_nation]", title_nation(data), class: "form-control" %>
                 </div>
             <% end %>
@@ -41,41 +41,140 @@
 
     <!-- Tab 2 Content -->
     <div class="tab-pane fade" id="tab-2" role="tabpanel">
-      <%= form_with(url: audio_masters_path, method: :post) do |f| %>
+  <%= form_with url: audio_masters_path, method: :get, local: true do |f| %>
+    <%= hidden_field_tag :active_tab, 'tab-2' %>
+    <div class="form-group">
+      <%= f.label :audio_a, "Select an Audio A Option" %>
+      <%= f.select :audio_a, @audio_a.map { |audio_a| [audio_a.title_nation['EN'], audio_a.id] }, 
+                  { prompt: "Choose an option" ,selected: params[:audio_a]}, 
+                  class: "form-control",
+                  onchange: "this.form.submit();" %>
+    </div>
+     <% if @audio_a.present? %>
         <div class="form-group">
-          <%= f.label :field2, "Field 2" %>
-          <%= f.text_field :field2, class: "form-control" %>
+          <%= f.label :audio_b, "Enter Title Nation for Audio B (in JSON format)" %>
+
+        <!-- Input for title_nation JSON -->
+        <%= f.text_area :title_nation, value: '{"EN": "", "JP": ""}', 
+          class: "form-control", 
+          placeholder: 'Enter JSON like {"EN": "English Title", "JP": "Japanese Title"}' %>
         </div>
-        <div class="form-actions text-center mt-3">
-            <%= f.submit 'next', name: "navigation", value: "save", class: "btn btn-success" %>
-        </div>
-      <% end %>
+      <%end%>
+    <div class="form-actions">
+      <%= f.submit "Submit", class: "btn btn-primary" %>
+    </div>
+  <% end %>
     </div>
 
     <!-- Tab 3 Content -->
-    <div class="tab-pane fade" id="tab-3" role="tabpanel">
-      <%= form_with(url: audio_masters_path, method: :post) do |f| %>
+     <div class="tab-pane fade" id="tab-3" role="tabpanel">
+  <%= form_with url: audio_masters_path, method: :get, local: true do |f| %>
+    <%= hidden_field_tag :active_tab, 'tab-3' %>
+    <div class="form-group">
+      <%= f.label :audio_a, "Select an Audio A Option" %>
+      <%= f.select :audio_a, @audio_a.map { |audio_a| [audio_a.title_nation['EN'], audio_a.id] }, 
+                  { prompt: "Choose an option" ,selected: params[:audio_a]}, 
+                  class: "form-control",
+                  onchange: "this.form.submit();" %>
+    </div>
+    <% if @audio_b.present? %>
+      <div class="form-group">
+        <%= f.label :audio_b, "Select an Audio B Option" %>
+        <%= f.select :audio_b, @audio_b.map { |audio_b| [audio_b.title_nation['EN'], audio_b.id] }, 
+                    { prompt: "Choose an option",selected: params[:audio_b] }, 
+                    class: "form-control",
+                    onchange: "this.form.submit();" %>
+      </div>
+    <% end %>
+    <% if params[:audio_b].present? %>
         <div class="form-group">
-            <%= f.label :field3, "Field 3" %>
-            <%= f.text_field :field3, class: "form-control" %>
+          <%= f.label :audio_c, "Enter Title Nation for Audio C (in JSON format)" %>
+
+        <!-- Input for title_nation JSON -->
+        <%= f.text_area :title_nation, value: '{"EN": "", "JP": ""}', 
+          class: "form-control", 
+          placeholder: 'Enter JSON like {"EN": "English Title", "JP": "Japanese Title"}' %>
         </div>
-        <div class="form-actions text-center mt-3">
-            <%= f.submit 'next', name: "navigation", value: "save", class: "btn btn-success" %>
+        <div class="form-group">
+          <%= f.label :audio_c, "Enter Case Name Nation for Audio C (in JSON format)" %>
+
+        <!-- Input for title_nation JSON -->
+        <%= f.text_area :case_name_nation, value: '{"EN": "", "JP": ""}', 
+          class: "form-control", 
+          placeholder: 'Enter JSON like {"EN": "English Title", "JP": "Japanese Title"}' %>
         </div>
-      <% end %>
+      <%end%>
+    <div class="form-actions">
+      <%= f.submit "Submit", class: "btn btn-primary" %>
+    </div>
+  <% end %>
     </div>
 
     <!-- Tab 4 Content -->
     <div class="tab-pane fade" id="tab-4" role="tabpanel">
-      <%= form_with(url: audio_masters_path, method: :post) do |f| %>
+  <%= form_with url: audio_masters_path, method: :get, local: true do |f| %>
+    <%= hidden_field_tag :active_tab, 'tab-4' %>
+    <div class="form-group">
+      <%= f.label :audio_a, "Select an Audio A Option" %>
+      <%= f.select :audio_a, @audio_a.map { |audio_a| [audio_a.title_nation['EN'], audio_a.id] }, 
+                  { prompt: "Choose an option" ,selected: params[:audio_a]}, 
+                  class: "form-control",
+                  onchange: "this.form.submit();" %>
+    </div>
+    <% if @audio_b.present? %>
+      <div class="form-group">
+        <%= f.label :audio_b, "Select an Audio B Option" %>
+        <%= f.select :audio_b, @audio_b.map { |audio_b| [audio_b.title_nation['EN'], audio_b.id] }, 
+                    { prompt: "Choose an option",selected: params[:audio_b] }, 
+                    class: "form-control",
+                    onchange: "this.form.submit();" %>
+      </div>
+    <% end %>
+    <% if @audio_c.present? %>
+      <div class="form-group">
+        <%= f.label :audio_b, "Select an Audio C Option" %>
+        <%= f.select :audio_c_id, @audio_c.map { |audio_c| ["#{audio_c.title_nation['EN']} - #{audio_c.case_name_nation['EN']}", audio_c.id] }, 
+                    { prompt: "Choose an option",selected: params[:audio_c_id] }, 
+                    class: "form-control",
+                    onchange: "this.form.submit();" %>
+      </div>
+    <% end %>
+    <% if params[:audio_c_id].present? %>
         <div class="form-group">
-          <%= f.label :field4, "Field 4" %>
-          <%= f.text_field :field4, class: "form-control" %>
+          <%= f.label :audio_d, "Enter language" %>
+
+        <!-- Input for title_nation JSON -->
+        <%= f.text_area :lang, value: '', 
+          class: "form-control", 
+          placeholder: 'EN/JP' %>
         </div>
-        <div class="form-actions text-center mt-3">
-            <%= f.submit 'next', name: "navigation", value: "save", class: "btn btn-success" %>
+        <div class="form-group">
+          <%= f.label :audio_d, "Enter Content" %>
+
+        <!-- Input for title_nation JSON -->
+        <%= f.text_area :content, value: '', 
+          class: "form-control", 
+          placeholder: 'Good Morning' %>
         </div>
-      <% end %>
+      <%end%>
+    <div class="form-actions">
+      <%= f.submit "Submit", class: "btn btn-primary" %>
+    </div>
+  <% end %>
     </div>
   </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const activeTab = '<%= @active_tab %>';
+    if (activeTab) {
+      // Find the tab and activate it
+      const tabLink = document.querySelector(`#tab-navigation a[href="#${activeTab}"]`);
+      if (tabLink) {
+        const tab = new bootstrap.Tab(tabLink);
+        tab.show();
+      }
+    }
+  });
+</script>
