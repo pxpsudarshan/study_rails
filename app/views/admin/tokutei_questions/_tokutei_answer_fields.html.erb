@@ -1,0 +1,19 @@
+<tr class="nested-fields align-middle">
+  <td class="text-center">
+    <%= f.number_field :sort, class: 'form-control' %>
+  </td>
+  <td class="text-center">
+    <%= f.text_field :title, class: 'form-control' %>
+  </td>
+  <td class="text-center">
+    <%= f.text_area :content, class: 'form-control' %>
+  </td>
+   <td class="text-center">
+    <%= f.check_box :correct_flg, { class: 'form-check-input', onchange: 'select_correct_flg(this);' }, true %>
+  </td>
+  <td class="text-start text-nowrap">
+    <%= link_to t('buttons.edit').html_safe, edit_admin_tokutei_answer_path(id: f.object.id), class: 'btn btn-primary' if f.object.persisted? %></td>
+  <td class="text-center text-nowrap">
+    <%= link_to_remove_association t('buttons.destroy').html_safe, f, class: "btn btn-danger" %>
+  </td>
+</tr>

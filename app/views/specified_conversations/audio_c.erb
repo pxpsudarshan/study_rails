@@ -1,4 +1,3 @@
-<script id="lang" data-lang="<%= @lang %>"></script>
 <div class="container w-75 m-auto">
 <div class="row mt-5 mb-3">
   <div class="col">
@@ -7,27 +6,20 @@
 
   <div class="col">
   <%= form_for :title_nation, url: audio_d_specified_conversations_path, html: { id: 'title_nations', role: 'form', method: :get }, class: "d-flex", remote: true do |form| %>
-      <% unique_titles = Set.new %>
-      <% audio = @audio_c.each_with_object([]) do |audio, arr| %>
-        <% title = title_nation(audio) %>
-        <% unless unique_titles.include?(title) %>
-          <% unique_titles.add(title) %>
-          <% arr << [title, audio.title_sort] %>
-        <% end %>
-      <% end %>
-      <%= hidden_field_tag :audio_b_id, @audio_c.first.audio_b_id %>
+      <% audio = @audio_c.order(:title_sort).map{|c| [title_nation(c), c.id]} %>
       <%= form.select :title_nation, options_for_select(audio, ''), { include_blank: false}, { class: 'form-select m-1 mr-sm-2 w-auto', style: 'border-radius: 0;', onchange: 'optionChange(this);'  } %>
-      <% first_item = @audio_c.first.title_sort %>
-      <% filtered_audio_case = @audio_c.select { |audio_case| audio_case.title_sort == first_item } %>
+      <% first_item = @audio_c.order(:title_sort).first %>
+      <% audio_case = first_item.audio_c_contents.map{ |audio_case| [audio_case.content, audio_case.id] } if first_item.present? %>
+      <%= form.select :content_id, options_for_select(audio_case || [], ''), { include_blank: false}, { class: 'form-select m-1 mr-sm-2 w-auto', style: 'border-radius: 0;' } %>
 
-      <% audio_case = filtered_audio_case.map { |audio_case| [case_name_nation(audio_case), audio_case.id] }.uniq %>
-      <%= form.select :case_name_nation, options_for_select(audio_case, ''), { include_blank: false}, { class: 'form-select m-1 mr-sm-2 w-auto', style: 'border-radius: 0;' } %>
+      <%= form.radio_button :language, '', id: 'jpn_radio', class: 'btn-check visually-hidden', autocomplete: 'off', checked: true %>
+      <label class="btn btn-primary m-1 mr-sm-2" style="border-radius: 0;" for="jpn_radio">JP</label>
 
-      <%= form.radio_button :language, 'JP', id: 'jpn_radio', class: 'btn-check visually-hidden', autocomplete: 'off', checked: true %>
-      <label class="btn btn-primary m-1 mr-sm-2" style="border-radius: 0;" for="jpn_radio">Jpn</label>
+      <% Language.group(:language).select(:language).each do |lng| %>
+      <%= form.radio_button :language, lng.language, id: "#{lng.language}_radio", class: 'btn-check visually-hidden', autocomplete: 'off' %>
+      <label class="btn btn-primary m-1 mr-sm-2" style="border-radius: 0;" for='<%= "#{lng.language}_radio" %>'><%= lng.language %></label>
+      <% end %>
 
-      <%= form.radio_button :language, 'EN', id: 'eng_radio', class: 'btn-check visually-hidden', autocomplete: 'off' %>
-      <label class="btn btn-primary m-1 mr-sm-2" style="border-radius: 0;" for="eng_radio">Eng</label>
       <button type="submit" class="btn btn-info m-1 mr-sm-2" style="border-radius: 0; margin-left: 5px;" >
         <i class="fas fa-search"></i>
       </button>

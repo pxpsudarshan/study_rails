@@ -41,7 +41,11 @@ module ApplicationHelper
   end
 
   def get_avatar(avatar)
-    avatar.attached? ? url_for(avatar.variant(resize_to_fit: [32, 32])) : 'thumb/missing.png'
+    avatar.attached? ? url_for(avatar.variant(resize_to_fit: [32, 32])) : url_for('thumb/missing.png')
+  end
+
+  def get_image(img)
+    img.attached? ? url_for(img.variant(resize_to_fit: [500, 500])) : url_for('thumb/missing.png')
   end
 
   def embedded_svg filename, options={}
@@ -61,8 +65,19 @@ module ApplicationHelper
     nil  # Return nil if the file doesn't exist
   end
   
-  def get_media(media)
-    media.attached? ? url_for(media) : nil
+  def get_lang_content(model, lang)
+    return model.languages.where(language: lang).first if lang.present?
+    model unless lang.present?
+  end
+
+  def get_media(model, lang = nil)
+    media = get_lang_content(model, lang)
+    media.mpg.attached? ? url_for(media.mpg) : nil if media.present?
+  end
+
+  def get_content(model, lang = nil)
+    media = get_lang_content(model, lang)
+    media.content if media.present?
   end
 
   def get_age(dob)
@@ -240,30 +255,32 @@ module ApplicationHelper
   end
 
   def title_nation(data)
-    out = data.title_nation['EN']
-    out = data.title_nation[current_user.lang_id] if data.title_nation[current_user.lang_id].present?
-    out
-  end
-
-  def case_name_nation(data)
-    out = data.case_name_nation['EN']
-    out = data.case_name_nation[current_user.lang_id] if data.case_name_nation[current_user.lang_id].present?
+    out = data.title_nation
+    if current_user.lang_id.present? && current_user.lang_id != 'JP'
+      out = data.languages.where(language: current_user.lang_id).first.content if data.languages.where(language: current_user.lang_id).present?
+    end
     out
   end
 
   def question_nation(data)
-    out = data.question_eng
-    if data.question_nation.present?
-      out = data.question_nation[current_user.lang_id] if data.question_nation[current_user.lang_id].present?
+    out = get_content(data, 'EN')
+    if data.languages.where(language: current_user.lang_id).present?
+      out = get_content(data, current_user.lang_id)
     end
     out
   end
 
   def explain_nation(data)
-    out = data.explain_eng
-    if data.explain_nation.present?
-      out = data.explain_nation[current_user.lang_id] if data.explain_nation[current_user.lang_id].present?
+    out = get_content(data, 'EN')
+    if data.languages.where(language: current_user.lang_id).present?
+      out = get_content(data, current_user.lang_id)
     end
     out
   end
+
+  def string_to_array(text)
+    return [] if text.nil?
+    text.split(',').map(&:strip) # Splitting by comma and removing extra spaces
+  end
+
 end

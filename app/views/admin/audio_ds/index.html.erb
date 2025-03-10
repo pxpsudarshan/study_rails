@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col-auto mb-3 ml-auto">
+    <%= link_to t('buttons.new').html_safe, new_admin_audio_c_content_audio_d_path(audio_lang: @audio_lang), class: 'btn btn-primary' %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <table class="table table-bordered table-hover table-sm">
+      <thead>
+        <tr class="table-success">
+          <th class="text-start"><%= t('activerecord.attributes.audio_d.content') %></th>
+          <th class="text-start"><%= t('common.edit') %></th>
+          <th class="text-start"><%= t('common.destroy') %></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @audio_ds.each do |d| %>
+        <tr class="details_row nested-fields">
+          <td class="<%= d.customer_flg ? 'text-end' : 'text-start' %> w-75"><%= link_to d.content, admin_audio_c_content_audio_d_path(id: d.id), class: '' %></td>
+          <td class="text-start"><%= link_to t('buttons.edit').html_safe, edit_admin_audio_c_content_audio_d_path(id: d.id, audio_lang: @audio_lang), class: 'btn btn-sm btn-primary' %></td>
+          <td class="text-start text-nowrap"><%= link_to t('buttons.destroy').html_safe, admin_audio_c_content_audio_d_path(id: d.id, audio_lang: @audio_lang), method: :delete, class: 'btn btn-sm btn-danger' %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="form-actions">
+  <%= link_to t('buttons.back'), admin_audio_c_audio_c_contents_path(audio_c_id: @audio_c_content.audio_c_id, audio_lang: @audio_lang), class: "btn btn-sm btn-secondary" %>
+</div>

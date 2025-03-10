@@ -2,8 +2,8 @@
 <html>
 <head>
   <title><%= t('title.title') %></title>
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-status-bar-style" content="black" />
   <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <meta name="turbolinks-cache-control" content="no-cache">
   <%= csrf_meta_tags %>
@@ -23,7 +23,7 @@
 <body>
   <% if controller_name != 'mains' %>
   <nav class="navbar navbar-expand-md p-0">
-  <div class="container-fluid bg-dark bg-gradient">
+  <div class="container-fluid bg-black bg-gradient">
       <a class="navbar-brand active p-0" href="<%= current_user.present? ? menus_path : kaisha_menus_path %>">
         <%= image_tag("niho_logo_newWhite.svg", class: "d-inline-block mt-3", alt: "NIHO", style:"position: relative;z-index: 1;left: 20px;height: 60px;") %>
       </a>
@@ -43,9 +43,16 @@
         <% else %>
           <!--<li class="nav-item"><%#= link_to t('navbar.user').html_safe, users_path, class: "nav-link text-white" %></li>-->
           <li class="nav-item"><%= link_to t('navbar.store').html_safe, new_store_path, class: "nav-link text-white" %></li>
-          <li class="nav-item"><%= link_to t('navbar.job').html_safe, jobs_path, class: "nav-link text-white" %></li>
+          <li class="nav-item ps-4"><%= link_to t('navbar.job').html_safe, jobs_path, class: "nav-link text-white" %></li>
         <% end %>
-        <li class="nav-item"></li>
+        <li class="nav-item ps-4"></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link text-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" href="#"><%== t('navbar.master') %><span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><%= link_to t('navbar.audio_a').html_safe, admin_audio_as_path, class: "dropdown-item" %></li>
+            <li><%= link_to t('navbar.tokutei').html_safe, admin_tokuteis_path, class: "dropdown-item" %></li>
+          </ul>
+        </li>
       </ul>
       <ul class="navbar-nav ms-auto mb-2 mb-md-0">
         <li class="nav-item mb-3 dropdown">

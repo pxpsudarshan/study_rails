@@ -5,10 +5,12 @@ module AzureApi
     def on_complete(env)
       return if [200, 302, 404].include?(env[:status])
       case env[:status]
+      when 400
+        raise AzureResponseError.new(env[:reason_phrase])
       when 401
         raise AzureApiAuthError.new(env)
       else
-        p JSON.parse(env.body)
+#        p JSON.parse(env.body)
         raise AzureResponseError.new(env)
       end
     end

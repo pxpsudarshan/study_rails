@@ -2,6 +2,38 @@ Rails.application.routes.draw do
   devise_for :comps, controllers: { passwords: "kaisha/passwords" , registrations: "kaisha/registrations", sessions: "kaisha/sessions" }
   devise_for :users, controllers: { registrations: "users/registrations" }
 
+  namespace :admin do
+    resources :tokuteis do
+    end
+
+    resources :tokutei_questions do
+    end
+
+    resources :tokutei_answers do
+    end
+
+    resources :audio_as do
+      resources :audio_bs do
+      end
+    end
+
+    resources :audio_bs do
+      resources :audio_cs do
+      end
+    end
+
+    resources :audio_cs do
+      resources :audio_c_contents do
+      end
+    end
+
+    resources :audio_c_contents do
+      resources :audio_ds do
+      end
+    end
+  end
+
+
   namespace :kaisha do
     root 'menus#index'
     resources :menus do
@@ -40,7 +72,7 @@ Rails.application.routes.draw do
 #      get :goi
 #    end
   end
-  
+ 
   resources :gois do
     collection do
       get :vocab_double
@@ -122,12 +154,13 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :specified_skills do
+  resources :tokutei_contents do
   end
 
   resources :specified_vocabs do
     collection do
       get :vocab_word
+      get :page_mylang
     end
   end
 

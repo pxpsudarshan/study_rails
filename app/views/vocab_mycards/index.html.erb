@@ -11,13 +11,13 @@
 </style>
 
 <div class="m-auto w-75 row">
-  <% if not @vocab_code.present? %>
+  <% unless @vocab_code.present? %>
   <div class="container">
     <div class="row justify-content-end mt-2">
       <div class="col-md-3 d-flex">
       <%= form_with url: vocab_mycards_path, method: :get, remote: true, id: 'job', role: 'form', class: 'd-flex flex-row w-100 align-items-center' do |f| %>
   
-        <% options = [['-', 0], ['one day', 1], ['one week', 2], ['one month', 3]] %>
+        <% options = [['-', nil], ['one day', 1], ['one week', 2], ['one month', 3], ['one year', 4]] %>
         
         <div class="mb-1">
           <%= f.select :selected_item, options_for_select(options, params[:selected_item]), 
@@ -39,12 +39,12 @@
     <%= @message %>
   <% end %>
 
-<div class="row">
-  <div class="col-md-12" id="test"></div>
-</div>
+  <div class="row">
+    <div class="col-md-12" id="test"></div>
+  </div>
   <% last_date = nil %>
   <% @cards.each do |card| %>
-    <% current_date = card.created_at.strftime('%Y-%m-%d') %>
+    <% current_date = card.created_at.strftime('%Y/%m/%d') %>
     <% if last_date != current_date %>
       <div style="width: 100%; background: lightblue; text-align: center; margin: 10px;">
         <%= current_date %>
@@ -65,13 +65,13 @@
 
           <hr class="m-1">
           <p class="card-text">
-            <% if text&.length.to_i > 1 %>
+            <% if text.length > 1 %>
               <% text.each_with_index do |txt, index| %>
                 <%= txt %><%= index < text.length - 1 ? ',' : '' %>
               <% end %>
             <% else %>
-              <%= text&.first %>
-            <% end %>
+              <%= text.first %>
+            <% end if text.present? %>
           </p>
         </div>
       </div>

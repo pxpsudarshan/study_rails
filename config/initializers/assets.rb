@@ -17,4 +17,5 @@ Rails.application.config.assets.precompile += %w( locales/ja/common.messages.js 
 
 Rails.application.config.assets.precompile += ['users.js', 'kaisha/company_stores.js', 'kaisha/job_profiles.js']
 Rails.application.config.assets.precompile += ['kaisha/comps.js', 'kaisha/menus.js', 'menus.js', 'stores.js', 'kaisha/offers.js']
-
+Rails.application.config.assets.precompile += ['admin/audio_as.js', 'admin/audio_bs.js', 'admin/audio_cs.js', 'admin/audio_ds.js', 'admin/audio_c_contents.js']
+Rails.application.config.assets.precompile += ['admin/tokuteis.js', 'admin/tokutei_questions.js', 'admin/tokutei_answers.js']

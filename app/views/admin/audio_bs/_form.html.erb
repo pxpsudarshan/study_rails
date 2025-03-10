@@ -1,0 +1,53 @@
+<%= form_for [:admin, @audio_a, @audio_b], html: { class: 'needs-validation', novalidate: true } do |f| %>
+<%= hidden_field_tag :audio_lang, @audio_lang %>
+<% if @audio_b.errors.any? %>
+<div class="row">
+  <div class="col-md-12">
+    <div id="error_explanations" class="alert fade show alert-danger">
+      <ul>
+        <% @audio_b.errors.full_messages.each do |msg| %>
+        <li>
+          <%= content_tag(:div, msg) %>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+<% end %>
+<div class="row mb-3">
+  <label class='col-md-2 col-form-label text-end'><%= t('activerecord.attributes.audio_b.title_nation') %></label>
+  <div class="col-md-3">
+    <div class="input-group">
+      <%= f.text_field :title_nation, class: 'form-control' %>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-3">
+  <div class="col-md-6">
+    <table class="table table-bordered table-sm">
+      <thead>
+        <tr class="table-success">
+          <th class="text-start w-25"><%= t('activerecord.attributes.language.language') %></th>
+          <th class="text-start"><%= t('activerecord.attributes.language.content') %></th>
+          <th class="text-start"><%= t('common.destroy') %></th>
+        </tr>
+      </thead>
+      <tbody id="langs">
+      <%= f.fields_for :languages do |ln| %>
+        <% render 'language_fields', f: ln %>
+      <% end %>
+      </tbody>
+    </table>
+    <%= link_to_add_association t('buttons.lang_add').html_safe, f, :languages,
+        'data-association-insertion-method'    => 'append' ,
+        'data-association-insertion-node'      => '#langs', class: "btn btn-sm btn-primary"
+    %>
+  </div>
+</div>
+<div class="form-actions">
+  <%= link_to t('buttons.back'), admin_audio_a_audio_bs_path(audio_lang: @audio_lang), class: "btn btn-sm btn-secondary" %>
+  <%= f.submit t('buttons.submit'), class: "btn btn-sm btn-primary" %>
+</div>
+<% end %>

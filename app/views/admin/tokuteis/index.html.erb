@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-auto mb-3 ml-auto">
+    <%= link_to t('buttons.new').html_safe, new_admin_tokutei_path(audio_lang: @audio_lang), class: 'btn btn-primary' %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <table class="table table-bordered table-hover table-sm">
+      <thead>
+        <tr class="table-success">
+          <th class="text-start"><%= t('activerecord.attributes.tokutei.title') %></th>
+          <th class="text-start"><%= t('common.edit') %></th>
+          <th class="text-start"><%= t('common.destroy') %></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @tokuteis.each do |a| %>
+        <tr class="details_row nested-fields">
+          <td class="text-start text-nowrap w-75"><%= link_to a.title, admin_tokutei_path(id: a.id, audio_lang: @audio_lang), class: '' %></td>
+          <td class="text-start text-nowrap"><%= link_to t('buttons.edit').html_safe, edit_admin_tokutei_path(id: a.id, audio_lang: @audio_lang), class: 'btn btn-sm btn-primary' %></td>
+          <td class="text-start text-nowrap"><%= link_to t('buttons.destroy').html_safe, admin_tokutei_path(id: a.id, audio_lang: @audio_lang), method: :delete, class: 'btn btn-sm btn-danger' %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

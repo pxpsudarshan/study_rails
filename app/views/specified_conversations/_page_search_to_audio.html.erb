@@ -3,10 +3,10 @@
     <div class="card mb-1 ">
       <ul class="list-group list-group-flush text-left ">
         <% @audio_d.each_with_index do |audio, index| %>
-          <li class="list-group-item dropdown-item" style="<%= audio.customer_flag ? 'text-align: end;' : '' %>">
-            <h6><%= audio.content %></h6>
+          <li class="list-group-item dropdown-item" style="<%= audio.customer_flg ? 'text-align: end;' : '' %>">
+            <h6><%= get_content(audio, @selected_language) %></h6>
             <audio controls>
-              <source src="<%= get_media(audio.mpg) %>" type="audio/mpeg" />
+              <source src="<%= get_media(audio, @selected_language) %>" type="audio/mpeg" />
             </audio>
           </li>
         <% end %>
@@ -14,4 +14,4 @@
     </div>
   </div>
 </div>
-</div>
+

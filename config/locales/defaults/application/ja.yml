@@ -88,6 +88,8 @@ ja:
     invalid:          '無効'
     sjis:             'Shift_JIS'
     destroy:          '削除'
+    audio_update_flg: '音声ファイル更新'
+    audio_male_flg:   '男性音声'
 
   title:
     # header:           '翰林日本語学院'
@@ -100,17 +102,21 @@ ja:
     comp:             '企業マスタ'
     profile:          '<i class="fas fa-user"></i> プロファイル'
     edit:             '<i class="fas fa-edit"></i> 編集'
+    master:             '<i class="fas fa-cogs"></i> マスターメンテ'
     company_store:    '貴社用語集'
     store:            '学生用語集'
     job_profile:      '企業プロファイル'
     job:              '求職検索'
     offer:            '求人検索'
+    audio_a:          '会話'
+    tokutei:          '特定技能'
   buttons:
     home:             '<i class="fas fa-home"></i> メインメニュー'
     menu:             'メニュー'
     new:              '<i class="far fa-save"></i> 新規登録'
     show:             '詳細'
     add:              '<i class="fas fa-plus"></i> 行追加'
+    lang_add:         '<i class="fas fa-plus"></i> 言語追加'
     edit:             '<i class="fas fa-edit"></i> 編集'
     destroy:          '<i class="fas fa-trash-alt"></i> 削除'
     destroy-icon:     '<i class="fas fa-trash-alt"></i>'
@@ -133,6 +139,8 @@ ja:
     add_item:         '追加'
     done:             '完了'
     excel_upload:     'Excel入力'
+    question_add:     '<i class="fas fa-plus"></i> 質問追加'
+    answer_add:       '<i class="fas fa-plus"></i> 答え追加'
 
   label:
     nodata:           '該当無し'

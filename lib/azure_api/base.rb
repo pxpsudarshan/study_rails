@@ -19,7 +19,8 @@ module AzureApi
         voice_lang: 'ja-JP',
         voice_gender: 'Female',
         voice_name: 'ja-JP-NanamiNeural',
-        text: 'はじめまして、田中です。よろしくお願いします。'
+        text: 'はじめまして、田中です。よろしくお願いします。',
+        filename: 'test'
       } if params.blank?
       payload = "
         <speak version='1.0' xml:lang='#{params[:speak_lang]}'>
@@ -30,7 +31,7 @@ module AzureApi
           </voice>
         </speak>"
       result = post('/cognitiveservices/v1', payload)
-      p = File.open(Rails.root.join('tmp/test.mp3'),'wb')
+      p = File.open(Rails.root.join("tmp/#{params[:filename]}.mp3"),'wb')
       p.write(result.body)
       p.close unless p.nil?
     end
@@ -41,7 +42,7 @@ module AzureApi
       @connection.post do |req|
         req.url url
         req.headers['Content-Type'] = 'application/ssml+xml'
-        req.headers['Host'] = 'eastus.tts.speech.microsoft.com'
+        req.headers['Host'] = 'japaneast.tts.speech.microsoft.com'
         req.headers['Content-Length'] = payload.length.to_s
         req.headers['User-Agent'] =  'Niho'
         req.headers['X-Microsoft-OutputFormat'] = 'audio-48khz-192kbitrate-mono-mp3'
@@ -52,7 +53,7 @@ module AzureApi
     def get(url, params)
       @connection.get do |request|
         request.url url
-        request.headers['Host'] = 'eastus.tts.speech.microsoft.com'
+        request.headers['Host'] = 'japaneast.tts.speech.microsoft.com'
         request.params = params
       end
     end

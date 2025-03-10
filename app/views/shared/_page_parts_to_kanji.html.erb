@@ -1,7 +1,64 @@
 <%= form_for :kanji, url: url, html: { id: 'kanjis', role: 'form', method: :get }, remote: true do |f| %>
 <% verbs = @gois.map{ |goi| [goi[:kanji_code], goi[:kanji_org]] } %>
-<div class="m-auto w-50">
+<div class="m-auto w-75">
+
 <%= f.select :kanji, options_for_select(verbs,''), { include_blank: false }, class: 'form-select' %>
 <%= f.submit 'next', class: 'btn btn-primary rounded-0 m-1' %>
+
+</div>
+  <% kanji_aray = [
+    { kanji_code: "慮", kunyomi: "おもんぱく.る,おもんぱか.る ", onyomi: "リョ", parts_body: "匕,卜,厂,心,田,虍", meaning_english: "prudence, thought, concern, consider, deliberate, fear"},
+    { kanji_code: "七", kunyomi: "なな,なな.つ,なの", onyomi: "シチ", parts_body: "乙,ノ,匕", meaning_english: "seven"},
+    { kanji_code: "切", kunyomi: "き.る,-き.る,き.り,-き.り,-ぎ.り,き.れる,-き.れる,き.れ,-き.れ,-ぎ.れ ", onyomi: "セツ,サイ", parts_body: "刀,匕", meaning_english: "cut, cutoff, be sharp"}
+  ] %>
+
+ <div class="m-auto w-75 row">
+  <% kanji_aray.each do |kanji| %>
+    <div class="col-sm-3 mt-1" style="min-width: 200px; height: 160px; overflow: auto;">
+      <div class="card rounded-0 h-100 overflow-auto shadow-sm">
+        <div class="card-body">
+          <%= link_to kanji[:kanji_code], "#", class: 'd-inline-block w-100 fs-2 text-center' %>
+          <hr class="m-1">
+          <p class="card-text text-center"> <%= kanji[:meaning_english] %> </p>
+          
+          <div class="position-absolute bottom-0 end-0 p-2">
+          <button type="button" class="btn btn-sm btn-outline-primary"
+          onclick="Openmodal(
+            '<%= kanji[:kanji_code] %>', 
+            '<%= kanji[:meaning_english] %>', 
+            '<%= kanji[:kunyomi] %>', 
+            '<%= kanji[:onyomi] %>', 
+            '<%= kanji[:parts_body] %>'
+          )"
+          data-bs-toggle="modal" data-bs-target="#kanjiModal">
+          <i class="bi bi-info-circle"></i> Details
+        </button>
+        </div>        
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<!-- Modal for displaying Kanji details -->
+<div class="modal fade" id="kanjiModal" tabindex="-1" aria-labelledby="kanjiModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-3 shadow-lg">
+      <div class="modal-header">
+        <h1 class="modal-title" id="ModalHeaderLabel">項目</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <p><strong >Meaning:</strong> <span id="modal-meaning"></span></p>
+      <p><strong >Kun:</strong> <span id="modal-kunyomi"></span></p>
+      <p><strong >On:</strong> <span id="modal-onyomi"></span></p>
+      <p><strong >Parts:</strong> <span id="modal-parts"></span></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 </div>
 <% end %>

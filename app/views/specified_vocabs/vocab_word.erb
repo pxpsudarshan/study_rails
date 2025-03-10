@@ -1,4 +1,3 @@
-
 <%= stylesheet_link_tag "jlpt", media: "all", 'data-turbo-track': 'reload' %>
 <div class="m-auto w-75 row">
   <% @tokutei_bs.each do |data| %>
@@ -12,7 +11,7 @@
           </div>
           <p class="card-text"><%= data.word %></p>
           <hr class="m-1" >
-          <%= link_to data.word, page_mylang_jlpts_path(vocab_code: data.word), class: 'underline d-inline-block w-100 fs-2 link-opacity-50-hover ink-dark' %>
+          <%= link_to data.word, page_mylang_specified_vocabs_path(vocab_code: data.word), class: 'underline d-inline-block w-100 fs-2 link-opacity-50-hover ink-dark' %>
           <hr class="m-1" >
           <p class="card-text">
             <%= data.word %>

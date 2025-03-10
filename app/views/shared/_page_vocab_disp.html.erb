@@ -1,6 +1,7 @@
 <% if @count != 0 %>
 
-<div class="m-auto w-50">
+<div class="m-auto w-75">
+<!--
 <%= form_for @mycard, html: { id: 'mycard', role: 'form' }, remote: false do |f| %>
 <%= f.hidden_field :vocab_org %>
 <%= f.hidden_field :kanji_body %>
@@ -52,9 +53,87 @@
   <button id="id_btn_lang_ext2" class="rounded-0 m-1 btn btn-primary">あなたのくにのことばでかく</button>
   <textarea id="id_lang_textarea_ex2" rows="10" cols="10" class="form-control" placeholder="じぶんのくにのことばで"></textarea>
 </p>
+
+  <% @gois[:vocab_kanji].each_with_index do |vocab, idx| %>
+    <%= link_to vocab["kanji_code"], parts_kanji_kanji_units_path(kanji: { kanji: vocab["kanji_org"] }), remote: true, class: 'rounded-0 m-1 btn btn-primary' if vocab["kanji_org"] != 0 %>
+    <% end if @gois[:vocab_kanji].present? %>
 -->
-<% @gois[:vocab_kanji].each_with_index do |vocab, idx| %>
-<%= link_to vocab["kanji_code"], parts_kanji_kanji_units_path(kanji: { kanji: vocab["kanji_org"] }), remote: true, class: 'rounded-0 m-1 btn btn-primary' if vocab["kanji_org"] != 0 %>
-<% end if @gois[:vocab_kanji].present? %>
+
+<div class="container mb-5 mt-5">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <!-- Header Section -->
+      <div class="d-flex align-items-center mb-4 border-bottom pb-3">
+        <h6 class="me-auto fw-bold">JLPT N3</h6>
+        <% kanji_parts = string_to_array("考,慮") %>
+        <div class="ms-3">
+        <% kanji_parts.each do |part| %>
+          <button class="btn btn-outline-primary btn-sm"><%= part %></button>
+        <% end %>
+      </div>      
+      </div>
+
+      <!-- Kanji Details -->
+      <div class="text-center mb-3">
+        <h4>こうりょ</h4>
+        <h2 class="fw-bold">考慮</h2>
+      </div>
+
+      <!-- Meaning Section -->
+      <div class="mb-4">
+        <h6 class="fw-bold">Meaning in English</h6>
+        <p class="text-muted">consideration, taking into account​</p>
+      </div>
+
+      <!-- Native Language Input -->
+      <div class="mb-4">
+        <h6 class="fw-bold">Native Language</h6>
+        <div class="d-flex">
+          <div class="input-group flex-grow-1">
+            <span class="input-group-text"><i class="bi bi-pencil"></i></span>
+            <input type="text" class="form-control" id="nativeLanguageInput" value="विचार" disabled>
+          </div>
+          <div class="ms-2">
+            <!-- Edit Button -->
+            <button class="btn btn-secondary btn-sm" id="editBtn" onclick="toggleEditSave('nativeLanguageInput', 'editBtn', 'saveBtn')">Edit</button>
+            <!-- Save Button -->
+            <button class="btn btn-primary btn-sm" id="saveBtn" onclick="toggleEditSave('nativeLanguageInput', 'editBtn', 'saveBtn')" style="display: none;">Save</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Example Sentences -->
+      <div class="mb-4">
+        <h6 class="fw-bold">Example Sentences</h6>
+        <div class="mb-2">
+          <h6 class="text-muted">日本語 (Japanese)</h6>
+          <p>会社は環境への影響を考慮して、新しい製品を開発しました</p>
+        </div>
+        <div class="mb-2">
+          <h6 class="text-muted">English</h6>
+          <p>The company developed a new product, taking the environmental impact into consideration.</p>
+        </div>
+        <div class="mb-2">
+          <h6 class="text-muted">Native Language</h6>
+          <div class="d-flex">
+            <div class="input-group flex-grow-1">
+              <span class="input-group-text"><i class="bi bi-pencil"></i></span>
+              <input type="text" class="form-control" id="exampleNativeLanguageInput" value="कम्पनीले वातावरणीय प्रभावलाई विचार गरेर नयाँ उत्पादन विकास गर्यो" disabled>
+            </div>
+            <!-- まだ決まってないので非表示
+             <div class="ms-2">
+                <!-- Edit Button -->
+                <button class="btn btn-secondary btn-sm" id="editExampleBtn" onclick="toggleEditSave('exampleNativeLanguageInput', 'editExampleBtn', 'saveExampleBtn')">Edit</button>
+                <!-- Save Button -->
+                <button class="btn btn-primary btn-sm" id="saveExampleBtn" onclick="toggleEditSave('exampleNativeLanguageInput', 'editExampleBtn', 'saveExampleBtn')" style="display: none;">Save</button>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 </div>
 <% end %>
+
+

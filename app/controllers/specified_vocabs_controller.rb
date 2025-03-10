@@ -4,9 +4,12 @@ class SpecifiedVocabsController < ApplicationController
   end
 
   def vocab_word
-    if params[:id].present?
-      @tokutei_bs = SpecifiedVocabB.where(specified_vocab_a_id: params[:id]).order(frequency_count: :desc)
-    end
+    sva = SpecifiedVocabA.find(params[:id])
+    @tokutei_bs = sva.specified_vocab_bs.order(frequency_count: :desc)
   end
 
+  def page_mylang
+    vocab_code = params[:vocab_code]
+    @vocab_stores = VocabStore.where(vocab_code: vocab_code).order(:vocab_org)  
+  end
 end

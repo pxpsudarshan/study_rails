@@ -60,3 +60,55 @@ ja:
         vocab_code:               '語彙'
         vocab_read:               '読み方'
         vocab_mean:               '説明'
+
+      audio_a:
+        title_nation:             'タイトル'
+        sort:                     '順番'
+
+      audio_b:
+        title_nation:             'タイトル'
+        sort:                     '順番'
+
+      audio_c:
+        title_nation:             'タイトル'
+        title_sort:               '順番'
+
+      audio_c_content:
+        content:                  'タイトル'
+        sort:                     '順番'
+
+      audio_d:
+        content:                  'タイトル'
+        sort:                     '順番'
+        customer_flg:             'お客さん'
+        audio_file:               '音声ファイル'
+
+      language: &language
+        content:                  'タイトル'
+        language:                 '言語'
+
+      languages: *language
+
+      tokutei:
+        sort:                     '順番'
+        title:                    'タイトル'
+
+      tokutei_question: &tokutei_question
+        sort:                     '順番'
+        title:                    'タイトル'
+        content:                  '質問内容'
+        image_flg:                '画像'
+      tokutei_questions: *tokutei_question
+
+      tokutei_answer: &tokutei_answer
+        sort:                     '順番'
+        title:                    'タイトル'
+        content:                  '返事内容'
+        correct_flg:              '正解'
+        image_flg:                '画像'
+      tokutei_answers: *tokutei_answer
+
+      tokutei_explain:
+        content:                  '説明内容'
+        image_flg:                '画像'
+

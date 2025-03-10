@@ -1,0 +1,2 @@
+module Admin::AudioCsHelper
+end

@@ -1,0 +1,2 @@
+module Admin::TokuteiQuestionsHelper
+end

@@ -1,0 +1,92 @@
+<%= form_for [:admin, @tokutei], html: { class: 'needs-validation', novalidate: true } do |f| %>
+<%= f.hidden_field :tokutei_id %>
+<% if @tokutei.errors.any? %>
+<div class="row">
+  <div class="col-md-12">
+    <div id="error_explanations" class="alert fade show alert-danger">
+      <ul>
+        <% @tokutei.errors.full_messages.each do |msg| %>
+        <li>
+          <%= content_tag(:div, msg) %>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+<% end %>
+
+<div class="row mb-3">
+  <label class='col-md-2 col-form-label text-end'><%= t('activerecord.attributes.tokutei.sort') %></label>
+  <div class="col-md-3">
+    <div class="input-group">
+      <%= f.text_field :sort, class: 'form-control' %>
+    </div>
+  </div>
+</div>
+<div class="row mb-3">
+  <label class='col-md-2 col-form-label text-end'><%= t('activerecord.attributes.tokutei.title') %></label>
+  <div class="col-md-3">
+    <div class="input-group">
+      <%= f.text_field :title, class: 'form-control' %>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-3">
+  <div class="col-md-6">
+    <table class="table table-bordered table-sm">
+      <thead>
+        <tr class="table-success">
+          <th class="text-start w-25"><%= t('activerecord.attributes.language.language') %></th>
+          <th class="text-start"><%= t('activerecord.attributes.language.content') %></th>
+          <th class="text-start"><%= t('common.destroy') %></th>
+        </tr>
+      </thead>
+      <tbody id="langs">
+      <%= f.fields_for :languages do |ln| %>
+        <% render 'language_fields', f: ln %>
+      <% end %>
+      </tbody>
+    </table>
+    <%= link_to_add_association t('buttons.lang_add').html_safe, f, :languages,
+        'data-association-insertion-method'    => 'append' ,
+        'data-association-insertion-node'      => '#langs', class: "btn btn-sm btn-primary"
+    %>
+  </div>
+</div>
+
+<div class="row mb-3">
+  <div class="col-md-8">
+    <label class='col-md-2 col-form-label text-start'><%= '質問一覧' %></label>
+    <table class="table table-bordered table-sm">
+      <thead>
+        <tr class="table-success">
+          <th class="text-start w-25"><%= t('activerecord.attributes.tokutei_question.sort') %></th>
+          <th class="text-start w-25"><%= t('activerecord.attributes.tokutei_question.title') %></th>
+          <th class="text-start w-75"><%= t('activerecord.attributes.tokutei_question.content') %></th>
+          <th class="text-start"><%= t('common.edit') %></th>
+          <th class="text-start"><%= t('common.destroy') %></th>
+        </tr>
+      </thead>
+      <tbody id="quests">
+      <%= f.fields_for :tokutei_questions do |ln| %>
+        <% render 'tokutei_question_fields', f: ln %>
+      <% end %>
+      </tbody>
+    </table>
+    <%= link_to_add_association t('buttons.question_add').html_safe, f, :tokutei_questions,
+        'data-association-insertion-method'    => 'append' ,
+        'data-association-insertion-node'      => '#quests', class: "btn btn-sm btn-primary"
+    %>
+  </div>
+</div>
+<div class="form-actions">
+  <% if @tokutei.tokutei_id.present? %>
+    <%= link_to t('buttons.back'), admin_tokutei_path(id: @tokutei.tokutei_id, audio_lang: @audio_lang), class: "btn btn-sm btn-secondary" %>
+  <% else %>
+    <%= link_to t('buttons.back'), admin_tokuteis_path(audio_lang: @audio_lang), class: "btn btn-sm btn-secondary" %>
+  <% end %>
+  <%= f.submit t('buttons.submit'), class: "btn btn-sm btn-primary" %>
+</div>
+<% end %>
