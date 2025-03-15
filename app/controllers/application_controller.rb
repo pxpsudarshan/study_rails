@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   helper_method :occupation_list
   before_action :authenticate_users
   before_action :force_tablet_html
+  before_action :set_breadcrumbs
+
 #  has_mobile_fu
   before_action do
     RecordWithOperator.operator = current_user || User.first
@@ -62,5 +64,16 @@ class ApplicationController < ActionController::Base
 #      end
     end
     stored_location_for(resource) || (current_user.present? ? menus_path : kaisha_menus_path)
+  end
+
+  def add_breadcrumb (label,path = nil)
+    @breadcrumbs << { 
+      label: label, 
+      path: path
+      }
+  end
+
+  def set_breadcrumbs
+    @breadcrumbs = []
   end
 end

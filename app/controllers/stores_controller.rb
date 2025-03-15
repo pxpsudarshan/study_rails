@@ -1,5 +1,6 @@
 class StoresController < ApplicationController
   before_action :parent
+  before_action :add_index_breadcrumb, only: [:create,:update]
 
   def index
   end
@@ -8,9 +9,11 @@ class StoresController < ApplicationController
     @store = @user.store
     @store ||= @user.build_store
     @store_contents = @store.store_contents.new
+    add_breadcrumb('Stores')
   end
 
   def create
+    add_breadcrumb('create')
     @store = @user.build_store(store_params)
     @store_contents = @store.store_contents
     begin
@@ -66,5 +69,9 @@ class StoresController < ApplicationController
         :_destroy
       ],
     )
+  end
+
+  def add_index_breadcrumb
+    add_breadcrumb('Stores', stores_path)
   end
 end
