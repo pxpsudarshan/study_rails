@@ -1,5 +1,8 @@
 class JobsController < ApplicationController
   def index
+    # Initialize breadcrumbs for jobs
+    @breadcrumbs = []
+    add_breadcrumb(t('breadcrumbs.jobs'))
     if params[:search].present?
       @jobs = JobProfileContent.reorder('')
       @jobs = @jobs.where(year: params[:search][:year]) if params[:search][:year].present?
@@ -16,6 +19,8 @@ class JobsController < ApplicationController
   end
 
   def apply
+    add_breadcrumb(t('breadcrumbs.jobs'), jobs_path)
+    add_breadcrumb(t('breadcrumbs.apply'))
     jpc = JobProfileContent.find(params[:job][:id])
     comp = jpc.job_profile.comp
     kaisha_email = comp.email

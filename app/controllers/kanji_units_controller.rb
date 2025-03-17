@@ -1,5 +1,8 @@
 class KanjiUnitsController < ApplicationController
   def index
+    # Initialize breadcrumbs for kanji units
+    @breadcrumbs = []
+    add_breadcrumb(t('breadcrumbs.kanji_units'))
     if params[:kanji].blank?
       @gois = []
       kanji_stores = KanjiStore.all.order(:kanji_org)
@@ -30,6 +33,7 @@ class KanjiUnitsController < ApplicationController
   end
 
   def parts_kanji
+    add_breadcrumb(t('breadcrumbs.kanji_units'), kanji_units_path)
     if params[:kanji][:kanji].present?
       goi = params[:kanji][:kanji]
       @gois = []
@@ -54,6 +58,7 @@ class KanjiUnitsController < ApplicationController
   end
 
   def kanji_vocab
+    add_breadcrumb(t('breadcrumbs.kanji_units'), kanji_units_path)
     if params[:kanji][:vocab_org].present?
         vocab_org = params[:kanji][:vocab_org]
         vocab = VocabStore.find_by(vocab_org: vocab_org)

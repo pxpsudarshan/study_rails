@@ -1,4 +1,7 @@
 class ApplicationController < ActionController::Base
+  
+  include BreadcrumbsConcern
+  helper BreadcrumbsHelper
   protect_from_forgery with: :exception
   before_action :set_response_headers, except: [ ]
   helper_method :occupation_list
@@ -66,14 +69,6 @@ class ApplicationController < ActionController::Base
     stored_location_for(resource) || (current_user.present? ? menus_path : kaisha_menus_path)
   end
 
-  def add_breadcrumb (label,path = nil)
-    @breadcrumbs << { 
-      label: label, 
-      path: path
-      }
-  end
-
-  def set_breadcrumbs
+  # Remove old breadcrumb methods as they're now handled by BreadcrumbsConcern
     @breadcrumbs = []
-  end
 end

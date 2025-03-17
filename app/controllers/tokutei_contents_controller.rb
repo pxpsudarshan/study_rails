@@ -1,5 +1,7 @@
 class TokuteiContentsController < ApplicationController
   def index
+    @breadcrumbs = []
+    add_breadcrumb(t('breadcrumbs.tokutei_contents'))
     if params[:id].present?
       @tokutei = Tokutei.find(params[:id])
     end

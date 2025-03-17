@@ -1,15 +1,23 @@
 class StoresController < ApplicationController
+  include BreadcrumbsConcern
   before_action :parent
-  before_action :add_index_breadcrumb, only: [:create,:update]
+  before_action :set_store, only: [:show, :edit, :update, :destroy]
+  before_action :add_index_breadcrumb, only: [:create, :update]
 
   def index
+    @stores = Store.all
+    add_breadcrumb t('breadcrumbs.stores')
   end
 
   def new
     @store = @user.store
     @store ||= @user.build_store
+    add_breadcrumb t('breadcrumbs.stores'), stores_path
+    add_breadcrumb t('breadcrumbs.new')
     @store_contents = @store.store_contents.new
-    add_breadcrumb('Stores')
+    # Initialize breadcrumbs for stores listing
+    @breadcrumbs = []
+    add_breadcrumb(t('breadcrumbs.stores'))
   end
 
   def create
@@ -69,6 +77,17 @@ class StoresController < ApplicationController
         :_destroy
       ],
     )
+  end
+
+  def show
+    add_breadcrumb t('breadcrumbs.stores'), stores_path
+    add_breadcrumb @store.name
+  end
+
+  def edit
+    add_breadcrumb t('breadcrumbs.stores'), stores_path
+    add_breadcrumb @store.name, store_path(@store)
+    add_breadcrumb t('breadcrumbs.edit')
   end
 
   def add_index_breadcrumb

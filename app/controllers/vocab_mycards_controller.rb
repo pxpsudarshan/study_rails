@@ -1,5 +1,8 @@
 class VocabMycardsController < ApplicationController
   def index
+    # Initialize breadcrumbs for vocabulary cards
+    @breadcrumbs = []
+    add_breadcrumb(t('breadcrumbs.vocab_mycards'))
     vocab_code = params[:vocab_code]
     @vocab_code = vocab_code
     @cards = []
@@ -53,6 +56,8 @@ class VocabMycardsController < ApplicationController
   end
 
   def update
+    add_breadcrumb(t('breadcrumbs.vocab_mycards'), vocab_mycards_path)
+    add_breadcrumb(t('breadcrumbs.update'))
     @mycard = VocabMycard.find(params[:id])
     if @mycard.save
       redirect_to vocab_mycards_path(vocab_code: @mycard.vocab_code), flash: {success: 'updated'}

@@ -1,5 +1,8 @@
 class KanjisController < ApplicationController
   def index
+    # Initialize breadcrumbs for kanji listing
+    @breadcrumbs = []
+    add_breadcrumb(t('breadcrumbs.kanjis'))
     if params[:kanji][:kanji].present?
       goi = params[:kanji][:kanji]
       @gois = []
@@ -27,6 +30,9 @@ class KanjisController < ApplicationController
     if params[:kanji][:vocab_org].present?
         vocab_org = params[:kanji][:vocab_org]
         vocab = VocabStore.find_by(vocab_org: vocab_org)
+        add_breadcrumb(t('breadcrumbs.kanjis'), kanjis_path)
+        add_breadcrumb(vocab_org)
+        add_breadcrumb(t('breadcrumbs.kanji_vocab'))
         vocab_code = vocab["vocab_code"]
         jlpt_level = vocab["jlpt_level"]||'N?'
         @gois = {

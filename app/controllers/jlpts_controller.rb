@@ -1,5 +1,7 @@
 class JlptsController < ApplicationController
   def index
+    @breadcrumbs = []
+    add_breadcrumb(t('breadcrumbs.jlpts'))
     jlpt = params[:jlpt].to_i
     @cards = []
     @message = ""

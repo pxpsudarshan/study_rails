@@ -1,5 +1,7 @@
 class PartsController < ApplicationController
   def index
+    @breadcrumbs = []
+    add_breadcrumb(t('breadcrumbs.parts'))
     if params[:kanji].blank?
       @goi = PartsStore.all.order(:parts_stroke)
     end
@@ -8,6 +10,8 @@ class PartsController < ApplicationController
   def part
     if params[:kanji][:kanji].present?
       parts_org = params[:kanji][:kanji]
+      add_breadcrumb(t('breadcrumbs.parts'), parts_path)
+      add_breadcrumb(parts_org)
       @gois = []
       parts_store = PartsStore.find_by(parts_org: parts_org)
       parts_store.parts_kanji.each do |kanji|
@@ -25,6 +29,8 @@ class PartsController < ApplicationController
   def parts_kanji
     if params[:kanji][:kanji].present?
       goi = params[:kanji][:kanji]
+      add_breadcrumb(t('breadcrumbs.parts'), parts_path)
+      add_breadcrumb(goi)
       @gois = []
       lang = current_user.lang_id
       vocab = KanjiStore.where(kanji_org: goi).first
@@ -50,6 +56,9 @@ class PartsController < ApplicationController
     if params[:kanji][:vocab_org].present?
         vocab_org = params[:kanji][:vocab_org]
         vocab = VocabStore.find_by(vocab_org: vocab_org)
+        add_breadcrumb(t('breadcrumbs.parts'), parts_path)
+        add_breadcrumb(vocab_org)
+        add_breadcrumb(t('breadcrumbs.kanji_vocab'))
         vocab_code = vocab["vocab_code"]
         jlpt_level = vocab["jlpt_level"]||'N?'
         @gois = {

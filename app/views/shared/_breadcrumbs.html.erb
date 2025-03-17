@@ -1,16 +1,17 @@
-<nav aria-label="breadcrumb">
-<ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="/">Home</a></li>
-    <% @breadcrumbs.each do |breadcrumb| %>
-        <% if breadcrumb[:path].nil? %> 
-            <li class="breadcrumb-item active" aria-current="page">
-                <%= breadcrumb[:label] %>
-            </li>
+<% if @breadcrumbs.present? %>
+  <nav aria-label="breadcrumb" class="bg-light p-2 mb-3 border-bottom">
+    <ol class="breadcrumb mb-0">
+      <% @breadcrumbs.each do |breadcrumb| %>
+        <% if breadcrumb == @breadcrumbs.last %>
+          <li class="breadcrumb-item active" aria-current="page">
+            <%= breadcrumb[:label] %>
+          </li>
         <% else %>
-            <li class="breadcrumb-item">
-                <%= link_to breadcrumb[:label],breadcrumb[:path] %>
-            </li>
+          <li class="breadcrumb-item">
+            <%= link_to(breadcrumb[:label], breadcrumb[:path], class: "text-decoration-none") %>
+          </li>
         <% end %>
-    <% end %>
-</ol>
-</nav>
+      <% end %>
+    </ol>
+  </nav>
+<% end %>

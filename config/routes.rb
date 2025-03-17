@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :comps, controllers: { passwords: "kaisha/passwords" , registrations: "kaisha/registrations", sessions: "kaisha/sessions" }
-  devise_for :users, controllers: { registrations: "users/registrations" }
+  devise_for :users, controllers: { registrations: "users/registrations", sessions: "users/sessions" }
 
   namespace :admin do
     resources :tokuteis do

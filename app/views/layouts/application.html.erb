@@ -21,7 +21,7 @@
   <![endif]-->
 </head>
 <body>
-  <% if controller_name != 'mains' %>
+  <% if controller_name != 'mains' && controller_name != 'sessions' %>
   <nav class="navbar navbar-expand-md p-0">
   <div class="container-fluid bg-black bg-gradient">
       <a class="navbar-brand active p-0" href="<%= current_user.present? ? menus_path : kaisha_menus_path %>">
@@ -74,11 +74,13 @@
     <!-- /.navb ar-static-side -->
   </nav>
   <hr class="m-0 student-line top-ten"></hr>
-  <%= render 'shared/breadcrumbs' %>
+  <% if controller_name != 'sessions' %>
+    <%= render 'shared/breadcrumbs' %>
+  <% end %>
   <% end %>
   <main class="overflow-hidden">
     <%= bootstrap_flash %>
-    <%= yield %>
+    <%= content_for?(:content) ? yield(:content) : yield %>
   </main>
 </body>
 </html>

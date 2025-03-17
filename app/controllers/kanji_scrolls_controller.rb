@@ -1,5 +1,8 @@
 class KanjiScrollsController < ApplicationController
   def index
+    # Initialize breadcrumbs for kanji scrolls
+    @breadcrumbs = []
+    add_breadcrumb(t('breadcrumbs.kanji_scrolls'))
     if params[:kanji].blank?
       @gois = []
       kanji_stores = KanjiStore.all.order(:kanji_org)
@@ -37,6 +40,8 @@ class KanjiScrollsController < ApplicationController
   end
 
   def kanji_vocab
+    add_breadcrumb(t('breadcrumbs.kanji_scrolls'), kanji_scrolls_path)
+    add_breadcrumb(t('breadcrumbs.kanji_vocab'))
     if params[:kanji][:vocab_org].present?
         vocab_org = params[:kanji][:vocab_org]
         vocab = VocabStore.find_by(vocab_org: vocab_org)

@@ -1,5 +1,7 @@
 class ForeignsController < ApplicationController
   def index
+    @breadcrumbs = []
+    add_breadcrumb(t('breadcrumbs.foreigns'))
     if params[:goi][:goi].present?
       goi = params[:goi][:goi]
       @gois = []

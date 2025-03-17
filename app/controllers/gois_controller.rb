@@ -1,5 +1,7 @@
 class GoisController < ApplicationController
   def index
+    @breadcrumbs = []
+    add_breadcrumb(t('breadcrumbs.gois'))
     if params[:goi][:goi].present?
       goi = params[:goi][:goi]
       vocab_code = ''

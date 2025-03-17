@@ -1,7 +1,19 @@
 class MenusController < ApplicationController
+  include BreadcrumbsConcern
+  include ActionView::Helpers::UrlHelper
+  include ActionView::RoutingUrlFor
+  include Rails.application.routes.url_helpers
+  before_action :set_menu, only: [:show, :edit, :update, :destroy]
+  before_action :set_store
   before_action :set_lang, except: []
   
   def index
+    @menus = @store.menus
+    add_breadcrumb t('breadcrumbs.stores'), stores_path
+    add_breadcrumb @store.name, store_path(@store)
+    add_breadcrumb t('breadcrumbs.menus')
+    # Breadcrumbs are handled by BreadcrumbsConcern
+    
 #    @tokutei_bs = TokuteiB.where(tokutei_a_id: nil).order(:sort)
     @audio_as = AudioA.order(:sort)
     @chart_data = generate_chart_data
