@@ -74,4 +74,5 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :sendmail
   config.hosts << "study.kanrin.biz"
+  config.hosts << "fcf3-240b-10-2d80-800-edb4-cc41-f6c0-ddbe.ngrok-free.app"
 end

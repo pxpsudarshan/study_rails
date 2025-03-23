@@ -120,7 +120,7 @@
     });
 
     $(".next-question").click(function() {
-      progressBarAnimation(20);
+      progressBarAnimation(90);
       triggerNextQuestion();
     });
 
@@ -193,7 +193,7 @@
     }
 
     function progressBarAnimation(barPercentage) {
-      var percentageRemaining = (barPercentage / 20) * 100;
+      var percentageRemaining = (barPercentage / 90) * 100;
       $(".progress-bar").css("width", percentageRemaining + "%");
       $(".progress-bar").attr("aria-valuenow", percentageRemaining);
 
@@ -223,7 +223,7 @@
     }
 
     function startCountdown() {
-        var countdown = 20; // Initial countdown value in seconds
+        var countdown = 90; // Initial countdown value in seconds
         clearInterval(countdownInterval);
         countdownInterval = setInterval(function() {
           countdown--;
@@ -231,7 +231,7 @@
             progressBarAnimation(countdown);
 
             if (countdown < 0) {
-              progressBarAnimation(20);
+              progressBarAnimation(90);
               triggerNextQuestion();
             } else {
                 $('#countdown_' + currentIndex).text(countdown);
@@ -241,7 +241,7 @@
 
     function resetCountdown() {
         clearInterval(countdownInterval);
-        $('#countdown_' + currentIndex).text(20);
+        $('#countdown_' + currentIndex).text(90);
         startCountdown();
     }
 

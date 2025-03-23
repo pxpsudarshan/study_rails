@@ -76,8 +76,22 @@
   <hr class="m-0 student-line top-ten"></hr>
   <% end %>
   <main class="overflow-hidden">
-    <%= bootstrap_flash %>
-    <%= yield %>
+  <!-- Toggle Button (visible on mobile only) -->
+  <button class="btn btn-primary d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle sidebar">
+  <i class="fas fa-bars" style="color:#fff; font-size:25px;"></i>
+  </button>
+  
+  <!-- Sidebar -->
+  <div id="sidebar" class="collapse d-md-block col-md-2 bg-black bg-gradient sidebar">
+  <div class="sidebar-sticky">
+  <ul class="nav flex-column">
+  <!-- Your nav items -->
+  </ul>
+  </div>
+  </div>
+  
+  <%= bootstrap_flash %>
+  <%= yield %>
   </main>
 </body>
 </html>
