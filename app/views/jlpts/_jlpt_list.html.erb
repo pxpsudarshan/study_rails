@@ -1,0 +1,32 @@
+  <%= paginate @cards, remote: true %>
+  <% @cards.each do |card| %>
+    <div class="col-sm-3 mt-1" style="min-width: 150px;">
+      <div class="card rounded-0" style="height: 160px; overflow: auto;">
+        <div class="card-body text-center">
+          <div class="mycard_status">
+            <% if card.vocab_mycards.where(user_id: current_user.id).present? %>
+            <%= '⭐️' %>
+            <% end %>
+          </div>
+          <p class="card-text"><%= card.vocab_read %></p>
+          <hr class="m-1" >
+          <%= link_to card.vocab_code, jlpt_path(id: card.id), class: 'underline d-inline-block w-100 fs-2 link-opacity-50-hover ink-dark' %>
+          <%
+            text = card.vocab_nations.where(lang: current_user.lang_id)
+          %>
+          <hr class="m-1" >
+          <p class="card-text">
+          <% if text.length > 1 %>
+            <% text.each_with_index do |txt, index| %>
+              <%= txt.nation_code %><%= index < text.length - 1 ? ',' : '' %>
+            <% end %>
+          <% else %>
+            <%= text.first.nation_code if text.present? %>
+          <% end %>
+          </p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <strong><%= page_entries_info @cards, :entry_name => '' %></strong>
+  <%= paginate @cards, remote: true %>

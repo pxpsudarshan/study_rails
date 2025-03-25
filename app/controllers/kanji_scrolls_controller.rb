@@ -1,34 +1,34 @@
 class KanjiScrollsController < ApplicationController
   def index
-    if params[:kanji].blank?
+    if params[:kanji_id].blank?
       @gois = []
-      kanji_stores = KanjiStore.all.order(:kanji_org)
+      kanji_stores = KanjiTable.all
       kanji_stores.each do |kanji|
-        kanji_code = kanji["kanji_code"]
-        kanji_org = kanji["kanji_org"]
+        kanji_code = kanji.kanji_code
+        kanji_id = kanji.id
         arr = {
           kanji_code: kanji_code,
-          kanji_org:  kanji_org,
+          kanji_id:  kanji_id,
         }
         @gois << arr
       end
     end
-    if params[:kanji][:kanji].present?
-      goi = params[:kanji][:kanji]
+    if params[:kanji][:kanji_id].present?
+      id = params[:kanji][:kanji_id]
       @gois = []
-      lang = current_user.lang_id
-      vocab = KanjiStore.where(kanji_org: goi).first
-      vocab.kanji_vocab.each do |vocab|
-        vocab_code = vocab["vocab_code"]
-        vocab_org = vocab["vocab_org"]
-        mycard = current_user.vocab_mycards.where(vocab_code: vocab["vocab_code"]).first
+      vocab = KanjiTable.find(id)
+      vocab.vocab_tables.each do |vocab|
+        vocab_code = vocab.vocab_code
+        mycard = current_user.vocab_mycards.where(vocab_table_id: vocab.id).first
         vocab_mycard = mycard.present? ? '⭐️' : '☆'
-        vocab_store = VocabStore.find_by(vocab_org: vocab_org)
-        jlpt_level = vocab_store["jlpt_level"] if vocab_store.present?
+        jlpt_level = vocab.jlpt_level
         arr = {
-          unit_sheet: vocab["unit_sheet"],
-          vocab_code: (vocab_code+" "+(jlpt_level||'')),
-          vocab_org:  vocab_org,
+#          unit_sheet: vocab["unit_sheet"],
+          vocab_code: (vocab_code+" "+'N'+(jlpt_level.to_s)),
+          vocab_id:  vocab.id,
+          parts_body: vocab.kanji_body,
+          eng_mean: vocab.vocab_nations.where(lang: 'EN').first&.nation_code,
+          read_code: vocab.vocab_read
         }
         @gois << arr
       end

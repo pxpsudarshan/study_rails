@@ -3,26 +3,27 @@ class KanjisController < ApplicationController
     if params[:kanji][:kanji].present?
       goi = params[:kanji][:kanji]
       @gois = []
-      lang = current_user.lang_id
-      vocab = KanjiStore.where(kanji_code: goi).order(:kanji_org).first
-      vocab.kanji_vocab.each do |vocab|
-        vocab_code = vocab["vocab_code"]
-        vocab_org = vocab["vocab_org"]
-        mycard = current_user.vocab_mycards.where(vocab_code: vocab["vocab_code"]).first
+      kanji = KanjiTable.where(kanji_code: goi).first
+      kanji.vocab_tables.each do |vocab|
+        vocab_code = vocab.vocab_code
+        mycard = current_user.vocab_mycards.where(vocab_table_id: vocab.id).first
         vocab_mycard = mycard.present? ? '⭐️' : '☆'
-        vocab_store = VocabStore.find_by(vocab_org: vocab_org)
-        jlpt_level = vocab_store["jlpt_level"] if vocab_store.present?
+        jlpt_level = vocab.jlpt_level
         arr = {
-          unit_sheet: vocab["unit_sheet"],
-          vocab_code: (vocab_code+" "+(jlpt_level||'')),
-          vocab_org:  vocab_org,
+#          unit_sheet: vocab["unit_sheet"],
+          vocab_code: (vocab_code+" "+'N'+(jlpt_level.to_s)),
+          vocab_id:  vocab.id,
+          parts_body: vocab.kanji_body,
+          eng_mean: vocab.vocab_nations.where(lang: 'EN').first&.nation_code,
+          read_code: vocab.vocab_read
         }
         @gois << arr
-      end if vocab.present?
+      end if kanji.present?
       @count = @gois.length
     end if params[:kanji].present?
   end
 
+# not used
   def kanji_vocab
     if params[:kanji][:vocab_org].present?
         vocab_org = params[:kanji][:vocab_org]

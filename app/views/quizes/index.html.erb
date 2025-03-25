@@ -11,9 +11,15 @@
       </div>
     <% else %>
       <% @quizData.each_with_index do |data, index| %>
-        <% @dataOption = data.vocab_store.nation_vocab["EN"] %>
-          <% correct_answer = @dataOption.join(", ") %>
-          <% incorrect_answers = @quizData.map { |d| d.vocab_store.nation_vocab["EN"] }.flatten.uniq - @dataOption %>
+        <% if current_user.lang_id != 'JP' %>
+        <% @dataOption = data.vocab_table.vocab_nations.where(lang: current_user.lang_id).first %>
+          <% correct_answer = @dataOption&.nation_code %>
+          <% incorrect_answers = @quizData.map { |d| d.vocab_table.vocab_nations.where(lang: current_user.lang_id).first&.nation_code }.flatten.uniq - [correct_answer] %>
+        <% else %>
+        <% @dataOption = data.vocab_table %>
+          <% correct_answer = @dataOption.vocab_read %>
+          <% incorrect_answers = @quizData.map { |d| d.vocab_table.vocab_read }.flatten.uniq - [correct_answer] %>
+        <% end %>
           <% shuffled_options = ([correct_answer] + incorrect_answers.sample(3)).shuffle %>
 
           <div class="card card-body mb-1 rounded-3 p-md-5 mx-md-4 text-black" style="margin-top: 5%">
@@ -27,8 +33,8 @@
                 <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
                 <div class="d-flex">
                   <h3 style="user-select: none;">
-                    <%= "#{index + 1}. What is the meaning of #{data.vocab_code}" %>
-                    <%= content_tag :span, "(#{data.vocab_read})", class: "hiraText d-none" %>
+                    <%= "#{index + 1}. What is the meaning of #{data.vocab_table.vocab_code}" %>
+                    <%= content_tag :span, "(#{data.vocab_table.vocab_read})", class: "hiraText d-none" %>
                   </h3>
                 </div>
                 <div class="progress">
@@ -48,7 +54,7 @@
 
                 <!-- Add the hidden input field here -->
                 <div class="pt-3">
-                  <%= hidden_field_tag "vocab_org_#{index}", data.vocab_org %>
+                  <%= hidden_field_tag "id_#{index}", data.vocab_table.id %>
                   <div class="d-flex gap-2">
                     <%= link_to 'Next', quizes_path , class: 'btn btn-primary next-question', remote: true %>
                   </div>
@@ -111,7 +117,7 @@
     });
 
     function triggerNextQuestion() {
-      var vocabOrg = $("input[name='vocab_org_" + currentIndex + "']").val();
+      var vocabOrg = $("input[name='id_" + currentIndex + "']").val();
       var correctOption = $("input[name='answer_" + currentIndex + "']").data("correct");
       var selectedOption = firstClickedOptions[currentIndex];
       if(!selectedOption){
@@ -128,7 +134,7 @@
         method: 'post',
         data: {
           authenticity_token: '<%= form_authenticity_token %>',
-          vocab_org: vocabOrg,
+          id: vocabOrg,
           index: currentIndex,
           mycard_level: mycardLevel,
           correct_option: correctOption,

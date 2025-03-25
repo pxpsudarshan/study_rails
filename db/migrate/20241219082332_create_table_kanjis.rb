@@ -53,26 +53,25 @@ class CreateTableKanjis < ActiveRecord::Migration[7.0]
       t.datetime :deleted_at
       t.operator_stamps
     end
-    create_table :read_tables, id: :uuid do |t|
-      t.string :read_code
-      t.integer :sort, null: false, default: 0
-      t.text :vocab_body
-      t.timestamps
-      t.datetime :deleted_at
-      t.operator_stamps
-    end
-#dont need
-    create_table :read_vocabs, id: :uuid do |t|
-      t.integer :sort, null: false, default: 0
-      t.references :vocab_table, null: false, foreign_key: true, type: :uuid
-      t.references :read_table, null: false, foreign_key: true, type: :uuid
-      t.timestamps
-      t.datetime :deleted_at
-      t.operator_stamps
-    end
+#    create_table :read_tables, id: :uuid do |t|
+#      t.string :read_code
+#      t.integer :sort, null: false, default: 0
+#      t.text :vocab_body
+#      t.timestamps
+#      t.datetime :deleted_at
+#      t.operator_stamps
+#    end
+#    create_table :read_vocabs, id: :uuid do |t|
+#      t.integer :sort, null: false, default: 0
+#      t.references :vocab_table, null: false, foreign_key: true, type: :uuid
+#      t.references :read_table, null: false, foreign_key: true, type: :uuid
+#      t.timestamps
+#      t.datetime :deleted_at
+#      t.operator_stamps
+#    end
     add_index :parts_tables, :parts_code, unique: true
     add_index :kanji_tables, :kanji_code, unique: true
     add_index :vocab_tables, :vocab_code, unique: true
-    add_index :read_tables,  :read_code, unique: true
+#    add_index :read_tables,  :read_code, unique: true
   end
 end

@@ -2,61 +2,9 @@
 
 <div class="m-auto w-75">
 <!--
-<%= form_for @mycard, html: { id: 'mycard', role: 'form' }, remote: false do |f| %>
-<%= f.hidden_field :vocab_org %>
-<%= f.hidden_field :kanji_body %>
-<%= f.hidden_field :jlpt_level %>
-<%= f.radio_button :vocab_read, @gois[:vocab_read], {checked: true, class:"btn-check"} %>
-<%= f.label :vocab_read, value: @gois[:vocab_read], class:'rounded-0 m-1 btn btn-outline-primary' %>
-
-<%= f.radio_button :read_unit, @gois[:unit_sheet], {checked: true, class:"btn-check"} %>
-<%= f.label :read_unit, value: @gois[:unit_sheet], class:'rounded-0 m-1 btn btn-outline-primary' %>
-
-<%= f.radio_button :vocab_code, @gois[:vocab_code], {checked: true, class:"btn-check"} %>
-<%= f.label :vocab_code, value: @gois[:vocab_code], class:'rounded-0 m-1 btn btn-outline-primary' %>
-
-<%= f.submit 'まいかーど', class: 'rounded-0 m-1 btn btn-primary' %>
-
-<%= f.radio_button :mycard_ext, true, {disabled: true, checked: true, class:"btn-check"} %>
-<%= f.label :mycard_ext, value: @vocab_mycard, class:'rounded-0 m-1 btn btn-outline-primary' %>
-<% end %>
-
-<%= form_for :lang, url: lang_gois_path, html: { id: 'langs', role: 'form', method: :post }, remote: true do |f| %>
-<%= f.hidden_field :val, value: @gois[:vocab_read] %>
-どのくにのことばでえらびますか？
-          <select id="lang_selectlangid" name="lang[selectlangid]" class="form-select">
-          <option value="">Select nation</option>
-          <option value="CN"> Chinese </option>
-          <option value="VN"> Viet Nam </option>
-          <option value="ID"> Indonesia </option>
-          <option value="KR"> Korea   </option>
-          <option value="EN"> English </option>
-          <option value="RU"> Russian </option>
-          <option value="MM"> Myanmar </option>
-          <option value="MY"> Malaysia </option>
-          <option value="FR"> France </option>
-          <option value="PK"> Pakistan </option>
-          <option value="DE"> Germany </option>
-          <option value="NP"> Nepal </option>
-          <option value="TH"> Thailand </option>
-          <option value="NP"> Nepal </option>
-          </select>
-          <button type="submit"id="id_btn_langid_ext" class="rounded-0 m-1 btn btn-primary">Search</button>
-<% end %>
-<textarea id="id_lang_textarea_ex1" placeholder="まだありません。" rows="6" class="form-control"></textarea>
-
-<!--
-<a id="download" download="foreign.rtf" class="ui-btn ui-btn-c ui-btn-inline ui-corner-all ui-btn-icon-left " >Download（Only PC）</a><br>
--->
-<!--
-<p>
-  <button id="id_btn_lang_ext2" class="rounded-0 m-1 btn btn-primary">あなたのくにのことばでかく</button>
-  <textarea id="id_lang_textarea_ex2" rows="10" cols="10" class="form-control" placeholder="じぶんのくにのことばで"></textarea>
-</p>
-
   <% @gois[:vocab_kanji].each_with_index do |vocab, idx| %>
     <%= link_to vocab["kanji_code"], parts_kanji_kanji_units_path(kanji: { kanji: vocab["kanji_org"] }), remote: true, class: 'rounded-0 m-1 btn btn-primary' if vocab["kanji_org"] != 0 %>
-    <% end if @gois[:vocab_kanji].present? %>
+  <% end if @gois[:vocab_kanji].present? %>
 -->
 
 <div class="container mb-5 mt-5">
@@ -64,25 +12,25 @@
     <div class="card-body">
       <!-- Header Section -->
       <div class="d-flex align-items-center mb-4 border-bottom pb-3">
-        <h6 class="me-auto fw-bold">JLPT N3</h6>
-        <% kanji_parts = string_to_array("考,慮") %>
+        <h6 class="me-auto fw-bold">JLPT <%= @gois[:jlpt_level] %><%= @vocab_mycard %></h6>
+        <% kanji_parts = @gois[:vocab_kanji] %>
         <div class="ms-3">
         <% kanji_parts.each do |part| %>
-          <button class="btn btn-outline-primary btn-sm"><%= part %></button>
+          <button class="btn btn-outline-primary btn-sm"><%= part.kanji_code %></button>
         <% end %>
       </div>      
       </div>
 
       <!-- Kanji Details -->
       <div class="text-center mb-3">
-        <h4>こうりょ</h4>
-        <h2 class="fw-bold">考慮</h2>
+        <h4><%= @gois[:vocab_read] %></h4>
+        <h2 class="fw-bold"><%= @gois[:vocab_code] %></h2>
       </div>
 
       <!-- Meaning Section -->
       <div class="mb-4">
         <h6 class="fw-bold">Meaning in English</h6>
-        <p class="text-muted">consideration, taking into account​</p>
+        <p class="text-muted"><%= @gois[:eng_mean] %></p>
       </div>
 
       <!-- Native Language Input -->
@@ -90,19 +38,19 @@
         <h6 class="fw-bold">Native Language</h6>
         <div class="d-flex">
           <div class="input-group flex-grow-1">
-            <span class="input-group-text"><i class="bi bi-pencil"></i></span>
-            <input type="text" class="form-control" id="nativeLanguageInput" value="विचार" disabled>
+            <span class="input-group-text"><i class="fa fa-pencil-alt" aria-hidden="true"></i></span>
+            <input type="text" class="form-control" id="nativeLanguageInput" value="<%= @gois[:nation_mean] %>" disabled>
           </div>
           <div class="ms-2">
             <!-- Edit Button -->
-            <button class="btn btn-secondary btn-sm" id="editBtn" onclick="toggleEditSave('nativeLanguageInput', 'editBtn', 'saveBtn')">Edit</button>
+            <!--<button class="btn btn-secondary btn-sm" id="editBtn" onclick="toggleEditSave('nativeLanguageInput', 'editBtn', 'saveBtn')">Edit</button>-->
             <!-- Save Button -->
-            <button class="btn btn-primary btn-sm" id="saveBtn" onclick="toggleEditSave('nativeLanguageInput', 'editBtn', 'saveBtn')" style="display: none;">Save</button>
+            <!--<button class="btn btn-primary btn-sm" id="saveBtn" onclick="toggleEditSave('nativeLanguageInput', 'editBtn', 'saveBtn')" style="display: none;">Save</button>-->
           </div>
         </div>
       </div>
-
       <!-- Example Sentences -->
+<!--
       <div class="mb-4">
         <h6 class="fw-bold">Example Sentences</h6>
         <div class="mb-2">
@@ -120,16 +68,13 @@
               <span class="input-group-text"><i class="bi bi-pencil"></i></span>
               <input type="text" class="form-control" id="exampleNativeLanguageInput" value="कम्पनीले वातावरणीय प्रभावलाई विचार गरेर नयाँ उत्पादन विकास गर्यो" disabled>
             </div>
-            <!-- まだ決まってないので非表示
-             <div class="ms-2">
-                <!-- Edit Button -->
-                <button class="btn btn-secondary btn-sm" id="editExampleBtn" onclick="toggleEditSave('exampleNativeLanguageInput', 'editExampleBtn', 'saveExampleBtn')">Edit</button>
-                <!-- Save Button -->
-                <button class="btn btn-primary btn-sm" id="saveExampleBtn" onclick="toggleEditSave('exampleNativeLanguageInput', 'editExampleBtn', 'saveExampleBtn')" style="display: none;">Save</button>
-              </div>
+            <div class="ms-2">
+              <button class="btn btn-secondary btn-sm" id="editExampleBtn" onclick="toggleEditSave('exampleNativeLanguageInput', 'editExampleBtn', 'saveExampleBtn')">Edit</button>
+              <button class="btn btn-primary btn-sm" id="saveExampleBtn" onclick="toggleEditSave('exampleNativeLanguageInput', 'editExampleBtn', 'saveExampleBtn')" style="display: none;">Save</button>
+            </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>

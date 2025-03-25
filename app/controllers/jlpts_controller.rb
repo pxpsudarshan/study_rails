@@ -1,59 +1,27 @@
 class JlptsController < ApplicationController
   def index
-    jlpt = params[:jlpt].to_i
-    @cards = []
-    @message = ""
-    # @cards = VocabStore.where(jlpt_class: jlpt).order(:vocab_org)
-    @cards = VocabStore.left_outer_joins(:vocab_mycards)
-                        .where(jlpt_class: jlpt)
-                        .select('vocab_stores.vocab_read,
-                                 vocab_stores.vocab_code,
-                                 vocab_stores.nation_vocab,
-                                 vocab_mycards.vocab_org AS mycard')
-                        .order(:vocab_org)
-    if !@cards.present?
-      @message = "NO DATA"
-    end
+    @cards = VocabTable.where(jlpt_level: params[:jlpt])
+                        .page(params[:page]).per(params[:per])
   end
 
-  def page_mylang
-    vocab_code = params[:vocab_code]
-    @vocab_stores = VocabStore.where(vocab_code: vocab_code).order(:vocab_org)
-  end
-
-  def create
-    @mycard = current_user.vocab_mycards.new(mycard_params)
-    if @mycard.save
-      redirect_to jlpts_path(vocab_code: @mycard.vocab_code), flash: {success: 'created'}
-    else
-      redirect_to gois_path(goi: {goi: mycard_params[:vocab_read]}), flash: {alert: 'error'}
-    end
-  end
-
-  def update
-    @mycard = VocabMycard.find(params[:id])
-    if @mycard.save
-      redirect_to jlpts_path(vocab_code: @mycard.vocab_code), flash: {success: 'updated'}
-    else
-      redirect_to gois_path(goi: {goi: mycard_params[:vocab_read]}), flash: {alert: 'error'}
-    end
+  def show
+    vocab = VocabTable.find(params[:id])
+    vocab_code = vocab.vocab_code
+    jlpt_level = vocab.jlpt_level
+    @gois = {
+      vocab_read: vocab.vocab_read,
+      vocab_code: vocab_code,
+      jlpt_level: 'N'+jlpt_level.to_s,
+      vocab_kanji: vocab.kanji_tables,
+      eng_mean: vocab.vocab_nations.where(lang: 'EN').first&.nation_code,
+      nation_mean: vocab.vocab_nations.where(lang: current_user.lang_id).first&.nation_code,
+    }
+    @count = 1
+    @mycard = current_user.vocab_mycards.where(vocab_table_id: vocab.id).first
+    @vocab_mycard = @mycard.present? ? '⭐️' : '☆'
+    current_user.vocab_mycards.create!(vocab_table_id: vocab.id) if @mycard.blank?
   end
 
   private
 
-  def mycard_params
-    params.require(:vocab_mycard).permit(
-      :vocab_read,
-      :vocab_code,
-      :vocab_org,
-      :vocab_code,
-      :vocab_read,
-      :kanji_body,
-      :jlpt_class,
-      :jlpt_level,
-      :parts_body,
-      :recent_date,
-      :mycard_check,
-    )
-  end
 end

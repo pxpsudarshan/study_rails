@@ -9,7 +9,6 @@ class SpecifiedVocabsController < ApplicationController
   end
 
   def page_mylang
-    vocab_code = params[:vocab_code]
-    @vocab_stores = VocabStore.where(vocab_code: vocab_code).order(:vocab_org)  
+    @vocab = VocabTable.find_by(vocab_code: params[:vocab_code])
   end
 end

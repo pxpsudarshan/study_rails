@@ -4,24 +4,24 @@ class ForeignsController < ApplicationController
       goi = params[:goi][:goi]
       @gois = []
           lang = current_user.lang_id
-          vocabs = VocabStore.where("nation_vocab ->> ? ILIKE ?", lang, '%'+goi+'%')
-          vocabs.each do |vocab|
-          vocab_code = vocab["vocab_code"]
-          vocab_org = vocab["vocab_org"]
-          lang_vocab = vocab["nation_vocab"][lang].join(",")
+          nations = VocabNation.where(lang: lang).where("nation_code ILIKE ?", '%'+goi+'%')
+          nations.each do |nation|
+          vocab = nation.vocab_table
+          vocab_code = vocab.vocab_code
+          lang_vocab = nation.nation_code
           arr = {
-            vocab_read: vocab["vocab_read"],
+            vocab_read: vocab.vocab_read,
             vocab_code: (vocab_code+" "+lang_vocab),
-            vocab_org:  vocab_org,
+            vocab_id:  vocab.id,
             lang_vocab: lang_vocab
           }
           @gois << arr
         end
-        @count = vocabs.count
+        @count = nations.count
 
     end if params[:goi].present?
   end
-
+#############################################
   def kanji_vocab
     if params[:kanji][:vocab_org].present?
         vocab_org = params[:kanji][:vocab_org]

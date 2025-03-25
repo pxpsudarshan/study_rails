@@ -1,12 +1,17 @@
-.card:hover{
-     transform: scale(1.05);
-     box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
 }
 
-.underline{
+.no_hover {
+  pointer-events: none;
+}
+
+.underline {
   text-decoration: none;
   color: black;
 }
+
 .mycard_status{
   position: absolute;
   right: 5px;

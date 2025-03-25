@@ -2,13 +2,13 @@ class KanjiUnitsController < ApplicationController
   def index
     if params[:kanji].blank?
       @gois = []
-      kanji_stores = KanjiStore.all.order(:kanji_org)
+      kanji_stores = KanjiTable.all
       kanji_stores.each do |kanji|
-        kanji_code = kanji["kanji_code"]
-        kanji_org = kanji["kanji_org"]
+        kanji_code = kanji.kanji_code
+        kanji_id = kanji.id
         arr = {
           kanji_code: kanji_code,
-          kanji_org:  kanji_org,
+          kanji_id:  kanji_id,
         }
         @gois << arr
       end
@@ -16,13 +16,11 @@ class KanjiUnitsController < ApplicationController
     if params[:kanji][:selectkanjiunit].present?
       unit_id = params[:kanji][:selectkanjiunit]
       @gois = []
-      kanji_stores = KanjiStore.where(unit_sheet: unit_id).order(:kanji_org)
+      kanji_stores = KanjiTable.where(kanji_sheet: unit_id)
       kanji_stores.each do |kanji|
-        kanji_code = kanji["kanji_code"]
-        kanji_org = kanji["kanji_org"]
         arr = {
-          kanji_code: kanji_code,
-          kanji_org:  kanji_org,
+          kanji_code: kanji.kanji_code,
+          kanji_id:  kanji.id,
         }
         @gois << arr
       end
@@ -46,13 +44,14 @@ class KanjiUnitsController < ApplicationController
           unit_sheet: vocab["unit_sheet"],
           vocab_code: (vocab_code+" "+(jlpt_level||'')),
           vocab_org:  vocab_org,
+          eng_mean: vocab.vocab_nations.where(lang: 'EN').first&.nation_code,
         }
         @gois << arr
       end
       @count = @gois.length
     end
   end
-
+# not used
   def kanji_vocab
     if params[:kanji][:vocab_org].present?
         vocab_org = params[:kanji][:vocab_org]

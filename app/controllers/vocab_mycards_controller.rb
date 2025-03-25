@@ -8,7 +8,7 @@ class VocabMycardsController < ApplicationController
       #Extrating only kanji characters
       vocab_code = vocab_code.scan(/\p{Han}/).join
       @cards = current_user.vocab_mycards
-                           .joins(:vocab_store)
+                           .joins(:vocab_table)
                            .where('vocab_mycards.vocab_code ~* ?', "[#{vocab_code}]")
                            .order(created_at: :desc)
     elsif params[:selected_item].present?
@@ -25,11 +25,11 @@ class VocabMycardsController < ApplicationController
         prev_date = top_date - 1.year
       end
       @cards = current_user.vocab_mycards
-                .joins(:vocab_store)
+                .joins(:vocab_table)
                 .where("DATE(vocab_mycards.created_at) BETWEEN ? AND ?", prev_date, top_date)
                 .order(created_at: :desc)
     else
-      @cards = current_user.vocab_mycards.joins(:vocab_store).order(created_at: :desc)
+      @cards = current_user.vocab_mycards.joins(:vocab_table).order(created_at: :desc)
     end
 
     if !@cards.present?
@@ -38,10 +38,9 @@ class VocabMycardsController < ApplicationController
   end
 
   def page_mylang
-    vocab_code = params[:vocab_code]
-    @vocab_stores = VocabStore.where(vocab_code: vocab_code).order(:vocab_org)  
+    @vocab = VocabTable.find(params[:vocab_id])
   end
-
+# below not used
   def create
     @mycard = current_user.vocab_mycards.new(mycard_params)
     @mycard.mycard_check = 1

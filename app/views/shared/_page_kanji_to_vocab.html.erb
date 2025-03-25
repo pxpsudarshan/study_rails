@@ -1,39 +1,26 @@
-<%= form_for :kanji, url: url, html: { id: 'gois', role: 'form', method: :get }, remote: true do |f| %>
-<% verbs = @gois.map{ |goi| [goi[:vocab_code], goi[:vocab_org]] } %>
 <div class="m-auto w-75">
-
-<%= f.select :vocab_org, options_for_select(verbs,''), { include_blank: false }, class: 'form-select' %>
-<%= f.submit 'next', class: 'btn btn-primary rounded-0 m-1' %>
-
-<% vocab_aray = [
-  { vocab_code: "考慮", read_code: "こうりょ", parts_body: "考,慮", meaning_english: "consideration, taking into accoun​"},
-  { vocab_code: "遠慮", read_code: "えんりょ", parts_body: "遠,慮", meaning_english: "restraint, modesty, diffidence, hesitation, holding back​"},
-  { vocab_code: "配慮", read_code: "はいりょ", parts_body: "配,慮", meaning_english: "attention, thoughtfulness, making arrangements, care​"},
-  { vocab_code: "御遠慮なく", read_code: "ごえんりょなく", parts_body: "御,遠,慮", meaning_english: "without reservation, freely, frankly​​"},
-] %>
-
   <div class="row">
-    <% vocab_aray.each do |vocab| %>
-      <div class="col-sm-3 mt-1" style="min-width: 200px; height: 160px; overflow: auto;">
-        <div class="card rounded-0 h-100 overflow-auto shadow-sm">
-          <div class="card-body">
-            <%= link_to vocab[:vocab_code], page_mylang_vocab_mycards_path(vocab_code: vocab[:vocab_code]), class: 'underline d-inline-block w-100 fs-2 link-opacity-50-hover text-decoration-none text-center' %>
+    <% @gois.each do |vocab| %>
+    <div class="col-sm-3 mt-1" style="min-width: 200px">
+      <div class="card rounded-0" style="height: 160px; overflow: auto;">
+          <div class="card-body text-center">
+            <%= link_to vocab[:vocab_code], kanji_vocab_parts_path(vocab_id: vocab[:vocab_id]), remote: true, class: 'underline d-inline-block w-100 fs-2 link-opacity-50-hover ink-dark' %>
             <hr class="m-1">
-            <p class="card-text text-center"> <%= vocab[:meaning_english] %></p>   
+            <p class="card-text text-center"> <%= vocab[:eng_mean] %></p>   
             <div class="d-flex flex-wrap justify-content-center">
             <% parts_body = string_to_array(vocab[:parts_body]) %>
             <% parts_body.each_with_index do |part, index| %>
             <% end %>
-            <div class="position-absolute bottom-0 end-0 p-2">
+            <div class="position-absolute top-0 end-0 p-2">
               <button type="button" class="btn btn-sm btn-outline-primary"
               onclick="Openmodal2(
                   '<%= vocab[:parts_body] %>',
-                  '<%= vocab[:meaning_english] %>',
+                  '<%= vocab[:eng_mean] %>',
                   '<%= vocab[:vocab_code] %>',
                    '<%= vocab[:read_code] %>',
               )"
               data-bs-toggle="modal" data-bs-target="#detailsModal">
-              <i class="bi bi-info-circle"></i> Details
+              <i class="fas fa-book-open"></i>
               </button>
             </div>
           </div>
@@ -42,8 +29,7 @@
       </div>
     <% end %>
   </div>
-  </div>
-<% end %>
+</div>
 
 <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
