@@ -10,9 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_02_16_115028) do
+ActiveRecord::Schema[7.0].define(version: 2025_03_22_082352) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
   create_table "active_storage_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -85,8 +84,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_16_115028) do
     t.datetime "created_at", default: -> { "now()" }, null: false, comment: "作成日時と更新日時"
     t.datetime "updated_at", default: -> { "now()" }, null: false, comment: "作成日時と更新日時"
     t.datetime "deleted_at", comment: "削除日時"
-    t.uuid "created_by", comment: "作成者"
-    t.uuid "updated_by", comment: "更新者"
+    t.uuid "created_by", null: false, comment: "作成者"
+    t.uuid "updated_by", null: false, comment: "更新者"
     t.uuid "deleted_by", comment: "削除者"
   end
 
@@ -97,8 +96,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_16_115028) do
     t.datetime "created_at", default: -> { "now()" }, null: false, comment: "作成日時と更新日時"
     t.datetime "updated_at", default: -> { "now()" }, null: false, comment: "作成日時と更新日時"
     t.datetime "deleted_at", comment: "削除日時"
-    t.uuid "created_by", comment: "作成者"
-    t.uuid "updated_by", comment: "更新者"
+    t.uuid "created_by", null: false, comment: "作成者"
+    t.uuid "updated_by", null: false, comment: "更新者"
     t.uuid "deleted_by", comment: "削除者"
     t.index ["audio_a_id", "id"], name: "index_audio_bs_on_audio_a_id_and_audio_bs_id"
     t.index ["audio_a_id"], name: "index_audio_bs_on_audio_a_id"
@@ -126,8 +125,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_16_115028) do
     t.datetime "created_at", default: -> { "now()" }, null: false, comment: "作成日時と更新日時"
     t.datetime "updated_at", default: -> { "now()" }, null: false, comment: "作成日時と更新日時"
     t.datetime "deleted_at", comment: "削除日時"
-    t.uuid "created_by", comment: "作成者"
-    t.uuid "updated_by", comment: "更新者"
+    t.uuid "created_by", null: false, comment: "作成者"
+    t.uuid "updated_by", null: false, comment: "更新者"
     t.uuid "deleted_by", comment: "削除者"
     t.index ["audio_b_id", "id"], name: "index_audio_cs_on_audio_b_id_and_audio_cs_id"
     t.index ["audio_b_id"], name: "index_audio_cs_on_audio_b_id"
@@ -415,6 +414,19 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_16_115028) do
     t.index ["reset_password_token"], name: "index_comps_on_reset_password_token", unique: true
   end
 
+  create_table "element_kanjis", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "element_code"
+    t.integer "sort", default: 0, null: false
+    t.text "kanji_body"
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.datetime "deleted_at"
+    t.uuid "created_by"
+    t.uuid "updated_by"
+    t.uuid "deleted_by"
+    t.index ["element_code"], name: "element_kanjis_element_code", unique: true
+  end
+
   create_table "job_profile_contents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "job_profile_id", null: false
     t.integer "employment_sts"
@@ -448,6 +460,19 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_16_115028) do
     t.index ["comp_id"], name: "index_job_profiles_on_comp_id"
   end
 
+  create_table "kanji_radicals", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "kanji_code"
+    t.integer "sort", default: 0, null: false
+    t.text "parts_body"
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.datetime "deleted_at"
+    t.uuid "created_by"
+    t.uuid "updated_by"
+    t.uuid "deleted_by"
+    t.index ["kanji_code"], name: "kanji_radicals_kanji_code", unique: true
+  end
+
   create_table "kanji_stores", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.serial "kanji_org", null: false
     t.string "kanji_code", null: false
@@ -466,29 +491,29 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_16_115028) do
   end
 
   create_table "kanji_tables", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "kanji_code", comment: "漢字の名称"
-    t.integer "sort", default: 0, null: false, comment: "ソート"
-    t.string "parts_body", comment: "包含パーツカンマ区切り"
-    t.text "vocab_body", comment: "包含語彙カンマ区切り"
-    t.datetime "created_at", null: false, comment: "作成日時と更新日時"
-    t.datetime "updated_at", null: false, comment: "作成日時と更新日時"
-    t.datetime "deleted_at", comment: "削除日時"
-    t.uuid "created_by", null: false, comment: "作成者"
-    t.uuid "updated_by", null: false, comment: "更新者"
-    t.uuid "deleted_by", comment: "削除者"
-    t.index ["kanji_code"], name: "index_kanji_tables_on_kanji_code", unique: true
+    t.string "kanji_code"
+    t.integer "sort", default: 0, null: false
+    t.string "kanji_sheet"
+    t.text "parts_body"
+    t.text "vocab_body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.uuid "created_by", null: false
+    t.uuid "updated_by", null: false
+    t.uuid "deleted_by"
   end
 
   create_table "kanji_vocabs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.integer "sort", default: 0, null: false, comment: "ソート"
-    t.uuid "kanji_table_id", null: false, comment: "漢字テーブルキー"
-    t.uuid "vocab_table_id", null: false, comment: "語彙テーブルキー"
-    t.datetime "created_at", null: false, comment: "作成日時と更新日時"
-    t.datetime "updated_at", null: false, comment: "作成日時と更新日時"
-    t.datetime "deleted_at", comment: "削除日時"
-    t.uuid "created_by", null: false, comment: "作成者"
-    t.uuid "updated_by", null: false, comment: "更新者"
-    t.uuid "deleted_by", comment: "削除者"
+    t.integer "sort", default: 0, null: false
+    t.uuid "kanji_table_id", null: false
+    t.uuid "vocab_table_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.uuid "created_by", null: false
+    t.uuid "updated_by", null: false
+    t.uuid "deleted_by"
     t.index ["kanji_table_id"], name: "index_kanji_vocabs_on_kanji_table_id"
     t.index ["vocab_table_id"], name: "index_kanji_vocabs_on_vocab_table_id"
   end
@@ -505,20 +530,21 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_16_115028) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
-    t.boolean "male_flg", default: false, null: false
+    t.boolean "male_flg_old", default: false, null: false
+    t.boolean "male_flg"
     t.index ["langs_type", "langs_id"], name: "index_langs_on_langs"
   end
 
   create_table "parts_kanjis", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.integer "sort", default: 0, null: false, comment: "ソート"
-    t.uuid "parts_table_id", null: false, comment: "パーツテーブルキー"
-    t.uuid "kanji_table_id", null: false, comment: "漢字テーブルキー"
-    t.datetime "created_at", null: false, comment: "作成日時と更新日時"
-    t.datetime "updated_at", null: false, comment: "作成日時と更新日時"
-    t.datetime "deleted_at", comment: "削除日時"
-    t.uuid "created_by", null: false, comment: "作成者"
-    t.uuid "updated_by", null: false, comment: "更新者"
-    t.uuid "deleted_by", comment: "削除者"
+    t.integer "sort", default: 0
+    t.uuid "parts_table_id", null: false
+    t.uuid "kanji_table_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.uuid "created_by", null: false
+    t.uuid "updated_by", null: false
+    t.uuid "deleted_by"
     t.index ["kanji_table_id"], name: "index_parts_kanjis_on_kanji_table_id"
     t.index ["parts_table_id"], name: "index_parts_kanjis_on_parts_table_id"
   end
@@ -539,17 +565,16 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_16_115028) do
   end
 
   create_table "parts_tables", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "parts_code", comment: "パーツの名称"
-    t.integer "parts_stroke", comment: "パーツ画数"
-    t.integer "sort", default: 0, null: false, comment: "ソート"
-    t.text "kanji_body", comment: "包含漢字カンマ区切り"
-    t.datetime "created_at", null: false, comment: "作成日時と更新日時"
-    t.datetime "updated_at", null: false, comment: "作成日時と更新日時"
-    t.datetime "deleted_at", comment: "削除日時"
-    t.uuid "created_by", null: false, comment: "作成者"
-    t.uuid "updated_by", null: false, comment: "更新者"
-    t.uuid "deleted_by", comment: "削除者"
-    t.index ["parts_code"], name: "index_parts_tables_on_parts_code", unique: true
+    t.string "parts_code"
+    t.integer "parts_stroke"
+    t.integer "sort", default: 0, null: false
+    t.text "kanji_body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.uuid "created_by", null: false
+    t.uuid "updated_by", null: false
+    t.uuid "deleted_by"
   end
 
   create_table "profile_languages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -631,28 +656,27 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_16_115028) do
   end
 
   create_table "read_tables", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "read_code", comment: "語彙のよみ"
-    t.integer "sort", default: 0, null: false, comment: "ソート"
-    t.text "vocab_body", comment: "包含語彙カンマ区切り"
-    t.datetime "created_at", null: false, comment: "作成日時と更新日時"
-    t.datetime "updated_at", null: false, comment: "作成日時と更新日時"
-    t.datetime "deleted_at", comment: "削除日時"
-    t.uuid "created_by", null: false, comment: "作成者"
-    t.uuid "updated_by", null: false, comment: "更新者"
-    t.uuid "deleted_by", comment: "削除者"
-    t.index ["read_code"], name: "index_read_tables_on_read_code", unique: true
+    t.string "read_code"
+    t.integer "sort", default: 0, null: false
+    t.text "vocab_body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.uuid "created_by", null: false
+    t.uuid "updated_by", null: false
+    t.uuid "deleted_by"
   end
 
   create_table "read_vocabs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.integer "sort", default: 0, null: false, comment: "ソート"
-    t.uuid "vocab_table_id", null: false, comment: "語彙テーブルキー"
-    t.uuid "read_table_id", null: false, comment: "読みテーブルキー"
-    t.datetime "created_at", null: false, comment: "作成日時と更新日時"
-    t.datetime "updated_at", null: false, comment: "作成日時と更新日時"
-    t.datetime "deleted_at", comment: "削除日時"
-    t.uuid "created_by", null: false, comment: "作成者"
-    t.uuid "updated_by", null: false, comment: "更新者"
-    t.uuid "deleted_by", comment: "削除者"
+    t.integer "sort", default: 0, null: false
+    t.uuid "vocab_table_id", null: false
+    t.uuid "read_table_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.uuid "created_by", null: false
+    t.uuid "updated_by", null: false
+    t.uuid "deleted_by"
     t.index ["read_table_id"], name: "index_read_vocabs_on_read_table_id"
     t.index ["vocab_table_id"], name: "index_read_vocabs_on_vocab_table_id"
   end
@@ -689,6 +713,176 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_16_115028) do
     t.datetime "created_at", default: -> { "now()" }, null: false, comment: "エントリ作成時のタイムスタンプ"
     t.datetime "updated_at", default: -> { "now()" }, null: false, comment: "エントリが最後に更新された時のタイムスタンプ"
     t.datetime "deleted_at", comment: "エントリが削除された時のタイムスタンプ"
+  end
+
+  create_table "ssw_expllimbs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "ssw_expl_id", null: false
+    t.string "expllimb_code", null: false
+    t.text "expllimb_txt", null: false
+    t.text "expllimb_eng"
+    t.jsonb "expllimb_nation"
+    t.integer "sort", default: 0, comment: "ケース名のソート順"
+    t.boolean "judge_flag"
+    t.boolean "image_flag"
+    t.boolean "sound_flag"
+    t.text "expllimb_hex"
+    t.text "img_hex"
+    t.text "snd_hex"
+    t.datetime "created_at", default: -> { "now()" }, null: false, comment: "作成日時と更新日時"
+    t.datetime "updated_at", default: -> { "now()" }, null: false, comment: "作成日時と更新日時"
+    t.datetime "deleted_at", comment: "削除日時"
+    t.uuid "created_by", comment: "作成者"
+    t.uuid "updated_by", comment: "更新者"
+    t.uuid "deleted_by", comment: "削除者"
+    t.index ["ssw_expl_id", "sort"], name: "ssw_expllimbs_ssw_expl_id_sort", unique: true
+  end
+
+  create_table "ssw_expls", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "ssw_prob_id", null: false
+    t.text "expl_txt", null: false
+    t.text "expl_eng"
+    t.jsonb "expl_nation"
+    t.integer "sort", default: 0, comment: "ケース名のソート順"
+    t.boolean "judge_flag"
+    t.boolean "image_flag"
+    t.boolean "sound_flag"
+    t.text "expl_hex"
+    t.text "img_hex"
+    t.text "snd_hex"
+    t.datetime "created_at", default: -> { "now()" }, null: false, comment: "作成日時と更新日時"
+    t.datetime "updated_at", default: -> { "now()" }, null: false, comment: "作成日時と更新日時"
+    t.datetime "deleted_at", comment: "削除日時"
+    t.uuid "created_by", comment: "作成者"
+    t.uuid "updated_by", comment: "更新者"
+    t.uuid "deleted_by", comment: "削除者"
+    t.index ["ssw_prob_id", "expl_txt"], name: "ssw_expls_ssw_prob_id_expl_txt", unique: true
+  end
+
+  create_table "ssw_plans", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "app_code", null: false
+    t.string "plan_name", null: false
+    t.string "plan_eng"
+    t.jsonb "plan_nation"
+    t.integer "sort", comment: "ソート"
+    t.datetime "created_at", default: -> { "now()" }, null: false, comment: "作成日時と更新日時"
+    t.datetime "updated_at", default: -> { "now()" }, null: false, comment: "作成日時と更新日時"
+    t.datetime "deleted_at", comment: "削除日時"
+    t.uuid "created_by", comment: "作成者"
+    t.uuid "updated_by", comment: "更新者"
+    t.uuid "deleted_by", comment: "削除者"
+    t.string "company"
+    t.index ["app_code"], name: "ssw_plans_app_code", unique: true
+  end
+
+  create_table "ssw_problimbs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "ssw_prob_id", null: false
+    t.string "problimb_code", null: false
+    t.text "problimb_txt", null: false
+    t.text "problimb_eng"
+    t.jsonb "problimb_nation"
+    t.integer "sort", default: 0, comment: "ケース名のソート順"
+    t.boolean "judge_flag"
+    t.boolean "image_flag"
+    t.boolean "sound_flag"
+    t.text "problimb_hex"
+    t.text "img_hex"
+    t.text "snd_hex"
+    t.datetime "created_at", default: -> { "now()" }, null: false, comment: "作成日時と更新日時"
+    t.datetime "updated_at", default: -> { "now()" }, null: false, comment: "作成日時と更新日時"
+    t.datetime "deleted_at", comment: "削除日時"
+    t.uuid "created_by", comment: "作成者"
+    t.uuid "updated_by", comment: "更新者"
+    t.uuid "deleted_by", comment: "削除者"
+    t.index ["ssw_prob_id", "sort"], name: "ssw_problimbs_ssw_prob_id_sort", unique: true
+  end
+
+  create_table "ssw_probs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "ssw_title_id", null: false
+    t.text "prob_txt", null: false
+    t.text "prob_eng"
+    t.jsonb "prob_nation"
+    t.integer "sort", default: 0, comment: "ケース名のソート順"
+    t.boolean "judge_flag", default: false
+    t.boolean "image_flag"
+    t.boolean "sound_flag"
+    t.text "prob_hex"
+    t.text "img_hex"
+    t.text "snd_hex"
+    t.datetime "created_at", default: -> { "now()" }, null: false, comment: "作成日時と更新日時"
+    t.datetime "updated_at", default: -> { "now()" }, null: false, comment: "作成日時と更新日時"
+    t.datetime "deleted_at", comment: "削除日時"
+    t.uuid "created_by", comment: "作成者"
+    t.uuid "updated_by", comment: "更新者"
+    t.uuid "deleted_by", comment: "削除者"
+    t.integer "sfx_num", default: 0, comment: "選択技の数"
+    t.index ["ssw_title_id", "prob_txt"], name: "ssw_probs_ssw_title_id_prob_txt", unique: true
+  end
+
+  create_table "ssw_titleas", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "ssw_plan_id", null: false
+    t.string "titlea_code", null: false, comment: "ソート用コード名"
+    t.string "titlea_name", null: false
+    t.string "titlea_eng"
+    t.jsonb "titlea_nation"
+    t.integer "sort", comment: "ソート"
+    t.datetime "created_at", default: -> { "now()" }, null: false, comment: "作成日時と更新日時"
+    t.datetime "updated_at", default: -> { "now()" }, null: false, comment: "作成日時と更新日時"
+    t.datetime "deleted_at", comment: "削除日時"
+    t.uuid "created_by", comment: "作成者"
+    t.uuid "updated_by", comment: "更新者"
+    t.uuid "deleted_by", comment: "削除者"
+    t.string "company"
+    t.index ["ssw_plan_id", "titlea_code"], name: "ssw_titleas_ssw_plan_id_titlea_code", unique: true
+  end
+
+  create_table "ssw_titlebs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "ssw_titlea_id", null: false
+    t.string "titleb_code", null: false, comment: "ソート用コード名"
+    t.string "titleb_name", null: false
+    t.string "titleb_eng"
+    t.jsonb "titleb_nation"
+    t.integer "sort", comment: "ソート"
+    t.datetime "created_at", default: -> { "now()" }, null: false, comment: "作成日時と更新日時"
+    t.datetime "updated_at", default: -> { "now()" }, null: false, comment: "作成日時と更新日時"
+    t.datetime "deleted_at", comment: "削除日時"
+    t.uuid "created_by", comment: "作成者"
+    t.uuid "updated_by", comment: "更新者"
+    t.uuid "deleted_by", comment: "削除者"
+    t.index ["ssw_titlea_id", "titleb_code"], name: "ssw_titlebs_ssw_titlea_id_titleb_code", unique: true
+  end
+
+  create_table "ssw_titlecs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "ssw_titleb_id", null: false
+    t.string "titlec_code", null: false, comment: "ソート用コード名"
+    t.string "titlec_name", null: false
+    t.string "titlec_eng"
+    t.jsonb "titlec_nation"
+    t.integer "sort"
+    t.datetime "created_at", default: -> { "now()" }, null: false, comment: "作成日時と更新日時"
+    t.datetime "updated_at", default: -> { "now()" }, null: false, comment: "作成日時と更新日時"
+    t.datetime "deleted_at", comment: "削除日時"
+    t.uuid "created_by", comment: "作成者"
+    t.uuid "updated_by", comment: "更新者"
+    t.uuid "deleted_by", comment: "削除者"
+    t.index ["ssw_titleb_id", "titlec_code"], name: "ssw_titlecs_ssw_titleb_id_titlec_code", unique: true
+  end
+
+  create_table "ssw_titles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "ssw_titlec_id", null: false
+    t.string "title_code", null: false, comment: "ソート用コード名"
+    t.string "title_name", null: false
+    t.string "title_eng"
+    t.jsonb "title_nation"
+    t.integer "sort", comment: "ケース名のソート順"
+    t.boolean "title_flag", default: true
+    t.datetime "created_at", default: -> { "now()" }, null: false, comment: "作成日時と更新日時"
+    t.datetime "updated_at", default: -> { "now()" }, null: false, comment: "作成日時と更新日時"
+    t.datetime "deleted_at", comment: "削除日時"
+    t.uuid "created_by", comment: "作成者"
+    t.uuid "updated_by", comment: "更新者"
+    t.uuid "deleted_by", comment: "削除者"
+    t.integer "app_code", default: 0, null: false, comment: "会社許可コード"
+    t.index ["ssw_titlec_id", "title_code"], name: "ssw_titles_ssw_titlec_id_title_code", unique: true
   end
 
   create_table "store_contents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -736,65 +930,6 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_16_115028) do
     t.index ["tokutei_question_id"], name: "index_tokutei_answers_on_tokutei_question_id"
   end
 
-  create_table "tokutei_as", id: { type: :uuid, default: -> { "gen_random_uuid()" }, comment: "各レコードの一意の識別子" }, comment: "特定技能試験のタイトルを格納するテーブル", force: :cascade do |t|
-    t.string "title", null: false, comment: "特定技能"
-    t.string "content", comment: "コンテンツA"
-    t.text "src_jpn", comment: "日本語ソース"
-    t.text "src_eng", comment: "英語ソース"
-    t.jsonb "src_nation", comment: "国別ソース"
-    t.integer "sort", comment: "ソート"
-    t.datetime "created_at", null: false, comment: "作成日時"
-    t.datetime "updated_at", null: false, comment: "更新日時"
-    t.datetime "deleted_at", comment: "削除日時"
-    t.uuid "created_by", comment: "作成者"
-    t.uuid "updated_by", comment: "更新者"
-    t.uuid "deleted_by", comment: "削除者"
-  end
-
-  create_table "tokutei_bs", id: { type: :uuid, default: -> { "gen_random_uuid()" }, comment: "各レコードの一意の識別子" }, comment: "特定技能試験の問題の補助情報を格納するテーブル", force: :cascade do |t|
-    t.uuid "tokutei_a_id", comment: "関連するtokuteiasテーブルのレコードのID"
-    t.string "title", null: false, comment: "特定種類"
-    t.integer "sort", comment: "ソート"
-    t.string "content", comment: "コンテンツB"
-    t.text "src_jpn", comment: "日本語ソース"
-    t.text "src_eng", comment: "英語ソース"
-    t.jsonb "src_nation", comment: "国別ソース"
-    t.uuid "created_by", comment: "作成者"
-    t.uuid "updated_by", comment: "更新者"
-    t.uuid "deleted_by", comment: "削除者"
-    t.datetime "created_at", null: false, comment: "作成日時"
-    t.datetime "updated_at", null: false, comment: "更新日時"
-    t.datetime "deleted_at", comment: "削除日時"
-    t.index ["tokutei_a_id", "title"], name: "index_tokuteias_id_tokuteib_idx"
-  end
-
-  create_table "tokutei_cs", id: { type: :uuid, default: -> { "gen_random_uuid()" }, comment: "各レコードの一意の識別子" }, comment: "特定技能試験の問題を格納するテーブル", force: :cascade do |t|
-    t.uuid "tokutei_b_id", null: false, comment: "関連するtokuteibsテーブルのレコードのID"
-    t.string "title", null: false, comment: "特定アC"
-    t.string "content", comment: "コンテンツC"
-    t.boolean "image_flag", default: false, comment: "画像の有無を示すフラグ"
-    t.text "correct_answer", comment: "正解の回答"
-    t.json "answer_option", comment: "回答の選択肢"
-    t.text "question_jp", comment: "問題の日本語版"
-    t.text "question_jp_hex", comment: "問題の日本語版（16進数表記）"
-    t.text "question_eng", comment: "問題の英語版"
-    t.jsonb "question_nation", comment: "問題の国別版"
-    t.text "explain_jp", comment: "解説の日本語版"
-    t.text "explain_jp_hex", comment: "解説の日本語版（16進数表記）"
-    t.text "explain_eng", comment: "解説の英語版"
-    t.jsonb "explain_nation", comment: "解説の国別版"
-    t.text "key_word", comment: "キーワード"
-    t.jsonb "keyword_nation", comment: "キーワードの国別版"
-    t.text "img_hex", comment: "画像の16進数表記"
-    t.uuid "created_by", comment: "作成者"
-    t.uuid "updated_by", comment: "更新者"
-    t.uuid "deleted_by", comment: "削除者"
-    t.datetime "created_at", null: false, comment: "作成日時"
-    t.datetime "updated_at", null: false, comment: "更新日時"
-    t.datetime "deleted_at", comment: "削除日時"
-    t.index ["tokutei_b_id", "title"], name: "index_tokuteibs_id_tokuteic_idx"
-  end
-
   create_table "tokutei_explains", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "explains_type", null: false
     t.uuid "explains_id", null: false
@@ -807,6 +942,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_16_115028) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.text "content_hex"
     t.index ["explains_type", "explains_id"], name: "index_tokutei_explains_on_explains"
   end
 
@@ -823,6 +959,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_16_115028) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.text "content_hex"
     t.index ["tokutei_id"], name: "index_tokutei_questions_on_tokutei_id"
   end
 
@@ -878,15 +1015,6 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_16_115028) do
 
   create_table "vocab_mycards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
-    t.integer "vocab_mycard_org"
-    t.integer "vocab_org", null: false
-    t.string "vocab_code", null: false
-    t.string "vocab_read"
-    t.text "kanji_body"
-    t.integer "jlpt_class"
-    t.string "jlpt_level"
-    t.text "parts_body"
-    t.date "recent_date"
     t.integer "mycard_check"
     t.uuid "created_by", null: false
     t.uuid "updated_by", null: false
@@ -895,20 +1023,22 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_16_115028) do
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
     t.integer "mycard_level", default: 0, null: false
+    t.uuid "vocab_table_id", null: false
     t.index ["user_id"], name: "index_vocab_mycards_on_user_id"
+    t.index ["vocab_table_id"], name: "index_vocab_mycards_on_vocab_table_id"
   end
 
   create_table "vocab_nations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "vocab_table_id", null: false
-    t.integer "sort", default: 0, null: false, comment: "ソート"
-    t.string "lang", comment: "多言語の国別情報"
-    t.text "nation_code", comment: "多言語の名称"
-    t.datetime "created_at", null: false, comment: "作成日時と更新日時"
-    t.datetime "updated_at", null: false, comment: "作成日時と更新日時"
-    t.datetime "deleted_at", comment: "削除日時"
-    t.uuid "created_by", null: false, comment: "作成者"
-    t.uuid "updated_by", null: false, comment: "更新者"
-    t.uuid "deleted_by", comment: "削除者"
+    t.integer "sort", default: 0, null: false
+    t.string "lang"
+    t.text "nation_code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.uuid "created_by", null: false
+    t.uuid "updated_by", null: false
+    t.uuid "deleted_by"
     t.index ["vocab_table_id"], name: "index_vocab_nations_on_vocab_table_id"
   end
 
@@ -938,18 +1068,18 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_16_115028) do
   end
 
   create_table "vocab_tables", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "vocab_code", comment: "語彙の名称"
-    t.integer "sort", default: 0, null: false, comment: "ソート"
-    t.integer "kanji_numb", comment: "語彙の漢字数"
-    t.text "kanji_body", comment: "漢字カンマ区切り"
-    t.string "vocab_read", comment: "語彙読み"
-    t.datetime "created_at", null: false, comment: "作成日時と更新日時"
-    t.datetime "updated_at", null: false, comment: "作成日時と更新日時"
-    t.datetime "deleted_at", comment: "削除日時"
-    t.uuid "created_by", null: false, comment: "作成者"
-    t.uuid "updated_by", null: false, comment: "更新者"
-    t.uuid "deleted_by", comment: "削除者"
-    t.index ["vocab_code"], name: "index_vocab_tables_on_vocab_code", unique: true
+    t.string "vocab_code"
+    t.integer "sort", default: 0, null: false
+    t.integer "kanji_numb"
+    t.text "kanji_body"
+    t.string "vocab_read"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.uuid "created_by", null: false
+    t.uuid "updated_by", null: false
+    t.uuid "deleted_by"
+    t.integer "jlpt_level", default: 0, null: false
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -962,20 +1092,26 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_16_115028) do
   add_foreign_key "company_stores", "comps"
   add_foreign_key "job_profile_contents", "job_profiles"
   add_foreign_key "job_profiles", "comps"
-  add_foreign_key "kanji_vocabs", "kanji_tables"
-  add_foreign_key "kanji_vocabs", "vocab_tables"
-  add_foreign_key "parts_kanjis", "kanji_tables"
-  add_foreign_key "parts_kanjis", "parts_tables"
+  add_foreign_key "kanji_vocabs", "vocab_tables", name: "kanji_vocabs_vocab_table_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "parts_kanjis", "parts_tables", name: "parts_kanjis_parts_table_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "profile_languages", "profiles"
   add_foreign_key "profile_works", "profiles"
   add_foreign_key "profiles", "users"
   add_foreign_key "read_vocabs", "read_tables"
   add_foreign_key "read_vocabs", "vocab_tables"
-  add_foreign_key "store_contents", "stores"
-  add_foreign_key "stores", "users"
+  add_foreign_key "ssw_expllimbs", "ssw_expls", name: "ssw_expllimbs_ssw_expl_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "ssw_expls", "ssw_probs", name: "ssw_expls_ssw_prob_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "ssw_problimbs", "ssw_probs", name: "ssw_problimbs_ssw_prob_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "ssw_titleas", "ssw_plans", name: "ssw_titleas_ssw_plan_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "ssw_titlebs", "ssw_titleas", name: "ssw_titlebs_ssw_titlea_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "ssw_titlecs", "ssw_titlebs", name: "ssw_titlecs_ssw_titleb_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "ssw_titles", "ssw_titlecs", name: "ssw_titles_ssw_titlec_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "store_contents", "stores", name: "store_contents_store_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "stores", "users", name: "stores_user_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "tokutei_answers", "tokutei_questions"
   add_foreign_key "tokutei_questions", "tokuteis"
   add_foreign_key "tokuteis", "tokuteis"
-  add_foreign_key "vocab_mycards", "users"
+  add_foreign_key "vocab_mycards", "users", name: "vocab_mycards_user_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "vocab_mycards", "vocab_tables"
   add_foreign_key "vocab_nations", "vocab_tables"
 end
