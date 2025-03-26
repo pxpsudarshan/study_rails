@@ -6,9 +6,9 @@
     <div class="col-12 col-md-6 mb-3">
       <div class="m-3 mx-md-0"> <!-- Added padding/margin for mobile (p-3, m-3) and removed for desktop (p-md-4, m-md-0) -->
         <%= pie_chart @chart_data, 
-            height: "200px", 
+            height: "240px", 
             width: "100%", 
-            colors: ["#28a745", "#17a2b8"],
+            colors: ["#c5a66f", "#2ea7e0"],
             title: "Your Learning Progress",
             legend: true,
             donut: true
@@ -19,23 +19,23 @@
     <!-- Line Chart Column with Red Border -->
     <div class="col-12 col-md-6 mb-3">
       <div class="m-3 mx-md-0"> <!-- Added padding/margin for mobile (p-3, m-3) and removed for desktop (p-md-4, m-md-0) -->
-        <!-- Button Group for Weekly, Monthly, Yearly above the Line Chart -->
-        
-        <%= line_chart @line_chart_data,
-        height: "200px",  
-        width: "100%",
-        colors: ["#17a2b8"],
-        title: "Study Progress Over Time",
-        legend: false,
-        points: true
-        %>
+      
+      <%= line_chart @line_chart_data,
+      height: "250px",  
+      width: "100%",
+      colors: ["#17a2b8"],
+      title: "Study Progress Over Time",
+      legend: false,
+      points: true
+      %>
+      <!-- Button Group for Weekly, Monthly, Yearly above the Line Chart -->
         <div class="btn-group w-75 m-3">
           <%= link_to 'Weekly', menus_path(period: 'weekly'), 
-              class: "btn btn-sm #{params[:period] == 'weekly' || params[:period].nil? ? 'btn-primary' : 'btn-outline-primary'}" %>
+              class: "btn btn-sm rounded-0 #{params[:period] == 'weekly' || params[:period].nil? ? 'btn-dark' : 'btn-outline-dark'}" %>
           <%= link_to 'Monthly', menus_path(period: 'monthly'), 
-              class: "btn btn-sm #{params[:period] == 'monthly' ? 'btn-primary' : 'btn-outline-primary'}" %>
+              class: "btn btn-sm rounded-0 #{params[:period] == 'monthly' ? 'btn-dark' : 'btn-outline-dark'}" %>
           <%= link_to 'Yearly', menus_path(period: 'yearly'), 
-              class: "btn btn-sm #{params[:period] == 'yearly' ? 'btn-primary' : 'btn-outline-primary'}" %>
+              class: "btn btn-sm rounded-0 #{params[:period] == 'yearly' ? 'btn-dark rounded-0' : 'btn-outline-dark'}" %>
         </div>
       </div>
     </div>
@@ -44,7 +44,7 @@
 
   <!-- "Select Parts" Link (Centered) -->
   <div class="d-flex justify-content-center">
-    <li class="dropdown-item fs-5 fw-bold text-center" data-bs-toggle="collapse" data-bs-target="#collapsePart" aria-expanded="false" aria-controls="collapsePart">
+    <li class="dropdown-item fs-5 fw-bold font-en text-center" data-bs-toggle="collapse" data-bs-target="#collapsePart" aria-expanded="false" aria-controls="collapsePart">
       Select Parts
     </li>
   </div>
@@ -60,7 +60,7 @@
 
   <!-- Additional Collapse Sections with Centered Content -->
   <div class="d-flex justify-content-center">
-    <li class="dropdown-item fs-5 fw-bold text-center" data-bs-toggle="collapse" data-bs-target="#collapseVocab" aria-expanded="false" aria-controls="collapseVocab">
+    <li class="dropdown-item fs-5 fw-bold font-en text-center" data-bs-toggle="collapse" data-bs-target="#collapseVocab" aria-expanded="false" aria-controls="collapseVocab">
       Select Vocabulary
     </li>
   </div>
@@ -82,7 +82,7 @@
   </div>
 
   <div class="d-flex justify-content-center">
-    <li class="dropdown-item fs-5 fw-bold text-center" data-bs-toggle="collapse" data-bs-target="#collapseKanji" aria-expanded="false" aria-controls="collapseKanji">
+    <li class="dropdown-item fs-5 fw-bold font-en text-center" data-bs-toggle="collapse" data-bs-target="#collapseKanji" aria-expanded="false" aria-controls="collapseKanji">
       Select Kanji
     </li>
   </div>
@@ -104,7 +104,7 @@
   </div>
 
   <div class="d-flex justify-content-center">
-    <li class="dropdown-item fs-5 fw-bold text-center" data-bs-toggle="collapse" data-bs-target="#collapseJlpt" aria-expanded="false" aria-controls="collapseJlpt">
+    <li class="dropdown-item fs-5 fw-bold font-en text-center" data-bs-toggle="collapse" data-bs-target="#collapseJlpt" aria-expanded="false" aria-controls="collapseJlpt">
       Jlpt
     </li>
   </div>
@@ -134,7 +134,7 @@
   </div>
 
   <div class="d-flex justify-content-center">
-    <li class="dropdown-item fs-5 fw-bold text-center" data-bs-toggle="collapse" data-bs-target="#collapsemycard" aria-expanded="false" aria-controls="collapsemycard">
+    <li class="dropdown-item fs-5 fw-bold font-en text-center" data-bs-toggle="collapse" data-bs-target="#collapsemycard" aria-expanded="false" aria-controls="collapsemycard">
       Select MyCard Review
     </li>
   </div>
@@ -148,7 +148,7 @@
   </div>
 
   <div class="d-flex justify-content-center">
-    <li class="dropdown-item fs-5 fw-bold text-center" data-bs-toggle="collapse" data-bs-target="#collapsequiz" aria-expanded="false" aria-controls="collapsequiz">
+    <li class="dropdown-item fs-5 fw-bold font-en text-center" data-bs-toggle="collapse" data-bs-target="#collapsequiz" aria-expanded="false" aria-controls="collapsequiz">
       Quiz
     </li>
   </div>
@@ -168,7 +168,7 @@
   </div>
 
   <div class="d-flex justify-content-center">
-    <li class="dropdown-item fs-5 fw-bold text-center" data-bs-toggle="collapse" data-bs-target="#collapseConversation" aria-expanded="false" aria-controls="collapseConvertion">
+    <li class="dropdown-item fs-5 fw-bold font-en text-center" data-bs-toggle="collapse" data-bs-target="#collapseConversation" aria-expanded="false" aria-controls="collapseConvertion">
       Conversation
     </li>
   </div>
