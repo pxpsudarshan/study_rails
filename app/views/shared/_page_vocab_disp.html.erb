@@ -6,9 +6,8 @@
     <%= link_to vocab["kanji_code"], parts_kanji_kanji_units_path(kanji: { kanji: vocab["kanji_org"] }), remote: true, class: 'rounded-0 m-1 btn btn-primary' if vocab["kanji_org"] != 0 %>
   <% end if @gois[:vocab_kanji].present? %>
 -->
-
-<div class="container mb-5 mt-5">
-  <div class="card shadow-sm">
+<div class="container mt-5">
+  <div class="card shadow-sm rounded-0">
     <div class="card-body">
       <!-- Header Section -->
       <div class="d-flex align-items-center mb-4 border-bottom pb-3">
@@ -18,7 +17,7 @@
         <% kanji_parts.each do |part| %>
           <button class="btn btn-outline-primary btn-sm"><%= part.kanji_code %></button>
         <% end %>
-      </div>      
+      </div>
       </div>
 
       <!-- Kanji Details -->
@@ -77,7 +76,39 @@
       </div> -->
     </div>
   </div>
+  
+<div class="row mt-3">
+<% @cards.each do |card| %>
+  <div class="col-sm-3 mt-1" style="min-width: 150px;">
+    <div class="card rounded-0" style="height: 160px; overflow: auto;">
+      <div class="card-body text-center">
+        <div class="position-absolute top-0 end-0 m-1">
+          <% if card.vocab_mycards.where(user_id: current_user.id).present? %>
+          <%= '⭐️' %>
+          <% end %>
+        </div>
+        <p class="card-text"><%= card.vocab_read %></p>
+        <hr class="m-1" >
+        <%= link_to card.vocab_code, jlpt_path(id: card.id), class: 'text-decoration-none d-inline-block w-100 fs-2 hover-red' %>
+        <%
+          text = card.vocab_nations.where(lang: current_user.lang_id)
+        %>
+        <hr class="m-1" >
+        <p class="card-text">
+        <% if text.length > 1 %>
+          <% text.each_with_index do |txt, index| %>
+            <%= txt.nation_code %><%= index < text.length - 1 ? ',' : '' %>
+          <% end %>
+        <% else %>
+          <%= text.first.nation_code if text.present? %>
+        <% end %>
+        </p>
+      </div>
+    </div>
+  </div>
+<% end %>
 </div>
+
 </div>
 <% end %>
 

@@ -5,12 +5,16 @@ class VocabMycardsController < ApplicationController
     @cards = []
     @message = ""
     if vocab_code.present?
-      #Extrating only kanji characters
-      vocab_code = vocab_code.scan(/\p{Han}/).join
-      @cards = current_user.vocab_mycards
-                           .joins(:vocab_table)
-                           .where('vocab_mycards.vocab_code ~* ?', "[#{vocab_code}]")
-                           .order(created_at: :desc)
+        #関連する語彙
+        vocab_code_kanji = vocab_code.scan(/\p{Han}/).join
+        @cards = []
+        if vocab_code_kanji.present?
+          @cards = VocabTable
+            .joins(:vocab_mycards)
+            .where(vocab_mycards: { user_id: current_user.id })
+            .where('vocab_tables.vocab_code ~* ?', "[#{vocab_code_kanji}]")
+            .where.not(vocab_code: vocab_code)
+        end
     elsif params[:selected_item].present?
       day = params[:selected_item].to_i
       top_date = Date.today

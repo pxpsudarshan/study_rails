@@ -10,7 +10,7 @@
           </div>
           <p class="card-text"><%= card.vocab_read %></p>
           <hr class="m-1" >
-          <%= link_to card.vocab_code, jlpt_path(id: card.id), class: 'underline d-inline-block w-100 fs-2 link-opacity-50-hover ink-dark' %>
+          <%= link_to card.vocab_code, jlpt_path(id: card.id), class: 'underline d-inline-block w-100 fs-2' %>
           <%
             text = card.vocab_nations.where(lang: current_user.lang_id)
           %>
