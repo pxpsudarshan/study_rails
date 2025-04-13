@@ -24,31 +24,43 @@ class MenusController < ApplicationController
   def generate_line_chart_data(period)
     cards = current_user.vocab_mycards
     end_date = Time.current
-
+  
     case period
     when 'weekly'
       start_date = 12.weeks.ago.beginning_of_week
-      group_by_period(cards, start_date, end_date, 'week')
+      period_unit = 'week'
     when 'monthly'
       start_date = 12.months.ago.beginning_of_month
-      group_by_period(cards, start_date, end_date, 'month')
+      period_unit = 'month'
     when 'yearly'
       start_date = 5.years.ago.beginning_of_year
-      group_by_period(cards, start_date, end_date, 'year')
+      period_unit = 'year'
     end
+  
+    # Existing line: based on created_at
+    created_data = group_by_period(cards, start_date, end_date, period_unit, :created_at)
+  
+    # New line: based on updated_at
+    updated_data = group_by_period(cards, start_date, end_date, period_unit, :updated_at)
+  
+    # Return both series for multi-line chart
+    [
+      { name: "progress", data: updated_data },
+      { name: "Studying", data: created_data }
+    ]
   end
-
-  def group_by_period(cards, start_date, end_date, period)
-    filtered_cards = cards.where(created_at: start_date..end_date)
+  
+  def group_by_period(cards, start_date, end_date, period, date_column)
+    filtered_cards = cards.where(date_column => start_date..end_date)
     data = initialize_date_range(start_date, end_date, period)
-    
+  
     filtered_cards.each do |card|
-      key = get_period_key(card.created_at, period)
+      key = get_period_key(card[date_column], period)
       data[key] += 1
     end
-
-    data.map { |date, count| [date, count] }.sort_by { |item| item[0] }
-  end
+  
+    data
+  end  
 
   def initialize_date_range(start_date, end_date, period)
     data = {}
