@@ -748,4 +748,24 @@ en:
     genre:
       title: "Genre"
       empty: "Empty"
-     
+
+  email_verification:
+    eyebrow: ONE MORE STEP
+    title: Check your inbox
+    description: Open your verification email and follow the link to confirm your email address.
+    recipient: Your email address
+    step_open: Find the verification email in your inbox.
+    step_verify: Open the link in the email to verify your address.
+    step_return: Sign in again to start learning.
+    help_title: Can't find the email?
+    help_body: Check your spam or junk folder. If you just signed up, allow a few minutes for the email to arrive.
+    continue: Continue after verification
+    sign_in: Back to sign in
+    link_hint: Email verification is completed using the link in your email.
+    resend: Resend verification email
+    resend_hint: You can request another email once every 60 seconds.
+    sign_in_to_resend: Sign in to request another verification email.
+    resent: A verification email has been sent. Please check your inbox.
+    cooldown: Please wait 60 seconds between verification emails.
+    send_failed: We couldn't send the email. Please try again shortly.
+    language: Language

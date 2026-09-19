@@ -182,6 +182,7 @@ Rails.application.routes.draw do
   resources :users do
     collection do
       get :verify_email
+      post :resend_verification_email
     end
     member do
       get :profile

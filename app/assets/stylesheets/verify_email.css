@@ -1,0 +1,12 @@
+.verification-page { color: #272b32; background: radial-gradient(ellipse at 50% 25%, #fffdf7, #f5f3ef 65%); }
+.verification-header { max-width: 1120px; }
+.verification-logo { width: 112px; height: auto; }
+.verification-main { width: min(100% - 32px, 560px); }
+.verification-languages a { color: #62656b; }
+.verification-languages a[aria-current="page"] { color: #272b32; border-bottom: 2px solid #ac8649; font-weight: 600; }
+.verification-icon { width: 76px; height: 76px; color: #8a642d; background: #f7f0e2; }
+.verification-eyebrow { color: #88632e; letter-spacing: .1em; }
+.verification-steps { counter-reset: step; }
+.verification-steps li { counter-increment: step; display: flex; align-items: center; gap: 12px; line-height: 1.7; margin-top: 14px; }
+.verification-steps li::before { content: counter(step); display: grid; place-items: center; flex: 0 0 28px; height: 28px; border-radius: 50%; background: #f5f3ef; font-size: 12px; font-weight: 700; color: #806035; }
+.verification-page a:focus-visible, .verification-page button:focus-visible { outline: 3px solid #ac8649; outline-offset: 4px; }

@@ -1,29 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="<%= I18n.locale %>">
 <head>
-  <title><%= t('title.title') %></title>
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="mobile-web-app-status-bar-style" content="black" />
-  <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta charset="utf-8" />
+  <title><%= t('email_verification.title') %> | <%= t('title.title') %></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="turbolinks-cache-control" content="no-cache">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
   <%= favicon_link_tag "favicon.ico" %>
   <%= stylesheet_link_tag "application", media: "all", 'data-turbo-track': 'reload' %>
-  <%= stylesheet_link_tag "sb-admin-2", media: "all", 'data-turbo-track': 'reload' %>
-  <%= yield :stylesheet %>
-  <%= javascript_include_tag "application", 'data-turbo-track': 'reload' %>
-  <%= javascript_include_tag "locales/#{locales}/common.messages" %>
-  <%= individual_javascript_include_tag %>
-  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-  <!--[if lt IE 9]>
-    <%= javascript_include_tag 'html5shiv' %>
-  <![endif]-->
+  <%= stylesheet_link_tag "verify_email", media: "all", 'data-turbo-track': 'reload' %>
 </head>
-<body>
-  <main class="overflow-hidden">
+<body class="verification-page min-vh-100">
+  <header class="verification-header mx-auto px-4 py-4 d-flex align-items-center justify-content-between gap-3">
+    <%= image_tag 'niho_logo_newBlack.svg', alt: 'NIHO', class: 'verification-logo' %>
+    <nav class="verification-languages d-flex gap-3 small" aria-label="<%= t('email_verification.language') %>">
+      <% [['日本語', :ja], ['English', :en]].each do |label, locale| %>
+        <%= link_to label, verify_email_users_path(locale: locale), lang: locale, class: 'text-decoration-none py-2', aria: { current: (I18n.locale == locale ? 'page' : nil) } %>
+      <% end %>
+    </nav>
+  </header>
+  <main class="verification-main mx-auto mt-3">
     <%= bootstrap_flash %>
     <%= yield %>
   </main>
+  <footer class="text-center text-muted small py-4">NIHO PROJECT</footer>
 </body>
 </html>

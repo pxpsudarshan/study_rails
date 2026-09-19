@@ -87,9 +87,7 @@ class ApplicationController < ActionController::Base
   def check_email
     if current_user.present? && !current_user.email_verify_flg && action_name != 'verify_email'
       if current_user.token.blank?
-        token = SecureRandom.uuid
-        current_user.update!(token: token)
-        UserMailer.verify_email(current_user.name, current_user.email, token).deliver_now
+        EmailVerificationSender.call(current_user)
       end
       redirect_to verify_email_users_path
     end

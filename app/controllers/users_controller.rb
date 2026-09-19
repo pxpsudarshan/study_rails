@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_action :parent
+  before_action :parent, except: [:verify_email, :resend_verification_email]
+  skip_before_action :check_email, only: [:resend_verification_email]
   skip_before_action :authenticate_users, only: [:verify_email]
 
   def verify_email
@@ -11,6 +12,20 @@ class UsersController < ApplicationController
       redirect_to menus_path and return
     end
     render :verify_email, layout: 'verify_email'
+  end
+
+  def resend_verification_email
+    result = EmailVerificationSender.call(current_user)
+    if result == :verified
+      redirect_to menus_path
+    else
+      key = result == :sent ? :success : :warning
+      message = result == :sent ? 'email_verification.resent' : 'email_verification.cooldown'
+      redirect_to verify_email_users_path, flash: { key => t(message) }
+    end
+  rescue StandardError => e
+    Rails.logger.error("Verification email delivery failed: #{e.class}")
+    redirect_to verify_email_users_path, alert: t('email_verification.send_failed')
   end
 
   def show
