@@ -191,7 +191,7 @@ and (max-width : 800px) {
   opacity: .8;
 }
 
-.alert-success {
+/*.alert-success {
   position: absolute;
   width: 100%;
   z-index: 2222;
@@ -200,11 +200,11 @@ and (max-width : 800px) {
   opacity: 1;
   transition: opacity 2s linear;
 }
-
+*/
 .hidden {
   visibility: hidden;
-  opacity: 0;
-  transition: visibility 0s 2s, opacity 2s linear;
+  /* opacity: 0;
+  transition: visibility 0s 2s, opacity 2s linear; */
 }
 
 .student-line {
@@ -274,4 +274,23 @@ and (max-width : 800px) {
 }
 .btn-text-line-height{
   line-height: 1!important;
+}
+
+/* プロフィール写真枠 */
+.profile-photo-frame {
+  width: 150px;
+  height: 150px;
+}
+
+/* 写真 */
+.profile-photo-img {
+  object-fit: cover;
+}
+.profile-avatar {
+  width: 128px;
+  height: 170px;
+}
+
+.profile-avatar img {
+  object-fit: cover;
 }

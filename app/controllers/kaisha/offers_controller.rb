@@ -1,49 +1,61 @@
 class Kaisha::OffersController < ApplicationController
   def index
-    if params[:search].present? && current_comp.company_store.present?
-      comp_arr = []
-      comp = current_comp.company_store.company_store_contents
-      comp = comp.where(occupation: params[:search][:occupation]) if params[:search][:occupation].present? && params[:search][:occupation].to_i != 0
-      comp.each do |c|
-        comp_arr << c.vocab_code
-      end
-      comp_arr = comp_arr.uniq
+    @genres = VocabGenre.all.map{ |vg| [vg.title, vg.id] } 
+
+    if params[:search].present?
+      genre_ids = params[:search][:genre]
+      search_mode = params[:search][:search_mode].to_i #0 - company_store, 1 - genre
+      rate = params[:search][:rate] || 0
+
+      sub_ids = []
+      table_ids = []
+      genre_ids.each do |genre_id|
+        sub_ids << genre_id
+        table_ids = [genre_id]
+        while id = table_ids.shift
+          vg = VocabGenre.find(id)
+          sub_maps = vg.sub_genres.where(hide_flg: false).pluck(:id)
+          table_ids += sub_maps
+          sub_ids += sub_maps
+        end
+      end if genre_ids.present?
 
       stud_arr = {}
-      stud = StoreContent.includes(:store).joins(store: :user).order(:store_id)
-      #stud = stud.where(user: id) if params[:search][:user] != 0
-      stud.each do |s|
-        stud_arr[s.store.user_id] ||= []
-        stud_arr[s.store.user_id] << s.vocab_code
-      end
+      if current_comp.company_store.present? && search_mode == 0
+        comp = current_comp.company_store.company_store_contents.map(&:vocab_code)
+        comp = comp.where(occupation: params[:search][:occupation]) if params[:search][:occupation].present? && params[:search][:occupation].to_i != 0
+        comp_arr = comp
 
-      stud = VocabMycard.order(:user_id)
+        stud = StoreContent.joins(:store).group(:user_id).select(:user_id).select('ARRAY_AGG("store_contents"."vocab_code") as vocab_code_arr')
+        #stud = stud.where(user: id) if params[:search][:user] != 0
+        stud.each do |s|
+          stud_arr[s.user_id] ||= []
+          stud_arr[s.user_id] = s.vocab_code_arr
+        end
+      end
+      comp_arr = VocabTable.joins(:vocab_genre_contents).map(&:vocab_code) if search_mode == 1
+
+      stud = VocabMycard.joins(:vocab_table).group(:user_id).reorder('').select(:user_id).select('ARRAY_AGG("vocab_tables"."vocab_code") as vocab_code_arr')
+      stud = stud.joins(vocab_table: :vocab_genre_contents).where(vocab_genre_contents: { vocab_genre_id: sub_ids }) if sub_ids.present? && search_mode == 1
       stud.each do |s|
         stud_arr[s.user_id] ||= []
-        stud_arr[s.user_id] << s.vocab_code
+        stud_arr[s.user_id] = stud_arr[s.user_id] + s.vocab_code_arr
       end
 
-      stud = VocabMycard.group(:user_id).reorder('').select(:user_id)
       @stud_rates = {}
-
-      rate = params[:search][:rate] || 0
-      stud.each do |s|
+      stud_arr.each do |k,v|
         res = 0
         comp_arr.each do |a|
-          res += 1 if stud_arr[s.user_id].uniq.include?(a)
-          #puts stud_arr[s.user_id].uniq
+          res += 1 if stud_arr[k].include?(a)
         end
         calc_rate = ((res * 100).to_f / comp_arr.length).round(2)
         if calc_rate >= rate.to_f
-          @stud_rates[s.user_id] = calc_rate
+          @stud_rates[k] = calc_rate
         end
       end
-      a = @stud_rates.sort_by{|k,v| v}.reverse
+      a = @stud_rates.sort_by{|k,v| v}.reverse.to_h
 
-      b = []
-      a.each { |k,v| b << k }
-
-      @offers = User.joins(:profile).in_order_of(:id, b)
+      @offers = User.joins(:profile).in_order_of(:id, a.keys)
       @offers = @offers.page(params[:page]).per(params[:per])
     end
 

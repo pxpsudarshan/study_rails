@@ -20,7 +20,7 @@
   <label class='col-md-2 col-form-label text-end'><%= t('activerecord.attributes.tokutei.sort') %></label>
   <div class="col-md-3">
     <div class="input-group">
-      <%= f.text_field :sort, class: 'form-control' %>
+      <%= f.text_field :sort, class: 'form-control', readonly: current_user.access_type != User::ACCESS_TYPE::KANRISHA %>
     </div>
   </div>
 </div>
@@ -28,7 +28,7 @@
   <label class='col-md-2 col-form-label text-end'><%= t('activerecord.attributes.tokutei.title') %></label>
   <div class="col-md-3">
     <div class="input-group">
-      <%= f.text_field :title, class: 'form-control' %>
+      <%= f.text_field :title, class: 'form-control', readonly: current_user.access_type != User::ACCESS_TYPE::KANRISHA %>
     </div>
   </div>
 </div>
@@ -66,7 +66,9 @@
           <th class="text-start w-25"><%= t('activerecord.attributes.tokutei_question.title') %></th>
           <th class="text-start w-75"><%= t('activerecord.attributes.tokutei_question.content') %></th>
           <th class="text-start"><%= t('common.edit') %></th>
+          <% if current_user.access_type == User::ACCESS_TYPE::KANRISHA %>
           <th class="text-start"><%= t('common.destroy') %></th>
+          <% end %>
         </tr>
       </thead>
       <tbody id="quests">
@@ -75,10 +77,12 @@
       <% end %>
       </tbody>
     </table>
+    <% if current_user.access_type == User::ACCESS_TYPE::KANRISHA %>
     <%= link_to_add_association t('buttons.question_add').html_safe, f, :tokutei_questions,
         'data-association-insertion-method'    => 'append' ,
         'data-association-insertion-node'      => '#quests', class: "btn btn-sm btn-primary"
     %>
+    <% end %>
   </div>
 </div>
 <div class="form-actions">

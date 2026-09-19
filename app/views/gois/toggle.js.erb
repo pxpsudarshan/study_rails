@@ -1,0 +1,8 @@
+<% if @result %>
+$("#error_explanations_required").text('Hide.');
+<% else %>
+$("#error_explanations_required").text('Unhide.');
+<% end %>
+$("#error_explanations_required").removeClass('bg-danger');
+$("#error_explanations_required").addClass('bg-success');
+$("#error_explanations_required").addClass('show');

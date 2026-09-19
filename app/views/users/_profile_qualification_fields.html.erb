@@ -1,0 +1,36 @@
+<div class="nested-fields">
+  <div class="row g-2 align-items-end">
+
+    <!-- 年 -->
+    <div class="col-12 col-sm-4 col-md-2">
+      <label class="form-label small mb-1">
+        <%= f.label :achieved_year %>
+      </label>
+      <%= f.select :achieved_year, options_for_select((2010..Date.today.year).to_a.reverse, f.object&.achieved_year), { include_blank: true }, class: "form-select form-select-sm" %>
+    </div>
+
+    <!-- 月 -->
+    <div class="col-12 col-sm-4 col-md-2">
+      <label class="form-label small mb-1">
+        <%= f.label :achieved_month %>
+      </label>
+      <%= f.select :achieved_month,
+          options_for_select( t('date.month_names').compact.each_with_index.map { |name, i| [name, i + 1] },
+              f.object&.achieved_month), { include_blank: true}, class: "form-select form-select-sm" %>
+    </div>
+
+    <!-- 資格名 -->
+    <div class="col-12 col-sm-8 col-md-6">
+      <label class="form-label small mb-1">
+        <%= f.label :qualification_name %>
+      </label>
+      <%= f.text_field :qualification_name, class: "form-control form-control-sm", placeholder: t('placeholder.qualification_name'), required: false %>
+    </div>
+
+    <!-- 削除ボタン -->
+    <div class="col-12 col-sm-4 col-md-2 text-start text-md-end">
+      <%= link_to_remove_association t('buttons.delete').html_safe, f, class: "btn btn-danger btn-sm" %>
+    </div>
+
+  </div>
+</div>

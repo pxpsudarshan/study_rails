@@ -8,7 +8,7 @@
       <tr>
         <th class="bg-success bg-opacity-25">職種</th>
         <td>
-        <%= f.select :occupation, options_for_select(occupation_list, f.object.occupation), {include_blank: false}, class: 'dropdown-toggle form-select' %>
+        <%= f.select :occupation, options_for_select(occupation_array, f.object.occupation), {include_blank: false}, class: 'dropdown-toggle form-select' %>
         </td>
         <td rowspan="6"><%= f.text_area :job_description, placeholder: "", class: "form-control", rows:"20" %></td>
       </tr>

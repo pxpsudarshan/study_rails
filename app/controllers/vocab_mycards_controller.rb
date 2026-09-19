@@ -5,32 +5,11 @@ class VocabMycardsController < ApplicationController
     @cards = []
     @message = ""
     if vocab_code.present?
-        #関連する語彙
-        vocab_code_kanji = vocab_code.scan(/\p{Han}/).join
-        @cards = []
-        if vocab_code_kanji.present?
-          @cards = VocabTable
-            .joins(:vocab_mycards)
-            .where(vocab_mycards: { user_id: current_user.id })
-            .where('vocab_tables.vocab_code ~* ?', "[#{vocab_code_kanji}]")
-            .where.not(vocab_code: vocab_code)
-        end
+      @cards = vocab_cards(vocab_code)
     elsif params[:selected_item].present?
-      day = params[:selected_item].to_i
-      top_date = Date.today
-      case day
-      when 1
-        prev_date = top_date - 1.day
-      when 2
-        prev_date = top_date - 7.day
-      when 3
-        prev_date = top_date - 1.month
-      else
-        prev_date = top_date - 1.year
-      end
       @cards = current_user.vocab_mycards
                 .joins(:vocab_table)
-                .where("DATE(vocab_mycards.created_at) BETWEEN ? AND ?", prev_date, top_date)
+                .where(created_at: period_range(params[:selected_item]))
                 .order(created_at: :desc)
     else
       @cards = current_user.vocab_mycards.joins(:vocab_table).order(created_at: :desc)
@@ -64,6 +43,16 @@ class VocabMycardsController < ApplicationController
     end
   end
 
+  def toggle
+    mycard = current_user.vocab_mycards.find_by(vocab_table_id: params[:card_id])
+
+    if mycard.present?
+      mycard.destroy!
+    else
+      current_user.vocab_mycards.create!(vocab_table_id: params[:card_id] )
+    end
+  end  
+
   private
 
   def mycard_params
@@ -80,5 +69,15 @@ class VocabMycardsController < ApplicationController
       :recent_date,
       :mycard_check,
     )
+  end
+
+  # 期間指定用
+  def period_range(period)
+    case period
+    when '1' then 1.day.ago..Time.current
+    when '2' then 1.month.ago..Time.current
+    when '3' then 3.months.ago..Time.current
+    else 1.years.ago..Time.current
+    end
   end
 end

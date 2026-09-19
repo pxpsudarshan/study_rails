@@ -1,0 +1,201 @@
+<!-- ====================== STEP 3: 希望・資格・語学 ====================== -->
+<div class="row mb-3">
+  <div class="col">
+    <h3 class="text-center mb-0"><%= t('title.step3') %></h3>
+  </div>
+</div>
+<%= f.fields_for :profile do |up| %>
+<!-- ================= 希望条件カード ================= -->
+<div class="card mb-3">
+  <div class="card-header py-2">
+    <strong><%= t('label.job_preferences') %></strong>
+  </div>
+
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-12 col-lg-6">
+        <!-- 希望職種 -->
+        <div class="row g-2 align-items-center mb-2">
+          <div class="col-12 col-md-4 col-form-label col-form-label-sm">
+            <%= up.label :desired_job_type %>
+          </div>
+
+          <div class="col-12 col-md-8">
+            <%= up.select :desired_job_type, options_for_select(occupation_array, up.object.desired_job_type), { include_blank: true }, class: 'form-select form-select-sm' %>
+          </div>
+        </div>
+        <!-- 希望業種 -->
+        <div class="row g-2 align-items-center mb-2">
+          <div class="col-12 col-md-4 col-form-label col-form-label-sm">
+            <%= up.label :desired_industry %>
+          </div>
+
+          <div class="col-12 col-md-8">
+            <%= up.select :desired_industry, options_for_select(industry_array, up.object.desired_industry), { include_blank: true }, class: 'form-select form-select-sm' %>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <!-- 希望勤務地 -->
+        <div class="row g-2 align-items-center mb-2">
+          <div class="col-12 col-md-4 col-form-label col-form-label-sm">
+            <%= up.label :desired_work_place %>
+          </div>
+
+          <div class="col-12 col-md-8">
+            <%= up.select :desired_work_place, options_for_select(pref_array, up.object.desired_work_place), { include_blank: true }, class: 'form-select form-select-sm' %>
+          </div>
+        </div>
+        <!-- 就労希望日 -->
+        <div class="row g-2 align-items-center">
+          <div class="col-12 col-md-4 col-form-label col-form-label-sm">
+            <%= up.label :desired_work_date %>
+          </div>
+          <div class="col-12 col-md-8">
+            <%= up.date_field :desired_work_date, class: "form-control form-control-sm" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ================= スキル ＋ 免許・資格カード ================= -->
+<div class="card mb-3">
+  <div class="card-header py-2">
+    <strong><%= t('label.skill_and_qualification') %></strong>
+  </div>
+
+  <div class="card-body">
+    <div class="row g-3">
+
+      <!-- ========== 左：スキル ========= -->
+      <div class="col-12 col-lg-5">
+        <div class="col-form-label col-form-label-sm mb-1">
+          <%= up.label :skill %>
+        </div>
+        <%= up.text_area :skill, rows: 8, class: 'form-control', placeholder: t('placeholder.skill') %>
+      </div>
+
+      <!-- ========== 右：免許・資格（Cocoon） ========= -->
+      <div class="col-12 col-lg-7">
+        <div class="small fw-bold mb-2">
+          <%= t('label.qualification') %>
+        </div>
+
+        <div id="qualification_history" class="vstack gap-2">
+          <%= up.fields_for :profile_qualifications do |pq| %>
+            <%= render 'profile_qualification_fields', f: pq %>
+          <% end %>
+        </div>
+
+        <div class="mt-2">
+          <%= link_to_add_association t('buttons.add').html_safe,
+              up, :profile_qualifications,
+              partial: 'profile_qualification_fields', class: "btn btn-sm btn-outline-secondary",
+              data: { association_insertion_method: 'append', association_insertion_node: '#qualification_history' } %> 
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ================= 語学力カード ================= -->
+<div class="card mb-3">
+  <div class="card-header py-2">
+    <strong><%= t('label.language_skill') %></strong>
+  </div>
+
+  <div class="card-body">
+    <div class="row g-3">
+
+      <!-- ================= 左：日本語・英語 ================= -->
+      <div class="col-12 col-lg-6">
+
+        <!-- 母国語 -->
+        <div class="row g-2 align-items-center mb-2">
+          <div class="col-12 col-sm-4 col-form-label col-form-label-sm">
+            <%= up.label :native_language %>
+          </div>
+          <div class="col-12 col-sm-8">
+            <%= up.text_field :native_language, class: "form-control" %>
+          </div>
+        </div>
+
+        <!-- 日本語 -->
+        <div class="row g-2 align-items-center mb-2">
+          <div class="col-12 col-sm-4 col-form-label col-form-label-sm">
+            <%= up.label :japanese_level %>
+          </div>
+          <div class="col-12 col-sm-4">
+              <%= up.select :japanese_level, options_for_select(language_level, up.object.japanese_level),
+                {include_blank: true}, class: 'form-select form-select-sm' %>
+          </div>
+
+          <div class="col-12 col-sm-4">
+            <div class="input-group input-group-sm">
+              <span class="input-group-text">JLPT</span>
+              <%= f.select :jp_level, options_for_select(['N1', 'N2', 'N3', 'N4', 'N5', 'Other'], f.object.jp_level),
+                {include_blank: true}, class: 'form-select form-select-sm' %>
+            </div>
+          </div>
+        </div>
+
+        <!-- 英語 -->
+        <div class="row g-2 align-items-center mb-2">
+          <div class="col-12 col-sm-4 col-form-label col-form-label-sm">
+            <%= up.label :english_level %>
+          </div>
+
+          <div class="col-12 col-sm-4">
+            <%= up.select :english_level, options_for_select(language_level, up.object.english_level), {include_blank: true}, class: 'form-select form-select-sm' %> 
+          </div>
+
+          <div class="col-12 col-sm-4">
+            <div class="input-group input-group-sm">
+              <span class="input-group-text">TOEIC</span>
+              <%= up.select :toeic_score, options_for_select((400..990).step(50).map { |s| [s, s] }, up.object.toeic_score), {include_blank: true}, class: 'form-select form-select-sm' %>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- ================= /左 ================= -->
+
+      <!-- ================= 右：その他の言語（Cocoon） ================= -->
+      <div class="col-12 col-lg-6">
+
+        <div class="small fw-bold mb-2">
+          <%= t('label.other_languages') %>
+        </div>
+
+        <div id="other_languages_list" class="vstack gap-2">
+          <%= up.fields_for :profile_languages do |pl| %>
+            <%= render 'profile_language_fields', f: pl %>
+          <% end %>
+        </div>
+
+        <div class="mt-2">
+          <%= link_to_add_association t('buttons.add').html_safe,
+              up, :profile_languages,
+              partial: 'profile_language_fields', class: "btn btn-sm btn-outline-secondary",
+              data: { association_insertion_method: 'append', association_insertion_node: '#other_languages_list' } %>                
+        </div>
+
+      </div>
+      <!-- ================= /右 ================= -->
+
+    </div>
+  </div>
+</div>
+
+<!-- ナビゲーションボタン -->
+<div class="d-flex align-items-center my-3">
+  <!-- 中央（保存） -->
+  <div class="flex-fill text-end">
+    <%= f.submit t('buttons.update'), class: "btn btn-primary" %>
+  </div>
+</div>
+<% end %>

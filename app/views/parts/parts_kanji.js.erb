@@ -1,1 +1,4 @@
-$('#part').html("<%= escape_javascript(render("page_kanji_to_vocab")) %>");
+$('#part')
+  .html("<%= escape_javascript(render("page_kanji_to_vocab")) %>")
+  .get(0)
+  .scrollIntoView({ behavior: "smooth", block: "start" });

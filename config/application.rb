@@ -25,7 +25,7 @@ module RailsTest
 #    %w(assets tasks).each do |subdir|
 #      Rails.autoloaders.main.ignore("#{Rails.root}/lib/#{subdir}")
 #    end
-
+    config.active_job.queue_adapter = :sidekiq
     config.time_zone = 'Tokyo'
     config.active_record.time_zone_aware_attributes = false
     config.active_record.default_timezone = :local

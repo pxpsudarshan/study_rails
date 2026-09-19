@@ -1,0 +1,5 @@
+<%= @user_name %>
+
+<%= I18n.t('message.verify_email_text') %>
+
+URL: <%= url_for controller: :users, action: :verify_email, api_token: @api_token %>

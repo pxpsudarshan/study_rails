@@ -6,18 +6,24 @@
     <%= link_to vocab["kanji_code"], parts_kanji_kanji_units_path(kanji: { kanji: vocab["kanji_org"] }), remote: true, class: 'rounded-0 m-1 btn btn-primary' if vocab["kanji_org"] != 0 %>
   <% end if @gois[:vocab_kanji].present? %>
 -->
-<div class="container mt-5">
+
+<div class="container mb-5 mt-5">
   <div class="card shadow-sm rounded-0">
     <div class="card-body">
-      <!-- Header Section -->
+     <!-- Header Section -->
       <div class="d-flex align-items-center mb-4 border-bottom pb-3">
         <h6 class="me-auto fw-bold">JLPT <%= @gois[:jlpt_level] %><%= @vocab_mycard %></h6>
+        <div id="error_explanations_required" class="w-75 bg-danger bg-opacity-50 text-center text-white fade nation_alert"></div>
         <% kanji_parts = @gois[:vocab_kanji] %>
         <div class="ms-3">
         <% kanji_parts.each do |part| %>
-          <button class="btn btn-outline-primary btn-sm"><%= part.kanji_code %></button>
+          <%= link_to part.kanji_code, kanjis_path(kanji: {kanji: part.kanji_code}), class: "btn btn-outline-primary btn-sm", target: '_blank' %>
         <% end %>
-      </div>
+        <% vocab = VocabTable.find(@gois[:nation_mean].id) %>
+        <% exists = vocab.vocab_nations.where(lang: current_user.lang_id).exists? %>
+          <%= link_to 'Toggle', toggle_gois_path(vocab_id: @gois[:nation_mean].id), 
+              class: "rounded-0 m-1 btn btn-sm btn-warning #{ exists ? '' : 'disabled' }", remote: true if current_user.access_type == User::ACCESS_TYPE::KANRISHA %>
+        </div>      
       </div>
 
       <!-- Kanji Details -->
@@ -29,16 +35,18 @@
       <!-- Meaning Section -->
       <div class="mb-4">
         <h6 class="fw-bold">Meaning in English</h6>
-        <p class="text-muted"><%= @gois[:eng_mean] %></p>
+        <p class="text-muted"><%= @gois[:eng_mean]&.nation_code %></p>
       </div>
 
       <!-- Native Language Input -->
+      <%= form_for @gois[:nation_mean], url: goi_path(@gois[:nation_mean].id), html: { class: 'needs-validation', novalidate: true, role: 'form' }, remote: true do |f| %>
+      <%= f.fields_for :vocab_nations, f.object.vocab_nations.where(hide_flg: false, lang: current_user.lang_id) do |vn| %>
       <div class="mb-4">
         <h6 class="fw-bold">Native Language</h6>
         <div class="d-flex">
           <div class="input-group flex-grow-1">
-            <span class="input-group-text"><i class="fa fa-pencil-alt" aria-hidden="true"></i></span>
-            <input type="text" class="form-control" id="nativeLanguageInput" value="<%= @gois[:nation_mean] %>" disabled>
+            <%= button_tag t('buttons.pencil').html_safe, disabled: current_user.access_type == User::ACCESS_TYPE::USER, class: 'btn btn-sm btn-secondary' %>
+            <%= vn.text_field :nation_code, class: 'form-control', required: true, disabled: current_user.access_type == User::ACCESS_TYPE::USER %>
           </div>
           <div class="ms-2">
             <!-- Edit Button -->
@@ -49,31 +57,29 @@
         </div>
       </div>
       <!-- Example Sentences -->
-<!--
+
       <div class="mb-4">
         <h6 class="fw-bold">Example Sentences</h6>
         <div class="mb-2">
           <h6 class="text-muted">日本語 (Japanese)</h6>
-          <p>会社は環境への影響を考慮して、新しい製品を開発しました</p>
+          <p><%= @gois[:nation_mean].example %></p>
         </div>
         <div class="mb-2">
           <h6 class="text-muted">English</h6>
-          <p>The company developed a new product, taking the environmental impact into consideration.</p>
+          <p><%= @gois[:eng_mean]&.example %></p>
         </div>
         <div class="mb-2">
           <h6 class="text-muted">Native Language</h6>
           <div class="d-flex">
             <div class="input-group flex-grow-1">
-              <span class="input-group-text"><i class="bi bi-pencil"></i></span>
-              <input type="text" class="form-control" id="exampleNativeLanguageInput" value="कम्पनीले वातावरणीय प्रभावलाई विचार गरेर नयाँ उत्पादन विकास गर्यो" disabled>
-            </div>
-            <div class="ms-2">
-              <button class="btn btn-secondary btn-sm" id="editExampleBtn" onclick="toggleEditSave('exampleNativeLanguageInput', 'editExampleBtn', 'saveExampleBtn')">Edit</button>
-              <button class="btn btn-primary btn-sm" id="saveExampleBtn" onclick="toggleEditSave('exampleNativeLanguageInput', 'editExampleBtn', 'saveExampleBtn')" style="display: none;">Save</button>
+              <%= button_tag t('buttons.pencil').html_safe, disabled: current_user.access_type == User::ACCESS_TYPE::USER, class: 'btn btn-sm btn-secondary' %>
+              <%= vn.text_field :example, class: 'form-control', required: false, disabled: current_user.access_type == User::ACCESS_TYPE::USER %>
             </div>
           </div>
         </div>
-      </div> -->
+      </div>
+      <% end %>
+      <% end %>
     </div>
   </div>
   
@@ -91,7 +97,7 @@
         <hr class="m-1" >
         <%= link_to card.vocab_code, jlpt_path(id: card.id), class: 'text-decoration-none d-inline-block w-100 fs-2 hover-red' %>
         <%
-          text = card.vocab_nations.where(lang: current_user.lang_id)
+          text = card.vocab_nations.where(hide_flg: false, lang: current_user.lang_id)
         %>
         <hr class="m-1" >
         <p class="card-text">
@@ -111,5 +117,23 @@
 
 </div>
 <% end %>
+<%= javascript_tag do %>
 
-
+  'use strict';
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.getElementsByClassName('needs-validation');
+  // Loop over them and prevent submission
+  var validation = Array.prototype.filter.call(forms, function(form) {
+    form.addEventListener('submit', function(event) {
+      if (form.checkValidity() === false) {
+        $("#error_explanations_required").text('Not Updated.');
+        $("#error_explanations_required").removeClass('bg-success');
+        $("#error_explanations_required").addClass('bg-danger');
+        $('#error_explanations_required').addClass('show');
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      form.classList.add('was-validated');
+    }, false);
+  });
+<% end %>

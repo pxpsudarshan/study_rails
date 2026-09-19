@@ -48,8 +48,8 @@
           <%= link_to card.vocab_table.vocab_code, page_mylang_vocab_mycards_path(vocab_id: card.vocab_table_id), class: 'underline d-inline-block w-100 fs-2 link-opacity-50-hover ink-dark' %>
           <% lang_id = current_user.lang_id %>
           <% if card.vocab_table.vocab_nations.present? %>
-            <% text = card.vocab_table.vocab_nations.where(lang: lang_id) %>
-            <% text = card.vocab_table.vocab_nations.where(lang: 'EN') if text.blank? %>
+            <% text = card.vocab_table.vocab_nations.where(hide_flg: false, lang: lang_id) %>
+            <% text = card.vocab_table.vocab_nations.where(hide_flg: false, lang: 'EN') if text.blank? %>
           <% end %>
 
           <hr class="m-1">

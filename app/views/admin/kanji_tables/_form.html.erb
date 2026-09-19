@@ -1,0 +1,120 @@
+<%= form_for [:admin, @kanji_table], html: { class: 'needs-validation', novalidate: true, id: 'user', role: 'form' } do |f| %>
+<% if @kanji_table.errors.any? %>
+<div class="row">
+  <div class="col-md-12">
+    <div id="error_explanations" class="alert fade show alert-danger">
+      <ul>
+        <% @kanji_table.errors.full_messages.each do |msg| %>
+        <li>
+          <%= content_tag(:div, msg) %>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+<% end %>
+<div class="row">
+  <div class="col-md-2">
+    <div id="error_explanations_required" class="alert text-center fade alert-danger">
+      必須項目を入力してください。
+    </div>
+    <table class="table table-bordered table-sm">
+      <tbody>
+        <tr>
+          <th class="table-success text-nowrap align-middle"><%= t('activerecord.attributes.kanji_table.kanji_code') %><%== t('common.flg_required') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+              <%= f.text_field :kanji_code, class: 'form-control', required: true %>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="row mb-3">
+  <div class="col-md-2">
+    <label class='col-md-3 col-form-label text-start'><%= 'パーツ一覧' %></label>
+    <table class="table table-bordered table-sm text-nowrap">
+      <thead>
+        <tr class="table-success">
+          <th class="text-start"><%= t('activerecord.attributes.parts_table.parts_code') %><%== t('common.flg_required') %></th>
+          <th class="text-start"><%= t('common.destroy') %></th>
+        </tr>
+      </thead>
+      <tbody id="parts">
+      <%= f.fields_for :parts_kanjis do |pk| %>
+        <% render 'parts_kanji_fields', f: pk %>
+      <% end %>
+      </tbody>
+    </table>
+    <%= link_to_add_association t('buttons.parts_add').html_safe, f, :parts_kanjis,
+        'data-association-insertion-method'    => 'append' ,
+        'data-association-insertion-node'      => '#parts', class: "btn btn-sm btn-primary"
+    %>
+  </div>
+</div>
+
+<div class="row mb-3">
+  <div class="col-md-10">
+    <label class='col-md-3 col-form-label text-start'><%= '語彙一覧' %></label>
+    <table class="table table-bordered table-sm text-nowrap">
+      <thead>
+        <tr class="table-success">
+          <th class="text-start"><%= t('activerecord.attributes.vocab_table.sort') %><%== t('common.flg_required') %></th>
+          <th class="text-start"><%= t('activerecord.attributes.vocab_table.vocab_code') %><%== t('common.flg_required') %></th>
+          <th class="text-start"><%= t('activerecord.attributes.vocab_table.vocab_read') %><%== t('common.flg_required') %></th>
+          <th class="text-start"><%= t('activerecord.attributes.vocab_table.example') %></th>
+          <th class="text-start"><%= t('activerecord.attributes.vocab_table.jlpt_level') %><%== t('common.flg_required') %></th>
+          <th class="text-start"><%= t('activerecord.attributes.vocab_table.hide_flg') %></th>
+          <th class="text-start"><%= t('common.destroy') %></th>
+        </tr>
+      </thead>
+      <tbody id="vocab_tables">
+      <%= f.fields_for :vocab_tables do |vt| %>
+        <% render 'vocab_table_fields', f: vt %>
+      <% end %>
+      </tbody>
+    </table>
+    <%#= link_to_add_association t('buttons.vocab_add').html_safe, f, :vocab_tables,
+        'data-association-insertion-method'    => 'append' ,
+        'data-association-insertion-node'      => '#vocab_tables', class: "btn btn-sm btn-primary"
+    %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="form-actions">
+      <%= link_to t('buttons.cancel'), admin_kanji_tables_path, class: "btn btn-secondary" %>
+      <%= button_tag t('buttons.create'), type: 'submit', class: "btn btn-warning" %>
+    </div>
+  </div>
+</div>
+<% end %>
+<%= javascript_tag do %>
+$(function() {
+'use strict';
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.getElementsByClassName('needs-validation');
+  // Loop over them and prevent submission
+  var validation = Array.prototype.filter.call(forms, function(form) {
+    form.addEventListener('submit', function(event) {
+      if (form.checkValidity() === false) {
+        $('#create_button').prop('disabled',false);
+        $('#cancel_button').removeClass('disabled');
+        $('#confirmButton').prop('disabled',false);
+        $('#yes_button').prop('disabled', false);
+        $('#no_button').prop('disabled', false);
+        $('#confirmModal').modal('hide');
+        $('#error_explanations_required').addClass('show');
+        window.scrollTo(0,0);
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      form.classList.add('was-validated');
+    }, false);
+  });
+});
+<% end %>

@@ -13,9 +13,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+ def create
+   super do
+     resource.mycard_sign = true
+     resource.entry_no = Time.current.to_i
+   end
+ end
 
   # GET /resource/edit
   # def edit

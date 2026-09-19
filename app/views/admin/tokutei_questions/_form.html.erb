@@ -19,7 +19,7 @@
   <label class='col-md-2 col-form-label text-end'><%= t('activerecord.attributes.tokutei_question.sort') %></label>
   <div class="col-md-3">
     <div class="input-group">
-      <%= f.text_field :sort, class: 'form-control' %>
+      <%= f.text_field :sort, class: 'form-control', readonly: current_user.access_type != User::ACCESS_TYPE::KANRISHA %>
     </div>
   </div>
 </div>
@@ -27,18 +27,19 @@
   <label class='col-md-2 col-form-label text-end'><%= t('activerecord.attributes.tokutei_question.title') %></label>
   <div class="col-md-3">
     <div class="input-group">
-      <%= f.text_field :title, class: 'form-control' %>
+      <%= f.text_field :title, class: 'form-control', readonly: current_user.access_type != User::ACCESS_TYPE::KANRISHA %>
     </div>
   </div>
 </div>
 <div class="row mb-3">
   <label class='col-md-2 col-form-label text-end'><%= t('activerecord.attributes.tokutei_question.content') %></label>
-  <div class="col-md-3">
+  <div class="col-md-5">
     <div class="input-group">
-      <%= f.text_area :content, class: 'form-control' %>
+      <%= f.text_area :content, rows: 5, class: 'form-control', readonly: current_user.access_type != User::ACCESS_TYPE::KANRISHA %>
     </div>
   </div>
 </div>
+<% if current_user.access_type == User::ACCESS_TYPE::KANRISHA %>
 <div class="row mb-3">
   <label class='col-md-2 col-form-label text-end'><%= t('activerecord.attributes.tokutei_question.image_flg') %></label>
   <div class="col-md-4">
@@ -47,6 +48,7 @@
     </div>
   </div>
 </div>
+<% end %>
 <div class="row mb-3">
   <div class="offset-md-2 col-md-4">
     <%= image_tag get_image(f.object.image) if f.object.image_flg %>
@@ -78,9 +80,9 @@
 <%= f.fields_for :tokutei_explain do |te| %>
 <div class="row mb-3">
   <label class='col-md-2 col-form-label text-end'><%= t('activerecord.attributes.tokutei_explain.content') %></label>
-  <div class="col-md-3">
+  <div class="col-md-5">
     <div class="input-group">
-      <%= te.text_area :content, class: 'form-control' %>
+      <%= te.text_area :content, rows: 5, class: 'form-control', readonly: current_user.access_type != User::ACCESS_TYPE::KANRISHA %>
     </div>
   </div>
 </div>
@@ -100,7 +102,7 @@
       <% end %>
       </tbody>
     </table>
-    <%= link_to_add_association t('buttons.lang_add').html_safe, f, :languages,
+    <%= link_to_add_association t('buttons.lang_add').html_safe, te, :languages,
         'data-association-insertion-method'    => 'append' ,
         'data-association-insertion-node'      => '#te_langs', class: "btn btn-sm btn-primary"
     %>
@@ -119,7 +121,9 @@
           <th class="text-start w-75"><%= t('activerecord.attributes.tokutei_answer.content') %></th>
           <th class="text-start"><%= t('activerecord.attributes.tokutei_answer.correct_flg') %></th>
           <th class="text-start"><%= t('common.edit') %></th>
+          <% if current_user.access_type == User::ACCESS_TYPE::KANRISHA %>
           <th class="text-start"><%= t('common.destroy') %></th>
+          <% end %>
         </tr>
       </thead>
       <tbody id="answers">
@@ -128,10 +132,12 @@
       <% end %>
       </tbody>
     </table>
+    <% if current_user.access_type == User::ACCESS_TYPE::KANRISHA %>
     <%= link_to_add_association t('buttons.answer_add').html_safe, f, :tokutei_answers,
         'data-association-insertion-method'    => 'append' ,
         'data-association-insertion-node'      => '#answers', class: "btn btn-sm btn-primary"
     %>
+    <% end %>
   </div>
 </div>
 <div class="form-actions">

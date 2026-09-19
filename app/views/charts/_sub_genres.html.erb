@@ -1,0 +1,22 @@
+<% @sub_genres.each do |sg| %>
+  <div class="genre-item mb-2" data-id="<%= sg[:id] %>">
+
+    <%= link_to sub_genre_chart_charts_path(genre_id: sg[:id]),
+                remote: true,
+                class: "genre-link d-flex justify-content-between text-decoration-none text-dark" do %>
+
+      <span>▶ <%= sg[:name] %></span>
+      <span><%= sg[:progress] %>%</span>
+
+    <% end %>
+
+    <div class="progress mt-1" style="height: 8px;">
+      <div class="progress-bar bg-success"
+           style="width: <%= sg[:progress] %>%"></div>
+    </div>
+
+    <!-- 👇 再帰用 -->
+    <div class="children ms-4 mt-2"></div>
+
+  </div>
+<% end %>

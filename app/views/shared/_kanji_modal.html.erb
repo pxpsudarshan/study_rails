@@ -1,0 +1,25 @@
+<div class="modal fade" id="kanjiModal" tabindex="-1" aria-labelledby="kanjiModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-3 shadow-lg">
+      <div class="modal-header">
+        <h1 class="modal-title" id="ModalHeaderLabel"><%= @kanji.kanji_code %></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <p><strong >Meaning:</strong> <span id="modal-meaning"></span></p>
+      <p><strong >Kun:</strong> <span id="modal-kunyomi"></span></p>
+      <p><strong >On:</strong> <span id="modal-onyomi"></span></p>
+      <p><strong >Parts:</strong>
+        <span id="modal-parts">
+        <% @kanji.parts_tables.each do |part| %>
+          <%= link_to part.parts_code, part_path(id: part.id), class: "btn btn-outline-primary btn-sm", target: '_blank' %>
+        <% end %>
+        </span>
+      </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -37,7 +37,7 @@
           <td class="text-center"><%= f.check_box :ids, { multiple: true, class: 'form-check-input'}, user.id, false %></td>
           <td class="text-center"><%= user.entry_no %></td>
           <td class="text-center"><%= kokuseki_array(user.profile.kokuseki) %></td>
-          <td class="text-center"><%= country_array(user.profile.address_country) %></td>
+          <td class="text-center"><%= user.profile.address %></td>
           <td class="text-center"><%= sex_array(user.profile.sex) %></td>
           <td class="text-center"><%= get_age(user.profile.birthday) %></td>
           <% if user.profile.jp_school_name.present? %>

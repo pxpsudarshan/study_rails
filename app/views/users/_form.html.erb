@@ -22,6 +22,14 @@
     <table class="table table-bordered table-sm">
       <tbody>
         <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.user.lang_id') %><%== t('common.flg_required') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+              <%= f.select :lang_id, options_for_select(langs, f.object.lang_id), {include_blank: true}, class: 'form-select', required: true, disabled: current_user.access_type != User::ACCESS_TYPE::KANRISHA %>
+            </div>
+          </td>
+        </tr>
+        <tr>
           <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.user.sei') %><%== t('common.flg_required') %></th>
           <td class="text-nowrap align-middle">
             <div class="input-group">
@@ -54,10 +62,10 @@
           </td>
         </tr>
         <tr>
-          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.user.mobile') %></th>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.user.mobile') %><%== t('common.flg_required') %></th>
           <td class="text-nowrap align-middle">
             <div class="input-group">
-              <%= f.text_field :mobile, class: 'form-control' %>
+              <%= f.text_field :mobile, class: 'form-control', required: true %>
             </div>
           </td>
         </tr>
@@ -94,11 +102,8 @@
 <div class="row">
   <div class="col-md-12">
     <div class="form-actions">
-      <%= link_to t('buttons.cancel'), users_path, class: "btn btn-secondary" %>
-      <%= button_tag t('buttons.create'), type: 'submit', class: "btn btn-warning" %>
-      <% if @user.persisted? && @user.id != current_user.id %>
-      <%= link_to t('buttons.destroy').html_safe, user_path, method: :delete, class: 'btn btn-danger' %>
-      <% end %>
+      <%= link_to t('buttons.cancel'), menus_path, class: "btn btn-secondary" %>
+      <%= button_tag t('buttons.save'), type: 'submit', class: "btn btn-warning" %>
     </div>
   </div>
 </div>

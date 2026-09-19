@@ -1,18 +1,16 @@
 class UsersController < ApplicationController
-  before_action :parent, except: [:index, :new]
+  before_action :parent
+  skip_before_action :authenticate_users, only: [:verify_email]
 
-  def index
-    @users = User.all
-    @users = @users.where(userid: params[:search][:userid]) if params[:search].present? && params[:search][:userid].present?
-    @users = @users.page(params[:page]).per(params[:per])
-    respond_to do |format|
-      format.html
-      format.js
+  def verify_email
+    redirect_to menus_path and return if current_user.present? && current_user.email_verify_flg
+    user = User.where(token: params[:api_token]).first if params[:api_token].present?
+    if params[:api_token].present? && user.present?
+      user.update!(email_verify_flg: true, token: nil)
+      sign_out user
+      redirect_to menus_path and return
     end
-  end
-
-  def new
-    @user = User.new
+    render :verify_email, layout: 'verify_email'
   end
 
   def show
@@ -26,79 +24,45 @@ class UsersController < ApplicationController
     begin
       ActiveRecord::Base.transaction() do
         if @user.save
-          redirect_to users_path, flash: {success: t('message.success_completed')}
+          redirect_to menus_path, flash: {success: t('message.success_completed')}
         else
           render 'edit'
         end
       end
     rescue => e
       logger.error(e.message)
-      redirect_to users_path, flash: {alert: e.message}
-    end
-  end
-
-  def create
-    @user = User.new(user_params)
-    @user.mycard_sign = true
-    @user.entry_no = Time.current.to_i
-    begin
-      ActiveRecord::Base.transaction() do
-        if @user.save
-          redirect_to users_path, flash: {success: t('message.success_completed')}
-        else
-          render 'new'
-        end
-      end
-    rescue => e
-      logger.error(e.message)
-      redirect_to users_path, flash: {alert: e.message}
-    end
-  end
-
-  def destroy
-    begin
-      ActiveRecord::Base.transaction() do
-        @user.destroy!
-        redirect_to users_path
-      end
-    rescue => e
-      logger.error(e.message)
-      redirect_to users_path, flash: {alert: e.message}
+      redirect_to menus_path, flash: {alert: e.message}
     end
   end
 
   def profile
     if @user.profile.blank?
       @user.build_profile
-      @user.profile.profile_languages.new
-      @user.profile.profile_works.new
     end
+
+    render 'profile'
   end
 
   def update_profile
-    profile = user_params[:profile_attributes]
-    works = profile[:profile_works_attributes]
-    profile[:profile_works_attributes] = []
-    @user.assign_attributes(profile_attributes: profile)
-    @user.profile.assign_attributes(profile_works_attributes: works)
+    @user.assign_attributes(user_params)
     begin
-      ActiveRecord::Base.transaction() do
+      ActiveRecord::Base.transaction do
         if @user.save
-          redirect_to profile_user_path, flash: {success: t('message.success_completed')}
+          redirect_to profile_user_path, flash: { success: t('message.success_completed') }
         else
           render 'profile'
         end
       end
     rescue => e
       logger.error(e.message)
-      redirect_to root_path, flash: {alert: e.message}
+      redirect_to menus_path, flash: {alert: e.message}
     end
   end
 
   private
 
   def parent
-    @user = User.find(params[:id])
+    @user = User.find(params[:id]) if params[:id].present?
   end
 
   def user_params
@@ -113,9 +77,11 @@ class UsersController < ApplicationController
       :mobile,
       :lang_id,
       :jp_level,
+      :plan,
       profile_attributes: [
       :id,
-      :call_name,
+      :photo,
+      :name_kana,
       :kokuseki,
       :birthday,
       :sex,
@@ -135,6 +101,13 @@ class UsersController < ApplicationController
       :school_end,
       :school_senko,
       :school_name,
+      :desired_job_type,
+      :desired_industry,
+      :desired_work_place,
+      :japanese_level,
+      :english_level,
+      :toeic_score,
+      :native_language,
       :skill,
         profile_works_attributes: [
         :id,
@@ -152,6 +125,13 @@ class UsersController < ApplicationController
         :use_lang,
         :use_lang_level,
         :_destroy
+        ],
+        profile_qualifications_attributes: [
+          :id,
+          :achieved_year,
+          :achieved_month,
+          :qualification_name,
+          :_destroy
         ]
       ]
     )

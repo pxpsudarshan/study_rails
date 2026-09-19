@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="col-auto mb-3 ml-auto">
+    <%= link_to t('buttons.new').html_safe, new_admin_vocab_genre_path(id: @vocab_genre.id), class: 'btn btn-primary' %>
+  </div>
+</div>
+<% unless current_user.comp&.channel_id.present? %>
+<div class="row mb-3">
+  <label class='col-md-2 col-form-label text-end'><%= t('activerecord.attributes.channel.channel_name') %></label>
+  <div class="col-md-3">
+    <div class="input-group">
+      <%= text_field_tag :channel_name, @vocab_genre.channel&.channel_name, class: 'form-control', disabled: true %>
+    </div>
+  </div>
+</div>
+<% end %>
+<div class="row mb-3">
+  <label class='col-md-2 col-form-label text-end'><%= t('activerecord.attributes.vocab_genre.title') %></label>
+  <div class="col-md-3">
+    <div class="input-group">
+      <%= text_field_tag :title, @vocab_genre.title, class: 'form-control', disabled: true %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <table class="table table-bordered table-hover table-sm">
+      <thead>
+        <tr class="table-success">
+          <th class="text-start"><%= t('activerecord.attributes.vocab_genre.title') %></th>
+          <th class="text-start"><%= t('common.edit') %></th>
+          <th class="text-start"><%= t('common.destroy') %></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @vocab_genre.sub_genres.each do |a| %>
+        <tr class="details_row nested-fields">
+          <td class="text-start text-nowrap w-75"><%= link_to a.title, admin_vocab_genre_path(id: a.id), class: '' %></td>
+          <td class="text-start text-nowrap"><%= link_to t('buttons.edit').html_safe, edit_admin_vocab_genre_path(id: a.id), class: 'btn btn-sm btn-primary' %></td>
+          <td class="text-start text-nowrap"><%= link_to t('buttons.destroy').html_safe, admin_vocab_genre_path(id: a.id), method: :delete, class: 'btn btn-sm btn-danger' %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="form-actions">
+  <% if @vocab_genre.vocab_genre_id.present? %>
+    <%= link_to t('buttons.back'), admin_vocab_genre_path(id: @vocab_genre.vocab_genre_id), class: "btn btn-sm btn-secondary" %>
+  <% else %>
+    <%= link_to t('buttons.back'), admin_vocab_genres_path, class: "btn btn-sm btn-secondary" %>
+  <% end %>
+</div>

@@ -1,7 +1,9 @@
 <%= stylesheet_link_tag "jlpt", media: "all", 'data-turbo-track': 'reload' %>
+
 <div class="m-auto w-75 row">
   <%= 'NO DATA' if @cards.blank? %>
 </div>
-<div class="m-auto w-75 row" id="jlpts">
+
+<div id="jlpts">
   <%= render 'jlpt_list' %>
 </div>

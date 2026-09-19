@@ -21,3 +21,21 @@ function optionChange(selectElement) {
     }
   });
 }
+
+$(document).on('click', '#toggleConversation', function() {
+  $('.js-conversation').toggleClass('hidden');
+  const hidden = $('.js-conversation').hasClass('hidden');
+  $(this).text(
+    hidden ? 'Normal Mode' : '🎧 Listening Mode'
+  );
+});
+
+function toggleConversation(element) {
+  const text = $(element).closest('li').find('.js-conversation')
+  text.toggleClass('hidden');
+  const hidden = text.hasClass('hidden');
+
+  $(element).text(
+    hidden ? '👁' : '🙈'
+  );
+}

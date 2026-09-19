@@ -1,0 +1,23 @@
+<tr class="nested-fields">
+  <td class="text-center">
+    <%= f.number_field :sort, min: 0, class: 'form-control', required: true %>
+  </td>
+  <td class="text-center">
+    <%= text_field_tag :vocab_code, f.object.vocab_table.vocab_code, class: 'form-control', disabled: true %>
+  </td>
+  <td class="text-center">
+    <%= text_field_tag :vocab_read, f.object.vocab_table.vocab_read, class: 'form-control', disabled: true %>
+  </td>
+  <td class="text-center">
+    <%= text_field_tag :example, f.object.vocab_table.example, class: 'form-control', disabled: true %>
+  </td>
+  <td class="text-center">
+    <%= number_field_tag :jlpt_level, f.object.vocab_table.jlpt_level, class: 'form-control', disabled: true %>
+  </td>
+  <td class="text-center text-nowrap">
+    <%= f.check_box :hide_flg, {class: 'form-check-input'} %>
+  </td>
+  <td class="text-center text-nowrap">
+    <%= link_to_remove_association t('buttons.destroy').html_safe, f, class: "btn btn-danger" %>
+  </td>
+</tr>

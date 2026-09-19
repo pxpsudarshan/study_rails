@@ -22,6 +22,77 @@
     <table class="table table-bordered table-sm">
       <tbody>
         <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.comp.comp_id') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+              <% if current_comp.access_type == Comp::ACCESS_TYPE::KANRIGAISHA %>
+              <% comps = Comp.where.not(id: f.object.id).order(access_type: :desc).map{|c| [c.company_name, c.id]} %>
+              <%= f.select :comp_id, options_for_select(comps, f.object.comp_id), {include_blank: true}, class: 'form-select' %>
+              <% else %>
+              <%= text_field_tag :comp_id, f.object.comp&.company_name, class: 'form-control', disabled: true %>
+              <%= f.hidden_field :comp_id %>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+        <%
+          #prices = Stripe::Price.list(
+          #  lookup_keys: ['kanrin', 'trip-arcade'],
+          #  expand: ['data.product']
+          #  ).data.sort_by {|p| p.unit_amount}
+          #user_prices = prices.map{|p| [p.product.name+' '+p.unit_amount.to_s+' '+p.currency.to_s,p.lookup_key]}
+        %>
+        <!--
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.comp.plan') %><%== t('common.flg_required') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+            <% #if current_comp.present? && current_comp.access_type == Comp::ACCESS_TYPE::KANRIGAISHA %>
+              <%#= f.select :plan, options_for_select(user_prices, f.object.plan), {include_blank: true}, class: 'form-select', required: true %>
+            <% #else %>
+              <% #p = Stripe::Price.list(lookup_keys: [f.object.plan], expand: ['data.product']).data.first %>
+              <% #plan = p.product.name+' '+p.unit_amount.to_s+' '+p.currency.to_s if p.present? %>
+              <%#= text_field_tag :plan, plan, class: 'form-control', disabled: true %>
+              <%#= f.hidden_field :plan %>
+            <% #end %>
+            </div>
+          </td>
+        </tr>
+        -->
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.comp.user_count') %><%== t('common.flg_required') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+              <%= f.number_field :user_count, min: 0, class: 'form-control', required: true, disabled: current_comp.access_type == Comp::ACCESS_TYPE::OTHER %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.comp.company_name') %><%== t('common.flg_required') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+              <%= f.text_field :company_name, class: 'form-control', required: true %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.comp.business_type') %><%== t('common.flg_required') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+              <%= f.text_field :business_type, class: 'form-control', required: true %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.comp.department') %><%== t('common.flg_required') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+              <%= f.text_field :department, class: 'form-control', required: true %>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
           <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.comp.sei') %><%== t('common.flg_required') %></th>
           <td class="text-nowrap align-middle">
             <div class="input-group">
@@ -54,10 +125,10 @@
           </td>
         </tr>
         <tr>
-          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.comp.mobile') %></th>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.comp.mobile') %><%== t('common.flg_required') %></th>
           <td class="text-nowrap align-middle">
             <div class="input-group">
-              <%= f.text_field :mobile, class: 'form-control' %>
+              <%= f.text_field :mobile, class: 'form-control', required: true %>
             </div>
           </td>
         </tr>
@@ -69,6 +140,37 @@
             </div>
           </td>
         </tr>
+        <% if current_comp.access_type == Comp::ACCESS_TYPE::KANRIGAISHA %>
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.comp.access_type') %><%== t('common.flg_required') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+              <div class="form-check form-check-inline">
+                <%= f.radio_button :access_type, Comp::ACCESS_TYPE::KANRIGAISHA, class: 'form-check-input', required: true %>
+                <%= f.label :access_type, t('common.kanrisha') %>
+              </div>
+              <div class="form-check form-check-inline">
+                <%= f.radio_button :access_type, Comp::ACCESS_TYPE::PARTNER, class: 'form-check-input', required: true %>
+                <%= f.label :access_type, t('common.partner') %>
+              </div>
+              <div class="form-check form-check-inline">
+                <%= f.radio_button :access_type, Comp::ACCESS_TYPE::OTHER, class: 'form-check-input', required: true %>
+                <%= f.label :access_type, t('common.other') %>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.comp.login_flg') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="form-check form-check-inline">
+              <%= f.label :login_flg do %>
+                <%= f.check_box :login_flg, { class: 'form-check-input' }, true %>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+        <% end %>
         <% if @comp.new_record? %>
         <tr>
           <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.comp.password') %><%== t('common.flg_required') %></th>
@@ -85,6 +187,11 @@
               <%= f.password_field :password_confirmation, class: 'form-control', required: true %>
             </div>
           </td>
+        </tr>
+        <% else %>
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('common.invite') %></th>
+          <td class="text-start"><%= invite_kaisha_comp_url(@comp.id) %></td>
         </tr>
         <% end %>
       </tbody>

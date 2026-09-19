@@ -25,10 +25,10 @@
     </div>
     <div class="col d-flex gap-3">
       <div class="col-form-label">
-        <%= f.label :name, '職種' %>
+        <%= f.label :occupation, '職種' %>
       </div>
       <div class="col-sm">
-        <%= f.select :occupation, options_for_select(occupation_list,''), { include_blank: false }, class: "form-select" %>
+        <%= f.select :occupation, options_for_select(occupation_array,''), { include_blank: false }, class: "form-select" %>
       </div>
     </div>
   </div>
@@ -37,12 +37,12 @@
       <h2 class="border border-4 m-2 ml-0 p-1 ">検索条件</h2>
     </div>
   </div>
-  <div class="row">
-    <div class="col-sm-7 d-flex gap-3">
-      <div class="col-form-label">
-        <%= f.label :name, '適合率(外国人材習得語彙-貴社語彙)' %>
+  <div class="row mb-3">
+    <div class="col-sm-5 d-flex gap-3">
+      <div class="col-sm-6 col-form-label">
+        <%= f.label :rate, '適合率(外国人材習得語彙-貴社語彙)' %>
       </div>
-      <div class="col-sm">
+      <div class="col-sm-2">
         <%= f.select :rate, [['10', 10],
         ['20', 20],
         ['30', 30],
@@ -54,15 +54,43 @@
         ['90', 90],
         ['100', 100]], { include_blank: true }, class: "form-select" %>
       </div>
-      <span class="align-bottom mt-3">% 以上</span>
+      <span class="align-bottom mt-2">% 以上</span>
     </div>
-    <div class="col-sm-5 d-flex gap-3 mb-3">
+    <div class="col-sm-3 d-flex gap-3">
       <div class="col-form-label">
-        <%= f.label :name, '検索範囲' %>
+        <%= f.label :user, '検索範囲' %>
       </div>
       <div class="col-sm">
-        <%= f.select :user, [['全ユーザ検索', 0],
-        ['貴社求人申込者検索', 1]], {}, class: "form-select" %>
+        <%= f.select :user, [['全ユーザ検索', 0], ['貴社求人申込者検索', 1]], {}, class: "form-select" %>
+      </div>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-sm-5 d-flex gap-3">
+    <label class="col-sm-2 col-form-label"><%= '検索種類' %></label>
+      <div class="col-sm-8 mt-2">
+        <div class="form-check form-check-inline">
+          <%= f.radio_button :search_mode, 0, class: "form-check-input", checked: true %>
+          <%= f.label :search_mode, class: "form-check-label", value: 0 do %>
+            <%= '貴社用語集' %>
+          <% end %>
+        </div>
+        <div class="form-check form-check-inline">
+          <%= f.radio_button :search_mode, 1, class: "form-check-input" %>
+          <%= f.label :search_mode, class: "form-check-label", value: 1 do %>
+            <%= 'ジャンル' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-sm-10 d-flex gap-3">
+      <div class="col-form-label">
+        <%= f.label :genre, 'ジャンル選択' %>
+      </div>
+      <div class="col-sm">
+        <%= f.select :genre, options_for_select(@genres, nil), { include_blank: true, include_hidden: false}, multiple: true, class: "form-select genre_select" %>
       </div>
     </div>
   </div>
@@ -81,3 +109,19 @@
     </div>
   </div>
 </div>
+<%= javascript_tag do %>
+function set_plan_name(obj) {
+  var plan_name = document.getElementById('users.plan_name');
+  plan_name.value = obj.value;
+}
+$(function() {
+
+  $('.genre_select').select2({
+    theme: 'bootstrap-5',
+    language: 'ja',
+    placeholder: '',
+    allowClear: false,
+    width: '100%',
+  });
+});
+<% end %>

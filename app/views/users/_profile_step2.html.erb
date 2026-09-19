@@ -1,0 +1,144 @@
+<!-- ====================== STEP 2: 学歴・職歴 ====================== -->
+<div class="row mb-3">
+  <div class="col">
+    <h3 class="text-center mb-0"><%= t('title.step2') %></h3>
+  </div>
+</div>
+<%= f.fields_for :profile do |up| %>
+<!-- 学歴カード -->
+<div class="card mb-3">
+  <div class="card-header py-2">
+    <strong><%= t('label.card_education') %></strong>
+  </div>
+
+  <div class="card-body">
+    <div id="edu_history" class="mb-2">
+
+      <!-- 日本での学歴 -->
+      <div class="mb-3">
+        <div class="row g-2 align-items-end">
+          <!-- 卒業年月 -->
+          <div class="col-md-2">
+            <div class="corm-label small mb-1">
+              <%= up.label :jp_school_date %>
+            </div>
+            <%= up.date_field :jp_school_date, class: 'form-control form-control-sm' %>
+          </div>
+
+          <!-- 学校名（日本） -->
+          <div class="col-md-4">
+            <div class="corm-label small mb-1">
+              <%= up.label :jp_school_name %>
+            </div>
+            <%= up.text_field :jp_school_name,
+                placeholder:  t('placeholder.school_name'), class: 'form-control form-control-sm' %>
+          </div>
+
+          <!-- 学校区分 -->
+          <div class="col-md-2">
+            <div class="corm-label small mb-1">
+              <%= up.label :jp_school_type %>
+            </div>
+            <%= up.select :jp_school_type, options_for_select(school_type_array, up.object.jp_school_type),
+                { include_blank: false }, class: 'form-select form-select-sm' %>
+          </div>
+
+          <!-- 卒業区分 -->
+          <div class="col-md-2">
+            <div class="corm-label small mb-1">
+              <%= up.label :jp_school_end %>
+            </div>
+            <%= up.select :jp_school_end, options_for_select(school_end_array, up.object.jp_school_end),
+                { include_blank: false }, class: 'form-select form-select-sm' %>
+          </div>
+
+          <!-- 専攻 -->
+          <div class="col-md-2">
+            <div class="corm-label small mb-1">
+              <%= up.label :jp_school_senko %>
+            </div>
+            <%= up.text_field :jp_school_senko, placeholder: t('placeholder.school_senko'), class: 'form-control form-control-sm' %>
+          </div>
+        </div>
+      </div>
+      <hr class="mt-2">
+      <!-- 日本以外の学歴 -->
+      <div class="mb-1">
+        <div class="row g-2 align-items-end">
+          <!-- 卒業年月 -->
+          <div class="col-md-2">
+            <div class="corm-label small mb-1">
+              <%= up.label :school_date %>
+            </div>
+            <%= up.date_field :school_date, class: 'form-control form-control-sm' %>
+          </div>
+
+          <!-- 学校名（母国など） -->
+          <div class="col-md-4">
+            <div class="corm-label small mb-1">
+              <%= up.label :school_name %>
+            </div>
+            <%= up.text_field :school_name, placeholder: t('placeholder.school_name'), class: 'form-control form-control-sm' %>
+          </div>
+
+          <!-- 学校区分 -->
+          <div class="col-md-2">
+            <div class="corm-label small mb-1">
+              <%= up.label :school_type %>
+            </div>
+            <%= up.select :school_type, options_for_select(school_type_array, up.object.school_type),
+                { include_blank: true }, class: 'form-select form-select-sm' %>
+          </div>
+
+          <!-- 卒業区分 -->
+          <div class="col-md-2">
+            <div class="corm-label small mb-1">
+              <%= up.label :school_end %>
+            </div>            
+            <%= up.select :school_end, options_for_select(school_end_array, up.object.school_end),
+                { include_blank: true }, class: 'form-select form-select-sm' %>
+          </div>
+
+          <!-- 専攻 -->
+          <div class="col-md-2">
+            <div class="corm-label small mb-1">
+              <%= up.label :school_senko %>
+            </div>            
+            <%= up.text_field :school_senko, placeholder:  t('placeholder.school_senko'), class: 'form-control form-control-sm' %>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- 職歴カード -->
+<div class="card mb-3">
+  <div class="card-header py-2">
+    <strong><%= t('label.card_work') %></strong>
+  </div>
+
+  <div class="card-body">
+    <div id="work_history" class="vstack gap-2">
+      <%= up.fields_for :profile_works do |pw| %>
+        <%= render 'profile_work_fields', f: pw %>
+      <% end %>
+    </div>
+
+    <div class="mt-2">
+      <%= link_to_add_association t('buttons.add').html_safe, up, :profile_works,
+            partial: 'profile_work_fields', class: "btn btn-sm btn-outline-secondary",
+            data: { association_insertion_method: 'append', association_insertion_node: '#work_history' } %> 
+    </div>
+  </div>
+</div>
+
+<!-- ナビゲーションボタン -->
+<div class="d-flex align-items-center my-3">
+  <!-- 右（次へ） -->
+  <div class="flex-fill text-end">
+    <%= f.submit t('buttons.update'), class: "btn btn-primary" %>
+  </div>
+</div>
+<% end %>

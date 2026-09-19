@@ -1,12 +1,12 @@
 <!-- Footer -->
 <footer>
-<nav class="aligned-div navbar fixed-bottom m-auto navbar-expand-lg navbar-light" >
+<nav class="aligned-div navbar fixed-bottom m-auto navbar-expand-lg navbar-light bg-white" >
   <div class="left-content">
     <div class="collapse navbar-collapse m-auto" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-item nav-link" data-bs-toggle="modal" data-bs-target="#agrenmentModal" href="#">利用規約</a>
-        <a class="nav-item nav-link" data-bs-toggle="modal" data-bs-target="#privicyModal" href="#">プライバシーポリシー</a>
-        <a class="nav-item nav-link" data-bs-toggle="modal" data-bs-target="#contractModal"  href="#">特定商取引に基づいて表示</a>
+        <a class="nav-item nav-link" data-bs-toggle="modal" data-bs-target="#agreementModal" href="#"><%= t('legal.terms_of_service')%></a>
+        <a class="nav-item nav-link" data-bs-toggle="modal" data-bs-target="#privicyModal" href="#"><%= t('legal.privacy_policy')%></a>
+        <a class="nav-item nav-link" data-bs-toggle="modal" data-bs-target="#contractModal"  href="#"><%= t('legal.specified_commercial')%></a>
       </div>
     </div>
   </div>
@@ -21,15 +21,15 @@
 </nav>
 </footer>
 <!-- モーダルダイアログ利用契約 -->
-<div class="modal" id="agrenmentModal" tabindex="-1" aria-labelledby="agrenmentModalLabel" aria-hidden="true">
+<div class="modal" id="agreementModal" tabindex="-1" aria-labelledby="agreementModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="agrenmentModalLabel">利用規約</h5>
+        <h5 class="modal-title" id="agreementModalLabel">利用規約</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      <%= render partial: "shared/agrenment" %>
+      <%= render partial: "shared/agreement" %>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

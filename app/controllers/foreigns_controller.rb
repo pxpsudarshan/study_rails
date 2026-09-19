@@ -1,24 +1,23 @@
 class ForeignsController < ApplicationController
   def index
+    @gois = []
     if params[:goi][:goi].present?
       goi = params[:goi][:goi]
-      @gois = []
-          lang = current_user.lang_id
-          nations = VocabNation.where(lang: lang).where("nation_code ILIKE ?", '%'+goi+'%')
-          nations.each do |nation|
-          vocab = nation.vocab_table
-          vocab_code = vocab.vocab_code
-          lang_vocab = nation.nation_code
-          arr = {
-            vocab_read: vocab.vocab_read,
-            vocab_code: (vocab_code+" "+lang_vocab),
-            vocab_id:  vocab.id,
-            lang_vocab: lang_vocab
-          }
-          @gois << arr
-        end
-        @count = nations.count
-
+      lang = current_user.lang_id
+      nations = VocabNation.where(hide_flg: false, lang: lang).where("nation_code ILIKE ?", "%#{goi}%")
+      nations.each do |nation|
+        vocab = nation.vocab_table
+        vocab_code = vocab.vocab_code
+        arr = {
+          vocab_code: (vocab_code+" "+'N'+(vocab.jlpt_level.to_s)),
+          vocab_id:  vocab.id,
+          parts_body: vocab.kanji_body,
+          eng_mean: nation,
+          read_code: vocab.vocab_read            
+        }
+        @gois << arr
+      end
+      @count = nations.count
     end if params[:goi].present?
   end
 #############################################

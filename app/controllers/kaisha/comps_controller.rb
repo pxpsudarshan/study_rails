@@ -1,8 +1,11 @@
 class Kaisha::CompsController < ApplicationController
+  skip_before_action :authenticate_users, only: [:invite]
   before_action :parent, except: [:index, :new, :create]
 
   def index
-    @comps = Comp.all
+    redirect_to edit_kaisha_comp_path(id: current_comp.id) and return if current_comp.access_type == Comp::ACCESS_TYPE::OTHER
+    @comps = Comp.order(access_type: :desc).order(:company_name) if current_comp.access_type == Comp::ACCESS_TYPE::KANRIGAISHA
+    @comps = Comp.where(comp_id: current_comp.id).order(access_type: :desc).order(:company_name) if current_comp.access_type == Comp::ACCESS_TYPE::PARTNER
     @comps = @comps.where(compid: params[:search][:compid]) if params[:search].present? && params[:search][:compid].present?
     @comps = @comps.page(params[:page]).per(params[:per])
     respond_to do |format|
@@ -12,7 +15,9 @@ class Kaisha::CompsController < ApplicationController
   end
 
   def new
-    @comp = Comp.new
+    redirect_to edit_kaisha_comp_path(id: current_comp.id) and return if current_comp.access_type == Comp::ACCESS_TYPE::OTHER
+    @comp = Comp.new(comp_id: current_comp.id, access_type: Comp::ACCESS_TYPE::OTHER) if current_comp.access_type == Comp::ACCESS_TYPE::PARTNER
+    @comp = Comp.new if current_comp.access_type == Comp::ACCESS_TYPE::KANRIGAISHA
   end
 
   def show
@@ -65,53 +70,13 @@ class Kaisha::CompsController < ApplicationController
     end
   end
 
-  def new_store
-#    @comp.company_middle_stores.new
-    @stores = @comp.company_middle_stores.new
-  end
-
-  def create_store
-    stores = []
-    comp_params[:company_middle_stores_attributes].each do |key, value|
-      stores << value.except(:_destroy)
-    end
-    @stores = @comp.company_middle_stores.new(stores)
-    begin
-      ActiveRecord::Base.transaction() do
-        if @comp.save
-          redirect_to kaisha_comps_path, flash: {success: t('message.success_completed') }
-        else
-          render 'new_store'
-        end
-      end
-    rescue => e
-      logger.error(e.message)
-      redirect_to kaisha_comps_path, flash: {alert: e.message}
-    end
-  end
-
-  def new_job_profile
-#    @comp.company_middle_stores.new
-    @job_profiles = @comp.job_profiles.new
-  end
-
-  def create_job_profile
-    job_profiles = []
-    comp_params[:job_profiles_attributes].each do |key, value|
-      job_profiles << value.except(:_destroy)
-    end
-    @job_profiles = @comp.job_profiles.new(job_profiles)
-    begin
-      ActiveRecord::Base.transaction() do
-        if @comp.save
-          redirect_to kaisha_comps_path, flash: {success: t('message.success_completed') }
-        else
-          render 'new_job_profile'
-        end
-      end
-    rescue => e
-      logger.error(e.message)
-      redirect_to kaisha_comps_path, flash: {alert: e.message}
+  def invite
+    user_count = @comp.user_count
+    current_user_count = @comp.users.count
+    if current_user_count < user_count
+      redirect_to new_user_kaisha_user_path(id: params[:id])
+    else
+      redirect_to root_path, flash: {alert: 'User Over Limit.'}
     end
   end
 
@@ -131,6 +96,10 @@ class Kaisha::CompsController < ApplicationController
       :sei_kana,
       :mei_kana,
       :mobile,
+      :comp_id,
+      :user_count,
+      :login_flg,
+      :access_type,
       :company_name, :business_type, :company_url, :department,
     )
   end

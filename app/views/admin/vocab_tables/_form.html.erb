@@ -1,0 +1,233 @@
+<%= form_for [:admin, @vocab_table], html: { class: 'needs-validation', novalidate: true, id: 'user', role: 'form' } do |f| %>
+<% if @vocab_table.errors.any? %>
+<div class="row">
+  <div class="col-md-12">
+    <div id="error_explanations" class="alert fade show alert-danger">
+      <ul>
+        <% @vocab_table.errors.full_messages.each do |msg| %>
+        <li>
+          <%= content_tag(:div, msg) %>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+<% end %>
+<div class="row">
+  <div class="col-md-4">
+    <div id="error_explanations_required" class="alert text-center fade alert-danger">
+      必須項目を入力してください。
+    </div>
+    <table class="table table-bordered table-sm">
+      <tbody>
+        <tr>
+          <th class="table-success text-nowrap align-middle"><%= t('activerecord.attributes.vocab_table.sort') %><%== t('common.flg_required') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+              <%= f.number_field :sort, min: 0, class: 'form-control', required: true %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th class="table-success text-nowrap align-middle"><%= t('activerecord.attributes.vocab_table.vocab_code') %><%== t('common.flg_required') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+              <%= f.text_field :vocab_code, class: 'form-control', required: true, readonly: current_user.access_type != User::ACCESS_TYPE::KANRISHA %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th class="table-success text-nowrap align-middle"><%= t('activerecord.attributes.vocab_table.vocab_read') %><%== t('common.flg_required') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+              <%= f.text_field :vocab_read, class: 'form-control', required: true, readonly: current_user.access_type != User::ACCESS_TYPE::KANRISHA %>
+            </div>
+          </td>
+        </tr>
+        <% if current_user.access_type == User::ACCESS_TYPE::KANRISHA %>
+        <tr>
+          <th class="table-success text-nowrap align-middle"><%= t('activerecord.attributes.vocab_table.jlpt_level') %><%== t('common.flg_required') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+              <%= f.number_field :jlpt_level, min: 0, class: 'form-control', required: true %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th class="table-success text-nowrap align-middle"><%= t('activerecord.attributes.vocab_table.example') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+              <%= f.text_field :example, class: 'form-control' %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th class="table-success text-nowrap align-middle"><%= t('activerecord.attributes.vocab_table.hide_flg') %></th>
+          <td class="text-nowrap align-middle">
+            <%= f.check_box :hide_flg, {class: 'form-check-input'} %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<% if current_user.access_type == User::ACCESS_TYPE::KANRISHA %>
+<div class="row mb-3">
+  <div class="col-md-2">
+    <label class='col-md-3 col-form-label text-start'><%= '漢字一覧' %></label>
+    <table class="table table-bordered table-sm text-nowrap">
+      <thead>
+        <tr class="table-success">
+          <th class="text-start"><%= t('activerecord.attributes.kanji_table.kanji_code') %><%== t('common.flg_required') %></th>
+          <th class="text-start"><%= t('common.destroy') %></th>
+        </tr>
+      </thead>
+      <tbody id="kanjis">
+      <%= f.fields_for :kanji_vocabs do |kv| %>
+        <% render 'kanji_vocab_fields', f: kv %>
+      <% end %>
+      </tbody>
+    </table>
+    <%= link_to_add_association t('buttons.kanji_add').html_safe, f, :kanji_vocabs,
+        'data-association-insertion-method'    => 'append' ,
+        'data-association-insertion-node'      => '#kanjis', class: "btn btn-sm btn-primary"
+    %>
+  </div>
+</div>
+
+<div class="row mb-3">
+  <div class="col-md-6">
+    <label class='col-md-3 col-form-label text-start'><%= 'ジャンル一覧' %></label>
+    <table class="table table-bordered table-sm text-nowrap">
+      <thead>
+        <tr class="table-success">
+          <th class="text-start"><%= t('activerecord.attributes.vocab_genre_content.sort') %><%== t('common.flg_required') %></th>
+          <th class="text-start"><%= t('activerecord.attributes.vocab_genre_content.vocab_genre_id') %><%== t('common.flg_required') %></th>
+          <th class="text-start"><%= t('activerecord.attributes.vocab_genre_content.hide_flg') %></th>
+          <th class="text-start"><%= t('common.destroy') %></th>
+        </tr>
+      </thead>
+      <tbody id="genres">
+      <%= f.fields_for :vocab_genre_contents do |vgc| %>
+        <% render 'vocab_genre_content_fields', f: vgc %>
+      <% end %>
+      </tbody>
+    </table>
+    <%= link_to_add_association t('buttons.vocab_genre_add').html_safe, f, :vocab_genre_contents,
+        'data-association-insertion-method'    => 'append' ,
+        'data-association-insertion-node'      => '#genres', class: "btn btn-sm btn-primary"
+    %>
+  </div>
+</div>
+<% end %>
+<div class="row mb-3">
+  <div class="col-md-12">
+    <label class='col-md-3 col-form-label text-start'><%= '多言語一覧' %></label>
+    <table class="table table-bordered table-sm text-nowrap">
+      <thead>
+        <tr class="table-success">
+          <th class="text-start"><%= t('activerecord.attributes.vocab_nation.lang') %><%== t('common.flg_required') %></th>
+          <th class="text-start"><%= t('activerecord.attributes.vocab_nation.nation_code') %></th>
+          <th class="text-start"><%= t('activerecord.attributes.vocab_nation.example') %></th>
+          <th class="text-start"><%= t('activerecord.attributes.vocab_nation.created_at') %></th>
+          <th class="text-start"><%= t('activerecord.attributes.vocab_nation.created_by') %></th>
+          <th class="text-start"><%= t('activerecord.attributes.vocab_nation.updated_at') %></th>
+          <th class="text-start"><%= t('activerecord.attributes.vocab_nation.updated_by') %></th>
+          <th class="text-start"><%= t('activerecord.attributes.vocab_nation.hide_flg') %></th>
+          <th class="text-start"><%= t('common.destroy') %></th>
+        </tr>
+      </thead>
+      <tbody id="vocab_nations">
+      <%= f.fields_for :vocab_nations do |vn| %>
+        <% render 'vocab_nation_fields', f: vn %>
+      <% end %>
+      </tbody>
+    </table>
+    <%= link_to_add_association t('buttons.vocab_nation_add').html_safe, f, :vocab_nations,
+        'data-association-insertion-method'    => 'append' ,
+        'data-association-insertion-node'      => '#vocab_nations', class: "btn btn-sm btn-primary"
+    %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="form-actions">
+      <%= link_to t('buttons.cancel'), admin_vocab_tables_path, class: "btn btn-secondary" %>
+      <%= button_tag t('buttons.create'), type: 'submit', class: "btn btn-warning" %>
+    </div>
+  </div>
+</div>
+<% end %>
+<%= javascript_tag do %>
+$(function() {
+
+  $('.genre_select').select2({
+    theme: 'bootstrap-5',
+    language: 'ja',
+    placeholder: '',
+    allowClear: false,
+    width: '100%'
+  });
+
+  $('#genres').on('cocoon:after-insert', function(e, insertedItem) {
+    insertedItem.find('.genre_select').select2({
+      theme: 'bootstrap-5',
+      language: 'ja',
+      placeholder: '',
+      allowClear: false,
+      width: '100%'
+    });
+  });
+
+//var vocab_list = $('#vocab_nations');
+//vocab_list.sortable({
+//  axis: 'y',
+//  update: function (event, ui) {
+//    var array = [];
+//    vocab_list.find('tr').each(function (idx, value) {
+//      array.push(value.dataset.id);
+//    });
+//    data = {
+//      ids: array
+//    }
+//    $.ajax({
+//      data: data,
+//      type: 'POST',
+//      url: '<%= update_vocab_nation_ids_admin_vocab_tables_path %>',
+//      success:    function(data) {
+//        console.log(data.message);
+//      },
+//      error:      function(data) {
+//        alert(data.responseJSON.message);
+//        return;
+//      }
+//    });
+//  }
+//});
+
+'use strict';
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.getElementsByClassName('needs-validation');
+  // Loop over them and prevent submission
+  var validation = Array.prototype.filter.call(forms, function(form) {
+    form.addEventListener('submit', function(event) {
+      if (form.checkValidity() === false) {
+        $('#create_button').prop('disabled',false);
+        $('#cancel_button').removeClass('disabled');
+        $('#confirmButton').prop('disabled',false);
+        $('#yes_button').prop('disabled', false);
+        $('#no_button').prop('disabled', false);
+        $('#confirmModal').modal('hide');
+        $('#error_explanations_required').addClass('show');
+        window.scrollTo(0,0);
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      form.classList.add('was-validated');
+    }, false);
+  });
+});
+<% end %>

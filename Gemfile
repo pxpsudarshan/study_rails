@@ -105,3 +105,6 @@ gem 'recaptcha'
 gem 'creek'
 gem 'faraday'
 gem "chartkick"
+gem 'stripe'
+
+gem "sidekiq", "~> 7.3"

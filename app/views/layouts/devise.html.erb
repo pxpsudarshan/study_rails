@@ -16,12 +16,38 @@
   <![endif]-->
 </head>
 <body>
-<%= image_tag('backphoto_01.jpg', class: 'my-image', alt: 'background Image') %>
+<%= javascript_include_tag 'application', 'data-turbo-track': 'reload' %>
   <main class="form-signin w-100 m-auto">
+  <!-- 🌐 Language + 🎨 Color selector -->
+  <% if action_name == 'new' && @locales.size > 1 %>
+    <div class="language-selector text-end d-flex justify-content-end align-items-center mb-3">
+      <%= select_tag 'select_language', options_for_select(@locales, @locale), class: 'form-select w-auto d-inline-block me-2' %>
+      <input type="color" id="bgColorPicker" value="#000000" class="form-control form-control-color" title="Choose background color">
+    </div>
+  <% end %>
   <%= bootstrap_flash %>
   <%= yield %>
   <%= render partial: "shared/footer" %>
   </main>  
-  <%= javascript_include_tag 'application', 'data-turbo-track': 'reload' %>
+  <%= javascript_tag do %>
+    // 🌍 Language change
+    $('#select_language').change(function() {
+      location.href = "?locale=" + $(this).val();
+    });
+
+    // 🎨 Load saved color on page load
+    const savedColor = localStorage.getItem('selectedBgColor');
+    if (savedColor) {
+      $('body').css('background-color', savedColor);
+      $('#bgColorPicker').val(savedColor);
+    }
+
+    // 🎨 Save color and change background
+    $('#bgColorPicker').on('input', function() {
+      const color = $(this).val();
+      $('body').css('background-color', color);
+      localStorage.setItem('selectedBgColor', color); // Persist color
+    });
+  <% end %>
 </body>
 </html>

@@ -1,0 +1,252 @@
+<%= form_for [:kaisha, @user], html: { class: 'needs-validation', novalidate: true, id: 'user', role: 'form' } do |f| %>
+<%= f.hidden_field :comp_id %>
+<% if @user.errors.any? %>
+<div class="row">
+  <div class="col-md-12">
+    <div id="error_explanations" class="alert fade show alert-danger">
+      <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+        <li>
+          <%= content_tag(:div, msg) %>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+<% end %>
+<div class="row">
+  <div class="col-md-7">
+    <div id="error_explanations_required" class="alert text-center fade alert-danger">
+      必須項目を入力してください。
+    </div>
+    <table class="table table-bordered table-sm">
+      <tbody>
+        <%# if f.object.persisted? && f.object.comp.present? %>
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.comp.company_name') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+            <% if current_comp.present? && current_comp.access_type == Comp::ACCESS_TYPE::KANRIGAISHA %>
+              <% comps = Comp.all.map{|c| [c.company_name, c.id]} %>
+              <%= f.select :comp_id, options_for_select(comps, f.object.comp_id), {include_blank: true}, class: 'form-select' %>
+            <% else %>
+              <%= text_field_tag :comp_id, f.object.comp.company_name, class: 'form-control', disabled: true %>
+              <%= f.hidden_field :comp_id %>
+            <% end %>
+            </div>
+          </td>
+        </tr>
+        <%# end %>
+        <% if current_comp.present? && current_comp.access_type == Comp::ACCESS_TYPE::KANRIGAISHA && f.object.comp_id.blank? %>
+        <%
+          prices = Stripe::Price.list(
+            lookup_keys: ['kanrin', 'kanrin_usd', 'trip-arcade'],
+            expand: ['data.product']
+            ).data.sort_by { |p| p.unit_amount }
+          user_prices = prices.map{ |p| [p.product.name+' '+p.unit_amount.to_s+' '+p.currency.to_s, p.lookup_key] }
+        %>
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.user.plan') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+            <%#= f.hidden_field :plan_name %>
+            <%= f.select :plan, options_for_select(user_prices, f.object.plan), {include_blank: true},
+            class: 'form-select', disabled: f.object.plan.present? %>
+            </div>
+          </td>
+        </tr>
+        <% end %>
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.user.lang_id') %><%== t('common.flg_required') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+              <%= f.select :lang_id, options_for_select(langs, f.object.lang_id), {include_blank: true}, class: 'form-select', required: true %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.user.sei') %><%== t('common.flg_required') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+              <%= f.text_field :sei, class: 'form-control', required: true %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.user.mei') %><%== t('common.flg_required') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+              <%= f.text_field :mei, class: 'form-control', required: true %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.user.sei_kana') %><%== t('common.flg_required') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+              <%= f.text_field :sei_kana, class: 'form-control', required: true %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.user.mei_kana') %><%== t('common.flg_required') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+              <%= f.text_field :mei_kana, class: 'form-control', required: true %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.user.mobile') %><%== t('common.flg_required') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+              <%= f.text_field :mobile, class: 'form-control', required: true %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.user.email') %><%== t('common.flg_required') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+              <%= f.text_field :email, class: 'form-control', required: true %>
+            </div>
+          </td>
+        </tr>
+        <% if current_comp.present? && current_comp.access_type == Comp::ACCESS_TYPE::KANRIGAISHA %>
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.user.access_type') %><%== t('common.flg_required') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+              <div class="form-check form-check-inline">
+                <%= f.radio_button :access_type, User::ACCESS_TYPE::KANRISHA, class: 'form-check-input', required: true %>
+                <%= f.label :access_type, t('common.kanrisha') %>
+              </div>
+              <div class="form-check form-check-inline">
+                <%= f.radio_button :access_type, User::ACCESS_TYPE::POWER_USER, class: 'form-check-input', required: true %>
+                <%= f.label :access_type, t('common.power_user') %>
+              </div>
+              <div class="form-check form-check-inline">
+                <%= f.radio_button :access_type, User::ACCESS_TYPE::USER, class: 'form-check-input', required: true %>
+                <%= f.label :access_type, t('common.user') %>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.user.login_flg') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="form-check form-check-inline">
+              <%= f.label :login_flg do %>
+                <%= f.check_box :login_flg, { class: 'form-check-input' }, true %>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.user.trial_end_date') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+              <%= f.text_field :trial_end_date, class: 'form-control date', required: false %>
+            </div>
+          </td>
+        </tr>
+        <% end %>
+        <% if @user.new_record? %>
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.user.password') %><%== t('common.flg_required') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+              <%= f.password_field :password, class: 'form-control', required: true %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.user.password_confirmation') %><%== t('common.flg_required') %></th>
+          <td class="text-nowrap align-middle">
+            <div class="input-group">
+              <%= f.password_field :password_confirmation, class: 'form-control', required: true %>
+            </div>
+          </td>
+        </tr>
+        <% else %>
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.user.stripe_customer_id') %></th>
+          <td class="text-nowrap">
+            <%= @user.stripe_customer_id %>
+          </td>
+        </tr>
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.user.stripe_subscription_id') %></th>
+          <td class="text-nowrap">
+            <%= @user.stripe_subscription_id %>
+          </td>
+        </tr>
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.user.subscription_status') %></th>
+          <td class="text-nowrap">
+            <%= @user.subscription_status %>
+          </td>
+        </tr>
+        <tr>
+          <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.user.billing_address') %></th>
+          <td class="text-nowrap">
+            Country: <%= @user.billing_address['country'] if @user.billing_address.present? %><br />
+            City: <%= @user.billing_address['city'] if @user.billing_address.present? %><br />
+            Address 1: <%= @user.billing_address['line1'] if @user.billing_address.present? %><br />
+            Address 2: <%= @user.billing_address['line2'] if @user.billing_address.present? %><br />
+            Postal Code: <%= @user.billing_address['postal_code'] if @user.billing_address.present? %><br />
+            State: <%= @user.billing_address['state'] if @user.billing_address.present? %><br />
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="form-actions">
+      <%= link_to t('buttons.cancel'), kaisha_users_path, class: "btn btn-secondary" %>
+      <%= button_tag t('buttons.create'), type: 'submit', class: "btn btn-warning" %>
+      <% if @user.persisted? %>
+      <%= link_to t('buttons.destroy').html_safe, kaisha_user_path, method: :delete, class: 'btn btn-danger' %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<% end %>
+<%= javascript_tag do %>
+function set_plan_name(obj) {
+  var plan_name = document.getElementById('users.plan_name');
+  plan_name.value = obj.value;
+}
+$(function() {
+'use strict';
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.getElementsByClassName('needs-validation');
+  // Loop over them and prevent submission
+  var validation = Array.prototype.filter.call(forms, function(form) {
+    form.addEventListener('submit', function(event) {
+      if (form.checkValidity() === false) {
+        $('#create_button').prop('disabled',false);
+        $('#cancel_button').removeClass('disabled');
+        $('#confirmButton').prop('disabled',false);
+        $('#yes_button').prop('disabled', false);
+        $('#no_button').prop('disabled', false);
+        $('#confirmModal').modal('hide');
+        $('#error_explanations_required').addClass('show');
+        window.scrollTo(0,0);
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      form.classList.add('was-validated');
+    }, false);
+  });
+
+  $( ".date" ).datetimepicker({
+    format: 'YYYY/MM/DD',
+    locale: 'ja'
+  });
+});
+<% end %>

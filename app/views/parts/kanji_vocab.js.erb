@@ -1,1 +1,5 @@
-$('#part').html("<%= escape_javascript(render("page_vocab_disp")) %>");
+$('#part')
+  .html("<%= escape_javascript(render("page_vocab_disp")) %>")
+  .get(0)
+  .scrollIntoView({ behavior: "smooth", block: "start" });
+

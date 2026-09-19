@@ -17,7 +17,7 @@ class KanjiScrollsController < ApplicationController
       id = params[:kanji][:kanji_id]
       @gois = []
       vocab = KanjiTable.find(id)
-      vocab.vocab_tables.each do |vocab|
+      vocab.vocab_tables.where(hide_flg: false).each do |vocab|
         vocab_code = vocab.vocab_code
         mycard = current_user.vocab_mycards.where(vocab_table_id: vocab.id).first
         vocab_mycard = mycard.present? ? '⭐️' : '☆'
@@ -27,7 +27,7 @@ class KanjiScrollsController < ApplicationController
           vocab_code: (vocab_code+" "+'N'+(jlpt_level.to_s)),
           vocab_id:  vocab.id,
           parts_body: vocab.kanji_body,
-          eng_mean: vocab.vocab_nations.where(lang: 'EN').first&.nation_code,
+          eng_mean: vocab.vocab_nations.where(hide_flg: false, lang: current_user.lang_id).first,
           read_code: vocab.vocab_read
         }
         @gois << arr
@@ -36,6 +36,7 @@ class KanjiScrollsController < ApplicationController
     end if params[:kanji].present?    
   end
 
+# not used
   def kanji_vocab
     if params[:kanji][:vocab_org].present?
         vocab_org = params[:kanji][:vocab_org]

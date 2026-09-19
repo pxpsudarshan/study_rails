@@ -1,0 +1,8 @@
+var parent = $('.genre-item[data-id="<%= params[:genre_id] %>"]');
+var container = parent.children('.children');
+
+if (container.children().length > 0) {
+  container.empty();
+} else {
+  container.html("<%= escape_javascript(render 'sub_genres', sub_genres: @sub_genres) %>");
+}

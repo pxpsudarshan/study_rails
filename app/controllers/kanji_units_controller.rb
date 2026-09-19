@@ -27,6 +27,7 @@ class KanjiUnitsController < ApplicationController
     end if params[:kanji].present?
   end
 
+# not used
   def parts_kanji
     if params[:kanji][:kanji].present?
       goi = params[:kanji][:kanji]
@@ -44,14 +45,14 @@ class KanjiUnitsController < ApplicationController
           unit_sheet: vocab["unit_sheet"],
           vocab_code: (vocab_code+" "+(jlpt_level||'')),
           vocab_org:  vocab_org,
-          eng_mean: vocab.vocab_nations.where(lang: 'EN').first&.nation_code,
+          eng_mean: vocab.vocab_nations.where(hide_flg: false, lang: 'EN').first,
         }
         @gois << arr
       end
       @count = @gois.length
     end
   end
-# not used
+
   def kanji_vocab
     if params[:kanji][:vocab_org].present?
         vocab_org = params[:kanji][:vocab_org]

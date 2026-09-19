@@ -96,144 +96,88 @@ module ApplicationHelper
     result
   end
 
+  def langs(code = nil)
+    langs_hash = t('select.langs')
+    langs_hash.present? ? code.present? ? [[langs_hash[code.to_sym], code]] : langs_hash.invert : []
+  end
+
+  def second_langs(code = nil)
+    second_langs_hash = t('select.second_langs')
+    second_langs_hash.present? ? code.present? ? [[second_langs_hash[code], code]] : second_langs_hash.invert : []
+  end
+
+  def get_access(type)
+    case type
+    when Comp::ACCESS_TYPE::KANRIGAISHA
+      t('common.kanrisha')
+    when Comp::ACCESS_TYPE::PARTNER
+      t('common.partner')
+    when Comp::ACCESS_TYPE::OTHER
+      t('common.other')
+    end
+  end
+
+  def get_user_access(type)
+    case type
+    when User::ACCESS_TYPE::KANRISHA
+      t('common.kanrisha')
+    when User::ACCESS_TYPE::POWER_USER
+      t('common.power_user')
+    when User::ACCESS_TYPE::USER
+      t('common.user')
+    end
+  end
+
   def occupation_array(id = 0)
-    id = id.to_i
-    out = ''
-    ocs = occupation_list
-    ocs.each do |element|
-      text, value = option_text_and_value(element)
-      out = text if id == value
-    end if id != 0
-    id == 0 ? ocs : out
-
+    occupation_hash = t('select.occupations')
+    occupation_hash.present? ? id == 0 ? occupation_hash.invert : occupation_hash[id] : []
   end
 
-  def country_array(id = 0)
-    id = id.to_i
-    out = ''
-    countries = [
-      ['日本',1],
-      ['アメリカ',2]
-    ]
-    countries.each do |element|
-      text, value = option_text_and_value(element)
-      out = text if id == value
-    end if id != 0
-    id == 0 ? countries : out
+  def industry_array(id = 0)
+    industry_hash = t('select.industries')
+    industry_hash.present? ? id == 0 ? industry_hash.invert : industry_hash[id] : []
   end
+
+  def work_country_array(id = 0)
+    work_country_hash = t('select.work_country')
+    work_country_hash.present? ? id == 0 ? work_country_hash.invert : work_country_hash[id] : []
+  end  
 
   def kokuseki_array(id = 0)
-    out = ''
-    kokusekis = [
-      ['EN',1],
-      ['JP',2],
-      ['RU',3],
-      ['CH',4]
-    ]
-    kokusekis.each do |element|
-      text, value = option_text_and_value(element)
-      out = text if id == value
-    end if id != 0
-    id == 0 ? kokusekis : out
+    kokuseki_hash = t('select.kokusekis')
+    kokuseki_hash.present? ? id == 0 ? kokuseki_hash.invert : kokuseki_hash[id] : []
   end
 
+  def visa_type_array(id = 0)
+    visa_type_hash = t('select.visa_type')
+    visa_type_hash.present? ? id == 0 ? visa_type_hash.invert : visa_type_hash[id] : []
+  end    
+
   def sex_array(id = 0)
-    out = ''
-    sexs = [
-      ['男性', 1],
-      ['女性', 2],
-      ['答えたくない', 3]
-    ]
-    sexs.each do |element|
-      text, value = option_text_and_value(element)
-      out = text if id == value
-    end if id != 0
-    id == 0 ? sexs : out
+    sex_hash = t('select.sex')
+    sex_hash.present? ? id == 0 ? sex_hash.invert : sex_hash[id] : []
   end
 
   def school_type_array(id = 0)
-    out = ''
-    types = [
-      ['大学(博士)', 1],
-      ['大学(修士)', 2],
-      ['大学(学部)', 3],
-      ['専門学校', 4],
-      ['高校 卒業', 5]
-    ]
-    types.each do |element|
-      text, value = option_text_and_value(element)
-      out = text if id == value
-    end if id != 0
-    id == 0 ? types : out
+    school_type_hash = t('select.school_type')
+    school_type_hash.present? ? id == 0 ? school_type_hash.invert : school_type_hash[id] : []
   end
 
   def school_end_array(id = 0)
-    out = ''
-    ends = [
-      ['卒業', 1],
-      ['中退', 2],
-      ['休学', 3],
-      ['卒業予定', 4]
-    ]
-    ends.each do |element|
-      text, value = option_text_and_value(element)
-      out = text if id == value
-    end if id != 0
-    id == 0 ? ends : out
+    school_end_hash = t('select.school_end')
+    school_end_hash.present? ? id == 0 ? school_end_hash.invert : school_end_hash[id] : []
+  end
+
+  def language_level(id = 0)
+    language_level_hash = t('select.language_level')
+    language_level_hash.present? ? id == 0 ? language_level_hash.invert : language_level_hash[id] : []
   end
 
   def pref_array(id = 0)
     arr = []
-    prefs = [
-      ['北海道', 1],
-      ['青森県', 2],
-      ['岩手県', 3],
-      ['宮城県', 4],
-      ['秋田県', 5],
-      ['山形県', 6],
-      ['福島県', 7],
-      ['茨城県', 8],
-      ['栃木県', 9],
-      ['群馬県', 10],
-      ['埼玉県', 11],
-      ['千葉県', 12],
-      ['東京都', 13],
-      ['神奈川県', 14],
-      ['新潟県', 15],
-      ['富山県', 16 ],
-      ['石川県', 17],
-      ['福井県', 18],
-      ['山梨県', 19],
-      ['長野県', 20],
-      ['岐阜県', 21],
-      ['静岡県', 22],
-      ['愛知県', 23],
-      ['三重県', 24],
-      ['滋賀県', 25],
-      ['京都府', 26],
-      ['大阪府', 27],
-      ['兵庫県', 28],
-      ['奈良県', 29],
-      ['和歌山県', 30],
-      ['鳥取県', 31],
-      ['島根県', 32],
-      ['岡山県', 33],
-      ['広島県', 34],
-      ['山口県', 35],
-      ['徳島県', 36],
-      ['香川県', 37],
-      ['愛媛県', 38],
-      ['高知県', 39],
-      ['福岡県', 40],
-      ['佐賀県', 41],
-      ['長崎県', 42],
-      ['熊本県', 43],
-      ['大分県', 44],
-      ['宮崎県', 45],
-      ['鹿児島県', 46],
-      ['沖縄県', 47],
-      ['海外', 48]
-    ]
+    prefecture_hash = t('select.prefectures')
+
+    prefs = prefecture_hash.invert
     prefs.each do |element|
       text, value = option_text_and_value(element)
       arr << text if id.include?(value)
@@ -256,6 +200,14 @@ module ApplicationHelper
 
   def title_nation(data)
     out = data.title_nation
+    if current_user.lang_id.present? && current_user.lang_id != 'JP'
+      out = data.languages.where(language: current_user.lang_id).first.content if data.languages.where(language: current_user.lang_id).present?
+    end
+    out
+  end
+
+  def content_nation(data)
+    out = data.content
     if current_user.lang_id.present? && current_user.lang_id != 'JP'
       out = data.languages.where(language: current_user.lang_id).first.content if data.languages.where(language: current_user.lang_id).present?
     end

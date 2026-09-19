@@ -1,0 +1,60 @@
+<div class="w-50 m-auto">
+  <!-- Pie Chart -->
+  <div class="col-12 mb-4">
+    <%= pie_chart @chart_data,
+      height: "240px",
+      donut: true,
+      title: "Total Learning Progress",
+      colors: ["#c5a66f", "#2ea7e0"] %>
+  </div>
+
+  <!-- Line Chart -->
+  <div class="col-12 mb-4">
+    <%= line_chart @line_chart_data,
+      height: "250px",
+      title: "Progress Over Time",
+      points: true,
+      colors: ["#c5a66f", "#2ea7e0"] %>
+  </div>
+
+  <!-- JLPT -->
+  
+  <div class="col-12 mb-4">
+    <%= bar_chart @jlpt_chart_data,
+      stacked: true,
+      max: 100,
+      title: "JLPT Progress %",
+      colors: ["#2ea7e0", "#c5a66f", "#e0e0e0"] %>
+  </div>
+
+  <!-- Genre -->
+  <div class="col-12 mb-4 m-1">
+    <div id="genre-list">
+      <% @genre_chart_data.each do |genre, values| %>
+        <div class="genre-item mb-3" data-id="<%= values[:id] %>">
+
+          <!-- 👇 header全体をリンク化 -->
+          <%= link_to sub_genre_chart_kaisha_progress_index_path(genre_id: values[:id], user_id: values[:user_id]),remote: true,
+                      class: "d-flex justify-content-between align-items-center text-decoration-none text-dark" do %>
+
+            <span class="text-truncate" style="max-width: 70%;">
+              ▶ <%= genre %>
+            </span>
+
+            <span><%= (values[:read] + values[:learned]).round(1) %>%</span>
+
+          <% end %>
+
+          <!-- progress -->
+          <div class="progress mt-1" style="height: 12px;">
+            <div class="progress-bar bg-info" style="width: <%= values[:read] %>%"></div>
+            <div class="progress-bar bg-warning" style="width: <%= values[:learned] %>%"></div>
+            <div class="progress-bar bg-secondary" style="width: <%= values[:remaining] %>%"></div>
+          </div>
+              <!-- 👇 子要素が入る場所（超重要） -->
+              <div class="children ms-4 mt-2"></div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

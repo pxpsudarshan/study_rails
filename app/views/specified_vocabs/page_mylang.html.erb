@@ -3,7 +3,7 @@
 <%= link_to @vocab.vocab_code, gois_path(goi: {goi: @vocab.vocab_read}), class: 'btn btn-primary rounded-0 m-1', remote: true %><br />
 <%= link_to @vocab.vocab_read, gois_path(goi: {goi: @vocab.vocab_read}), class: 'btn btn-primary rounded-0 m-1', remote: true %><br />
 <%
-  text = @vocab.vocab_nations.where(lang: current_user.lang_id)
+  text = @vocab.vocab_nations.where(hide_flg: false, lang: current_user.lang_id)
 %>
   <% text.each do |txt| %>
   <%= text_area_tag 'lang', txt.nation_code, cols: 10, rows: 1, class: 'form-control' %>

@@ -19,7 +19,7 @@
   <label class='col-md-2 col-form-label text-end'><%= t('activerecord.attributes.audio_d.sort') %></label>
   <div class="col-md-3">
     <div class="input-group">
-      <%= f.text_field :sort, class: 'form-control' %>
+      <%= f.text_field :sort, class: 'form-control', readonly: current_user.access_type != User::ACCESS_TYPE::KANRISHA %>
     </div>
   </div>
 </div>
@@ -27,10 +27,11 @@
   <label class='col-md-2 col-form-label text-end'><%= t('activerecord.attributes.audio_d.content') %></label>
   <div class="col-md-3">
     <div class="input-group">
-      <%= f.text_field :content, class: 'form-control' %>
+      <%= f.text_field :content, class: 'form-control', readonly: current_user.access_type != User::ACCESS_TYPE::KANRISHA %>
     </div>
   </div>
 </div>
+<% if current_user.access_type == User::ACCESS_TYPE::KANRISHA %>
 <div class="row mb-3">
   <div class="col offset-md-2 mt-2">
     <div class="form-check form-check-inline">
@@ -51,6 +52,7 @@
     </div>
   </div>
 </div>
+<% end %>
 <div class="row mb-3">
   <div class="col-md-8">
     <table class="table table-bordered table-sm">

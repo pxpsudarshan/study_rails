@@ -1,0 +1,40 @@
+<%= paginate @users, remote: true %>
+<div style="white-space: nowrap; min-width: 800px;">
+<table class="table table-bordered table-hover table-sm">
+  <thead>
+    <tr class="table-success">
+      <th class="text-center"><%= t('buttons.show') %></th>
+      <th class="text-center"><%= t('activerecord.attributes.comp.company_name') %></th>
+      <th class="text-center"><%= t('activerecord.attributes.user.lang_id') %></th>
+      <th class="text-center"><%= t('activerecord.attributes.user.plan') %></th>
+      <th class="text-center"><%= t('activerecord.attributes.user.name') %></th>
+      <th class="text-center"><%= t('activerecord.attributes.user.name_kana') %></th>
+      <th class="text-center"><%= t('activerecord.attributes.user.mobile') %></th>
+      <th class="text-center"><%= t('activerecord.attributes.user.email') %></th>
+      <th class="text-center"><%= t('activerecord.attributes.user.access_type') %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+    <tr class="details_row nested-fields <%= !user.login_flg ? 'table-secondary' : user.trial_end_date.present? && user.trial_end_date < Date.current ? 'table-danger' : '' %>">
+      <td class="text-center"><%= link_to t('buttons.edit').html_safe, edit_kaisha_user_path(id: user.id), class: "btn btn-secondary btn-sm" %></td>
+      <td class="text-center"><%= user.comp&.company_name %></td>
+      <td class="text-center"><%= user.lang_id %></td>
+      <td class="text-center"><%= user.plan %></td>
+      <td class="text-center"><%= user.name %></td>
+      <td class="text-center"><%= user.name_kana %></td>
+      <td class="text-center"><%= user.mobile %></td>
+      <td class="text-center"><%= user.email %></td>
+      <td class="text-center"><%= get_user_access(user.access_type) %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<strong><%= page_entries_info @users, :entry_name => '' %></strong>
+<%= paginate @users, remote: true %>
+<%= javascript_tag do %>
+  $(function() {
+    NProgress.done();
+  });
+<% end %>

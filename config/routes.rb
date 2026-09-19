@@ -1,8 +1,26 @@
+require "sidekiq/web" # require the web UI
+
 Rails.application.routes.draw do
-  devise_for :comps, controllers: { passwords: "kaisha/passwords" , registrations: "kaisha/registrations", sessions: "kaisha/sessions" }
+  devise_for :comps, controllers: { unlocks: "kaisha/unlocks", passwords: "kaisha/passwords" , registrations: "kaisha/registrations", sessions: "kaisha/sessions" }
   devise_for :users, controllers: { registrations: "users/registrations" }
 
+  authenticate :user, lambda { |u| u.access_type == User::ACCESS_TYPE::KANRISHA } do 
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
   namespace :admin do
+    resources :parts_tables do
+    end
+    resources :kanji_tables do
+    end
+    resources :vocab_tables do
+      collection do
+        post :update_vocab_nation_ids
+      end
+    end
+    resources :vocab_genres do
+    end
+
     resources :tokuteis do
     end
 
@@ -31,6 +49,15 @@ Rails.application.routes.draw do
       resources :audio_ds do
       end
     end
+
+    resources :users do
+    end
+
+    resources :channels do
+    end
+
+    resources :block_ips do
+    end
   end
 
 
@@ -56,12 +83,22 @@ Rails.application.routes.draw do
 
     resources :comps do
       member do
-#        get :new_store
-#        patch :create_store
-#        get :new_job_profile
-#        patch :create_job_profile
+        get :invite
       end
     end
+
+    resources :users do
+      member do
+        get :new_user
+      end
+    end
+
+    resources :progress do
+      collection do
+        get :chart
+        get :sub_genre_chart
+      end
+    end    
   end
 
   resources :mains do
@@ -72,13 +109,27 @@ Rails.application.routes.draw do
 #      get :goi
 #    end
   end
- 
+   
+  resources :charts do
+    collection do
+      get :sub_genre_chart
+    end
+  end
+  
   resources :gois do
     collection do
       get :vocab_double
       post :lang
+      get :toggle
     end
   end
+
+#  resources :webhook_events do
+#    collection do
+#      post :
+#    end
+#  end
+  post '/webhook_events/:source', to: 'webhook_events#create'
 
   resources :foreigns do
     collection do
@@ -114,6 +165,8 @@ Rails.application.routes.draw do
       get :kanji_vocab
       get :parts_kanji
       get :part
+      get :vocab_info
+      get :kanji_info
     end
   end
 
@@ -127,6 +180,9 @@ Rails.application.routes.draw do
   end
 
   resources :users do
+    collection do
+      get :verify_email
+    end
     member do
       get :profile
       post :update_profile
@@ -138,6 +194,7 @@ Rails.application.routes.draw do
     collection do
       get :page_mylang
       get :vocab
+      get :toggle
     end
   end
 
@@ -147,9 +204,14 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :vocab_genres do
+  end
+
   resources :quizes do
     collection do
-      get :quiz
+      get :period
+      get :jlpt
+      get :genre
       post :next_ques
     end
   end
@@ -181,5 +243,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
-  root 'mains#index'
+  root 'menus#index'
 end
+

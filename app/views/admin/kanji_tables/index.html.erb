@@ -1,0 +1,44 @@
+<div class="row text-center">
+  <div class="col-md-12 mt-3">
+    <h2 class="border border-info rounded">漢字一覧</h2>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <%= form_for :search, url: admin_kanji_tables_path, html: { id: 'search_kanji', class: 'form-horizontal', role: 'form', method: :get }, remote: true do |f| %>
+      <div class="row mb-3">
+        <label class='col-md-1 col-form-label text-md-end text-nowrap'><%= t('activerecord.attributes.kanji_table.kanji_code') %></label>
+        <div class="col-md-2">
+          <div class="input-group">
+            <%= f.text_field :kanji_code, class: 'form-control' %>
+          </div>
+        </div>
+        <label class='col-md-1 col-form-label text-md-end text-nowrap'><%= t('activerecord.attributes.kanji_table.parts_body') %></label>
+        <div class="col-md-2">
+          <div class="input-group">
+            <%= f.text_field :parts_body, class: 'form-control' %>
+          </div>
+        </div>
+        <label class='col-md-1 col-form-label text-md-end text-nowrap'><%= t('activerecord.attributes.kanji_table.vocab_body') %></label>
+        <div class="col-md-2">
+          <div class="input-group">
+            <%= f.text_field :vocab_body, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-11 text-end mb-3">
+        <%= button_tag t('buttons.search').html_safe, id: 'search_button', onclick: 'NProgress.start();', class: 'btn btn-warning' %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-auto mb-3 ml-auto">
+    <%= link_to t('buttons.new').html_safe, new_admin_kanji_table_path, class: 'btn btn-primary' %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12" id="kanjis">
+    <%= render 'kanji_table_list' %>
+  </div>
+</div>

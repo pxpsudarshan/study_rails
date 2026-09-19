@@ -19,7 +19,7 @@
   <label class='col-md-2 col-form-label text-end'><%= t('activerecord.attributes.audio_b.title_nation') %></label>
   <div class="col-md-3">
     <div class="input-group">
-      <%= f.text_field :title_nation, class: 'form-control' %>
+      <%= f.text_field :title_nation, class: 'form-control', readonly: current_user.access_type != User::ACCESS_TYPE::KANRISHA %>
     </div>
   </div>
 </div>

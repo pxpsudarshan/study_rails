@@ -1,0 +1,244 @@
+<%= stylesheet_link_tag "quizes", media: "all", 'data-turbo-track': 'reload' %>
+<div class="row d-flex justify-content-center align-items-center">
+  <div class="col-xl-8">
+    <% total_count = @quiz_data.size %>
+
+    <% if total_count < 5 %>
+      <div class="alert alert-warning">
+        You need at least 5 questions to start the quiz.
+      </div>
+    <% else %>
+
+      <% @quiz_data.each_with_index do |data, index| %>
+        <div class="quiz_box quiz_box-body mb-1 rounded-3 p-md-5 mx-md-4 text-black" style="margin-top: 5%">
+          <div class="text-start ms-20">
+            <div class="text-end">
+              <h5>
+                Question <%= index + 1 %> of <%= total_count %>
+              </h5>
+            </div>
+            <%= form_for :quiz, url: next_ques_quizes_path, html: {}, remote: true do |f| %>
+              <%= f.hidden_field :id, value: data[:id] %>
+              <%= f.hidden_field :index, value: index %>
+              <%= f.hidden_field "answer_#{index}" %>
+
+              <div class="grid text-center d-flex flex-column align-items-center gap-2">
+                <h1 style="position: absolute; top: 110px; left: 50%; transform: translateX(-50%);">
+                  <i class="correct color-green fas fa-thumbs-up"></i>
+                </h1>
+
+                <!-- 読み（JP用・非表示） -->
+                <h3>
+                  <%= content_tag :span, data[:read], class: "hiraText d-none" %>
+                </h3>
+
+                <!-- 問題文 -->
+                <h1 style="user-select: none;">
+                  <%= data[:word] %>
+                </h1>
+              </div>
+
+              <!-- タイマー -->
+              <div class="progress">
+                <div class="progress-bar progress-bar-animated bg-success"
+                     role="progressbar"
+                     style="width: 100%"
+                     aria-valuenow="100"
+                     aria-valuemin="0"
+                     aria-valuemax="100">
+                  <span id="countdown_<%= index %>">20</span>
+                </div>
+              </div>
+
+              <!-- 選択肢 -->
+              <div class="pt-2">
+                <% data[:options].each do |option| %>
+                <%= f.hidden_field "correct_#{index}", value: data[:correct] %>
+                  <label class="options radiocontainer">
+                    <input type="radio"
+                           name="answer_<%= index %>"
+                           value="<%= option %>"
+                           class="quiz-option"
+                           data-correct="<%= data[:correct] %>">
+                    <%= option %>
+                    <span class="checkmark"></span>
+                  </label>
+                <% end %>
+              </div>
+
+              <!-- hidden + Next -->
+              <div class="pt-3">
+                <div class="d-flex gap-2">
+                  <%= f.button 'Next', class: 'rounded-0 btn btn-outline-dark next-question' %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="quiz_box quiz_box-body result-container" style="margin-top: 10%"></div>
+    <% end %>
+
+    <%= audio_tag 'correct.mp3',
+                  id: 'correct-sound',
+                  type: 'audio/mpeg',
+                  autoplay: false,
+                  controls: false,
+                  preload: 'auto' %>
+  </div>
+</div>
+
+<!-- Your result view -->
+<script>
+  $(document).ready(function () {
+    $(".result-container").hide();
+    $(".correct").hide();
+
+    const firstClickedOptions = [];
+    let totalCorrectAnswer = 0;
+    const totalQuestions = <%= total_count %>;
+    let currentIndex = 0;
+    let countdownInterval;
+
+    // 初期化
+    firstClickedOptions.length = totalQuestions;
+
+    // radio change（委譲）
+    $(document).on("change", ".quiz-option", function () {
+      const $this = $(this);
+
+      if (!firstClickedOptions[currentIndex]) {
+        const selectedValue = $(`input[name='answer_${currentIndex}']:checked`).val();
+        const correctValue  = $(`input[name='answer_${currentIndex}']`).data("correct");
+
+        firstClickedOptions[currentIndex] = selectedValue;
+        $("#quiz_answer_"+currentIndex).val(firstClickedOptions[currentIndex]);
+
+        if (selectedValue === correctValue) {
+          $(".correct").show().addClass("animated-flashy");
+
+          const burst = $('<div class="burst-bg"></div>');
+          $("body").append(burst);
+
+          const sound = document.getElementById("correct-sound");
+          if (sound) {
+            sound.currentTime = 0;
+            sound.play();
+          }
+        }
+      }
+
+      // 読みを表示
+      const vocabReadSpan = $this.closest(".quiz_box").find(".hiraText");
+      vocabReadSpan.removeClass("d-none");
+
+      // 色付け
+      const correctAnswer = $this.data("correct");
+      if ($this.val() === correctAnswer) {
+        $this.closest("label").removeClass("text-danger").addClass("text-success");
+      } else {
+        $this.closest("label").removeClass("text-success").addClass("text-danger");
+      }
+
+      clearInterval(countdownInterval);
+    });
+
+    // Next
+    $(".next-question").on("click", function (e) {
+      $(".correct").hide();
+      progressBarAnimation(20);
+      goNext();
+    });
+
+    function goNext() {
+      const correctOption = $(`input[name='answer_${currentIndex}']`).data("correct");
+      const selectedOption = firstClickedOptions[currentIndex] || "";
+
+      const mycardLevel = selectedOption === correctOption ? 1 : 0;
+      if (mycardLevel === 1) totalCorrectAnswer++;
+
+      currentIndex++;
+
+      if (currentIndex < totalQuestions) {
+        showQuestion(currentIndex);
+      } else {
+        clearInterval(countdownInterval);
+        $(".progress").hide();
+        showResult();
+      }
+    }
+
+    function showResult() {
+      $(".quiz_box").hide();
+
+      const resultContainer = $(".result-container").show();
+      const percentage = Math.round((totalCorrectAnswer / totalQuestions) * 100);
+
+      let msg;
+      if (percentage < 25) msg = "Keep practicing!";
+      else if (percentage < 50) msg = "Keep working on it!";
+      else if (percentage < 75) msg = "You're making progress!";
+      else if (percentage < 90) msg = "Great job!";
+      else msg = "Excellent work!";
+
+      const content = `
+        <div class="Content-result text-center">
+          <h1>Result</h1>
+          <p>${totalCorrectAnswer} / ${totalQuestions}</p>
+          <p><b>${percentage}%</b></p>
+          <p>${msg}</p>
+          <a href="<%= quizes_path %>" class="btn btn-primary">Try Again</a>
+          <a href="<%= menus_path %>" class="btn btn-secondary">Back</a>
+        </div>
+      `;
+
+      resultContainer.html(content);
+    }
+
+    function showQuestion(index) {
+      resetCountdown();
+      $(".quiz_box").hide();
+      $(".quiz_box").eq(index).show();
+    }
+
+    function progressBarAnimation(seconds) {
+      const percent = (seconds / 20) * 100;
+      const bar = $(".progress-bar");
+
+      bar.css("width", percent + "%").attr("aria-valuenow", percent);
+      bar.removeClass("bg-danger bg-warning bg-info bg-success");
+
+      if (percent < 25) bar.addClass("bg-danger");
+      else if (percent < 50) bar.addClass("bg-warning");
+      else if (percent < 75) bar.addClass("bg-info");
+      else bar.addClass("bg-success");
+    }
+
+    function startCountdown() {
+      let countdown = 20;
+      clearInterval(countdownInterval);
+
+      countdownInterval = setInterval(() => {
+        countdown--;
+        progressBarAnimation(countdown);
+
+        if (countdown < 0) {
+          progressBarAnimation(20);
+          goNext();
+        } else {
+          $("#countdown_" + currentIndex).text(countdown);
+        }
+      }, 1000);
+    }
+
+    function resetCountdown() {
+      clearInterval(countdownInterval);
+      $("#countdown_" + currentIndex).text(20);
+      startCountdown();
+    }
+
+    // 初期表示
+    showQuestion(0);
+  });
+</script>

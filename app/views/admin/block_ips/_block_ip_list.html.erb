@@ -1,0 +1,26 @@
+<%= paginate @block_ips, remote: true %>
+<div style="white-space: nowrap; min-width: 800px;">
+<table class="table table-bordered table-hover table-sm">
+  <thead>
+    <tr class="table-success">
+      <th class="text-center"><%= t('buttons.show') %></th>
+      <th class="text-center"><%= t('activerecord.attributes.block_ip.ipaddr') %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @block_ips.each do |block_ip| %>
+    <tr class="details_row nested-fields">
+      <td class="text-center"><%= link_to t('buttons.edit').html_safe, edit_admin_block_ip_path(id: block_ip.id), class: "btn btn-secondary btn-sm" %></td>
+      <td class="text-center"><%= block_ip.ipaddr %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<strong><%= page_entries_info @block_ips, :entry_name => '' %></strong>
+<%= paginate @block_ips, remote: true %>
+<%= javascript_tag do %>
+  $(function() {
+    NProgress.done();
+  });
+<% end %>

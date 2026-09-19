@@ -1,10 +1,10 @@
 class KanjisController < ApplicationController
   def index
+    @gois = []
     if params[:kanji][:kanji].present?
-      goi = params[:kanji][:kanji]
-      @gois = []
-      kanji = KanjiTable.where(kanji_code: goi).first
-      kanji.vocab_tables.each do |vocab|
+      @goi = params[:kanji][:kanji]
+      kanji = KanjiTable.where(kanji_code: @goi).first
+      kanji.vocab_tables.where(hide_flg: false).each do |vocab|
         vocab_code = vocab.vocab_code
         mycard = current_user.vocab_mycards.where(vocab_table_id: vocab.id).first
         vocab_mycard = mycard.present? ? '⭐️' : '☆'
@@ -14,7 +14,7 @@ class KanjisController < ApplicationController
           vocab_code: (vocab_code+" "+'N'+(jlpt_level.to_s)),
           vocab_id:  vocab.id,
           parts_body: vocab.kanji_body,
-          eng_mean: vocab.vocab_nations.where(lang: 'EN').first&.nation_code,
+          eng_mean: vocab.vocab_nations.where(hide_flg: false, lang: current_user.lang_id).first,
           read_code: vocab.vocab_read
         }
         @gois << arr

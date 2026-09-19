@@ -17,7 +17,7 @@ ja:
     sessions:
       already_signed_out: 既にログアウト済みです。
       new:
-        sign_in:      '企業ログイン'
+        sign_in:      'ログイン'
       signed_in: ログインしました。
       signed_out: ログアウトしました。
     registrations:
@@ -25,9 +25,48 @@ ja:
         sign_up:      '企業用のアカウント登録'
     shared:
       links:
+        back: 戻る
+        didn_t_receive_confirmation_instructions: アカウント確認のメールを受け取っていませんか？
+        didn_t_receive_unlock_instructions: アカウントのロック解除方法のメールを受け取っていませんか？
         sign_up: '企業用のアカウント登録'
-        sign_in: '企業ログイン'
+        sign_in: '企業用'
+        sign_up_user:      '学生用のアカウント登録'
+        sign_in_user:      '学生用'
         forgot_your_password: 'パスワードを忘れましたか？'
+    unlocks:
+      new:
+        resend_unlock_instructions: アカウントのロック解除方法を再送する
+      send_instructions: アカウントのロック解除方法を数分以内にメールでご連絡します。
+      send_paranoid_instructions: アカウントが見つかった場合、アカウントのロック解除方法を数分以内にメールでご連絡します。
+      unlocked: アカウントをロック解除しました。
+    mailer:
+      confirmation_instructions:
+        action: メールアドレスの確認
+        greeting: "%{recipient}様"
+        instruction: 以下のリンクをクリックし、メールアドレスの確認手続を完了させてください。
+        subject: メールアドレス確認メール
+      email_changed:
+        greeting: こんにちは、%{recipient}様。
+        message: あなたのメールの変更（%{email}）をお知らせいたします。
+        message_unconfirmed:
+        subject: メール変更完了
+      password_change:
+        greeting: "%{recipient}様"
+        message: パスワードが再設定されました。
+        subject: パスワードの変更について
+      reset_password_instructions:
+        action: パスワード変更
+        greeting: "%{recipient}様"
+        instruction: パスワード再設定の依頼を受けたため、メールを送信しています。下のリンクからパスワードの再設定ができます。
+        instruction_2: パスワード再設定の依頼をしていない場合、このメールを無視してください。
+        instruction_3: パスワードの再設定は、上のリンクから新しいパスワードを登録するまで完了しません。
+        subject: パスワードの再設定について
+      unlock_instructions:
+        action: アカウントのロック解除
+        greeting: "%{recipient}様"
+        instruction: アカウントのロックを解除するには下のリンクをクリックしてください。
+        message: ログイン失敗が繰り返されたため、アカウントはロックされています。
+        subject: アカウントのロック解除について
   users:
     passwords:
       edit:
@@ -46,7 +85,7 @@ ja:
     sessions:
       already_signed_out: 既にログアウト済みです。
       new:
-        sign_in:      '学生ログイン'
+        sign_in:      'ログイン'
       signed_in: ログインしました。
       signed_out: ログアウトしました。
     registrations:
@@ -54,12 +93,49 @@ ja:
         sign_up:      '学生用のアカウント登録'
     shared:
       links:
+        back: 戻る
+        didn_t_receive_confirmation_instructions: アカウント確認のメールを受け取っていませんか？
+        didn_t_receive_unlock_instructions: アカウントのロック解除方法のメールを受け取っていませんか？
         sign_up_company: '企業用のアカウント登録'
         sign_up:      '学生用のアカウント登録'
-        sign_in:      '学生ログイン'
-        sign_in_company: '企業ログイン'
+        sign_in:      'ログイン'
+        sign_in_company: '企業用'
         forgot_your_password: 'パスワードを忘れましたか？'
-  
+    unlocks:
+      new:
+        resend_unlock_instructions: アカウントのロック解除方法を再送する
+      send_instructions: アカウントのロック解除方法を数分以内にメールでご連絡します。
+      send_paranoid_instructions: アカウントが見つかった場合、アカウントのロック解除方法を数分以内にメールでご連絡します。
+      unlocked: アカウントをロック解除しました。
+    mailer:
+      confirmation_instructions:
+        action: メールアドレスの確認
+        greeting: "%{recipient}様"
+        instruction: 以下のリンクをクリックし、メールアドレスの確認手続を完了させてください。
+        subject: メールアドレス確認メール
+      email_changed:
+        greeting: こんにちは、%{recipient}様。
+        message: あなたのメールの変更（%{email}）をお知らせいたします。
+        message_unconfirmed:
+        subject: メール変更完了
+      password_change:
+        greeting: "%{recipient}様"
+        message: パスワードが再設定されました。
+        subject: パスワードの変更について
+      reset_password_instructions:
+        action: パスワード変更
+        greeting: "%{recipient}様"
+        instruction: パスワード再設定の依頼を受けたため、メールを送信しています。下のリンクからパスワードの再設定ができます。
+        instruction_2: パスワード再設定の依頼をしていない場合、このメールを無視してください。
+        instruction_3: パスワードの再設定は、上のリンクから新しいパスワードを登録するまで完了しません。
+        subject: パスワードの再設定について
+      unlock_instructions:
+        action: アカウントのロック解除
+        greeting: "%{recipient}様"
+        instruction: アカウントのロックを解除するには下のリンクをクリックしてください。
+        message: ログイン失敗が繰り返されたため、アカウントはロックされています。
+        subject: アカウントのロック解除について
+
   common:
     flg_required:     '<i class="fas fa-asterisk red"></i>'
     flg_enabled:      &flg_enabled "可"
@@ -90,26 +166,448 @@ ja:
     destroy:          '削除'
     audio_update_flg: '音声ファイル更新'
     audio_male_flg:   '男性音声'
+    invite:           '招待URL'
+    kanrisha:         '管理者'
+    partner:          'パートナー'
+    other:            'その他'
+    power_user:       'パワーユーザー'
+    user:             '学生'
+    maximum_number:   '最大件数:'
+    nation_code_en:   '英語'
+    nation_example_en: '英語例文'
+    nation_code:      '母国語'
+    nation_example:   '母国語例文'
+    select_photo:     '写真を選択'
+    prefer_image_format: 'JPG / PNG（推奨：長方形）'
+
+  select:           
+      visa_type:           
+        1:   '留学'
+        2:   '特定活動'
+        3:   '技術・人文知識・国際業務'
+        4:   '特定技能'
+        5:   '技能実習'
+        6:   '家族滞在'
+        7:   '永住者'
+        8:   '在留資格なし（申請中）'
+      occupations:
+        0:   '全て'
+        1:   '管理的職業'
+        2:   '研究・技術の職業'
+        3:   '法務・経営・文化芸術等の専門的職業'
+        4:   '医療・看護・保健の職業'
+        5:   '保育・教育の職業'
+        6:   '事務的職業'
+        7:   '販売・営業の職業'
+        8:   '福祉・介護の職業'
+        9:   'サービスの職業'
+        10:  '警備・保安の職業'
+        11:  '農林漁業の職業'
+        12:  '製造・修理・塗装・製図等の職業'
+        13:  '配送・輸送・機械運転の職業'
+        14:  '建設・土木・電気工事の職業'
+        15:  '運搬・清掃・包装・選別等の職業'
+
+      industries:           
+        0:   '全て'
+        1:   ' 農業・林業'
+        2:   ' 漁業'
+        3:   ' 鉱業・採石業・砂利採取業'
+        4:   ' 建設業'
+        5:   ' 製造業'
+        6:   ' 電気・ガス・熱供給・水道業'
+        7:   ' 情報通信業'
+        8:   ' 運輸業・郵便業'
+        9:   ' 卸売業・小売業'
+        10:  ' 金融業・保険業'
+        11:  ' 不動産業・物品賃貸業'
+        12:  ' 学術研究・専門・技術サービス業'
+        13:  ' 宿泊業・飲食サービス業'
+        14:  ' 生活関連サービス・娯楽業'
+        15:  ' 教育・学習支援業'
+        16:  ' 医療・福祉'
+        17:  ' 複合サービス事業'
+        18:  ' サービス業（その他）'
+        19:  ' 公務（政府・地方自治体）'
+      toeic:           
+        1:  '600以上'
+        2:  '650以上'
+        3:  '700以上'
+        4:  '800以上'
+        5:  '900以上'
+        6:  '950以上'  
+      kokusekis:
+        1:  "🇦🇫 アフガニスタン"
+        2:  "🇦🇱 アルバニア"
+        3:  "🇩🇿 アルジェリア"
+        4:  "🇦🇩 アンドラ"
+        5:  "🇦🇴 アンゴラ"
+        6:  "🇦🇬 アンティグア・バーブーダ"
+        7:  "🇦🇷 アルゼンチン"
+        8:  "🇦🇲 アルメニア"
+        9:  "🇦🇺 オーストラリア"
+        10: "🇦🇹 オーストリア"
+        11: "🇦🇿 アゼルバイジャン"
+        12: "🇧🇸 バハマ"
+        13: "🇧🇭 バーレーン"
+        14: "🇧🇩 バングラデシュ"
+        15: "🇧🇧 バルバドス"
+        16: "🇧🇾 ベラルーシ"
+        17: "🇧🇪 ベルギー"
+        18: "🇧🇿 ベリーズ"
+        19: "🇧🇯 ベナン"
+        20: "🇧🇹 ブータン"
+        21: "🇧🇴 ボリビア"
+        22: "🇧🇦 ボスニア・ヘルツェゴビナ"
+        23: "🇧🇼 ボツワナ"
+        24: "🇧🇷 ブラジル"
+        25: "🇧🇳 ブルネイ"
+        26: "🇧🇬 ブルガリア"
+        27: "🇧🇫 ブルキナファソ"
+        28: "🇧🇮 ブルンジ"
+        29: "🇰🇭 カンボジア"
+        30: "🇨🇲 カメルーン"
+        31: "🇨🇦 カナダ"
+        32: "🇨🇻 カーボベルデ"
+        33: "🇨🇫 中央アフリカ共和国"
+        34: "🇹🇩 チャド"
+        35: "🇨🇱 チリ"
+        36: "🇨🇳 中国"
+        37: "🇨🇴 コロンビア"
+        38: "🇰🇲 コモロ"
+        39: "🇨🇬 コンゴ共和国"
+        40: "🇨🇷 コスタリカ"
+        41: "🇭🇷 クロアチア"
+        42: "🇨🇺 キューバ"
+        43: "🇨🇾 キプロス"
+        44: "🇨🇿 チェコ"
+        45: "🇩🇰 デンマーク"
+        46: "🇩🇯 ジブチ"
+        47: "🇩🇲 ドミニカ国"
+        48: "🇩🇴 ドミニカ共和国"
+        49: "🇪🇨 エクアドル"
+        50: "🇪🇬 エジプト"
+        51: "🇸🇻 エルサルバドル"
+        52: "🇬🇶 赤道ギニア"
+        53: "🇪🇷 エリトリア"
+        54: "🇪🇪 エストニア"
+        55: "🇸🇿 エスワティニ"
+        56: "🇪🇹 エチオピア"
+        57: "🇫🇯 フィジー"
+        58: "🇫🇮 フィンランド"
+        59: "🇫🇷 フランス"
+        60: "🇬🇦 ガボン"
+        61: "🇬🇲 ガンビア"
+        62: "🇬🇪 ジョージア"
+        63: "🇩🇪 ドイツ"
+        64: "🇬🇭 ガーナ"
+        65: "🇬🇷 ギリシャ"
+        66: "🇬🇩 グレナダ"
+        67: "🇬🇹 グアテマラ"
+        68: "🇬🇳 ギニア"
+        69: "🇬🇼 ギニアビサウ"
+        70: "🇬🇾 ガイアナ"
+        71: "🇭🇹 ハイチ"
+        72: "🇭🇳 ホンジュラス"
+        73: "🇭🇺 ハンガリー"
+        74: "🇮🇸 アイスランド"
+        75: "🇮🇳 インド"
+        76: "🇮🇩 インドネシア"
+        77: "🇮🇷 イラン"
+        78: "🇮🇶 イラク"
+        79: "🇮🇪 アイルランド"
+        80: "🇮🇱 イスラエル"
+        81: "🇮🇹 イタリア"
+        82: "🇯🇲 ジャマイカ"
+        83: "🇯🇵 日本"
+        84: "🇯🇴 ヨルダン"
+        85: "🇰🇿 カザフスタン"
+        86: "🇰🇪 ケニア"
+        87: "🇰🇮 キリバス"
+        88: "🇰🇼 クウェート"
+        89: "🇰🇬 キルギス"
+        90: "🇱🇦 ラオス"
+        91: "🇱🇻 ラトビア"
+        92: "🇱🇧 レバノン"
+        93: "🇱🇸 レソト"
+        94: "🇱🇷 リベリア"
+        95: "🇱🇾 リビア"
+        96: "🇱🇮 リヒテンシュタイン"
+        97: "🇱🇹 リトアニア"
+        98: "🇱🇺 ルクセンブルク"
+        99: "🇲🇬 マダガスカル"
+        100: "🇲🇼 マラウイ"
+        101: "🇲🇾 マレーシア"
+        102: "🇲🇻 モルディブ"
+        103: "🇲🇱 マリ"
+        104: "🇲🇹 マルタ"
+        105: "🇲🇭 マーシャル諸島"
+        106: "🇲🇷 モーリタニア"
+        107: "🇲🇺 モーリシャス"
+        108: "🇲🇽 メキシコ"
+        109: "🇫🇲 ミクロネシア"
+        110: "🇲🇩 モルドバ"
+        111: "🇲🇨 モナコ"
+        112: "🇲🇳 モンゴル"
+        113: "🇲🇪 モンテネグロ"
+        114: "🇲🇦 モロッコ"
+        115: "🇲🇿 モザンビーク"
+        116: "🇲🇲 ミャンマー"
+        117: "🇳🇦 ナミビア"
+        118: "🇳🇷 ナウル"
+        119: "🇳🇵 ネパール"
+        120: "🇳🇱 オランダ"
+        121: "🇳🇿 ニュージーランド"
+        122: "🇳🇮 ニカラグア"
+        123: "🇳🇪 ニジェール"
+        124: "🇳🇬 ナイジェリア"
+        125: "🇰🇵 北朝鮮"
+        126: "🇲🇰 北マケドニア"
+        127: "🇳🇴 ノルウェー"
+        128: "🇴🇲 オマーン"
+        129: "🇵🇰 パキスタン"
+        130: "🇵🇼 パラオ"
+        131: "🇵🇦 パナマ"
+        132: "🇵🇬 パプアニューギニア"
+        133: "🇵🇾 パラグアイ"
+        134: "🇵🇪 ペルー"
+        135: "🇵🇭 フィリピン"
+        136: "🇵🇱 ポーランド"
+        137: "🇵🇹 ポルトガル"
+        138: "🇶🇦 カタール"
+        139: "🇷🇴 ルーマニア"
+        140: "🇷🇺 ロシア"
+        141: "🇷🇼 ルワンダ"
+        142: "🇰🇳 セントクリストファー・ネービス"
+        143: "🇱🇨 セントルシア"
+        144: "🇻🇨 セントビンセントおよびグレナディーン諸島"
+        145: "🇼🇸 サモア"
+        146: "🇸🇲 サンマリノ"
+        147: "🇸🇹 サントメ・プリンシペ"
+        148: "🇸🇦 サウジアラビア"
+        149: "🇸🇳 セネガル"
+        150: "🇷🇸 セルビア"
+        151: "🇸🇨 セーシェル"
+        152: "🇸🇱 シエラレオネ"
+        153: "🇸🇬 シンガポール"
+        154: "🇸🇰 スロバキア"
+        155: "🇸🇮 スロベニア"
+        156: "🇸🇧 ソロモン諸島"
+        157: "🇸🇴 ソマリア"
+        158: "🇿🇦 南アフリカ"
+        159: "🇸🇸 南スーダン"
+        160: "🇪🇸 スペイン"
+        161: "🇱🇰 スリランカ"
+        162: "🇸🇩 スーダン"
+        163: "🇸🇷 スリナム"
+        164: "🇸🇪 スウェーデン"
+        165: "🇨🇭 スイス"
+        166: "🇸🇾 シリア"
+        167: "🇹🇼 台湾"
+        168: "🇹🇯 タジキスタン"
+        169: "🇹🇿 タンザニア"
+        170: "🇹🇭 タイ"
+        171: "🇹🇱 東ティモール"
+        172: "🇹🇬 トーゴ"
+        173: "🇹🇴 トンガ"
+        174: "🇹🇹 トリニダード・トバゴ"
+        175: "🇹🇳 チュニジア"
+        176: "🇹🇷 トルコ"
+        177: "🇹🇲 トルクメニスタン"
+        178: "🇹🇻 ツバル"
+        179: "🇺🇬 ウガンダ"
+        180: "🇺🇦 ウクライナ"
+        181: "🇦🇪 アラブ首長国連邦"
+        182: "🇬🇧 イギリス"
+        183: "🇺🇸 アメリカ合衆国"
+        184: "🇺🇾 ウルグアイ"
+        185: "🇺🇿 ウズベキスタン"
+        186: "🇻🇺 バヌアツ"
+        187: "🇻🇦 バチカン市国"
+        188: "🇻🇪 ベネズエラ"
+        189: "🇻🇳 ベトナム"
+        190: "🇾🇪 イエメン"
+        191: "🇿🇲 ザンビア"
+        192: "🇿🇼 ジンバブエ"
+      langs:           
+        EN: '🇬🇧 英語'
+        JP: '🇯🇵 日本語'
+        RU: '🇷🇺 ロシア語'
+        CN: '🇨🇳 中国語'
+        ID: '🇮🇩 インドネシア語'
+        MM: '🇲🇲 ミャンマー語'
+        BD: '🇧🇩 ベンガル語'
+        SK: '🇰🇷 韓国語'
+        ES: '🇪🇸 スペイン語'
+        VN: '🇻🇳 ベトナム語'
+        FR: '🇫🇷 フランス語'
+        IT: '🇮🇹 イタリア語'
+        NP: '🇳🇵 ネパール語'
+        MN: '🇲🇳 モンゴル語'
+        LK: '🇱🇰 シンハラ語'
+        TW: '🇹🇼 中国語（台湾）'
+        TO: '🇹🇴 トンガ語'
+        TR: "🇹🇷 トルコ語"
+        TH: "🇹🇭 タイ語"
+        FA: "🇮🇷 ペルシア語"
+      second_langs:           
+        1:  '🇨🇳 中国語'
+        2:  '🇫🇷 フランス語'
+        3:  '🇪🇸 スペイン語'
+        4:  '🇸🇦 アラビア語'
+        5:  '🇩🇪 ドイツ語'
+        6:  '🇮🇹 イタリア語'
+        7:  '🇵🇹 ポルトガル語'
+        8:  '🇷🇺 ロシア語'
+        9:  '🇮🇳 ヒンディー語'
+        10: '🇵🇰 ウルドゥー語'
+        11: '🇧🇩 ベンガル語'
+        12: '🇮🇳 タミル語'
+        13: '🇹🇷 トルコ語'
+        14: '🇮🇷 ペルシャ語（Farsi）'
+        15: '🇰🇪 スワヒリ語'
+        16: '🇮🇩 インドネシア語'
+        17: '🇲🇲 ミャンマー語'
+        18: '🇰🇭 クメール語（カンボジア）'
+        19: '🇹🇭 タイ語'
+        20: '🇵🇭 タガログ語'
+      school_end:           
+        1:  '卒業'
+        2:  '中退'
+        3:  '休学'
+        4:  '卒業予定'
+      language_level:           
+        1:  '初級レベル'
+        2:  '日常会話レベル'
+        3:  'ビジネスレベル'
+        4:  'ネイティブレベル'
+      work_country:           
+        1:  '日本'
+        2:  '母国'
+        3:  'その他'
+      sex:           
+        1:  '男性'
+        2:  '女性'
+      school_type:           
+        1:  '大学(博士)'
+        2:  '大学(修士)'
+        3:  '大学(学部)'
+        4:  '専門学校'
+        5:  '高校'
+      prefectures:           
+        1:  '北海道'
+        2:  '青森県'
+        3:  '岩手県'
+        4:  '宮城県'
+        5:  '秋田県'
+        6:  '山形県'
+        7:  '福島県'
+        8:  '茨城県'
+        9:  '栃木県'
+        10: '群馬県'
+        11: '埼玉県'
+        12: '千葉県'
+        13: '東京都'
+        14: '神奈川県'
+        15: '新潟県'
+        16: '富山県'
+        17: '石川県'
+        18: '福井県'
+        19: '山梨県'
+        20: '長野県'
+        21: '岐阜県'
+        22: '静岡県'
+        23: '愛知県'
+        24: '三重県'
+        25: '滋賀県'
+        26: '京都府'
+        27: '大阪府'
+        28: '兵庫県'
+        29: '奈良県'
+        30: '和歌山県'
+        31: '鳥取県'
+        32: '島根県'
+        33: '岡山県'
+        34: '広島県'
+        35: '山口県'
+        36: '徳島県'
+        37: '香川県'
+        38: '愛媛県'
+        39: '高知県'
+        40: '福岡県'
+        41: '佐賀県'
+        42: '長崎県'
+        43: '熊本県'
+        44: '大分県'
+        45: '宮崎県'
+        46: '鹿児島県'
+        47: '沖縄県'
+        48: '海外'
+
+  placeholder:           
+    sei:              '姓'
+    mei:              '名'
+    sei_kana:         '姓カナ'
+    mei_kana:         '名カナ'
+    no_photo:         '写真なし'
+    image_type:       'JPG / PNG が使用できます'  
+    school_senko:     '例）語学、工学、経済'
+    school_name:      '例）〇〇学校、〇〇専門学校'
+    desired_job_type: '例）システムエンジニア、インフラエンジニア など'
+    desired_industry: '例）IT・通信、メーカー など'
+    desired_work_place: '例）東京、神奈川 など'
+    native_language:  '例）ネパール語'
+    skill:            '例）Java（3年）、AWS運用、リーダー経験 など'
+    qualification_name:  '例）基本情報技術者、普通自動車第一種運転免許'
+    work_place:       '例）〇〇株式会社'
+    work_type:        '例）システムエンジニア'
 
   title:
-    # header:           '翰林日本語学院'
-    # title:            '翰林日本語学院'
     header:           'NIHO'
-    title:            'NIHO'    
+    title:            'NIHO'
+    step1:            '個人情報'
+    step2:            '学歴・職歴'
+    step3:            '希望・資格・語学'
+
   navbar:
     logout:           '<i class="fas fa-sign-out-alt"></i> ログアウト'
     user:             '学生マスタ'
     comp:             '企業マスタ'
     profile:          '<i class="fas fa-user"></i> プロファイル'
     edit:             '<i class="fas fa-edit"></i> 編集'
-    master:             '<i class="fas fa-cogs"></i> マスターメンテ'
+    edit_user:        '<i class="fas fa-edit"></i> 個人情報'
+    master:           '<i class="fas fa-cogs"></i> マスターメンテ'
     company_store:    '貴社用語集'
     store:            '学生用語集'
-    job_profile:      '企業プロファイル'
+    job_profile:      '求人情報'
     job:              '求職検索'
     offer:            '求人検索'
     audio_a:          '会話'
     tokutei:          '特定技能'
+    progress:         '学生進捗'
+    parts_table:      '漢字パーツ'
+    kanji_table:      '漢字本体'
+    vocab_genre:      '語彙ジャンル'
+    vocab_table:      '語彙'
+    channel:          'チャンネル'
+    block_ip:         'ブロックIP'
+
+  feature:
+    parts:            'パーツ'
+    parts_parts:      'パーツ検索'
+    vocab:            '語彙'
+    vocab_hiragana:   'ひらがな'
+    vocab_native:     '母国語'
+    kanji:            '漢字'
+    kanji_kanji:      '漢字検索'
+    word:             '語彙リスト'
+    mycard:           'マイカード'
+    mycard_mycard:    'レビュー'
+    quiz:             'クイズ'
+    quiz_quiz:        'マイカードクイズ'
+    conversation:     '会話'
+  header:
+    student_progress: '実績一覧'
   buttons:
     home:             '<i class="fas fa-home"></i> メインメニュー'
     menu:             'メニュー'
@@ -120,9 +618,10 @@ ja:
     edit:             '<i class="fas fa-edit"></i> 編集'
     destroy:          '<i class="fas fa-trash-alt"></i> 削除'
     destroy-icon:     '<i class="fas fa-trash-alt"></i>'
-    save:             '更新'
+    save:             '保存'
     copy:             '<i class="fas fa-file-alt"></i> 複製'
     back:             '戻る'
+    next:             '次へ'
     cancel:           'キャンセル'
     create:           '登録'
     'yes':            'はい'
@@ -141,6 +640,14 @@ ja:
     excel_upload:     'Excel入力'
     question_add:     '<i class="fas fa-plus"></i> 質問追加'
     answer_add:       '<i class="fas fa-plus"></i> 答え追加'
+    pencil:           '<i class="fa fa-pencil-alt"></i>'
+    kanji_add:        '<i class="fas fa-plus"></i> 漢字追加'
+    vocab_add:        '<i class="fas fa-plus"></i> 語彙追加'
+    vocab_genre_add:  '<i class="fas fa-plus"></i> ジャンル追加'
+    vocab_nation_add: '<i class="fas fa-plus"></i> 多言語追加'
+    parts_add:        '<i class="fas fa-plus"></i> パーツ追加'
+    update:           '更新'
+    delete:           '削除'
 
   label:
     nodata:           '該当無し'
@@ -152,6 +659,14 @@ ja:
     remember_me:      '保存'
     input_error:      "this.setCustomValidity('入力エラー')"
     date_range:       '日時'
+    card_education:   '学歴（最近のものから順番に）'
+    card_work:        '職歴（最近のものから順番に）'
+    card_qualification: '資格'
+    job_preferences:  '就職希望条件'
+    skill_and_qualification: '資格・保有スキル'
+    language_skill:   '語学・言語レベル'
+    qualification:    '資格情報'
+    other_languages:  'その他の使用言語'
 
   message:
     search_result:    '%{count}件見つかりました'
@@ -179,6 +694,10 @@ ja:
     updating:           '更新中'
     deleting:           '削除中'
     select_file:        'ファイルを選択してください。'
+    check_email:        '確認メールを送信しました。メールを開いて、登録手続きを完了してください。<br /><br />A confirmation email has been sent. Open it and complete your registration.'
+    verify_email_text:  '以下のURLでメールアドレスをご確認してください。'
+    trial_ended:        'お試し期間は終了しました。'
+
   layouts:
     devise:
       specification:  'ファイルレイアウト'
@@ -210,3 +729,35 @@ ja:
       create_job_profile: '<i class="fas fa-address-card"></i> 求人企業プロファイル登録'
     errors:
       limit_access:   '<i class="fas fa-exclamation-triangle"></i> 権限エラー'
+
+  legal:
+    terms_of_service: "利用規約"
+    privacy_policy: "プライバシーポリシー"
+    specified_commercial: "特定商取引法に基づく表示"
+
+  quizes:
+    title: クイズを選択
+
+    learning_history:
+      title: "📅 学習履歴"
+      one_day: "1日"
+      one_day_note: "今日"
+      one_month: "1か月"
+      one_month_note: "最近"
+      three_months: "3か月"
+      three_months_note: "復習"
+      all: "すべて"
+      all_note: "全期間"
+
+    jlpt:
+      title: "JLPT 単語"
+      levels:
+        n5: "N5（A1）"
+        n4: "N4（A2）"
+        n3: "N3"
+        n2: "N2"
+        n1: "N1"
+
+    genre:
+      title: "ジャンル"
+      empty: "未設定"

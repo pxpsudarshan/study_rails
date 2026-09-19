@@ -1,0 +1,50 @@
+<%= paginate @vocab_table, remote: true %>
+<div style="min-width: 800px;">
+  <table class="table table-bordered table-hover table-sm">
+    <thead>
+      <tr class="table-success">
+        <% unless current_user.comp&.channel_id.present? %>
+        <th class="text-start text-nowrap"><%= t('activerecord.attributes.channel.channel_name') %></th>
+        <% end %>
+        <th class="text-start"><%= t('activerecord.attributes.vocab_table.vocab_code') %></th>
+        <th class="text-start text-nowrap"><%= t('activerecord.attributes.vocab_table.example') %></th>
+        <th class="text-start"><%= t('common.nation_code_en') %></th>
+        <th class="text-start text-nowrap"><%= t('common.nation_example_en') %></th>
+        <th class="text-start"><%= t('common.nation_code') %></th>
+        <th class="text-start text-nowrap"><%= t('common.nation_example') %></th>
+        <th class="text-start"><%= t('common.edit') %></th>
+        <% if current_user.access_type == User::ACCESS_TYPE::KANRISHA %>
+        <th class="text-start"><%= t('common.destroy') %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+    <% @vocab_table.each do |vocab| %>
+    <% vocab_en = vocab.vocab_nations.where(lang: 'EN').first %>
+    <% vocab_lang = vocab.vocab_nations.where(lang: current_user.lang_id).first %>
+      <tr class="details_row nested-fields <%= vocab.hide_flg ? 'table-secondary' : '' %>">
+        <% unless current_user.comp&.channel_id.present? %>
+        <td class="text-start text-nowrap"><%= vocab.channel&.channel_name %></td>
+        <% end %>
+        <td class="text-start text-nowrap"><%= vocab.vocab_code %></td>
+        <td class="text-start"><%= vocab.example %></td>
+        <td class="text-start"><%= vocab_en&.nation_code %></td>
+        <td class="text-start"><%= vocab_en&.example %></td>
+        <td class="text-start"><%= vocab_lang&.nation_code %></td>
+        <td class="text-start"><%= vocab_lang&.example %></td>
+        <td class="text-start text-nowrap"><%= link_to t('buttons.edit').html_safe, edit_admin_vocab_table_path(id: vocab.id), class: 'btn btn-sm btn-primary' %></td>
+        <% if current_user.access_type == User::ACCESS_TYPE::KANRISHA %>
+        <td class="text-start text-nowrap"><%= link_to t('buttons.destroy').html_safe, admin_vocab_table_path(id: vocab.id), method: :delete, class: 'btn btn-sm btn-danger' %></td>
+        <% end %>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+<strong><%= page_entries_info @vocab_table, :entry_name => '' %></strong>
+<%= paginate @vocab_table, remote: true %>
+<%= javascript_tag do %>
+  $(function() {
+    NProgress.done();
+  });
+<% end %>

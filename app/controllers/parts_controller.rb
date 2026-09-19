@@ -7,12 +7,20 @@ class PartsController < ApplicationController
     @gois = PartsTable.find(params[:id]).kanji_tables
   end
   
+  def vocab_info
+    @vocab = VocabTable.find(params[:vocab_id])
+  end
+
+  def kanji_info
+    @kanji = KanjiTable.find(params[:id])
+  end
+
   def parts_kanji
       id = params[:id]
       @gois = []
       lang = current_user.lang_id
       kanji = KanjiTable.find(id)
-      kanji.vocab_tables.each do |vocab|
+      kanji.vocab_tables.where(hide_flg: false).each do |vocab|
         vocab_code = vocab.vocab_code
         mycard = current_user.vocab_mycards.where(vocab_table_id: vocab.id).first
         vocab_mycard = mycard.present? ? '⭐️' : '☆'
@@ -22,7 +30,7 @@ class PartsController < ApplicationController
           vocab_code: (vocab_code+" "+'N'+(jlpt_level.to_s)),
           vocab_id:  vocab.id,
           parts_body: vocab.kanji_body,
-          eng_mean: vocab.vocab_nations.where(lang: 'EN').first&.nation_code,
+          eng_mean: vocab.vocab_nations.where(hide_flg: false, lang: current_user.lang_id).first,
           read_code: vocab.vocab_read
         }
         @gois << arr
@@ -41,20 +49,10 @@ class PartsController < ApplicationController
           #unit_sheet: vocab.unit_sheet,
           jlpt_level: 'N'+jlpt_level.to_s,
           vocab_kanji: vocab.kanji_tables,
-          eng_mean: vocab.vocab_nations.where(lang: 'EN').first&.nation_code,
-          nation_mean: vocab.vocab_nations.where(lang: current_user.lang_id).first&.nation_code,
+          eng_mean: vocab.vocab_nations.where(hide_flg: false, lang: 'EN').first,
+          nation_mean: vocab,
         }
-
-        #関連する語彙
-        vocab_code_kanji = vocab_code.scan(/\p{Han}/).join
-        @cards = []
-        if vocab_code_kanji.present?
-          @cards = VocabTable
-            .joins(:vocab_mycards)
-            .where(vocab_mycards: { user_id: current_user.id })
-            .where('vocab_tables.vocab_code ~* ?', "[#{vocab_code_kanji}]")
-            .where.not(vocab_code: vocab_code)
-        end
+        @cards = vocab_cards(vocab_code)
         @count = 1
         @mycard = current_user.vocab_mycards.where(vocab_table_id: vocab.id).first
         @vocab_mycard = @mycard.present? ? '⭐️' : '☆'

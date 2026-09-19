@@ -1,0 +1,2 @@
+module Kaisha::ProgressHelper
+end

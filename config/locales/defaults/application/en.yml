@@ -1,0 +1,751 @@
+en:
+  kaisha:
+    passwords:
+      edit:
+        change_my_password: Change my password
+        change_your_password: Change your password
+        confirm_new_password: Confirm new password
+        new_password: New password
+      new:
+        forgot_your_password: Forgot your password?
+        send_me_reset_password_instructions: Send me reset password instructions
+      no_token: You can't access this page without coming from a password reset email. If you do come from a password reset email, please make sure you used the full URL provided.
+      send_instructions: You will receive an email with instructions on how to reset your password in a few minutes.
+      send_paranoid_instructions: If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes.
+      updated: Your password has been changed successfully. You are now signed in.
+      updated_not_active: Your password has been changed successfully.
+    sessions:
+      already_signed_out: Signed out successfully.
+      new:
+        sign_in: Company Log in
+      signed_in: Signed in successfully.
+      signed_out: Signed out successfully.
+    registrations:
+      destroyed: Bye! Your account has been successfully cancelled. We hope to see you again soon.
+      edit:
+        are_you_sure: Are you sure?
+        cancel_my_account: Cancel my account
+        currently_waiting_confirmation_for_email: 'Currently waiting confirmation for: %{email}'
+        leave_blank_if_you_don_t_want_to_change_it: leave blank if you don't want to change it
+        title: Edit %{resource}
+        unhappy: Unhappy?
+        update: Update
+        we_need_your_current_password_to_confirm_your_changes: we need your current password to confirm your changes
+      form:
+        sign_up: Company Sign up
+      signed_up: Welcome! You have signed up successfully.
+      signed_up_but_inactive: You have signed up successfully. However, we could not sign you in because your account is not yet activated.
+      signed_up_but_locked: You have signed up successfully. However, we could not sign you in because your account is locked.
+      signed_up_but_unconfirmed: A message with a confirmation link has been sent to your email address. Please follow the link to activate your account.
+      update_needs_confirmation: You updated your account successfully, but we need to verify your new email address. Please check your email and follow the confirmation link to confirm your new email address.
+      updated: Your account has been updated successfully.
+      updated_but_not_signed_in: Your account has been updated successfully, but since your password was changed, you need to sign in again.
+    shared:
+      links:
+        back: Back
+        didn_t_receive_confirmation_instructions: Didn't receive confirmation instructions?
+        didn_t_receive_unlock_instructions: Didn't receive unlock instructions?
+        forgot_your_password: Forgot your password?
+        sign_in: for Company
+        sign_in_user: Student Log in
+        sign_in_with_provider: Sign in with %{provider}
+        sign_up: Company Sign up
+        sign_up_user: Student Sign up
+    unlocks:
+      new:
+        resend_unlock_instructions: Resend unlock instructions
+      send_instructions: You will receive an email with instructions for how to unlock your account in a few minutes.
+      send_paranoid_instructions: If your account exists, you will receive an email with instructions for how to unlock it in a few minutes.
+      unlocked: Your account has been unlocked successfully. Please sign in to continue.
+    mailer:
+      confirmation_instructions:
+        action: Confirm my account
+        greeting: Welcome %{recipient}!
+        instruction: 'You can confirm your account email through the link below:'
+        subject: Confirmation instructions
+      email_changed:
+        greeting: Hello %{recipient}!
+        message: We're contacting you to notify you that your email has been changed to %{email}.
+        message_unconfirmed: We're contacting you to notify you that your email is being changed to %{email}.
+        subject: Email Changed
+      password_change:
+        greeting: Hello %{recipient}!
+        message: We're contacting you to notify you that your password has been changed.
+        subject: Password Changed
+      reset_password_instructions:
+        action: Change my password
+        greeting: Hello %{recipient}!
+        instruction: Someone has requested a link to change your password. You can do this through the link below.
+        instruction_2: If you didn't request this, please ignore this email.
+        instruction_3: Your password won't change until you access the link above and create a new one.
+        subject: Reset password instructions
+      unlock_instructions:
+        action: Unlock my account
+        greeting: Hello %{recipient}!
+        instruction: 'Click the link below to unlock your account:'
+        message: Your account has been locked due to an excessive number of unsuccessful sign in attempts.
+        subject: Unlock instructions
+  users:
+    passwords:
+      edit:
+        change_my_password: Change my password
+        change_your_password: Change your password
+        confirm_new_password: Confirm new password
+        new_password: New password
+      new:
+        forgot_your_password: Forgot your password?
+        send_me_reset_password_instructions: Send me reset password instructions
+      no_token: You can't access this page without coming from a password reset email. If you do come from a password reset email, please make sure you used the full URL provided.
+      send_instructions: You will receive an email with instructions on how to reset your password in a few minutes.
+      send_paranoid_instructions: If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes.
+      updated: Your password has been changed successfully. You are now signed in.
+      updated_not_active: Your password has been changed successfully.
+    sessions:
+      already_signed_out: Signed out successfully.
+      new:
+        sign_in: Log in
+      signed_in: Signed in successfully.
+      signed_out: Signed out successfully.
+    registrations:
+      destroyed: Bye! Your account has been successfully cancelled. We hope to see you again soon.
+      edit:
+        are_you_sure: Are you sure?
+        cancel_my_account: Cancel my account
+        currently_waiting_confirmation_for_email: 'Currently waiting confirmation for: %{email}'
+        leave_blank_if_you_don_t_want_to_change_it: leave blank if you don't want to change it
+        title: Edit %{resource}
+        unhappy: Unhappy?
+        update: Update
+        we_need_your_current_password_to_confirm_your_changes: we need your current password to confirm your changes
+      form:
+        sign_up: Student Sign up
+      signed_up: Welcome! You have signed up successfully.
+      signed_up_but_inactive: You have signed up successfully. However, we could not sign you in because your account is not yet activated.
+      signed_up_but_locked: You have signed up successfully. However, we could not sign you in because your account is locked.
+      signed_up_but_unconfirmed: A message with a confirmation link has been sent to your email address. Please follow the link to activate your account.
+      update_needs_confirmation: You updated your account successfully, but we need to verify your new email address. Please check your email and follow the confirmation link to confirm your new email address.
+      updated: Your account has been updated successfully.
+      updated_but_not_signed_in: Your account has been updated successfully, but since your password was changed, you need to sign in again.
+    shared:
+      links:
+        back: Back
+        didn_t_receive_confirmation_instructions: Didn't receive confirmation instructions?
+        didn_t_receive_unlock_instructions: Didn't receive unlock instructions?
+        forgot_your_password: Forgot your password?
+        sign_in: Student Log in
+        sign_in_company: For Company
+        sign_in_with_provider: Sign in with %{provider}
+        sign_up: Sign up
+        sign_up_company: Company Sign up
+    unlocks:
+      new:
+        resend_unlock_instructions: Resend unlock instructions
+      send_instructions: You will receive an email with instructions for how to unlock your account in a few minutes.
+      send_paranoid_instructions: If your account exists, you will receive an email with instructions for how to unlock it in a few minutes.
+      unlocked: Your account has been unlocked successfully. Please sign in to continue.
+    mailer:
+      confirmation_instructions:
+        action: Confirm my account
+        greeting: Welcome %{recipient}!
+        instruction: 'You can confirm your account email through the link below:'
+        subject: Confirmation instructions
+      email_changed:
+        greeting: Hello %{recipient}!
+        message: We're contacting you to notify you that your email has been changed to %{email}.
+        message_unconfirmed: We're contacting you to notify you that your email is being changed to %{email}.
+        subject: Email Changed
+      password_change:
+        greeting: Hello %{recipient}!
+        message: We're contacting you to notify you that your password has been changed.
+        subject: Password Changed
+      reset_password_instructions:
+        action: Change my password
+        greeting: Hello %{recipient}!
+        instruction: Someone has requested a link to change your password. You can do this through the link below.
+        instruction_2: If you didn't request this, please ignore this email.
+        instruction_3: Your password won't change until you access the link above and create a new one.
+        subject: Reset password instructions
+      unlock_instructions:
+        action: Unlock my account
+        greeting: Hello %{recipient}!
+        instruction: 'Click the link below to unlock your account:'
+        message: Your account has been locked due to an excessive number of unsuccessful sign in attempts.
+        subject: Unlock instructions
+
+  common:
+    flg_required:     '<i class="fas fa-asterisk red"></i>'
+    flg_enabled:      &flg_enabled "Enabled"
+    flg_disabled:     &flg_disabled "Disabled"
+    flg_req:          &flg_required "Required"
+    flg_not_req:      &flg_not_required "Not reguired"
+    flg_allow:        &flg_allow "Allow"
+    flg_disallow:     &flg_disallow "Disallow"
+    flg_use:          &flg_use "Use"
+    flg_not_use:      &flg_not_use "Not use"
+    id:               'No'
+    edit:             'Edit'
+    valid:            'Valid'
+    invalid:          'Invalid'
+    sjis:             'Shift_JIS'
+    destroy:          'Delete'
+    audio_update_flg: 'Update Audio File'
+    audio_male_flg:   'Male voice'
+    invite:           'Invite URL'
+    kanrisha:         'Admin'
+    partner:          'Partner'
+    other:            'Other'
+    power_user:       'Power User'
+    user:             'Student'
+    maximum_number:   'Max Number:'
+    nation_code_en:   'English'
+    nation_example_en: 'English Example'
+    nation_code:      'Country Word'
+    nation_example:   'Country Example'
+    select_photo:     'Select Photo'
+    prefer_image_format: 'JPG / PNG（Recommend: Rectangular）'
+
+  placeholder:
+    sei:               "Last Name"
+    mei:               "First Name"
+    sei_kana:          "Last Name (Kana)"
+    mei_kana:          "First Name (Kana)"
+    no_photo:          "No Photo"
+    image_type:        "JPG / PNG formats are supported"
+    school_senko:      "e.g. Language, Engineering, Economics"
+    school_name:       "e.g. ○○ School, ○○ College"
+    desired_job_type:  "e.g. System Engineer, Infrastructure Engineer"
+    desired_industry:  "e.g. IT/Telecom, Manufacturing"
+    desired_work_place: "e.g. Tokyo, Kanagawa"
+    native_language:   "e.g. Nepali"
+    skill:             "e.g. Java (3 years), AWS Operations, Team Lead Experience"
+    qualification_name: "e.g. Fundamental IT Engineer, Driver’s License"
+    work_place:        "e.g. ○○ Corporation"
+    work_type:         "e.g. System Engineer"
+
+  select:
+      visa_type:
+        1: "Student"
+        2: "Designated Activities"
+        3: "Engineer / Specialist in Humanities / International Services"
+        4: "Specified Skilled Worker"
+        5: "Technical Intern Training"
+        6: "Family Stay"
+        7: "Permanent Resident"
+        8: "No Residence Status (Application in Process)"
+      occupations:
+        0: "All"
+        1: 'IT / Web Engineer'
+        2: 'Manufacturing Engineer'
+        3: 'Corporate Planning / Consultant'
+        4: 'Creative'
+        5: 'Administrative / Back Office'
+        6: 'Sales / Trade Administration'
+        7: 'Corporate / Planning Sales'
+        8: 'Caregiver / Welfare Specialist'
+        9: 'Service Management'
+        10: 'Construction / Civil Engineer'
+      industries:
+        0: "All"
+        1: "Agriculture / Forestry"
+        2: "Fishery"
+        3: "Mining / Quarrying / Gravel Extraction"
+        4: "Construction"
+        5: "Manufacturing"
+        6: "Electricity / Gas / Heat Supply / Water"
+        7: "Information & Communications"
+        8: "Transportation / Postal Services"
+        9: "Wholesale / Retail"
+        10: "Finance / Insurance"
+        11: "Real Estate / Rental Services"
+        12: "Academic Research / Professional / Technical Services"
+        13: "Accommodation / Food Services"
+        14: "Living-related Services / Entertainment"
+        15: "Education / Learning Support"
+        16: "Medical / Welfare"
+        17: "Combined Services"
+        18: "Other Services"
+        19: "Public Sector (Government / Local Authorities)"
+      toeic:
+        1: "600+"
+        2: "650+"
+        3: "700+"
+        4: "800+"
+        5: "900+"
+        6: "950+"
+      kokusekis:
+        1:  "🇦🇫 Afghanistan"
+        2:  "🇦🇱 Albania"
+        3:  "🇩🇿 Algeria"
+        4:  "🇦🇩 Andorra"
+        5:  "🇦🇴 Angola"
+        6:  "🇦🇬 Antigua and Barbuda"
+        7:  "🇦🇷 Argentina"
+        8:  "🇦🇲 Armenia"
+        9:  "🇦🇺 Australia"
+        10: "🇦🇹 Austria"
+        11: "🇦🇿 Azerbaijan"
+        12: "🇧🇸 Bahamas"
+        13: "🇧🇭 Bahrain"
+        14: "🇧🇩 Bangladesh"
+        15: "🇧🇧 Barbados"
+        16: "🇧🇾 Belarus"
+        17: "🇧🇪 Belgium"
+        18: "🇧🇿 Belize"
+        19: "🇧🇯 Benin"
+        20: "🇧🇹 Bhutan"
+        21: "🇧🇴 Bolivia"
+        22: "🇧🇦 Bosnia and Herzegovina"
+        23: "🇧🇼 Botswana"
+        24: "🇧🇷 Brazil"
+        25: "🇧🇳 Brunei"
+        26: "🇧🇬 Bulgaria"
+        27: "🇧🇫 Burkina Faso"
+        28: "🇧🇮 Burundi"
+        29: "🇰🇭 Cambodia"
+        30: "🇨🇲 Cameroon"
+        31: "🇨🇦 Canada"
+        32: "🇨🇻 Cape Verde"
+        33: "🇨🇫 Central African Republic"
+        34: "🇹🇩 Chad"
+        35: "🇨🇱 Chile"
+        36: "🇨🇳 China"
+        37: "🇨🇴 Colombia"
+        38: "🇰🇲 Comoros"
+        39: "🇨🇬 Congo"
+        40: "🇨🇷 Costa Rica"
+        41: "🇭🇷 Croatia"
+        42: "🇨🇺 Cuba"
+        43: "🇨🇾 Cyprus"
+        44: "🇨🇿 Czech Republic"
+        45: "🇩🇰 Denmark"
+        46: "🇩🇯 Djibouti"
+        47: "🇩🇲 Dominica"
+        48: "🇩🇴 Dominican Republic"
+        49: "🇪🇨 Ecuador"
+        50: "🇪🇬 Egypt"
+        51: "🇸🇻 El Salvador"
+        52: "🇬🇶 Equatorial Guinea"
+        53: "🇪🇷 Eritrea"
+        54: "🇪🇪 Estonia"
+        55: "🇸🇿 Eswatini"
+        56: "🇪🇹 Ethiopia"
+        57: "🇫🇯 Fiji"
+        58: "🇫🇮 Finland"
+        59: "🇫🇷 France"
+        60: "🇬🇦 Gabon"
+        61: "🇬🇲 Gambia"
+        62: "🇬🇪 Georgia"
+        63: "🇩🇪 Germany"
+        64: "🇬🇭 Ghana"
+        65: "🇬🇷 Greece"
+        66: "🇬🇩 Grenada"
+        67: "🇬🇹 Guatemala"
+        68: "🇬🇳 Guinea"
+        69: "🇬🇼 Guinea-Bissau"
+        70: "🇬🇾 Guyana"
+        71: "🇭🇹 Haiti"
+        72: "🇭🇳 Honduras"
+        73: "🇭🇺 Hungary"
+        74: "🇮🇸 Iceland"
+        75: "🇮🇳 India"
+        76: "🇮🇩 Indonesia"
+        77: "🇮🇷 Iran"
+        78: "🇮🇶 Iraq"
+        79: "🇮🇪 Ireland"
+        80: "🇮🇱 Israel"
+        81: "🇮🇹 Italy"
+        82: "🇯🇲 Jamaica"
+        83: "🇯🇵 Japan"
+        84: "🇯🇴 Jordan"
+        85: "🇰🇿 Kazakhstan"
+        86: "🇰🇪 Kenya"
+        87: "🇰🇮 Kiribati"
+        88: "🇰🇼 Kuwait"
+        89: "🇰🇬 Kyrgyzstan"
+        90: "🇱🇦 Laos"
+        91: "🇱🇻 Latvia"
+        92: "🇱🇧 Lebanon"
+        93: "🇱🇸 Lesotho"
+        94: "🇱🇷 Liberia"
+        95: "🇱🇾 Libya"
+        96: "🇱🇮 Liechtenstein"
+        97: "🇱🇹 Lithuania"
+        98: "🇱🇺 Luxembourg"
+        99: "🇲🇬 Madagascar"
+        100: "🇲🇼 Malawi"
+        101: "🇲🇾 Malaysia"
+        102: "🇲🇻 Maldives"
+        103: "🇲🇱 Mali"
+        104: "🇲🇹 Malta"
+        105: "🇲🇭 Marshall Islands"
+        106: "🇲🇷 Mauritania"
+        107: "🇲🇺 Mauritius"
+        108: "🇲🇽 Mexico"
+        109: "🇫🇲 Micronesia"
+        110: "🇲🇩 Moldova"
+        111: "🇲🇨 Monaco"
+        112: "🇲🇳 Mongolia"
+        113: "🇲🇪 Montenegro"
+        114: "🇲🇦 Morocco"
+        115: "🇲🇿 Mozambique"
+        116: "🇲🇲 Myanmar"
+        117: "🇳🇦 Namibia"
+        118: "🇳🇷 Nauru"
+        119: "🇳🇵 Nepal"
+        120: "🇳🇱 Netherlands"
+        121: "🇳🇿 New Zealand"
+        122: "🇳🇮 Nicaragua"
+        123: "🇳🇪 Niger"
+        124: "🇳🇬 Nigeria"
+        125: "🇰🇵 North Korea"
+        126: "🇲🇰 North Macedonia"
+        127: "🇳🇴 Norway"
+        128: "🇴🇲 Oman"
+        129: "🇵🇰 Pakistan"
+        130: "🇵🇼 Palau"
+        131: "🇵🇦 Panama"
+        132: "🇵🇬 Papua New Guinea"
+        133: "🇵🇾 Paraguay"
+        134: "🇵🇪 Peru"
+        135: "🇵🇭 Philippines"
+        136: "🇵🇱 Poland"
+        137: "🇵🇹 Portugal"
+        138: "🇶🇦 Qatar"
+        139: "🇷🇴 Romania"
+        140: "🇷🇺 Russia"
+        141: "🇷🇼 Rwanda"
+        142: "🇰🇳 Saint Kitts and Nevis"
+        143: "🇱🇨 Saint Lucia"
+        144: "🇻🇨 Saint Vincent and the Grenadines"
+        145: "🇼🇸 Samoa"
+        146: "🇸🇲 San Marino"
+        147: "🇸🇹 Sao Tome and Principe"
+        148: "🇸🇦 Saudi Arabia"
+        149: "🇸🇳 Senegal"
+        150: "🇷🇸 Serbia"
+        151: "🇸🇨 Seychelles"
+        152: "🇸🇱 Sierra Leone"
+        153: "🇸🇬 Singapore"
+        154: "🇸🇰 Slovakia"
+        155: "🇸🇮 Slovenia"
+        156: "🇸🇧 Solomon Islands"
+        157: "🇸🇴 Somalia"
+        158: "🇿🇦 South Africa"
+        159: "🇸🇸 South Sudan"
+        160: "🇪🇸 Spain"
+        161: "🇱🇰 Sri Lanka"
+        162: "🇸🇩 Sudan"
+        163: "🇸🇷 Suriname"
+        164: "🇸🇪 Sweden"
+        165: "🇨🇭 Switzerland"
+        166: "🇸🇾 Syria"
+        167: "🇹🇼 Taiwan"
+        168: "🇹🇯 Tajikistan"
+        169: "🇹🇿 Tanzania"
+        170: "🇹🇭 Thailand"
+        171: "🇹🇱 Timor-Leste"
+        172: "🇹🇬 Togo"
+        173: "🇹🇴 Tonga"
+        174: "🇹🇹 Trinidad and Tobago"
+        175: "🇹🇳 Tunisia"
+        176: "🇹🇷 Turkey"
+        177: "🇹🇲 Turkmenistan"
+        178: "🇹🇻 Tuvalu"
+        179: "🇺🇬 Uganda"
+        180: "🇺🇦 Ukraine"
+        181: "🇦🇪 United Arab Emirates"
+        182: "🇬🇧 United Kingdom"
+        183: "🇺🇸 United States"
+        184: "🇺🇾 Uruguay"
+        185: "🇺🇿 Uzbekistan"
+        186: "🇻🇺 Vanuatu"
+        187: "🇻🇦 Vatican City"
+        188: "🇻🇪 Venezuela"
+        189: "🇻🇳 Vietnam"
+        190: "🇾🇪 Yemen"
+        191: "🇿🇲 Zambia"
+        192: "🇿🇼 Zimbabwe"
+      langs:
+        EN: "🇬🇧 English"
+        JP: "🇯🇵 Japanese"
+        RU: "🇷🇺 Russian"
+        CN: "🇨🇳 Chinese"
+        ID: "🇮🇩 Indonesian"
+        MM: "🇲🇲 Burmese"
+        BD: "🇧🇩 Bengali"
+        SK: "🇰🇷 Korean"
+        ES: "🇪🇸 Spanish"
+        VN: "🇻🇳 Vietnamese"
+        FR: "🇫🇷 French"
+        IT: "🇮🇹 Italian"
+        NP: "🇳🇵 Nepali"
+        MN: "🇲🇳 Mongolian"
+        LK: "🇱🇰 Sinhala"
+        TW: "🇹🇼 Chinese (Taiwan)"
+        TO: "🇹🇴 Tongan"
+        TR: "🇹🇷 Turkey"
+        TH: "🇹🇭 Thailand"
+        FA: "🇮🇷 Persia"
+      second_langs:
+        1:  "🇨🇳 Chinese"
+        2:  "🇫🇷 French"
+        3:  "🇪🇸 Spanish"
+        4:  "🇸🇦 Arabic"
+        5:  "🇩🇪 German"
+        6:  "🇮🇹 Italian"
+        7:  "🇵🇹 Portuguese"
+        8:  "🇷🇺 Russian"
+        9:  "🇮🇳 Hindi"
+        10: "🇵🇰 Urdu"
+        11: "🇧🇩 Bengali"
+        12: "🇮🇳 Tamil"
+        13: "🇹🇷 Turkish"
+        14: "🇮🇷 Persian (Farsi)"
+        15: "🇰🇪 Swahili"
+        16: "🇮🇩 Indonesian"
+        17: "🇲🇲 Burmese"
+        18: "🇰🇭 Khmer (Cambodia)"
+        19: "🇹🇭 Thai"
+        20: "🇵🇭 Tagalog"
+      school_end:
+        1: "Graduated"
+        2: "Withdrawn"
+        3: "Leave of Absence"
+        4: "Expected to Graduate"
+      language_level:
+        1: "Beginner Level"
+        2: "Daily Conversation Level"
+        3: "Business Level"
+        4: "Native Level"
+      work_country:
+        1: "Japan"
+        2: "Home Country"
+        3: "Other"
+      sex:
+        1: "Male"
+        2: "Female"
+      school_type:
+        1: "University (Doctorate)"
+        2: "University (Master's)"
+        3: "University (Bachelor's)"
+        4: "Vocational School"
+        5: "High School"
+      prefectures:
+        1:  "Hokkaido"
+        2:  "Aomori"
+        3:  "Iwate"
+        4:  "Miyagi"
+        5:  "Akita"
+        6:  "Yamagata"
+        7:  "Fukushima"
+        8:  "Ibaraki"
+        9:  "Tochigi"
+        10: "Gunma"
+        11: "Saitama"
+        12: "Chiba"
+        13: "Tokyo"
+        14: "Kanagawa"
+        15: "Niigata"
+        16: "Toyama"
+        17: "Ishikawa"
+        18: "Fukui"
+        19: "Yamanashi"
+        20: "Nagano"
+        21: "Gifu"
+        22: "Shizuoka"
+        23: "Aichi"
+        24: "Mie"
+        25: "Shiga"
+        26: "Kyoto"
+        27: "Osaka"
+        28: "Hyogo"
+        29: "Nara"
+        30: "Wakayama"
+        31: "Tottori"
+        32: "Shimane"
+        33: "Okayama"
+        34: "Hiroshima"
+        35: "Yamaguchi"
+        36: "Tokushima"
+        37: "Kagawa"
+        38: "Ehime"
+        39: "Kochi"
+        40: "Fukuoka"
+        41: "Saga"
+        42: "Nagasaki"
+        43: "Kumamoto"
+        44: "Oita"
+        45: "Miyazaki"
+        46: "Kagoshima"
+        47: "Okinawa"
+        48: "Overseas"
+
+  title:
+    header:           'NIHO'
+    title:            'NIHO'
+    step1:            "Personal Information"
+    step2:            "Education & Work History"
+    step3:            "Preferences, Qualifications & Languages"
+  navbar:
+    logout:           '<i class="fas fa-sign-out-alt"></i> Logout'
+    user:             'User'
+    comp:             'Company'
+    profile:          '<i class="fas fa-user"></i> Profile'
+    edit:             '<i class="fas fa-edit"></i> Edit'
+    edit_user:        '<i class="fas fa-edit"></i> Personal Info'
+    master:           '<i class="fas fa-cogs"></i> Admin'
+    company_store:    'Company Words'
+    store:            'Student Words'
+    job_profile:      'Job Profile'
+    job:              'Job Search'
+    offer:            'Student Search'
+    audio_a:          'Conversation'
+    tokutei:          'Special Skill'
+    progress:         'Student Progress'
+    channel:          'Channel'
+    block_ip:         'Block IP'
+    parts_table:      'Kanji Parts'
+    kanji_table:      'Kanji'
+    vocab_genre:      'Genre'
+    vocab_table:      'Vocab'
+
+  feature:
+    parts:            'Parts'
+    parts_parts:      'Search by Parts'
+    vocab:            'Vocab'
+    vocab_hiragana:   'Search by Hiragana'
+    vocab_native:     'Search by Native language'
+    kanji:            'Kanji'
+    kanji_kanji:      'Search by Kanji'
+    word:             'Word List'
+    mycard:           'Mycard'
+    mycard_mycard:    'Review'
+    quiz:             'Quiz'
+    quiz_mycard:      'Mycard Quiz'
+    conversation:     'Conversation'
+  header:
+    student_progress: 'Progress List'
+  buttons:
+    home:             '<i class="fas fa-home"></i> Main Menu'
+    menu:             'メニュー'
+    new:              '<i class="far fa-save"></i> New'
+    show:             'Show'
+    add:              '<i class="fas fa-plus"></i> Add'
+    lang_add:         '<i class="fas fa-plus"></i> Add Language'
+    edit:             '<i class="fas fa-edit"></i> Edit'
+    destroy:          '<i class="fas fa-trash-alt"></i> Delete'
+    destroy-icon:     '<i class="fas fa-trash-alt"></i>'
+    save:             'Save'
+    copy:             '<i class="fas fa-file-alt"></i> Copy'
+    back:             'Back'
+    next:             'Next'  
+    cancel:           'Cancel'
+    create:           'Create'
+    'yes':            'Yes'
+    'no':             'No'
+    search:           '<i class="fas fa-search"></i> Search'
+    download:         '<i class="fas fa-cloud-download-alt"></i> CSV Download'
+    change_password:  'Password Change'
+    open_search:      'Show Result'
+    return_to_list:   'Back to List'
+    return_to_main:   'Back to previous page'
+    list:             '<i class="fas fa-home"></i>List'
+    close:            'Close'
+    submit:           'Submit'
+    add_item:         'Add Item'
+    done:             'Done'
+    excel_upload:     'Excel Download'
+    question_add:     '<i class="fas fa-plus"></i> Add Question'
+    answer_add:       '<i class="fas fa-plus"></i> Add Answer'
+    pencil:           '<i class="fa fa-pencil-alt"></i>'
+    kanji_add:        '<i class="fas fa-plus"></i> Add Kanji'
+    vocab_add:        '<i class="fas fa-plus"></i> Add Word'
+    vocab_genre_add:  '<i class="fas fa-plus"></i> Add Genre'
+    vocab_nation_add: '<i class="fas fa-plus"></i> Add Lang'
+    parts_add:        '<i class="fas fa-plus"></i> Add Parts'
+    update:           'Update'
+    delete:           'Delete'
+
+  label:
+    nodata:           'No Data'
+    not_yet:          'Not Yet'
+    already:          'Already'
+    from_to:          'to'
+    'on':             'ON'
+    'off':            'OFF'
+    remember_me:      'Remember Me'
+    input_error:      "this.setCustomValidity('Input Error')"
+    date_range:       'Date Range'
+    card_education:     "Education (from the most recent)"
+    card_work:          "Work Experience (from the most recent)"
+    card_qualification: "Qualifications"
+    job_preferences:    "Job Preferences"
+    skill_and_qualification: "Skills & Qualifications"
+    language_skill:     "Language Skills / Proficiency Levels"
+    qualification:      "Qualification Details"
+    other_languages:  "Other Languages"
+
+  message:
+    search_result:    '%{count} item(s) found'
+    search_none:      'No data'
+    create_confirm_t: 'Create Confirmation'
+    create_confirm:   'This content will be created. Ok?'
+    destroy_confirm_t: 'Destroy Confirmation'
+    destroy_confirm:  'This content will be destroyed. Ok?'
+    complete_form:    'Complete required form'
+    save_confirm_t:   'Save Confirmation'
+    save_confirm:     'This content will be saved. Ok?'
+    destroy:          'Destroy'
+    number:           'No'
+    success_completed:  'Completed without error.'
+    check_email:      'We sent a confirmation mail to you. Please read the instructions on that mail to complete the email verification.'
+    verify_email_text:  'Please click the link below to verify your email address.'
+    trial_ended:       'Trial period is ended.'
+
+  page_title:
+    users:
+      index:          '<i class="fas fa-user"></i> Student List'
+      show:           '<i class="fas fa-user"></i> Student Details'
+      new:            '<i class="fas fa-user"></i> New Student Registration'
+      create:         '<i class="fas fa-user"></i> New Student Registration'
+      edit:           '<i class="fas fa-user"></i> Student Edit'
+      update:         '<i class="fas fa-user"></i> Student Edit'
+      new_store:      '<i class="fas fa-address-card"></i> Input Word'
+      create_store:   '<i class="fas fa-address-card"></i> Input Word'
+      new_job_profile: '<i class="fas fa-address-card"></i> Create Job Profile'
+      create_job_profile: '<i class="fas fa-address-card"></i> Create Job Profile'
+    errors:
+      limit_access:   '<i class="fas fa-exclamation-triangle"></i> Resticted Access'
+
+  legal:
+    terms_of_service: "Terms of Service"
+    privacy_policy: "Privacy Policy"
+    specified_commercial: "Legal Notice"
+
+  quizes:
+    title: Select Quiz
+
+    learning_history:
+      title: "📅 Learning History"
+      one_day: "1 Day"
+      one_day_note: "Today"
+      one_month: "1 Month"
+      one_month_note: "Recent"
+      three_months: "3 Months"
+      three_months_note: "Review"
+      all: "All"
+      all_note: "Entire history"
+
+    jlpt:
+      title: "JLPT Words"
+      levels:
+        n5: "N5 (A1)"
+        n4: "N4 (A2)"
+        n3: "N3"
+        n2: "N2"
+        n1: "N1"
+
+    genre:
+      title: "Genre"
+      empty: "Empty"
+     

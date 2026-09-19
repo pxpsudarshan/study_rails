@@ -1,0 +1,10 @@
+<tr class="nested-fields">
+  <td class="text-center">
+    <%= f.text_field :kanji_code_tmp, value: f.object.kanji_table&.kanji_code, class: 'form-control', required: true %>
+    <%= f.hidden_field :kanji_table_id %>
+    <%= f.hidden_field :vocab_table_id %>
+  </td>
+  <td class="text-center text-nowrap">
+    <%= link_to_remove_association t('buttons.destroy').html_safe, f, class: "btn btn-danger" %>
+  </td>
+</tr>

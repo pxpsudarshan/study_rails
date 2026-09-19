@@ -11,22 +11,94 @@ ja:
         mei:                      '名'
         sei_kana:                 '姓カナ'
         mei_kana:                 '名カナ'
-        lang_id:                  '言語'
+        lang_id:                  '母国語'
+        last_sign_in:             '最終ログイン'
+        login_count:              'ログイン回数'
+        studyed:                  '勉強'
+        learned:                  '学習'
         jp_level:                 '日本語能力試験'
+        login_flg:                'ログイン'
+        access_type:              '権限'
         mobile:                   'お電話番号'
         new_password:             'パスワード'
         confirm_password:         'パスワード確認'
         password:                 'パスワード'
         password_confirmation:    'パスワード確認'
+        plan:                     'サブスクリプションプラン'
+        stripe_customer_id:       'Stripe Customer ID'
+        stripe_subscription_id:   'Stripe Subscription ID'
+        subscription_status:      'Subscription Status'
+        billing_address:          'Billing Address'
+        trial_end_date:           'お試し期間終了日'
+
+      profile:
+        kokuseki:    '国籍'
+        nationality: "国籍"
+        sex: "性別"
+        birthday: "生年月日"
+        email: "メール"
+        phone: "電話番号"
+        address: "現住所"
+        address_country: "出身地"
+        no_photo: "写真なし"
+        image_type: "JPG / PNG が使用できます"
+        jp_school_date: "入学日"
+        school_date: "入学日"
+        graduation_date: "卒業年月"
+        jp_school_name: "学校名（日本）"
+        school_name_foreign: "学校名（母国など）"
+        jp_school_type: "学校区分"
+        school_type: "学校区分"
+        jp_school_end: "卒業区分"
+        school_end: "卒業区分"
+        jp_school_senko: "専攻"
+        school_senko: "専攻"
+        school_name: "学校名"
+        desired_job_type: "希望職種"
+        desired_industry: "希望業種"
+        desired_work_place: "希望勤務地"
+        desired_work_date: "希望時期"
+        visa_type: "在留資格"
+        visa_end_date: "有効期限"
+        native_language: "母国語"
+        japanese_level: "日本語力"
+        english_level: "英語力"
+        other_languages: "その他の言語"
+        skill: "趣味や特技、アピールポイントなど"
+        year: "年"
+        month: "月"
+        work_country: "勤務エリア"
+        work_place: "勤務先"
+        work_type: "職種"
+        work_start_date: "開始年"
+        work_end_date: "終了年" 
+        name: '名前'
+
+      profile_work:
+        work_country: '勤務国'
+        work_place:   '勤務先'
+        work_type:    '職業'
+        start_date:   '開始年月'
+        end_date:     '終了年月'
+      
+      profile_qualification:
+        achieved_year: "年"
+        achieved_month: "月"
+        qualification_name: "資格名"
 
       comp:
         email:                    'メール'
         name:                     '名前'
+        name_kana:                '名前カナ'
         sei:                      '姓'
         mei:                      '名'
         sei_kana:                 '姓カナ'
         mei_kana:                 '名カナ'
         company_name:             '貴社名'
+        comp_id:                  '関連会社'
+        login_flg:                'ログイン'
+        access_type:              '権限'
+        user_count:               '最大ユーザー数'
         business_type:            '業種'
         company_url:              '貴社url'
         department:               '部署名'
@@ -112,3 +184,55 @@ ja:
         content:                  '説明内容'
         image_flg:                '画像'
 
+      parts_table: &parts_table
+        parts_code:               'パーツコード'
+        kanji_body:               '漢字本体'
+
+      parts_kanjis: *parts_table
+
+      kanji_table: &kanji_table
+        kanji_code:               '漢字コード'
+        parts_body:               'パーツ本体'
+        vocab_body:               '語彙'
+      kanji_tables: *kanji_table
+
+      kanji_vocabs: *kanji_table
+
+      vocab_table: &vocab_table
+        sort:                     '順番'
+        vocab_code:               '語彙'
+        vocab_read:               '読み方'
+        kanji_body:               '漢字本体'
+        jlpt_level:               'JLPT'
+        example:                  '例文'
+        hide_flg:                 '非表示'
+      vocab_tables: *vocab_table
+
+      vocab_nation: &vocab_nation
+        sort:                     '順番'
+        lang:                     '言語'
+        nation_code:              '内容'
+        example:                  '例文'
+        created_at:               '作成日'
+        created_by:               '作成者'
+        updated_at:               '更新日'
+        updated_by:               '更新者'
+        hide_flg:                 '非表示'
+      vocab_nations: *vocab_nation
+
+      vocab_genre:
+        title:                    'タイトル'
+        sort:                     '順番'
+        hide_flg:                 '非表示'
+
+      vocab_genre_content: &vocab_genre_content
+        sort:                     '順番'
+        hide_flg:                 '非表示'
+        vocab_genre_id:           'ジャンル'
+      vocab_genre_contents: *vocab_genre_content
+
+      channel:
+        channel_name:             'チャンネル名'
+
+      block_ip:
+        ipaddr:                   'IPアドレス'

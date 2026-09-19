@@ -14,8 +14,14 @@ Rails.application.config.assets.precompile += ['icon.png','favicon.ico']
 Rails.application.config.assets.precompile += ['login.css','sb-admin-2']
 Rails.application.config.assets.precompile += ['html5shiv.js', 'mains.js']
 Rails.application.config.assets.precompile += %w( locales/ja/common.messages.js )
+Rails.application.config.assets.precompile += %w( locales/en/common.messages.js )
 
 Rails.application.config.assets.precompile += ['users.js', 'kaisha/company_stores.js', 'kaisha/job_profiles.js']
 Rails.application.config.assets.precompile += ['kaisha/comps.js', 'kaisha/menus.js', 'menus.js', 'stores.js', 'kaisha/offers.js']
 Rails.application.config.assets.precompile += ['admin/audio_as.js', 'admin/audio_bs.js', 'admin/audio_cs.js', 'admin/audio_ds.js', 'admin/audio_c_contents.js']
 Rails.application.config.assets.precompile += ['admin/tokuteis.js', 'admin/tokutei_questions.js', 'admin/tokutei_answers.js']
+Rails.application.config.assets.precompile += ['correct.mp3']
+Rails.application.config.assets.precompile += ['admin/users.js','admin/channels.js', 'admin/block_ips.js']
+Rails.application.config.assets.precompile += ['kaisha/progress.js']
+Rails.application.config.assets.precompile += ['kaisha/users.js']
+Rails.application.config.assets.precompile += ['admin/parts_tables.js', 'admin/kanji_tables.js', 'admin/vocab_tables.js', 'admin/vocab_genres.js']

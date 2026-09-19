@@ -1,0 +1,6 @@
+class BlockIp < ApplicationRecord
+  acts_as_paranoid
+  records_with_operator_on :create, :update, :destroy
+
+  validates :ipaddr, uniqueness: true
+end

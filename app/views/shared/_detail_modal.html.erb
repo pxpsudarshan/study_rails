@@ -1,0 +1,26 @@
+<div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-3 shadow-lg">
+      <div class="modal-header">
+        <h1 class="modal-title" id="detailsModalLabel"><%= @vocab.vocab_code %></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <div class="modal-body">
+        <!-- Modal Content to display vocab details -->      
+        <p><strong>Read Code:</strong> <span id="vocab-read_code"><%= @vocab.vocab_read %></span></p>
+        <p><strong>Meaning:</strong> <span id="vocab-meaning"><%= @vocab.vocab_nations.where(hide_flg: false, lang: current_user.lang_id).first&.nation_code %></span></p>
+        <p><strong >Parts:</strong>
+          <span id="vocab-parts">
+          <% @vocab.kanji_tables.each do |part| %>
+          <%= link_to part.kanji_code, kanjis_path(kanji: {kanji: part.kanji_code}), class: "btn btn-outline-primary btn-sm", target: '_blank' %>
+          <% end %>
+          </span></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+

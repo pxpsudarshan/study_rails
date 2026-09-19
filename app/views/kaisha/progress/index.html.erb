@@ -1,0 +1,35 @@
+<div class="m-5">
+  <div class="row text-center">
+    <div class="col-md-12 mt-3">
+      <h2 class="border border-info rounded"><%= t('header.student_progress') %></h2>
+    </div>
+  </div>
+  <% if current_comp.access_type == Comp::ACCESS_TYPE::KANRIGAISHA || current_comp.access_type == Comp::ACCESS_TYPE::PARTNER %>
+  <div class="row">
+    <div class="col-md-12">
+      <%= form_for :search, url: kaisha_progress_index_path, html: { class: 'form-horizontal', role: 'form', method: :get }, remote: true do |f| %>
+        <div class="row mb-3">
+          <label class='col-md-1 col-form-label text-md-end text-nowrap'>
+            <%= t('activerecord.attributes.comp.comp_id') %>
+          </label>
+          <div class="col-md-2">
+            <div class="input-group">
+              <% comps = Comp.all.order(access_type: :desc).order(:company_name).map{|c| [c.company_name, c.id]} if current_comp.access_type == Comp::ACCESS_TYPE::KANRIGAISHA %>
+              <% comps = Comp.where(id: current_comp.comps&.ids).order(access_type: :desc).order(:company_name).map{|c| [c.company_name, c.id]} if current_comp.access_type == Comp::ACCESS_TYPE::PARTNER %>
+              <%= f.select :comp_id, options_for_select(comps, nil), {include_blank: true}, class: 'form-select' %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-11 text-start mb-3">
+          <%= button_tag t('buttons.search').html_safe, id: 'search_button', onclick: 'NProgress.start();', class: 'btn btn-warning' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <% end %>
+  <div class="row">
+    <div class="col-md-12" id="user_progress">
+      <%= render 'progress_list' %>
+    </div>
+  </div>
+</div>

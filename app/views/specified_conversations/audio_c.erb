@@ -1,51 +1,78 @@
-<div class="container w-75 m-auto">
-<div class="row mt-5 mb-3">
-  <div class="col">
-    <h1 class="text-left">会話</h1>
-  </div>
+<div class="container-fluid w-75 m-auto">
+  <div class="row mt-5 mb-3">
+    <div class="col">
+      <h1 class="text-left fs-2 fs-md-1">会話</h1>
+    </div>
+<div class="col d-flex justify-content-end flex-wrap gap-2">
+  <%= form_for :title_nation, url: audio_d_specified_conversations_path,
+               html: { id: 'title_nations', role: 'form', method: :get },
+               class: 'd-flex flex-md-nowrap flex-wrap justify-content-end gap-2', remote: true do |form| %>
 
-  <div class="col">
-  <%= form_for :title_nation, url: audio_d_specified_conversations_path, html: { id: 'title_nations', role: 'form', method: :get }, class: "d-flex", remote: true do |form| %>
-      <% audio = @audio_c.order(:title_sort).map{|c| [title_nation(c), c.id]} %>
-      <%= form.select :title_nation, options_for_select(audio, ''), { include_blank: false}, { class: 'form-select m-1 mr-sm-2 w-auto', style: 'border-radius: 0;', onchange: 'optionChange(this);'  } %>
-      <% first_item = @audio_c.order(:title_sort).first %>
-      <% audio_case = first_item.audio_c_contents.map{ |audio_case| [audio_case.content, audio_case.id] } if first_item.present? %>
-      <%= form.select :content_id, options_for_select(audio_case || [], ''), { include_blank: false}, { class: 'form-select m-1 mr-sm-2 w-auto', style: 'border-radius: 0;' } %>
+    <% audio = @audio_c.order(:title_sort).map { |c| [title_nation(c), c.id] } %>
+    <% first_item = @audio_c.order(:title_sort).first %>
+    <% audio_case = first_item.audio_c_contents.map { |ac| [content_nation(ac), ac.id] } if first_item.present? %>
+    <% constant_languages = ['JP', 'EN'] 
+       user_language = current_user.lang_id
 
-      <%= form.radio_button :language, '', id: 'jpn_radio', class: 'btn-check visually-hidden', autocomplete: 'off', checked: true %>
-      <label class="btn btn-primary m-1 mr-sm-2" style="border-radius: 0;" for="jpn_radio">JP</label>
+      # Add user language only if it's not JP or EN
+      language_options = constant_languages.dup
+      if user_language.present? && !constant_languages.include?(user_language)
+        language_options << user_language
+      end
+    %>
 
-      <% Language.group(:language).select(:language).each do |lng| %>
-      <%= form.radio_button :language, lng.language, id: "#{lng.language}_radio", class: 'btn-check visually-hidden', autocomplete: 'off' %>
-      <label class="btn btn-primary m-1 mr-sm-2" style="border-radius: 0;" for='<%= "#{lng.language}_radio" %>'><%= lng.language %></label>
-      <% end %>
+    <div class="d-inline-block w-100" style="min-width: 150px; max-width: 250px;">
+      <%= form.select :title_nation,
+        options_for_select(audio, ''),
+        { include_blank: false },
+        { class: 'form-select', onchange: 'optionChange(this);' } %>
+    </div>
 
-      <button type="submit" class="btn btn-info m-1 mr-sm-2" style="border-radius: 0; margin-left: 5px;" >
+    <div class="d-inline-block w-100" style="min-width: 150px; max-width: 250px;">
+      <%= form.select :content_id,
+        options_for_select(audio_case || [], ''),
+        { include_blank: false },
+        { class: 'form-select' } %>
+    </div>
+    
+    <% language_options.each_with_index do |lang, index| %>
+        <%= form.radio_button :language, lang, id: "language_#{lang}", class: 'btn-check visually-hidden', autocomplete: 'off', checked: index.zero? %>
+        <%= form.label :language, lang, for: "language_#{lang}", class: 'btn btn-primary mb-1 mr-sm-2' %>
+    <% end %>
+
+    <div class="d-inline-block w-100" style="max-width: 250px;">
+      <button type="submit" class="btn btn-info w-100">
         <i class="fas fa-search"></i>
       </button>
-      <style>
-      @media (max-width: 500px) {
-        .d-flex {
-          display: contents !important;
-        }
-      }
-      .btn-primary {
-        background-color: aliceblue;
-        color: black;
-      }
+    </div>
 
-      .btn-primary:hover {
-        background-color: #007bff; /* Change to desired hover color */
+  <% end %>
+</div>
+
+  </div>
+  <style>
+    @media only screen and (max-width: 500px) {
+      .w-75 {
+        width: 100% !important;
       }
-    
-      .btn-primary.active {
-        background-color: #007bff; /* Change to desired selected color */
-      }
-      </style>      
-    <% end %>
-    </div>
-    </div>
-    <hr class="mx-0 border border-secondary border-2 opacity-75">
-    <div class="col">
-      <div id="audio_d"></div>
-    </div>
+    }
+    .btn-primary {
+      background-color: aliceblue;
+      color: black;
+    }
+
+    .btn-primary:hover {
+      background-color: #007bff; /* Change to desired hover color */
+    }
+  
+    .btn-primary.active {
+      background-color: #007bff; /* Change to desired selected color */
+    }
+  </style>
+  <hr class="mx-0 border border-secondary border-2 opacity-75">
+  <div class="col">
+    <div id="audio_d"></div>
+  </div>
+</div>
+
+

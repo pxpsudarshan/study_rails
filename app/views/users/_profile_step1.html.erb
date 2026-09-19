@@ -1,0 +1,209 @@
+<!-- ====================== STEP 1: 個人情報 ====================== -->
+<div class="row mb-2">
+  <div class="col">
+    <h3 class="text-center mb-0"><%= t('title.step1') %></h3>
+  </div>
+</div>
+
+<%= f.fields_for :profile do |up| %>
+<div class="row g-3">
+  <!-- 左エリア：フォーム -->
+  <div class="col-md-9">
+    <div class="card">
+      <div class="card-body">
+
+        <!-- 氏名 -->
+        <div class="row mb-3 align-items-center">
+            <div class="col-sm-2 col-form-label">
+              <%= f.label :sei %><%== t('common.flg_required') %>
+            </div>
+            <div class="col-sm-4">
+                <%= f.text_field :sei, class: "form-control", placeholder: t('placeholder.sei'), required: true %>
+            </div>
+            <div class="col-sm-2 col-form-label">
+              <%= f.label :mei %><%== t('common.flg_required') %>
+            </div>
+            <div class="col-sm-4">
+                <%= f.text_field :mei, class: "form-control", placeholder: t('placeholder.mei'), required: true %>
+            </div>
+        </div>
+
+        <!-- 氏名（カタカナ） -->
+        <div class="row mb-3 align-items-center">
+            <div class="col-sm-2 col-form-label">
+              <%= f.label :sei_kana %><%== t('common.flg_required') %>
+            </div>
+            <div class="col-sm-4">
+                <%= f.text_field :sei_kana, class: "form-control", placeholder: t('placeholder.sei_kana'), required: true %>
+            </div>
+            <div class="col-sm-2 col-form-label">
+              <%= f.label :mei_kana %><%== t('common.flg_required') %>
+            </div>
+            <div class="col-sm-4">
+                <%= f.text_field :mei_kana, class: "form-control", placeholder: t('placeholder.mei_kana'), required: true %>
+            </div>
+        </div>
+
+        <!-- 国籍 + 性別（同じ行に並べる） -->
+        <div class="row mb-3">
+          <!-- 国籍 -->
+          <div class="col-md-6">
+            <div class="row align-items-center">
+              <div class="col-sm-4 col-form-label">
+                <%= up.label :kokuseki %><%== t('common.flg_required') %>
+              </div>
+              <div class="col-sm-8">
+                <%= up.select :kokuseki, options_for_select(kokuseki_array, up.object.kokuseki), { include_blank: true }, class: "form-select", required: true %>
+              </div>
+            </div>
+          </div>
+
+          <!-- 性別 -->
+          <div class="col-md-6 mt-3 mt-md-0">
+            <div class="row align-items-center">
+              <div class="col-sm-4 col-form-label">
+                <%= up.label :sex %>
+              </div>
+              <div class="col-sm-8">
+                <%= up.select :sex, options_for_select(sex_array, up.object.sex), { include_blank: true }, class: "form-select"
+                %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <!-- 生年月日 -->
+          <div class="col-md-6">
+            <div class="row align-items-center">
+              <div class="col-sm-4 col-form-label">
+                <%= up.label :birthday %><%== t('common.flg_required') %>
+              </div>
+              <div class="col-sm-8">
+                <%= up.date_field :birthday, class: "form-control", required: true %>
+              </div>
+            </div>
+          </div>
+
+          <!-- 就職希望時期 -->
+          <div class="col-md-6">
+
+          </div>
+        </div>
+
+        <!-- メール + 電話番号（セットで横並び 例） -->
+        <div class="row mb-3">
+          <!-- メール -->
+          <div class="col-md-6">
+            <div class="row align-items-center">
+              <div class="col-sm-4 col-form-label">
+                <%= f.label :email %>
+              </div>
+              <div class="col-sm-8">
+                <%= f.text_field :email, class: "form-control", disabled: true %>
+              </div>
+            </div>
+          </div>
+
+          <!-- 電話番号 -->
+          <div class="col-md-6 mt-3 mt-md-0">
+            <div class="row align-items-center">
+              <div class="col-sm-4 col-form-label">
+                <%= f.label :mobile %><%== t('common.flg_required') %>
+              </div>
+              <div class="col-sm-8">
+                <%= f.text_field :mobile, class: "form-control", required: true %>
+              </div>
+            </div>
+          </div>
+        </div>     
+        
+        <!-- 在留資格 -->
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <div class="row align-items-center">
+              <div class="col-sm-4 col-form-label">
+                <%= up.label :visa_type %><%== t('common.flg_required') %>
+              </div>
+              <div class="col-sm-8">
+                <%= up.select :visa_type, options_for_select(visa_type_array, up.object.visa_type),
+                    { include_blank: true }, class: "form-select", required: true %>
+              </div>
+            </div>
+          </div>
+
+          <!-- 有効期限 -->
+          <div class="col-md-6">
+            <div class="row align-items-center">
+              <div class="col-sm-4 col-form-label">
+                <%= up.label :visa_end_date %><%== t('common.flg_required') %>
+              </div>
+              <div class="col-sm-8">
+                <%= up.date_field :visa_end_date, class: "form-control", required: true %>
+              </div>
+            </div>
+          </div>
+        </div>           
+
+        <!-- 現住所 -->
+        <div class="row mb-3 align-items-center">
+          <div class="col-sm-2 col-form-label">
+            <%= up.label :address %><%== t('common.flg_required') %>
+          </div>
+          <div class="col-sm-10">
+            <%= up.text_field :address, class: "form-control", required: true %>
+          </div>
+        </div>
+
+        <!-- 住所2 -->
+        <div class="row mb-3 align-items-center">
+          <div class="col-sm-2 col-form-label">
+            <%= up.label :address_country %>
+          </div>
+          <div class="col-sm-10">
+            <%= up.text_field :address_country, class: "form-control", required: false %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 右側：写真 -->
+  <div class="col-md-3">
+    <div class="card h-100">
+      <div class="card-body d-flex flex-column align-items-center">
+        <!-- ▼ 写真表示用の「1つの枠」 -->
+        <div class="position-relative mb-3">
+          <div class="bg-light border overflow-hidden shadow-sm profile-avatar">
+            <img id="profile-photo-preview" class="w-100 h-100 <%= 'd-none' unless @user.profile&.photo&.attached? %>"
+                src="<%= url_for(@user.profile.photo) if @user.profile&.photo&.attached? %>" alt="Profile photo">
+            <div class="w-100 h-100 d-flex align-items-center justify-content-center">
+              <% unless @user.profile&.photo&.attached? %>                
+              <span id="profile-photo-placeholder" class="text-secondary fw-semibold">No Photo</span>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <!-- file input（隠す） -->
+        <%= up.file_field :photo, accept: "image/jpeg,image/png", id: 'profile_photo_input', onchange: "show_image(this);", class: "d-none" %>
+
+        <!-- メイン操作ボタン -->
+        <label for="profile_photo_input" class="btn btn-outline-primary btn-sm w-100"><%= t('common.select_photo')%></label>
+
+        <small class="text-muted mt-2 text-center"><%= t('common.prefer_image_format')%></small>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ナビゲーションボタン -->
+<div class="d-flex align-items-center my-3">
+  <!-- 右（次へ） -->
+  <div class="flex-fill text-end">
+    <%= f.submit t('buttons.update'),class: "btn btn-primary" %>
+  </div>
+</div>
+<% end %>

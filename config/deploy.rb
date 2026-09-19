@@ -44,7 +44,7 @@ namespace :deploy do
       within current_path do
         execute "touch  #{release_path}/tmp/restart.txt"
         execute :chmod, "u+x bin/rails"
-#        execute :bundle, :exec, "whenever --update-crontab #{fetch(:application)}  -s environment=#{fetch(:rails_env)}"
+        execute :bundle, :exec, "whenever --update-crontab #{fetch(:application)}  -s environment=#{fetch(:rails_env)}"
       end
     end
   end

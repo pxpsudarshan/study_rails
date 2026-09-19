@@ -7,10 +7,6 @@
   margin-bottom: 1px;
   cursor: pointer;
   font-size: 18px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
   word-wrap: break-word;
 }
 
@@ -71,4 +67,91 @@ body.darkpagetheme .radiocontainer {
 }
 body.darkpagetheme .radiocontainer:hover {
   background-color:#404e59;
+}
+
+@keyframes flashyPop {
+  0% {
+    transform: scale(0.5) rotate(-45deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.3) rotate(10deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.correct.animated-flashy {
+  animation: flashyPop 0.7s ease-out;
+  color: #4EF18B; /* 柔らかく鮮やかなグリーン */
+  text-shadow:
+    0 0 4px #4EF18B,
+    0 0 8px #4EF18B,
+    0 0 12px rgba(78, 241, 139, 0.7);
+}
+
+@keyframes flashBurst {
+  0% {
+    transform: scale(0.5);
+    opacity: 0.8;
+    box-shadow: 0 0 0px rgba(255, 255, 255, 0.5);
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 1;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.9);
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+    box-shadow: 0 0 60px rgba(255, 255, 255, 0);
+  }
+}
+
+.burst-bg {
+  position: absolute;
+  top: 110px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, #ffffff 10%, transparent 70%);
+  border-radius: 50%;
+  animation: flashBurst 0.6s ease-out forwards;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Info icon styles */
+.info-point {
+  display: inline-block;
+  margin-left: 10px;
+  cursor: pointer;
+  color: #007bff;
+  font-size: 16px;
+}
+.info-point:hover {
+  color: #0056b3;
+}
+
+/* Dropdown box styles */
+.option-dropdown {
+  margin-top: 6px;
+  padding: 10px;
+  background-color: #f0f8ff;
+  border-left: 3px solid #007bff;
+  font-size: 14px;
+}
+
+/* Hidden class to toggle visibility */
+.hidden {
+  display: none;
+}
+
+.card,
+.btn {
+  border-radius: 0 !important;
 }

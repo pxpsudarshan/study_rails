@@ -1,0 +1,46 @@
+<div class="row text-center">
+  <div class="col-md-12 mt-3">
+    <h2 class="border border-info rounded">語彙一覧</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <%= form_for :search, url: admin_vocab_tables_path, html: { id: 'search_vocab', class: 'form-horizontal', role: 'form', method: :get }, remote: true do |f| %>
+      <div class="row mb-3">
+        <label class='col-md-1 col-form-label text-md-end text-nowrap'><%= t('activerecord.attributes.vocab_table.vocab_code') %></label>
+        <div class="col-md-2">
+          <div class="input-group">
+            <%= f.text_field :vocab_code, class: 'form-control' %>
+          </div>
+        </div>
+        <label class='col-md-1 col-form-label text-md-end text-nowrap'><%= t('activerecord.attributes.vocab_table.vocab_read') %></label>
+        <div class="col-md-2">
+          <div class="input-group">
+            <%= f.text_field :vocab_read, class: 'form-control' %>
+          </div>
+        </div>
+        <label class='col-md-1 col-form-label text-md-end text-nowrap'><%= t('activerecord.attributes.vocab_table.jlpt_level') %></label>
+        <div class="col-md-2">
+          <div class="input-group">
+            <%= f.number_field :jlpt_level, min: 0, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-11 text-end mb-3">
+        <%= button_tag t('buttons.search').html_safe, id: 'search_button', onclick: 'NProgress.start();', class: 'btn btn-warning' %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-auto mb-3 ml-auto">
+    <%= link_to t('buttons.new').html_safe, new_admin_vocab_table_path, class: 'btn btn-primary' unless current_user.access_type != User::ACCESS_TYPE::KANRISHA %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12" id="vocabs">
+    <%= render 'vocab_table_list' %>
+  </div>
+</div>

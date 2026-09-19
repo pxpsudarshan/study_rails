@@ -1,29 +1,62 @@
- <div class="nested-fields-work">
-    <div  class="row mb-1">
-      <div class="col-md-2 mb-1">
-        <%= f.select :work_country, options_for_select([
-            ['-', 0],
-            ['日本', 1],
-            ['アメリカ', 2]
-        ], f.object.work_country), {}, class: "form-select", required: true %>
+<div class="nested-fields mb-3">
+  <div class="row g-2 align-items-end">
+
+    <!-- 勤務国 -->
+    <div class="col-md-1">
+      <div class="col-form-label small mb-1">
+        <%= f.label :work_country %>
       </div>
-      <div class="col-md mb-1">
-          <%= f.text_field :work_place, placeholder: '勤務先', class: 'form-control', required: true %>
+      <%= f.select :work_country, options_for_select(work_country_array, f.object.work_country), { include_blank: true }, class: 'form-select form-select-sm' %>
+    </div>
+
+    <!-- 勤務先 -->
+    <div class="col-md-4">
+      <div class="col-form-label small mb-1">
+        <%= f.label :work_place %>
       </div>
-      <div class="col-md-4 d-flex gap-2 mb-1">
-        <div class="">
-          <%= f.text_field :work_type, placeholder: '職業', class: 'form-control', required: true %>
-        </div>
-        <div class="w-50 mb-1">
-        <%= f.date_select :start_date, {discard_day: true, discard_month: true}, class: 'form-control', required: true %>
-        </div>
-        <p class="col-form-label text-center mb-1">~</p>
-        <div class="w-50 mb-1">
-        <%= f.date_select :end_date, {discard_day: true, discard_month: true}, class: 'form-control', required: true %>
-        </div>
-      </div>  
-      <div class="col-md-auto mb-1 text-nowrap mb-1">
-        <%= link_to_remove_association t('buttons.destroy').html_safe, f, class: "btn btn-danger btn-delete-work" %>
+      <%= f.text_field :work_place, placeholder: t('placeholder.work_place'), class: 'form-control form-control-sm' %>
+    </div>
+
+    <!-- 職業 -->
+    <div class="col-md-2">
+      <div class="col-form-label small mb-1">
+        <%= f.label :work_type %>
+      </div>
+      <%= f.text_field :work_type, placeholder: t('placeholder.work_type'), class: 'form-control form-control-sm' %>
+    </div>
+
+    <!-- 開始年月 -->
+    <div class="col-md-2">
+      <div class="col-form-label small mb-1">
+        <%= f.label :start_date %>
+      </div>
+      <div class="d-flex gap-1">
+        <%= f.date_select :start_date, { discard_day: true, start_year: Time.current.year - 15, end_year: Time.current.year }, { class: 'form-select form-select-sm' } %>
       </div>
     </div>
+
+    <!-- 区切り（固定幅） -->
+    <div class="col-md-1 text-center">
+      <div class="col-form-label small mb-1 invisible">~</div>
+      <span class="fw-bold">~</span>
+    </div>
+
+    <!-- 終了年月 -->
+    <div class="col-md-2">
+      <div class="col-form-label small mb-1">
+        <%= f.label :end_date %>
+      </div>
+      <div class="d-flex gap-1">
+        <%= f.date_select :end_date, { discard_day: true, start_year: Time.current.year - 15, end_year: Time.current.year + 1 }, { class: 'form-select form-select-sm' } %>
+      </div>
+    </div>
+
+    <!-- 削除ボタン -->
+    <div class="col-md-12 text-end mt-2">
+      <%= link_to_remove_association t('buttons.delete').html_safe, f, class: "btn btn-danger btn-sm" %>
+    </div>
+
+  </div>
+
+  <hr class="mt-2">
 </div>

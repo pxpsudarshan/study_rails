@@ -1,0 +1,11 @@
+<% if @result %>
+$("#error_explanations_required").text('Updated.');
+$("#error_explanations_required").removeClass('bg-danger');
+$("#error_explanations_required").addClass('bg-success');
+$("#error_explanations_required").addClass('show');
+<% else %>
+$("#error_explanations_required").text('Not Updated.');
+$("#error_explanations_required").removeClass('bg-success');
+$("#error_explanations_required").addClass('bg-danger');
+$("#error_explanations_required").addClass('show');
+<% end %>

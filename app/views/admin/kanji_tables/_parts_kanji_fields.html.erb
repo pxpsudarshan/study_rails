@@ -1,0 +1,10 @@
+<tr class="nested-fields">
+  <td class="text-center">
+    <%= f.text_field :parts_code_tmp, value: f.object.parts_table&.parts_code, class: 'form-control', required: true %>
+    <%= f.hidden_field :parts_table_id %>
+    <%= f.hidden_field :kanji_table_id %>
+  </td>
+  <td class="text-center text-nowrap">
+    <%= link_to_remove_association t('buttons.destroy').html_safe, f, class: "btn btn-danger" %>
+  </td>
+</tr>

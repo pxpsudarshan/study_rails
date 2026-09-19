@@ -1,17 +1,40 @@
+<div class="d-flex align-items-center w-100">
+  <button type="button"
+          id="toggleConversation"
+          class="btn btn-outline-dark ms-auto mb-1">
+          🎧 Listening Mode
+    </button>
+</div>
+
 <div class="row justify-content-center">
   <div class="col">
-    <div class="card mb-1 ">
-      <ul class="list-group list-group-flush text-left ">
-        <% @audio_d.each_with_index do |audio, index| %>
-          <li class="list-group-item dropdown-item" style="<%= audio.customer_flg ? 'text-align: end;' : '' %>">
-            <h6><%= get_content(audio, @selected_language) %></h6>
-            <audio controls>
-              <source src="<%= get_media(audio, @selected_language) %>" type="audio/mpeg" />
-            </audio>
-          </li>
-        <% end %>
-      </ul>
+    <div class="card mb-1">
+      <% if @audio_d.blank? %>
+        <p class="text-center text-muted mt-3">表示できる音声データがありません。</p>
+      <% else %>
+        <ul class="list-group list-group-flush text-left">
+          <% filtered_audio = @audio_d.take_while { |audio| get_content(audio, @selected_language).presence.present? } %>
+
+          <% if filtered_audio.present? %>
+            <% filtered_audio.each_with_index do |audio, index| %>
+              <li class="list-group-item dropdown-item" style="<%= audio.customer_flg ? 'text-align: end; background-color: #e9f5ff;' : '' %>">
+                <h6 class="text-wrap text-break js-conversation"><%= get_content(audio, @selected_language) %></h6>
+                <audio controls>
+                  <source src="<%= get_media(audio, @selected_language) %>" type="audio/mpeg" />
+                </audio>
+                <button type="button" class="btn btn-light border mb-3 btn-sm" onclick="toggleConversation(this)">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </li>
+            <% end %>
+          <% else %>
+            <li class="list-group-item text-muted text-center">
+              表示できる音声データがありません。
+            </li>
+          <% end %>
+
+        </ul>
+      <% end %>
     </div>
   </div>
 </div>
-

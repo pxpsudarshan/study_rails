@@ -1,0 +1,238 @@
+en:
+  activerecord:
+    attributes:
+      user:
+        email:                    'Email'
+        name:                     'Name'
+        name_kana:                "Name KANA"
+        name_label:               'Name'
+        name_furigana:            '(furigana)'
+        sei:                      'Last Name'
+        mei:                      'First Name'
+        sei_kana:                 'Last Name(Kana)'
+        mei_kana:                 'First Name(Kana)'
+        kokuseki:                 'Country'
+        lang_id:                  'Native Language'
+        last_sign_in:             'Last sign in'
+        login_count:              'Login Count'
+        studyed:                  'Studyed'
+        learned:                  'Learned'
+        jp_level:                 'JLPT Level'
+        login_flg:                'Login'
+        access_type:              'Access Type'
+        mobile:                   'Mobile'
+        new_password:             'New Password'
+        confirm_password:         'Confirm Password'
+        password:                 'Password'
+        password_confirmation:    'Password Confirmation'
+        plan:                     'Subscription Plan'
+        stripe_customer_id:       'Stripe Customer ID'
+        stripe_subscription_id:   'Stripe Subscription ID'
+        subscription_status:      'Subscription Status'
+        billing_address:          'Billing Address'
+        trial_end_date:           'Trial End Date'        
+
+      profile:
+        kokuseki:          "Nationality"
+        sex:               "Gender"
+        birthday:          "Date of Birth"
+        email:             "Email"
+        phone:             "Phone Number"
+        address:           "Current Address"
+        address_country:   "Country of Origin"
+        no_photo:          "No Photo"
+        image_type:        "JPG / PNG formats supported"
+        jp_school_date:    "Enrollment Date (Japan)"
+        school_date:       "Enrollment Date"
+        graduation_date:   "Graduation Date"
+        jp_school_name:    "School Name (Japan)"
+        school_name_foreign: "School Name (Home Country)"
+        jp_school_type:    "School Category"
+        school_type:       "School Category"
+        jp_school_end:     "Graduation Status"
+        school_end:        "Graduation Status"
+        jp_school_senko:   "Major"
+        school_senko:      "Major"
+        school_name:       "School Name"
+        desired_job_type:  "Desired Job Type"
+        desired_industry:  "Desired Industry"
+        desired_work_place: "Desired Work Location"
+        desired_work_date: "Desired Start Date"
+        visa_type:         "Visa Status"
+        visa_end_date:     "Exp Date"
+        native_language:   "Native Language"
+        japanese_level:    "Japanese Ability"
+        english_level:     "English Ability"
+        other_languages:   "Other Languages"
+        skill:             "Hobbies, Skills, Strengths, etc."
+        year:              "Year"
+        month:             "Month"
+        work_country:      "Work Area"
+        work_place:        "Workplace"
+        work_type:         "Job Type"
+        work_start_date:   "Start Year"
+        work_end_date:     "End Year"
+        name:              "Name"
+
+      profile_work:
+        work_country: "Work Country"
+        work_place:   "Workplace"
+        work_type:    "Occupation"
+        start_date:   "Start Date"
+        end_date:     "End Date"
+
+      profile_qualification:
+        achieved_year:  "Year"
+        achieved_month: "Month"
+        qualification_name: "Qualification Name"
+
+      comp:
+        email:                    'Email'
+        name:                     'Name'
+        name_kana:                'Name in KANA'
+        sei:                      'Last'
+        mei:                      'First'
+        sei_kana:                 'Last Kana'
+        mei_kana:                 'First Kana'
+        company_name:             'Company Name'
+        comp_id:                  'Belonged to'
+        login_flg:                'Login'
+        access_type:              'Access Type'
+        user_count:               'Max Users'
+        business_type:            'Business Type'
+        company_url:              'Company URL'
+        department:               'Department'
+        name_label:               'Name'
+        name_furigana:            '(furigana)'
+        mobile:                   'Mobile'
+        new_password:             'New Password'
+        confirm_password:         'Confirm Password'
+        password:                 'Password'
+        password_confirmation:    'Password Confirmation'
+
+      company_store_contents:
+        occupation:               'Occupation'
+        vocab_code:               'Word'
+        vocab_read:               'Reading'
+        vocab_mean:               'Meaning'
+
+      job_profile_contents:
+        job_description:          'Job description'
+        location:                 'Job location'
+        visa_support:             'Visa support'
+        occupation:               'Occupation'
+        salary:                   'Salary'
+        employment_sts:           'Employment type'
+        year:                     'Joining[Year]'
+        month:                    'Joining[Month]'
+        visa_type:                'Visa type'
+
+      store_contents:
+        use:                      'Use place'
+        vocab_code:               'Word'
+        vocab_read:               'Reading'
+        vocab_mean:               'Meaning'
+
+      audio_a:
+        title_nation:             'Title'
+        sort:                     'Order'
+
+      audio_b:
+        title_nation:             'Title'
+        sort:                     'Order'
+
+      audio_c:
+        title_nation:             'Title'
+        title_sort:               'Order'
+
+      audio_c_content:
+        content:                  'Title'
+        sort:                     'Order'
+
+      audio_d:
+        content:                  'Title'
+        sort:                     'Order'
+        customer_flg:             'Client'
+        audio_file:               'Audio File'
+
+      language: &language
+        content:                  'Title'
+        language:                 'Language'
+
+      languages: *language
+
+      tokutei:
+        sort:                     'Order'
+        title:                    'Title'
+
+      tokutei_question: &tokutei_question
+        sort:                     'Order'
+        title:                    'Title'
+        content:                  'Content'
+        image_flg:                'Image'
+      tokutei_questions: *tokutei_question
+
+      tokutei_answer: &tokutei_answer
+        sort:                     'Order'
+        title:                    'Title'
+        content:                  'Content'
+        correct_flg:              'Correct'
+        image_flg:                'Image'
+      tokutei_answers: *tokutei_answer
+
+      tokutei_explain:
+        content:                  'Content'
+        image_flg:                'Image'
+
+      parts_table: &parts_table
+        parts_code:               'Parts Code'
+        kanji_body:               'Kanji Body'
+
+      parts_kanjis: *parts_table
+
+      kanji_table: &kanji_table
+        kanji_code:               'Kanji Code'
+        parts_body:               'Parts Body'
+        vocab_body:               'Word'
+      kanji_tables: *kanji_table
+
+      kanji_vocabs: *kanji_table
+
+      vocab_table: &vocab_table
+        sort:                     'Sort'
+        vocab_code:               'Word Code'
+        vocab_read:               'Word Read'
+        kanji_body:               'Kanji Body'
+        jlpt_level:               'JLPT'
+        example:                  'Example'
+        hide_flg:                 'Hide'
+      vocab_tables: *vocab_table
+
+      vocab_nation: &vocab_nation
+        sort:                     'Sort'
+        lang:                     'Lang'
+        nation_code:              'Content'
+        example:                  'Example'
+        created_at:               'Created At'
+        created_by:               'Created By'
+        updated_at:               'Updated At'
+        updated_by:               'Updated By'
+        hide_flg:                 'Hide'
+      vocab_nations: *vocab_nation
+
+      vocab_genre:
+        title:                    'Title'
+        sort:                     'Sort'
+        hide_flg:                 'Hide'
+
+      vocab_genre_content: &vocab_genre_content
+        sort:                     'Sort'
+        hide_flg:                 'Hide'
+        vocab_genre_id:           'Genre'
+      vocab_genre_contents: *vocab_genre_content
+
+      channel:
+        channel_name:             'Channel Name'
+
+      block_ip:
+        ipaddr:                   'IP Address'

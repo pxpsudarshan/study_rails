@@ -1,32 +1,89 @@
-  <%= paginate @cards, remote: true %>
+<!-- xsのみ表示 / sm以上は非表示 -->
+<!-- xsのみ -->
+<div class="d-flex d-sm-none justify-content-center w-100">
+  <%= paginate @cards, remote: true, window: 1, outer_window: 0 %>
+</div>
+<!-- タブレット：中くらい -->
+<!-- sm〜mdのみ -->
+<div class="d-none d-sm-flex d-md-none justify-content-center w-100">
+  <%= paginate @cards, remote: true, window: 2, outer_window: 1 %>
+</div>
+
+<div class="m-auto w-75 row">
+  <div class="d-flex justify-content-between align-items-center flex-wrap w-100">
+    <!-- desktop pager -->
+    <div class="d-none d-md-block">
+      <%= paginate @cards, remote: true, window: 3, outer_window: 1 %>
+    </div>
+
+    <!-- toggle buttons -->
+    <div class="btn-group" role="group" aria-label="Hide toggles">
+      <button type="button" id="toggleHiragana" class="btn btn-outline-dark rounded-0 m-1">Hiragana</button>
+      <button type="button" id="toggleKanji" class="btn btn-outline-dark rounded-0 m-1">Kanji</button>
+      <button type="button" id="toggleMeaning" class="btn btn-outline-dark rounded-0 m-1">Meaning</button>
+    </div>
+  </div>
   <% @cards.each do |card| %>
-    <div class="col-sm-3 mt-1" style="min-width: 150px;">
-      <div class="card rounded-0" style="height: 160px; overflow: auto;">
-        <div class="card-body text-center">
-          <div class="mycard_status">
-            <% if card.vocab_mycards.where(user_id: current_user.id).present? %>
-            <%= '⭐️' %>
-            <% end %>
-          </div>
-          <p class="card-text"><%= card.vocab_read %></p>
-          <hr class="m-1" >
-          <%= link_to card.vocab_code, jlpt_path(id: card.id), class: 'underline d-inline-block w-100 fs-2' %>
-          <%
-            text = card.vocab_nations.where(lang: current_user.lang_id)
-          %>
-          <hr class="m-1" >
-          <p class="card-text">
-          <% if text.length > 1 %>
-            <% text.each_with_index do |txt, index| %>
-              <%= txt.nation_code %><%= index < text.length - 1 ? ',' : '' %>
-            <% end %>
-          <% else %>
-            <%= text.first.nation_code if text.present? %>
-          <% end %>
-          </p>
+  <div class="col-sm-3 mt-1" style="min-width: 150px;">
+    <div class="card rounded-0 flip-target" style="height: 160px; overflow: auto;">
+      <div class="card-body text-center">
+
+        <% is_favorited = card.vocab_mycards.where(user_id: current_user.id).exists? %>
+        <div class="mycard_status">
+          <!-- 既存のお気に入りボタンはそのまま -->
+          <button class="btn p-0 border-0 bg-transparent toggle-favorite position-relative"
+                  type="button"
+                  title="Favorite"
+                  aria-pressed="<%= is_favorited ? 'true' : 'false' %>"
+                  data-card-id="<%= card.id %>"
+                  style="width:24px; height:24px;">
+            <i class="far fa-star fa-lg text-secondary"></i>
+            <i class="fas fa-star fa-lg text-secondary position-absolute shadow-star" style="top:2px; left:2px;"></i>
+            <i class="fas fa-star fa-lg text-warning position-absolute filled-star" style="top:0; left:0;"></i>
+          </button>
         </div>
+
+
+        <button class="btn p-0 mycard_swip border-0 bg-transparent js-swip" type="button" title="flip" style="width:24px; height:24px;"><i class="fas fa-retweet"></i>
+        </button>
+
+        <!-- ひらがな -->
+        <p class="card-text js-hiragana"><%= card.vocab_read %></p>
+
+        
+        <!-- 漢字（ここでは vocab_code を「漢字」として扱う前提。必要なら差し替え） -->
+        <div class="js-kanji">
+        <hr class="m-1">
+          <%= link_to card.vocab_code, jlpt_path(id: card.id), class: 'underline d-inline-block w-100 fs-2 link-opacity-50-hover link-dark' %>
+        </div>
+
+        <div class="js-meaning">
+          <% langs = current_user.lang_id == "EN" ? ["EN"] : [current_user.lang_id, "EN"] %>
+          <% texts = card.vocab_nations
+                        .where(hide_flg: false, lang: langs)
+                        .sort_by { |text| langs.index(text.lang) } %>
+
+          <% if texts.present? %>
+            <hr class="m-1">
+
+            <p class="card-text js-meaning">
+              <% texts.each_with_index do |txt, index| %>
+                <%= txt.nation_code %>
+
+                <% if index < texts.length - 1 %>
+                  <hr class="m-1">
+                <% end %>
+              <% end %>
+            </p>
+          <% end %>
+        </div>
+          
       </div>
     </div>
+  </div>
   <% end %>
   <strong><%= page_entries_info @cards, :entry_name => '' %></strong>
-  <%= paginate @cards, remote: true %>
+  <%= paginate @cards, remote: true, window: 1, outer_window: 0 %>
+</div>
+
+

@@ -8,7 +8,8 @@
           <p class="card-text text-center"> <%#= kanji[:eng_mean] %> </p>
           
           <div class="position-absolute top-0 end-0 p-2">
-          <button type="button" class="btn btn-sm btn-outline-primary"
+            <%= link_to '<i class="fas fa-book-open"></i>'.html_safe, kanji_info_parts_path(id: kanji.id), remote: true, class: "btn btn-outline-primary btn-sm" %>
+          <!--<button type="button" class="btn btn-sm btn-outline-primary"
           onclick="Openmodal(
             '<%= kanji.kanji_code %>', 
             '', 
@@ -18,7 +19,7 @@
           )"
           data-bs-toggle="modal" data-bs-target="#kanjiModal">
           <i class="fas fa-book-open"></i>
-        </button>
+        </button>-->
         </div>        
         </div>
       </div>
@@ -26,23 +27,4 @@
   <% end %>
 </div>
 <!-- Modal for displaying Kanji details -->
-<div class="modal fade" id="kanjiModal" tabindex="-1" aria-labelledby="kanjiModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content rounded-3 shadow-lg">
-      <div class="modal-header">
-        <h1 class="modal-title" id="ModalHeaderLabel">項目</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-      <p><strong >Meaning:</strong> <span id="modal-meaning"></span></p>
-      <p><strong >Kun:</strong> <span id="modal-kunyomi"></span></p>
-      <p><strong >On:</strong> <span id="modal-onyomi"></span></p>
-      <p><strong >Parts:</strong> <span id="modal-parts"></span></p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
+<div id="detail_modal"></div>
