@@ -182,7 +182,10 @@ Rails.application.routes.draw do
   resources :users do
     collection do
       get :verify_email
+      get :edit_verification_email
+      patch :update_verification_email
       post :resend_verification_email
+      post :back_to_login
     end
     member do
       get :profile

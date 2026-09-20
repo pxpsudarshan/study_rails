@@ -702,6 +702,25 @@ en:
     verify_email_text:  'Please click the link below to verify your email address.'
     trial_ended:       'Trial period is ended.'
 
+  layouts:
+    devise:
+      specification:  'FileLayout'
+  exception:
+    save_error:       'An error occurred while registering the master data.'
+    save_error:       'An error occurred while registering the master data.'
+    delete_error:     'An error occurred while deleting the master data.'
+    invalid_date:     'The format is invalid.'
+    invalid_password: 'must contain at least one uppercase letter, one lowercase letter, and one digit.'
+    create_error:     'An error occurred while creating the record.'
+  display_condition:
+    number:           "Display by number"
+    search:           "Search"
+
+  time:
+    formats:
+      only_time: "%H:%M"
+      kintone_job: '%Y/%m/%d %H:%M:%S'   
+
   page_title:
     users:
       index:          '<i class="fas fa-user"></i> Student List'
@@ -756,10 +775,8 @@ en:
     recipient: Your email address
     step_open: Find the verification email in your inbox.
     step_verify: Open the link in the email to verify your address.
-    step_return: Sign in again to start learning.
     help_title: Can't find the email?
     help_body: Check your spam or junk folder. If you just signed up, allow a few minutes for the email to arrive.
-    continue: Continue after verification
     sign_in: Back to sign in
     link_hint: Email verification is completed using the link in your email.
     resend: Resend verification email
@@ -769,3 +786,8 @@ en:
     cooldown: Please wait 60 seconds between verification emails.
     send_failed: We couldn't send the email. Please try again shortly.
     language: Language
+    change_email: Change email address
+    change_email_hint: Enter the correct email address. We will send a new verification link.
+    save_email: Save and send verification email
+    back: Back to verification
+    back_to_login: Back to login

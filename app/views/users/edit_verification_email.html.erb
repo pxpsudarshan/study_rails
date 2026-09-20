@@ -1,0 +1,11 @@
+<section class="bg-white border rounded-4 shadow-sm p-4 p-sm-5" aria-labelledby="change-email-title">
+  <h1 id="change-email-title" class="h3 fw-bold mb-3"><%= t('email_verification.change_email') %></h1>
+  <p class="small text-muted mb-4"><%= t('email_verification.change_email_hint') %></p>
+  <%= form_with model: @user, url: update_verification_email_users_path, method: :patch, local: true do |f| %>
+    <%= render 'users/shared/error_messages', resource: @user %>
+    <%= f.label :email, t('email_verification.recipient'), class: 'form-label' %>
+    <%= f.email_field :email, required: true, autocomplete: 'email', class: 'form-control mb-3' %>
+    <%= f.submit t('email_verification.save_email'), class: 'btn btn-dark w-100 py-3' %>
+  <% end %>
+  <%= link_to t('email_verification.back'), verify_email_users_path, class: 'd-block text-center text-secondary small mt-3' %>
+</section>

@@ -8,8 +8,8 @@
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
   <%= favicon_link_tag "favicon.ico" %>
-  <%= stylesheet_link_tag "application", media: "all", 'data-turbo-track': 'reload' %>
-  <%= stylesheet_link_tag "verify_email", media: "all", 'data-turbo-track': 'reload' %>
+  <%= stylesheet_link_tag "application", "verify_email", media: "all", 'data-turbo-track': 'reload' %>
+  <%= javascript_include_tag "application", 'data-turbo-track': 'reload' %>
 </head>
 <body class="verification-page min-vh-100">
   <header class="verification-header mx-auto px-4 py-4 d-flex align-items-center justify-content-between gap-3">

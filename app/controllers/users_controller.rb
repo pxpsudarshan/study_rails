@@ -1,7 +1,12 @@
 class UsersController < ApplicationController
-  before_action :parent, except: [:verify_email, :resend_verification_email]
-  skip_before_action :check_email, only: [:resend_verification_email]
-  skip_before_action :authenticate_users, only: [:verify_email]
+  before_action :parent, except: [:verify_email, :resend_verification_email, :edit_verification_email, :update_verification_email, :back_to_login]
+  skip_before_action :check_email, only: [:resend_verification_email, :edit_verification_email, :update_verification_email, :back_to_login]
+  skip_before_action :authenticate_users, only: [:verify_email, :back_to_login]
+
+  def back_to_login
+    sign_out :user
+    redirect_to new_user_session_path
+  end
 
   def verify_email
     redirect_to menus_path and return if current_user.present? && current_user.email_verify_flg
@@ -14,15 +19,35 @@ class UsersController < ApplicationController
     render :verify_email, layout: 'verify_email'
   end
 
+  def edit_verification_email
+    redirect_to menus_path and return if current_user.email_verify_flg
+    @user = current_user
+    render :edit_verification_email, layout: 'verify_email'
+  end
+
+  def update_verification_email
+    @user = current_user
+    result = EmailVerificationSender.call(@user, attributes: params.require(:user).permit(:email))
+    redirect_to menus_path and return if result == :verified
+    if result == :throttled
+      redirect_to edit_verification_email_users_path, flash: { warning: t('email_verification.cooldown') }
+    else
+      redirect_to verify_email_users_path, notice: t('email_verification.resent')
+    end
+  rescue ActiveRecord::RecordInvalid
+    render :edit_verification_email, layout: 'verify_email', status: :unprocessable_entity
+  rescue StandardError => e
+    Rails.logger.error("Verification email change failed: #{e.class}")
+    flash.now[:alert] = t('email_verification.send_failed')
+    render :edit_verification_email, layout: 'verify_email', status: :unprocessable_entity
+  end
+
   def resend_verification_email
     result = EmailVerificationSender.call(current_user)
-    if result == :verified
-      redirect_to menus_path
-    else
-      key = result == :sent ? :success : :warning
-      message = result == :sent ? 'email_verification.resent' : 'email_verification.cooldown'
-      redirect_to verify_email_users_path, flash: { key => t(message) }
-    end
+    redirect_to menus_path and return if result == :verified
+    key = result == :sent ? :success : :warning
+    message = result == :sent ? 'email_verification.resent' : 'email_verification.cooldown'
+    redirect_to verify_email_users_path, flash: { key => t(message) }
   rescue StandardError => e
     Rails.logger.error("Verification email delivery failed: #{e.class}")
     redirect_to verify_email_users_path, alert: t('email_verification.send_failed')
