@@ -8,7 +8,9 @@
       <div class="border p-3 mt-4">
         <span class="d-block text-muted small mb-1"><%= t('email_verification.recipient') %></span>
         <strong class="small text-break"><%= current_user.email %></strong>
-        <%= link_to t('email_verification.change_email'), edit_verification_email_users_path, class: 'd-block small text-secondary mt-2' %>
+        <div class="mt-2">
+          <%= link_to t('email_verification.change_email'), edit_verification_email_users_path, class: 'btn btn-outline-dark btn-sm rounded-0' %>
+        </div>
       </div>
     <% end %>
     <ol class="text-start small my-4">
