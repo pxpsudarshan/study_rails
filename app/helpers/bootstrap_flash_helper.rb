@@ -9,7 +9,6 @@ module BootstrapFlashHelper
 
       type = :success if type == "notice"
       type = :danger  if type == "alert"
-      type = :danger  if type == "recaptcha_error"
       type = :success if type == "success"
       type = :info if type == "info"
       type = :warning if type == "warning"

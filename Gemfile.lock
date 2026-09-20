@@ -241,8 +241,6 @@ GEM
       thor (~> 1.0)
       zeitwerk (~> 2.5)
     rake (13.0.6)
-    recaptcha (5.12.3)
-      json
     redis-client (0.25.1)
       connection_pool
     reline (0.3.1)
@@ -332,7 +330,6 @@ DEPENDENCIES
   rails (~> 7.0.4)
   rails-erd
   rails_autolink
-  recaptcha
   sassc-rails
   select2-rails
   sidekiq (~> 7.3)
