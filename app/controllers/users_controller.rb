@@ -16,13 +16,13 @@ class UsersController < ApplicationController
       sign_out user
       redirect_to menus_path and return
     end
-    render :verify_email, layout: 'verify_email'
+    render :verify_email, layout: 'devise'
   end
 
   def edit_verification_email
     redirect_to menus_path and return if current_user.email_verify_flg
     @user = current_user
-    render :edit_verification_email, layout: 'verify_email'
+    render :edit_verification_email, layout: 'devise'
   end
 
   def update_verification_email
@@ -35,11 +35,11 @@ class UsersController < ApplicationController
       redirect_to verify_email_users_path, notice: t('email_verification.resent')
     end
   rescue ActiveRecord::RecordInvalid
-    render :edit_verification_email, layout: 'verify_email', status: :unprocessable_entity
+    render :edit_verification_email, layout: 'devise', status: :unprocessable_entity
   rescue StandardError => e
     Rails.logger.error("Verification email change failed: #{e.class}")
     flash.now[:alert] = t('email_verification.send_failed')
-    render :edit_verification_email, layout: 'verify_email', status: :unprocessable_entity
+    render :edit_verification_email, layout: 'devise', status: :unprocessable_entity
   end
 
   def resend_verification_email

@@ -17,9 +17,9 @@
 </head>
 <body>
 <%= javascript_include_tag 'application', 'data-turbo-track': 'reload' %>
-  <main class="form-signin w-100 m-auto">
+  <main class="form-signin w-100 mh-100 m-auto">
   <!-- 🌐 Language + 🎨 Color selector -->
-  <% if action_name == 'new' && @locales.size > 1 %>
+  <% if ['new', 'verify_email', 'edit_verification_email'].include?(action_name) && @locales.size > 1 %>
     <div class="language-selector text-end d-flex justify-content-end align-items-center mb-3">
       <%= select_tag 'select_language', options_for_select(@locales, @locale), class: 'form-select w-auto d-inline-block me-2' %>
       <input type="color" id="bgColorPicker" value="#000000" class="form-control form-control-color" title="Choose background color">
