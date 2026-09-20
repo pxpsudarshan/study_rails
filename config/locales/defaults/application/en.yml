@@ -748,4 +748,47 @@ en:
     genre:
       title: "Genre"
       empty: "Empty"
-     
+
+  devise:
+    failure:
+      unauthenticated: ''
+
+  offers_ui:
+    filters: "Search filters"
+    occupation: "Occupation"
+    rate: "Minimum achievement"
+    any_rate: "Any achievement"
+    scope: "Search scope"
+    all_users: "All users"
+    applicants: "Your applicants"
+    source: "Vocabulary source"
+    company_words: "Company vocabulary"
+    genres: "Genres"
+    genre_hint: "Select genres"
+    search: "Search candidates"
+    searching: "Searching…"
+    reset: "Reset filters"
+    search_error: "Search failed. Please try again."
+    results: "Search results"
+    candidate: "candidate"
+    select_page: "Select all on this page"
+    select: "Select"
+    entry: "Entry number"
+    nationality: "Nationality"
+    address: "Current address"
+    sex: "Gender"
+    age: "Age"
+    education: "Education"
+    achievement: "Achievement"
+    select_candidate: "Select candidate %{entry}"
+    selected: "Selected candidates"
+    selection_hint: "Select candidates on this page before requesting details. Selections reset when you change pages or search again."
+    request: "Request candidate details"
+    sending: "Sending…"
+    contact_hint: "Bizport will contact your company about your request."
+    no_results: "No candidates found"
+    no_results_hint: "Try a lower minimum achievement or different search filters."
+    start_title: "Start your candidate search"
+    start_hint: "Choose your filters above, then select Search candidates."
+    sent_title: "Your request has been sent"
+    back: "Back to candidate search"

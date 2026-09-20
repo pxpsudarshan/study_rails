@@ -1,63 +1,62 @@
 <% if @offers.present? %>
-<div class="row p-3">
-  <table class="cell-border">
-    <div class="row">
-      <div class="col-sm-3 text-center bg-white m-0 px-0">
-        <h2 class="border border-4 m-0">検索結果</h2>
+  <div class="card border shadow-sm">
+    <div class="card-body p-3 p-md-4">
+      <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+        <h2 class="h5 mb-0"><%= t('offers_ui.results') %></h2>
+        <span class="small text-muted"><%= page_entries_info @offers, entry_name: t('offers_ui.candidate') %></span>
       </div>
-      <div class="col-sm text-center align-middle">
-        <h4>該当者情報</h4>
-      </div>
-      <div class="col-sm-3" id="custom-paging">
-      </div>
-    </div>
-  </table>
-</div>
-<%= form_for :offer, url: mail_request_kaisha_offers_path, html: { class: 'needs-validation', novalidate: true, role: 'form' } do |f| %>
-<%= paginate @offers, remote: true %>
-<div class="row">
-  <div class="col-sm">
-    <table class="table table-bordered table-hover table-sm">
-      <thead>
-        <tr class="table-success">
-          <th class="text-center"><%= '選択' %></th>
-          <th class="text-center"><%= 'エントリー番号' %></th>
-          <th class="text-center"><%= '国籍' %></th>
-          <th class="text-center"><%= '現住所' %></th>
-          <th class="text-center"><%= '性別' %></th>
-          <th class="text-center"><%= '年齢' %></th>
-          <th class="text-center"><%= '最終学歴' %></th>
-          <th class="text-end"><%= '達成率' %></th>
-        </tr>
-      </thead>
-      <tbody>
-
-      <% @offers.each do |user| %>
-        <tr class="details_row nested-fields">
-          <td class="text-center"><%= f.check_box :ids, { multiple: true, class: 'form-check-input'}, user.id, false %></td>
-          <td class="text-center"><%= user.entry_no %></td>
-          <td class="text-center"><%= kokuseki_array(user.profile.kokuseki) %></td>
-          <td class="text-center"><%= user.profile.address %></td>
-          <td class="text-center"><%= sex_array(user.profile.sex) %></td>
-          <td class="text-center"><%= get_age(user.profile.birthday) %></td>
-          <% if user.profile.jp_school_name.present? %>
-          <td class="text-center"><%= school_type_array(user.profile.jp_school_type) %> / <%= school_end_array(user.profile.jp_school_end) %></td>
-          <% else %>
-          <td class="text-center"><%= user.profile.school_type %> / <%= user.profile.school_end %></td>
-          <% end %>
-          <td class="text-end"><%= @stud_rates[user.id] %>％</td>
-        </tr>
+      <%= form_for :offer, url: mail_request_kaisha_offers_path, html: { id: 'offer-request' } do |f| %>
+        <div class="form-check mb-3">
+          <%= check_box_tag :select_page, '1', false, id: 'offer-select-page', class: 'form-check-input' %>
+          <%= label_tag 'offer-select-page', t('offers_ui.select_page'), class: 'form-check-label small' %>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover align-middle mb-0">
+            <caption class="visually-hidden"><%= t('offers_ui.results') %></caption>
+            <thead class="table-light">
+              <tr>
+                <% %w(select entry nationality address sex age education achievement).each do |key| %>
+                  <th scope="col" class="text-nowrap small"><%= t("offers_ui.#{key}") %></th>
+                <% end %>
+              </tr>
+            </thead>
+            <tbody>
+              <% @offers.each do |user| %>
+                <tr>
+                  <td class="text-center"><%= f.check_box :ids, { multiple: true, class: 'form-check-input offer-selection', id: "offer-#{user.id}", aria: { label: t('offers_ui.select_candidate', entry: user.entry_no) } }, user.id, false %></td>
+                  <td class="text-nowrap fw-bold"><%= user.entry_no %></td>
+                  <td class="text-nowrap"><%= kokuseki_array(user.profile.kokuseki) %></td>
+                  <td><%= user.profile.address %></td>
+                  <td class="text-nowrap"><%= sex_array(user.profile.sex) %></td>
+                  <td><%= get_age(user.profile.birthday) %></td>
+                  <td class="small">
+                    <% if user.profile.jp_school_name.present? %>
+                      <%= school_type_array(user.profile.jp_school_type) %> / <%= school_end_array(user.profile.jp_school_end) %>
+                    <% else %>
+                      <%= user.profile.school_type %> / <%= user.profile.school_end %>
+                    <% end %>
+                  </td>
+                  <td class="text-end text-nowrap fw-bold"><%= @stud_rates[user.id] %>%</td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        <div class="mt-3"><%= paginate @offers, remote: true %></div>
+        <div class="border-top pt-3 mt-3 d-flex flex-wrap justify-content-between align-items-center gap-3">
+          <div>
+            <p class="fw-bold mb-1" role="status"><%= t('offers_ui.selected') %>: <span id="offer-selected-count">0</span></p>
+            <p class="small text-muted mb-0"><%= t('offers_ui.selection_hint') %></p>
+          </div>
+          <%= f.submit t('offers_ui.request'), class: 'btn btn-primary', id: 'offer-request-submit', disabled: true, data: { disable_with: t('offers_ui.sending') } %>
+        </div>
+        <p class="small text-muted mt-3 mb-0"><%= t('offers_ui.contact_hint') %></p>
       <% end %>
-      </tbody>
-    </table>
-  </div>    
-</div>
-<strong><%= page_entries_info @offers, :entry_name => '' %></strong>
-<div class="row">
-  <div class="col-sm-12 text-end mt-2">
-    <%= f.submit '詳細情報を希望する', class: 'btn btn-primary btn-lg mb-2' %>
-    <h6>ビズポート社より貴社様にご連絡致します。</h6>
+    </div>
   </div>
-</div>
-<% end %>
+<% else %>
+  <div class="border rounded bg-light text-center p-4 p-md-5">
+    <h2 class="h5"><%= t(params[:search].present? ? 'offers_ui.no_results' : 'offers_ui.start_title') %></h2>
+    <p class="text-muted mb-0"><%= t(params[:search].present? ? 'offers_ui.no_results_hint' : 'offers_ui.start_hint') %></p>
+  </div>
 <% end %>
