@@ -1,0 +1,27 @@
+<% items = breadcrumb_items %>
+<% unless controller_name == 'mains' %>
+  <nav data-breadcrumb-history
+       data-expand-label="<%= t('breadcrumbs.expand') %>"
+       data-scope="<%= breadcrumb_history_scope %>"
+       data-home="<%= controller_path.start_with?('kaisha/') ? kaisha_root_path : root_path %>"
+       data-page-label="<%= t('breadcrumbs.page', number: '%{number}') %>"
+       data-home-label="<%= t('breadcrumbs.home') %>"
+       data-label="<%= items.last&.first %>"
+       data-reset="<%= controller_name == 'menus' %>"
+       data-track="<%= request.get? %>"
+       <%= 'hidden' if items.empty? %>
+       aria-label="<%= t('breadcrumbs.label') %>" class="px-3 pt-3">
+    <ol class="breadcrumb mb-3">
+      <% items.each do |label, path| %>
+        <% if path %>
+          <li class="breadcrumb-item"><%= link_to label, path %></li>
+        <% else %>
+          <li class="breadcrumb-item active" aria-current="page"><%= label %></li>
+        <% end %>
+      <% end %>
+    </ol>
+    <div id="breadcrumb-history-dropdown" class="breadcrumb-dropdown" popover="auto" aria-label="<%= t('breadcrumbs.hidden') %>">
+      <ol class="breadcrumb-dropdown-list"></ol>
+    </div>
+  </nav>
+<% end %>

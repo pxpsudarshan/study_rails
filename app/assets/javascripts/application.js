@@ -13,6 +13,7 @@
 
 //= require jquery
 //= require jquery_ujs
+//= require breadcrumbs
 //= require jquery-ui/widgets/sortable
 
 //= require dayjs/dayjs.min
