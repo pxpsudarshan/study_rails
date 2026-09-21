@@ -113,8 +113,8 @@
   <% else %>
     <%= image_tag('backphoto_02.jpg', class: 'my-image', alt: 'background Image') if action_name != 'new_user' %>
   <% end %>
-  <% end %>
-  <main class="app-content overflow-hidden <%= 'w-100 p-3' if admin_content? %>">
+  <main class="overflow-hidden">
+    <%= render partial: "shared/breadcrumbs", formats: [:html] %>
     <%= bootstrap_flash %>
     <%= yield %>
   </main>

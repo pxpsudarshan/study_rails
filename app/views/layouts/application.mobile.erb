@@ -51,6 +51,7 @@
         <h1 class="page-header-mobile"><span class="page-title-mobile"><%= page_title_mobile.html_safe %></span></h1>
       </div>
     </div>
+    <%= render partial: "shared/breadcrumbs", formats: [:html] %>
     <%= bootstrap_flash %>
     <%= yield %>
     <%= render partial: "shared/footer" %>
