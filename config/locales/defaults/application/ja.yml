@@ -805,3 +805,13 @@ ja:
     start_hint: "上の検索条件を設定し、「候補者を検索」を押してください。"
     sent_title: "詳細情報のご希望を受け付けました"
     back: "候補者検索に戻る"
+
+  sidebar:
+    learn: "学習"
+    track: "学習記録"
+    career: "キャリア"
+    recruitment: "採用"
+    dashboard: "ホーム"
+    progress: "学習の進捗"
+    navigation: "メインナビゲーション"
+    menu: "メニュー"

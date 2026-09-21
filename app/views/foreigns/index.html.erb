@@ -1,6 +1,6 @@
 <%= stylesheet_link_tag "jlpt", media: "all", 'data-turbo-track': 'reload' %>
 <%= form_for :goi, url: foreigns_path, html: { id: 'gois', role: 'form', method: :get }, remote: true do |f| %>
-  <div class="m-auto w-50">
+  <div class="w-100 p-3">
     <%= f.text_field :goi, class: 'form-control' %>
     <%= f.submit 'next', class: 'btn btn-primary rounded-0 m-1' %>
   </div>

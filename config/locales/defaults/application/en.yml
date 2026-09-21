@@ -792,3 +792,13 @@ en:
     start_hint: "Choose your filters above, then select Search candidates."
     sent_title: "Your request has been sent"
     back: "Back to candidate search"
+
+  sidebar:
+    learn: "Learn"
+    track: "Track"
+    career: "Career"
+    recruitment: "Recruitment"
+    dashboard: "Dashboard"
+    progress: "Progress"
+    navigation: "Main navigation"
+    menu: "Menu"

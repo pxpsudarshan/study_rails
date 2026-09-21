@@ -67,3 +67,87 @@ textarea
 
 .offers-page *
   border-radius: 0 !important
+
+.app-sidebar
+  position: fixed
+  inset: 106px auto 0 0
+  width: var(--sidebar-width)
+  height: calc(100dvh - 106px)
+  display: flex
+  flex-direction: column
+  z-index: 1040
+  background: #171717
+  color: #eee
+  border-right: 1px solid #333
+  border-radius: 0
+  .app-sidebar-body
+    flex: 1
+    min-height: 0
+    overflow-y: auto
+  .app-sidebar-heading
+    color: #bcb5a8
+  .border-top
+    border-color: #38352f !important
+  .nav-link
+    color: inherit
+    font-size: .9rem
+  .nav-link:hover, .nav-link:focus-visible, .nav-link.active
+    background: #302a20
+    color: #e2c58f
+  .nav-link.active
+    box-shadow: inset 3px 0 #c4a66d
+    font-weight: 700
+
+.app-with-sidebar
+  --sidebar-width: 76px
+  padding-left: var(--sidebar-width)
+  .fixed-bottom
+    left: var(--sidebar-width)
+
+.app-sidebar-header
+  margin-left: calc(-1 * var(--sidebar-width))
+  background: linear-gradient(to top, #c4a66d 6px, transparent 6px), linear-gradient(#242424, #000)
+
+.app-sidebar-controls
+  position: fixed
+  top: 62px
+  left: 0
+  width: var(--sidebar-width)
+  z-index: 1040
+  background: #171717
+  .btn
+    width: 44px
+    height: 44px
+    align-items: center
+    justify-content: center
+    color: #e2c58f
+    border: 0
+    &:hover, &:focus-visible
+      background: #302a20
+
+@mixin sidebar-icons
+  .app-sidebar-body
+    padding: 16px 8px !important
+  .app-sidebar-heading, .app-sidebar-account, .nav-link span
+    display: none
+  .nav:not(:first-of-type)
+    margin-top: 16px
+  .nav-link
+    justify-content: center
+    min-height: 44px
+    padding: 8px !important
+
+@media (max-width: 991.98px)
+  .app-with-sidebar:not(.app-sidebar-expanded) .app-sidebar
+    @include sidebar-icons
+  .app-sidebar-expanded
+    .app-sidebar, .app-sidebar-controls
+      width: 270px
+
+@media (min-width: 992px)
+  .app-with-sidebar
+    --sidebar-width: 270px
+  .app-with-sidebar.app-sidebar-collapsed
+    --sidebar-width: 76px
+    .app-sidebar
+      @include sidebar-icons

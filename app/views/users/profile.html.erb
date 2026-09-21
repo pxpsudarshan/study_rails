@@ -1,5 +1,5 @@
 <%= form_for @user, url: update_profile_user_path,
-             html: { class: 'needs-validation w-75 m-auto', multipart: true, novalidate: true, id: 'profile', role: 'form' } do |f| %>
+             html: { class: 'needs-validation w-100 p-3', multipart: true, novalidate: true, id: 'profile', role: 'form' } do |f| %>
 
   <% if @user.errors.any? %>
     <div class="row">

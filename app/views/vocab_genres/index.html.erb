@@ -6,7 +6,7 @@
                 data: { turbo: false },
                 class: "" do |f| %>
 
-<div class="m-auto w-75 row justify-content-end mb-3">
+<div class="m-auto row justify-content-end mb-3">
     <% options_array = @children.map { |c| [current_user.lang_id == 'JP' ? c.title : (get_content(c, current_user.lang_id)||'Empty') , c.id] } %>
     <%= f.hidden_field :id, value: @id %>
 

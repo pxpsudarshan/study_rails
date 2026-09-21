@@ -20,7 +20,10 @@
     <%= javascript_include_tag 'html5shiv' %>
   <![endif]-->
 </head>
-<body>
+<body class="<%= 'app-with-sidebar' if show_app_sidebar? %>">
+  <% if show_app_sidebar? %>
+    <%= render 'shared/sidebar' %>
+  <% else %>
   <% if controller_name != 'mains' %>
   <nav class="navbar navbar-expand-md navbar-dark bg-black bg-gradient">
   <div class="container-fluid bg-black bg-gradient">
@@ -110,7 +113,8 @@
   <% else %>
     <%= image_tag('backphoto_02.jpg', class: 'my-image', alt: 'background Image') if action_name != 'new_user' %>
   <% end %>
-  <main class="overflow-hidden">
+  <% end %>
+  <main class="app-content overflow-hidden <%= 'w-100 p-3' if admin_content? %>">
     <%= bootstrap_flash %>
     <%= yield %>
   </main>

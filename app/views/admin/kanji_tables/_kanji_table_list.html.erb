@@ -15,7 +15,7 @@
       <tr class="details_row nested-fields">
         <td class="text-start"><%= kanji.kanji_code %></td>
         <td class="text-start text-nowrap"><%= kanji.parts_tables.map{ |pt| pt.parts_code }.join(', ') if kanji.parts_tables.present? %></td>
-        <td class="text-start w-75"><%= kanji.vocab_tables.map{ |vt| vt.vocab_code }.join(', ') if kanji.vocab_tables.present? %></td>
+        <td class="text-start"><%= kanji.vocab_tables.map{ |vt| vt.vocab_code }.join(', ') if kanji.vocab_tables.present? %></td>
         <td class="text-start text-nowrap"><%= link_to t('buttons.edit').html_safe, edit_admin_kanji_table_path(id: kanji.id), class: 'btn btn-sm btn-primary' %></td>
         <td class="text-start text-nowrap"><%= link_to t('buttons.destroy').html_safe, admin_kanji_table_path(id: kanji.id), method: :delete, class: 'btn btn-sm btn-danger' %></td>
       </tr>

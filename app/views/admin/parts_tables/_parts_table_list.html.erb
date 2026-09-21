@@ -13,7 +13,7 @@
     <% @parts_table.each do |part| %>
       <tr class="details_row nested-fields">
         <td class="text-start text-nowrap w-25"><%= part.parts_code %></td>
-        <td class="text-start w-75"><%= part.kanji_tables.map{ |kt| kt.kanji_code }.join(', ') if part.kanji_tables.present? %></td>
+        <td class="text-start"><%= part.kanji_tables.map{ |kt| kt.kanji_code }.join(', ') if part.kanji_tables.present? %></td>
         <td class="text-start text-nowrap"><%= link_to t('buttons.edit').html_safe, edit_admin_parts_table_path(id: part.id), class: 'btn btn-sm btn-primary' %></td>
         <td class="text-start text-nowrap"><%= link_to t('buttons.destroy').html_safe, admin_parts_table_path(id: part.id), method: :delete, class: 'btn btn-sm btn-danger' %></td>
       </tr>

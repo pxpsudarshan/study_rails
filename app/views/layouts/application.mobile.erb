@@ -19,7 +19,10 @@
     <%= javascript_include_tag 'html5shiv' %>
   <![endif]-->
 </head>
-<body>
+<body class="<%= 'app-with-sidebar' if show_app_sidebar? %>">
+  <% if show_app_sidebar? %>
+    <%= render 'shared/sidebar' %>
+  <% else %>
   <nav class="navbar navbar-expand-md navbar-light static-top bg-light">
   <div class="container-fluid">
     <a class="navbar-brand" href="<%= menus_path %>"><%= t('title.header') %></a>
@@ -41,7 +44,8 @@
   </div>
     <!-- /.navbar-static-side -->
   </nav>
-  <div class="container-fluid">
+  <% end %>
+  <div class="app-content container-fluid <%= 'w-100 p-3' if admin_content? %>">
     <div class="row">
       <div class="col-12">
         <h1 class="page-header-mobile"><span class="page-title-mobile"><%= page_title_mobile.html_safe %></span></h1>

@@ -1,6 +1,6 @@
 <% if @count != 0 %>
 
-<div class="m-auto w-75">
+<div class="m-auto">
 <!--
   <% @gois[:vocab_kanji].each_with_index do |vocab, idx| %>
     <%= link_to vocab["kanji_code"], parts_kanji_kanji_units_path(kanji: { kanji: vocab["kanji_org"] }), remote: true, class: 'rounded-0 m-1 btn btn-primary' if vocab["kanji_org"] != 0 %>
@@ -13,7 +13,7 @@
      <!-- Header Section -->
       <div class="d-flex align-items-center mb-4 border-bottom pb-3">
         <h6 class="me-auto fw-bold">JLPT <%= @gois[:jlpt_level] %><%= @vocab_mycard %></h6>
-        <div id="error_explanations_required" class="w-75 bg-danger bg-opacity-50 text-center text-white fade nation_alert"></div>
+        <div id="error_explanations_required" class="bg-danger bg-opacity-50 text-center text-white fade nation_alert"></div>
         <% kanji_parts = @gois[:vocab_kanji] %>
         <div class="ms-3">
         <% kanji_parts.each do |part| %>

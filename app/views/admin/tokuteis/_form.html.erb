@@ -64,7 +64,7 @@
         <tr class="table-success">
           <th class="text-start w-25"><%= t('activerecord.attributes.tokutei_question.sort') %></th>
           <th class="text-start w-25"><%= t('activerecord.attributes.tokutei_question.title') %></th>
-          <th class="text-start w-75"><%= t('activerecord.attributes.tokutei_question.content') %></th>
+          <th class="text-start"><%= t('activerecord.attributes.tokutei_question.content') %></th>
           <th class="text-start"><%= t('common.edit') %></th>
           <% if current_user.access_type == User::ACCESS_TYPE::KANRISHA %>
           <th class="text-start"><%= t('common.destroy') %></th>

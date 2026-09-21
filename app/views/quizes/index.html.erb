@@ -1,6 +1,6 @@
 <%= stylesheet_link_tag "quizes", media: "all", 'data-turbo-track': 'reload' %>
 <h2 class="text-center my-4"><%= t("quizes.title") %></h2>
-<div class="container" style="max-width: 720px;">
+<div class="container">
 
   <!-- ===================== -->
   <!-- Learning History -->
@@ -69,12 +69,12 @@
                             .order(:sort, :title) %>
 
         <% rows.each do |row| %>
-          <div class="col-6 col-md-4">
+          <div class="col-12">
             <%= link_to(
                   current_user.lang_id == 'JP' ? row.title :
                     (get_content(row, current_user.lang_id) || t("quizes.genre.empty")),
                   genre_quizes_path(genre_id: row.id),
-                  class: 'btn btn-outline-dark w-100 text-truncate'
+                  class: 'btn btn-outline-dark rounded-0 w-100 text-wrap'
                 ) %>
           </div>
         <% end %>

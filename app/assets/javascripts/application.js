@@ -475,3 +475,21 @@ $(window).resize(function () {
 
     
 // }
+
+// Keep sidebar navigation from changing the desktop menu state.
+Common.restoreSidebar = function() {
+  var collapsed = false;
+  try { collapsed = sessionStorage.getItem('niho.sidebar.collapsed') === 'true'; } catch (error) {}
+  document.body.classList.toggle('app-sidebar-collapsed', collapsed);
+  var button = document.querySelector('.app-sidebar-toggle.d-lg-inline-flex');
+  if (button) button.setAttribute('aria-expanded', String(!collapsed));
+};
+['DOMContentLoaded', 'turbolinks:load', 'turbo:load'].forEach(function(event) { document.addEventListener(event, Common.restoreSidebar); });
+document.addEventListener('click', function(event) {
+  var button = event.target.closest('.app-sidebar-toggle');
+  if (!button) return;
+  var desktop = window.matchMedia('(min-width: 992px)').matches;
+  var toggled = document.body.classList.toggle(desktop ? 'app-sidebar-collapsed' : 'app-sidebar-expanded');
+  button.setAttribute('aria-expanded', String(desktop ? !toggled : toggled));
+  if (desktop) { try { sessionStorage.setItem('niho.sidebar.collapsed', String(toggled)); } catch (error) {} }
+});
