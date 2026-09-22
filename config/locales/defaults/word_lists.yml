@@ -1,0 +1,56 @@
+en:
+  word_lists:
+    eyebrow: YOUR VOCABULARY LIBRARY
+    intro: Find your next words. Choose a JLPT level or explore a topic that interests you.
+    browse: Browse word lists →
+    my_cards: My saved words →
+    by_level: By JLPT level
+    by_genre: By genre
+    level_hint: Start with N5, or jump to the level you are working toward.
+    genre_hint: Learn words in context. Choose a genre or open its subgenres to narrow your focus.
+    explore: Explore words
+    all_words: Browse all words →
+    search: Find a genre
+    search_hint: Search genres and subgenres…
+    no_matches: No matching genres. Try a different search.
+    empty: New genres will appear here when available. You can explore JLPT vocabulary above.
+    words:
+      one: '%{count} word'
+      other: '%{count} words'
+    subgenres:
+      one: '%{count} subgenre'
+      other: '%{count} subgenres'
+    levels:
+      n5: Beginner
+      n4: Elementary
+      n3: Intermediate
+      n2: Upper intermediate
+      n1: Advanced
+ja:
+  word_lists:
+    eyebrow: あなたの語彙ライブラリー
+    intro: 次に学ぶ単語を見つけましょう。JLPTのレベルや興味のあるジャンルから選べます。
+    browse: 単語リストを見る →
+    my_cards: 保存した単語 →
+    by_level: JLPTレベルから選ぶ
+    by_genre: ジャンルから選ぶ
+    level_hint: N5から始めることも、目標のレベルに進むこともできます。
+    genre_hint: 場面に合わせて単語を学びましょう。サブジャンルを開くと、さらに絞り込めます。
+    explore: 単語を見る
+    all_words: すべての単語を見る →
+    search: ジャンルを探す
+    search_hint: ジャンル・サブジャンルを検索…
+    no_matches: 一致するジャンルがありません。別のキーワードをお試しください。
+    empty: ジャンルが追加されるとここに表示されます。上のJLPTレベルから単語を学べます。
+    words:
+      one: '%{count}語'
+      other: '%{count}語'
+    subgenres:
+      one: 'サブジャンル %{count}件'
+      other: 'サブジャンル %{count}件'
+    levels:
+      n5: 入門
+      n4: 初級
+      n3: 中級
+      n2: 中上級
+      n1: 上級

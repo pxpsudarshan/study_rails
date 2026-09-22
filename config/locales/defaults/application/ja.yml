@@ -807,6 +807,7 @@ ja:
     back: "候補者検索に戻る"
 
   sidebar:
+    word_list: 単語リスト
     learn: "学習"
     track: "学習記録"
     career: "キャリア"

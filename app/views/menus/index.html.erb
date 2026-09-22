@@ -1,161 +1,75 @@
-<ul class="dropdown-menu border-0 text-center inherit d-block w-100 p-3">
-  <div class="row">
-  <!-- Charts Button -->
-  <div class="text-center mb-4">
-    <%= link_to "📊 Progress",
-        charts_path,
-        class: "btn btn-dark px-4 rounded-0",
-        data: { turbo_frame: "charts_area" } %>
-  </div>
+<% content_for :stylesheet do %>
+  <%= stylesheet_link_tag 'menus', media: 'all' %>
+<% end %>
+<div class="study-home" data-study-home data-user-id="<%= current_user.id %>" data-today-cards="<%= @today_cards %>">
+  <header class="study-heading">
+    <div><p class="study-eyebrow">YOUR LEARNING SPACE</p><h1>Small steps. Real progress.</h1><p>Welcome back, <%= current_user.mei %>. Make a little room for Japanese today.</p></div>
+    <%= link_to charts_path, class: 'study-report' do %><i class="fas fa-chart-line" aria-hidden="true"></i> Progress report <span aria-hidden="true">↗</span><% end %>
+  </header>
 
-  <!-- "Select Parts" Link (Centered) -->
-  <div class="d-flex justify-content-center">
-    <li class="dropdown-item fs-5 fw-bold font-en text-center" data-bs-toggle="collapse" data-bs-target="#collapsePart" aria-expanded="false" aria-controls="collapsePart">
-      <%= t('feature.parts') %>
-    </li>
-  </div>
-
-  <!-- Collapse for Select Parts -->
-  <div class="collapse" id="collapsePart">
-    <ul class="dropdown-menu inherit d-block w-100 m-auto rounded-0">
-      <li class="dropdown-item text-center">
-        <%= link_to t('feature.parts_parts'), parts_path, class: 'text-decoration-none d-inline-block w-100 text-reset' %>
-      </li>
-    </ul>
-  </div>
-
-  <!-- Additional Collapse Sections with Centered Content -->
-  <div class="d-flex justify-content-center">
-    <li class="dropdown-item fs-5 fw-bold font-en text-center" data-bs-toggle="collapse" data-bs-target="#collapseVocab" aria-expanded="false" aria-controls="collapseVocab">
-      <%= t('feature.vocab') %>
-    </li>
-  </div>
-
-  <div class="collapse" id="collapseVocab">
-    <ul class="dropdown-menu inherit d-block w-100 m-auto rounded-0">
-      <li class="dropdown-item text-center">
-        <%= link_to t('feature.vocab_hiragana'), gois_path, class: 'text-decoration-none d-inline-block w-100 text-reset' %>
-      </li>
-      <hr class="mb-1 mt-1">
-      <li class="dropdown-item text-center">
-        <%= link_to t('feature.vocab_native'), foreigns_path, class: 'text-decoration-none d-inline-block w-100 text-reset' %>
-      </li>
-      <!-- <hr class="mb-1 mt-1">
-      <li class="dropdown-item text-center">
-        <%= link_to 'Specific skill word', specified_vocabs_path, class: 'text-decoration-none d-inline-block w-100 text-reset' %>
-      </li> -->
-    </ul>
-  </div>
-
-  <div class="d-flex justify-content-center">
-    <li class="dropdown-item fs-5 fw-bold font-en text-center" data-bs-toggle="collapse" data-bs-target="#collapseKanji" aria-expanded="false" aria-controls="collapseKanji">
-      <%= t('feature.kanji') %>
-    </li>
-  </div>
-
-  <div class="collapse" id="collapseKanji">
-    <ul class="dropdown-menu inherit d-block w-100 m-auto rounded-0">
-      <li class="dropdown-item text-center">
-        <%= link_to t('feature.kanji_kanji'), kanjis_path, class: 'text-decoration-none d-inline-block w-100 text-reset' %>
-      </li>
- <!--
-      <hr class="mb-1 mt-1">
-      <li class="dropdown-item text-center">
-        <%= link_to 'kanji_scroll', kanji_scrolls_path, class: 'text-decoration-none d-inline-block w-100 text-reset' %>
-      </li>
-      <hr class="mb-1 mt-1">
-      <li class="dropdown-item text-center">
-        <%#= link_to 'kanji_unit', kanji_units_path, class: 'text-decoration-none d-inline-block w-100 text-reset' %>
-      </li>
--->
-    </ul>
-  </div>
-
-  <div class="d-flex justify-content-center">
-    <li class="dropdown-item fs-5 fw-bold font-en text-center" data-bs-toggle="collapse" data-bs-target="#collapseJlpt" aria-expanded="false" aria-controls="collapseJlpt">
-      <%= t('feature.word') %>
-    </li>
-  </div>
-
-  <div class="collapse" id="collapseJlpt">
-    <ul class="dropdown-menu inherit d-block w-100 m-auto rounded-0">
-      <li class="dropdown-item text-center">
-        <%= link_to 'jlpt N5 (CEFR A1)', jlpts_path(jlpt: 5), class: 'text-decoration-none d-inline-block w-100 text-reset' %>
-      </li>
-      <hr class="mb-1 mt-1">
-      <li class="dropdown-item text-center">
-        <%= link_to 'jlpt N4 JFT-Basic(CEFR A2)', jlpts_path(jlpt: 4), class: 'text-decoration-none d-inline-block w-100 text-reset' %>
-      </li>
-      <hr class="mb-1 mt-1">
-      <li class="dropdown-item text-center">
-        <%= link_to 'jlpt N3', jlpts_path(jlpt: 3), class: 'text-decoration-none d-inline-block w-100 text-reset' %>
-      </li>
-      <hr class="mb-1 mt-1">
-      <li class="dropdown-item text-center">
-        <%= link_to 'jlpt N2', jlpts_path(jlpt: 2), class: 'text-decoration-none d-inline-block w-100 text-reset' %>
-      </li>
-      <hr class="mb-1 mt-1">
-      <li class="dropdown-item text-center">
-        <%= link_to 'jlpt N1', jlpts_path(jlpt: 1), class: 'text-decoration-none d-inline-block w-100 text-reset' %>
-      </li>
-      <% rows = VocabGenre.where(vocab_genre_id: nil, hide_flg: false).select(:title, :sort, :id).order(:sort, :title) %>
-      <% rows.each do |row| %>
-        <hr class="mb-1 mt-1">
-        <li class='dropdown-item text-center'>
-          <%= link_to (current_user.lang_id == 'JP' ? row.title : (get_content(row, current_user.lang_id)||'Empty')), vocab_genres_path(id: row.id), class: 'text-decoration-none d-inline-block w-100 text-reset'  %>
-        </li>
+  <div class="study-top-grid">
+    <section class="study-continue" aria-labelledby="continue-title">
+      <div class="study-hero-art" aria-hidden="true">学<span>まなぶ</span></div>
+      <p class="study-eyebrow">YOUR NEXT SMALL STEP</p>
+      <% recent = @recent_genres.find { |entry| entry[:learned] < entry[:total] } %>
+      <h2 id="continue-title"><%= recent ? 'Pick up where you left off.' : 'Keep your Japanese growing.' %></h2>
+      <p><%= recent ? 'Your closest unfinished topic is ready for a little more practice.' : 'Explore a topic and build your confidence, one word at a time.' %></p>
+      <% if recent %>
+        <div class="study-current-word"><strong><%= study_genre_title(recent[:genre]) %></strong><span><%= recent[:learned] %> / <%= recent[:total] %> learned</span></div>
       <% end %>
-    </ul>
+      <%= link_to(recent ? vocab_genres_path(id: recent[:root].id, child_id: recent[:genre].id) : jlpts_path(jlpt: 5), class: 'study-primary') do %><%= recent ? 'Continue studying' : 'Explore N5 vocabulary' %> <span aria-hidden="true">→</span><% end %>
+    </section>
+
+    <section class="study-panel study-goal" aria-labelledby="goal-title">
+      <p class="study-eyebrow">A LITTLE EVERY DAY</p><h2 id="goal-title">Your daily goal</h2>
+      <p>Add new words to your collection.</p>
+      <div class="study-goal-count"><strong><%= @today_cards %></strong><span>/ <span data-goal-target>10</span> words today</span></div>
+      <progress data-goal-progress max="10" value="<%= [@today_cards, 10].min %>" aria-label="Daily vocabulary goal"></progress>
+      <label for="study-daily-goal">Set your pace</label>
+      <select id="study-daily-goal" data-goal-select class="form-select"><option value="5">Light · 5 words a day</option><option value="10" selected>Steady · 10 words a day</option><option value="20">Focused · 20 words a day</option></select>
+      <p class="study-note" data-goal-message role="status">Your goal is saved on this browser.</p>
+      <noscript><p class="study-note">Enable JavaScript to change and save your goal.</p></noscript>
+    </section>
   </div>
 
-  <div class="d-flex justify-content-center">
-    <li class="dropdown-item fs-5 fw-bold font-en text-center" data-bs-toggle="collapse" data-bs-target="#collapsemycard" aria-expanded="false" aria-controls="collapsemycard">
-      <%= t('feature.mycard') %>
-    </li>
-  </div>
+  <section class="study-stats" aria-label="Vocabulary progress">
+    <div><span class="study-stat-icon"><i class="fas fa-layer-group" aria-hidden="true"></i></span><div><strong><%= @total_cards %></strong><span>Words collected</span></div></div>
+    <div><span class="study-stat-icon"><i class="fas fa-seedling" aria-hidden="true"></i></span><div><strong><%= @learning_cards %></strong><span>Still learning</span></div></div>
+    <div><span class="study-stat-icon"><i class="fas fa-check" aria-hidden="true"></i></span><div><strong><%= @learned_cards %></strong><span>Words learned</span></div></div>
+    <div class="study-stat-progress"><div><strong><%= @learned_percent %>%</strong><span>Of your collection learned</span></div><progress max="100" value="<%= @learned_percent %>" aria-label="Collection learned"></progress></div>
+  </section>
 
-  <div class="collapse" id="collapsemycard">
-    <ul class="dropdown-menu inherit d-block w-100 m-auto rounded-0">
-      <li class="dropdown-item text-center">
-        <%= link_to t('feature.mycard_mycard'), vocab_mycards_path, class: 'text-decoration-none d-inline-block w-100 text-reset' %>
-      </li>
-    </ul>
-  </div>
-
-  <div class="d-flex justify-content-center">
-    <li class="dropdown-item fs-5 fw-bold font-en text-center" data-bs-toggle="collapse" data-bs-target="#collapsequiz" aria-expanded="false" aria-controls="collapsequiz">
-      <%= t('feature.quiz') %>
-    </li>
-  </div>
-
-  <div class="collapse" id="collapsequiz">
-    <ul class="dropdown-menu inherit d-block w-100 m-auto rounded-0">
-      <li class="dropdown-item text-center">
-        <%= link_to t('feature.quiz'), quizes_path, class: 'text-decoration-none d-inline-block w-100 text-reset'  %>
-      </li>
-      <% Tokutei.where(tokutei_id: nil).each do |tokutei| %>
-        <hr class="mb-1 mt-1">
-        <li class="dropdown-item text-center">
-          <%= link_to (current_user.lang_id == 'JP' ? tokutei.title : (get_content(tokutei, current_user.lang_id)||'Empty')), tokutei_contents_path(id: tokutei.id), class: 'text-decoration-none d-inline-block w-100 text-reset'  %>
-        </li>
-      <% end %>
-    </ul>
-  </div>
-
-  <div class="d-flex justify-content-center">
-    <li class="dropdown-item fs-5 fw-bold font-en text-center" data-bs-toggle="collapse" data-bs-target="#collapseConversation" aria-expanded="false" aria-controls="collapseConvertion">
-      <%= t('feature.conversation') %>
-    </li>
-  </div>
-
-  <div class="collapse" id="collapseConversation">
-      <ul class="dropdown-menu inherit d-block w-100 m-auto rounded-0">
-        <% AudioA.order(:sort).each_with_index do |audio_a, index| %>
-          <% if index > 0 %> <hr class="mb-1 mt-1"> <% end %>
-          <li class="dropdown-item text-center">
-              <%= link_to title_nation(audio_a), specified_conversations_path(id: audio_a.id), class: 'text-decoration-none d-inline-block w-100 text-reset' %>
-          </li>
+  <section class="study-recent" aria-labelledby="recent-title">
+    <div class="study-section-heading"><div><h2 id="recent-title">Continue your topics</h2><p>Subgenres related to your recent words. Closest to completion comes first; completed topics follow.</p></div><%= link_to 'All my cards →', vocab_mycards_path %></div>
+    <div class="study-recent-grid">
+      <% @recent_genres.each do |entry| %>
+        <%= link_to vocab_genres_path(id: entry[:root].id, child_id: entry[:genre].id), class: 'study-word-card study-topic-card' do %>
+          <span class="study-topic-content">
+            <small><%= study_genre_title(entry[:root]) %></small>
+            <strong><%= study_genre_title(entry[:genre]) %></strong>
+            <small><%= entry[:learned] %> / <%= entry[:total] %> words learned · <%= entry[:percent].floor %>%</small>
+            <progress max="<%= entry[:total] %>" value="<%= entry[:learned] %>" aria-label="Words learned in <%= study_genre_title(entry[:genre]) %>"></progress>
+            <small><%= entry[:learned] == entry[:total] ? 'Completed · Review again' : 'Continue learning' %></small>
+          </span>
+          <span aria-hidden="true">→</span>
         <% end %>
-      </ul>
-  </div>
-</ul>
+      <% end %>
+      <% if @recent_genres.empty? %>
+        <div class="study-empty"><i class="fas fa-book-open" aria-hidden="true"></i><div><strong>Your next topic is waiting.</strong><p>Study words from a topic to see their related subgenres and progress here.</p></div><a href="#explore-title">Explore study topics →</a></div>
+      <% end %>
+    </div>
+  </section>
+
+  <section aria-labelledby="explore-title">
+    <div class="study-section-heading"><div><p class="study-eyebrow">FIND YOUR FOCUS</p><h2 id="explore-title">What would you like to practice?</h2></div></div>
+    <div class="study-menu-grid">
+      <article class="study-menu-card"><span class="study-menu-icon">あ</span><h3><%= t('feature.vocab') %></h3><p>Discover words and their meanings.</p><%= link_to t('feature.vocab_hiragana'), gois_path %><%= link_to t('feature.vocab_native'), foreigns_path %></article>
+      <article class="study-menu-card"><span class="study-menu-icon">漢</span><h3><%= t('feature.kanji') %> &amp; <%= t('feature.parts') %></h3><p>Understand the building blocks of Japanese.</p><%= link_to t('feature.kanji_kanji'), kanjis_path %><%= link_to t('feature.parts_parts'), parts_path %></article>
+      <article class="study-menu-card study-jlpt"><span class="study-menu-icon"><i class="fas fa-book" aria-hidden="true"></i></span><h3><%= t('sidebar.word_list') %></h3><p><%= t('word_lists.intro') %></p><%= link_to t('word_lists.browse'), word_lists_path %></article>
+      <article class="study-menu-card"><span class="study-menu-icon"><i class="far fa-clone" aria-hidden="true"></i></span><h3><%= t('feature.mycard') %></h3><p>A collection that grows with you. Revisit and remember your words.</p><%= link_to t('feature.mycard_mycard'), vocab_mycards_path %></article>
+      <article class="study-menu-card"><span class="study-menu-icon"><i class="fas fa-bolt" aria-hidden="true"></i></span><h3><%= t('feature.quiz') %></h3><p>Put what you know into practice.</p><%= link_to 'Start a quiz →', quizes_path %><% if @topics.any? %><details><summary>Specific skills practice</summary><% @topics.each do |topic| %><%= link_to(current_user.lang_id == 'JP' ? topic.title : (get_content(topic, current_user.lang_id).presence || topic.title), tokutei_contents_path(id: topic.id)) %><% end %></details><% end %></article>
+      <article class="study-menu-card"><span class="study-menu-icon"><i class="far fa-comments" aria-hidden="true"></i></span><h3><%= t('feature.conversation') %></h3><p>Listen, understand, and connect in everyday situations.</p><% if @conversations.any? %><details><summary>Choose a conversation</summary><% @conversations.each do |audio| %><%= link_to title_nation(audio), specified_conversations_path(id: audio.id) %><% end %></details><% else %><small>Conversation lessons will appear here when available.</small><% end %></article>
+    </div>
+  </section>
+  <p class="study-footer">少しずつ、一歩ずつ。 <span>A little at a time, one step at a time.</span></p>
+</div>

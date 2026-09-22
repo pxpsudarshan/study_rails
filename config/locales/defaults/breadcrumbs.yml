@@ -32,6 +32,7 @@ en:
       company_stores: Word entry
       vocab_mycards: My cards
       quizes: Quizzes
+      word_lists: Word List
       jlpts: JLPT vocabulary
       vocab_genres: Vocabulary genres
       tokutei_contents: Specified skills
@@ -90,6 +91,7 @@ ja:
       company_stores: 語彙入力
       vocab_mycards: マイカード
       quizes: クイズ
+      word_lists: 単語リスト
       jlpts: JLPT語彙
       vocab_genres: 語彙ジャンル
       tokutei_contents: 特定技能

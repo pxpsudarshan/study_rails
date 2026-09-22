@@ -20,7 +20,8 @@ module SidebarHelper
       groups = [[t('sidebar.learn'), [
         ['sidebar.dashboard', menus_path, 'home'], ['feature.vocab_hiragana', gois_path, 'book'],
         ['feature.vocab_native', foreigns_path, 'language'], ['feature.kanji', kanjis_path, 'font'],
-        ['feature.parts', parts_path, 'puzzle-piece'], ['feature.mycard', vocab_mycards_path, 'clone'],
+        ['feature.parts', parts_path, 'puzzle-piece'],
+        ['sidebar.word_list', word_lists_path, 'list-ul'], ['feature.mycard', vocab_mycards_path, 'clone'],
         ['feature.quiz', quizes_path, 'question-circle']
       ]], [t('sidebar.track'), [['sidebar.progress', charts_path, 'chart-line']]],
         [t('sidebar.career'), [['navbar.job', jobs_path, 'briefcase'], ['navbar.store', new_store_path, 'book-open'], ['navbar.profile', profile_user_path(current_user), 'user']]]]
@@ -43,6 +44,7 @@ module SidebarHelper
     base = path.sub(%r{/new\z}, '')
     active = request.path == path || request.path == base || request.path.start_with?("#{base}/")
     active ||= request.path == root_path && path == menus_path
+    active = %w[word_lists jlpts vocab_genres].include?(controller_name) if label == 'sidebar.word_list'
     label = strip_tags(t(label)).strip
     active = false unless method == :get
     content = content_tag(:i, '', class: "fas fa-#{icon} fa-fw", aria: { hidden: true }) + content_tag(:span, label)

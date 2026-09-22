@@ -1,0 +1,65 @@
+<% content_for :stylesheet do %>
+  <%= stylesheet_link_tag 'menus', 'word_lists', media: 'all' %>
+<% end %>
+<div class="study-home word-library">
+  <header class="study-heading">
+    <div>
+      <p class="study-eyebrow"><%= t('word_lists.eyebrow') %></p>
+      <h1><%= t('sidebar.word_list') %></h1>
+      <p><%= t('word_lists.intro') %></p>
+    </div>
+    <%= link_to t('word_lists.my_cards'), vocab_mycards_path, class: 'study-report' %>
+  </header>
+  <nav class="library-jumps" aria-label="<%= t('word_lists.browse') %>">
+    <a href="#jlpt-levels"><i class="fas fa-graduation-cap" aria-hidden="true"></i> <%= t('word_lists.by_level') %></a>
+    <a href="#word-genres"><i class="fas fa-tags" aria-hidden="true"></i> <%= t('word_lists.by_genre') %></a>
+  </nav>
+
+  <section id="jlpt-levels" aria-labelledby="jlpt-heading">
+    <div class="study-section-heading"><div><h2 id="jlpt-heading"><%= t('word_lists.by_level') %></h2><p><%= t('word_lists.level_hint') %></p></div></div>
+    <div class="library-levels">
+      <% [5, 4, 3, 2, 1].each do |level| %>
+        <%= link_to jlpts_path(jlpt: level), class: 'library-level' do %>
+          <span class="study-eyebrow">JLPT</span>
+          <strong>N<%= level %></strong>
+          <span class="library-level-name"><%= t("word_lists.levels.n#{level}") %></span>
+          <small><%= t('word_lists.words', count: @jlpt_counts.fetch(level, 0)) %></small>
+          <span class="library-card-action"><%= t('word_lists.explore') %> <span aria-hidden="true">→</span></span>
+        <% end %>
+      <% end %>
+    </div>
+  </section>
+
+  <section id="word-genres" aria-labelledby="genre-heading" class="library-genres">
+    <div class="study-section-heading"><div><h2 id="genre-heading"><%= t('word_lists.by_genre') %></h2><p><%= t('word_lists.genre_hint') %></p></div></div>
+    <% if @genres.any? %>
+      <div class="library-search" data-genre-search hidden>
+        <label for="genre-search"><%= t('word_lists.search') %></label>
+        <input type="search" id="genre-search" class="form-control" placeholder="<%= t('word_lists.search_hint') %>" aria-controls="genre-list" autocomplete="off">
+      </div>
+      <div id="genre-list" class="study-menu-grid">
+        <% @genres.each do |genre| %>
+          <% children = @children.fetch(genre.id, []) %>
+          <article class="study-menu-card library-genre" data-genre-card>
+            <span class="study-menu-icon"><i class="fas fa-folder-open" aria-hidden="true"></i></span>
+            <h3><%= link_to breadcrumb_genre_title(genre), vocab_genres_path(id: genre.id) %></h3>
+            <%= link_to t('word_lists.all_words'), vocab_genres_path(id: genre.id), class: 'library-browse' %>
+            <% if children.any? %>
+              <details>
+                <summary><%= t('word_lists.subgenres', count: children.size) %></summary>
+                <ul class="library-subgenres">
+                  <% children.each do |child| %>
+                    <li><%= link_to breadcrumb_genre_title(child), vocab_genres_path(id: genre.id, child_id: child.id) %></li>
+                  <% end %>
+                </ul>
+              </details>
+            <% end %>
+          </article>
+        <% end %>
+      </div>
+      <p data-genre-empty class="study-empty" role="status" hidden><%= t('word_lists.no_matches') %></p>
+    <% else %>
+      <p class="study-empty"><%= t('word_lists.empty') %></p>
+    <% end %>
+  </section>
+</div>

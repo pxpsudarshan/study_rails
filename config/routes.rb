@@ -198,6 +198,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :word_lists, only: :index
+
   resources :jlpts do
     collection do
       get :page_mylang

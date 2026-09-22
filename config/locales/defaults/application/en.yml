@@ -794,6 +794,7 @@ en:
     back: "Back to candidate search"
 
   sidebar:
+    word_list: Word List
     learn: "Learn"
     track: "Track"
     career: "Career"
