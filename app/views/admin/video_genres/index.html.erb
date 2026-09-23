@@ -1,0 +1,3 @@
+<h1 class="h3 mb-3"><%= t('video_learning.manage') %></h1>
+<div class="d-flex gap-2 mb-3"><%= link_to t('video_learning.new_category'), new_admin_video_genre_path, class: 'btn btn-primary' %><%= link_to t('video_learning.all_videos'), admin_video_lessons_path, class: 'btn btn-secondary' %></div>
+<%= render 'table', genres: @video_genres %>

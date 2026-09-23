@@ -1,0 +1,20 @@
+<%= form_with model: [:admin, @video_lesson], local: true, html: { multipart: true, class: 'card card-body mx-auto', style: 'max-width: 760px' } do |f| %>
+  <% if @video_lesson.errors.any? %>
+    <div class="alert alert-danger" role="alert"><ul class="mb-0"><% @video_lesson.errors.full_messages.each do |message| %><li><%= message %></li><% end %></ul></div>
+  <% end %>
+  <%= f.label :title, t('video_learning.lesson_title'), class: 'form-label' %>
+  <%= f.text_field :title, required: true, maxlength: 200, class: 'form-control mb-3' %>
+  <%= f.label :video_genre_id, t('video_learning.category'), class: 'form-label' %>
+  <%= f.collection_select :video_genre_id, @categories, :id, :label, { include_blank: t('video_learning.uncategorized') }, class: 'form-select mb-3' %>
+  <%= f.label :content, t('video_learning.description'), class: 'form-label' %>
+  <%= f.text_area :content, rows: 3, class: 'form-control mb-3' %>
+  <%= f.label :sort, t('video_learning.sort'), class: 'form-label' %>
+  <%= f.number_field :sort, class: 'form-control mb-3' %>
+  <div class="mb-3"><%= f.check_box :hide_flg %> <%= f.label :hide_flg, t('video_learning.keep_draft') %></div>
+  <%= f.label :youtube_url, t('video_learning.url'), class: 'form-label' %>
+  <%= f.text_field :youtube_url, value: @video_lesson.youtube_url || @video_lesson.youtube_video_id, required: true, class: 'form-control mb-3', placeholder: 'https://www.youtube.com/watch?v=…' %>
+  <%= f.label :subtitle_file, t('video_learning.subtitles'), class: 'form-label' %>
+  <%= f.file_field :subtitle_file, accept: '.srt,.vtt', required: @video_lesson.new_record?, class: 'form-control', aria: { describedby: 'subtitle-help' } %>
+  <p id="subtitle-help" class="text-muted mt-2"><%= t('video_learning.upload_help') %></p>
+  <div class="d-flex gap-2 mt-3"><%= f.submit t('video_learning.save'), class: 'btn btn-primary' %><%= link_to t('video_learning.cancel'), admin_video_lessons_path, class: 'btn btn-outline-secondary' %></div>
+<% end %>

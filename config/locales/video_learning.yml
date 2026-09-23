@@ -1,0 +1,176 @@
+{
+  "en": {
+    "video_learning": {
+      "title": "Video learning",
+      "new": "Add video lesson",
+      "edit": "Edit lesson",
+      "lesson_title": "Lesson title",
+      "url": "YouTube URL or video ID",
+      "subtitles": "Subtitles (.srt or .vtt)",
+      "upload_help": "Upload UTF-8 subtitles, up to 2 MB. YouTube captions are not imported automatically. When editing, leave this blank to keep existing subtitles.",
+      "save": "Save lesson",
+      "cancel": "Cancel",
+      "intro": "Your personal video library. Watch, listen, and study one sentence at a time.",
+      "empty": "Add a YouTube video and subtitles to begin.",
+      "lines": {
+        "one": "%{count} subtitle line",
+        "other": "%{count} subtitle lines"
+      },
+      "study": "Start studying",
+      "library": "Lesson library",
+      "loading": "Loading YouTube player…",
+      "ready": "Ready. Press play or choose a subtitle.",
+      "error": "The video could not be loaded. Check your connection or edit the lesson to use a video that allows embedding, then reload.",
+      "blocked": "Press play in the YouTube player to continue.",
+      "controls": "Study controls",
+      "previous": "Previous sentence",
+      "replay": "Replay sentence",
+      "next": "Next sentence",
+      "loop": "Loop sentence",
+      "speed": "Speed",
+      "follow": "Follow subtitles",
+      "transcript": "Transcript",
+      "click_help": "Click a line to jump to that moment. Turn off Follow subtitles to browse freely.",
+      "delete": "Delete lesson",
+      "confirm_delete": "Delete this lesson and its subtitles?",
+      "youtube": {
+        "connected": "YouTube connected.",
+        "disconnected": "YouTube disconnected from NIHO. To revoke Google permission too, remove NIHO from your Google Account connections.",
+        "connect": "Connect YouTube",
+        "reconnect": "Reconnect YouTube",
+        "disconnect": "Disconnect",
+        "explanation": "Connect the Google account that owns your videos to import subtitles. Google requires a YouTube management permission for caption downloads; NIHO uses it to read captions.",
+        "setup": "YouTube import is waiting for server setup. Add the Google OAuth Client ID and Client Secret to Rails credentials, then restart the app.",
+        "find": "Find subtitles",
+        "language": "Subtitle language",
+        "refresh": "Refresh YouTube subtitles",
+        "refreshed": "Subtitles refreshed from YouTube.",
+        "invalid_video": "Enter a lesson title and a valid YouTube video URL.",
+        "no_tracks": "No caption tracks were found. Publish subtitles in YouTube Studio, then try again.",
+        "import": "Import from YouTube"
+      },
+      "manage": "Video maintenance",
+      "categories": "Categories",
+      "category": "Category / subtitle",
+      "new_category": "Add category",
+      "new_subcategory": "Add subtitle",
+      "parent": "Parent title",
+      "top_level": "Top-level title",
+      "description": "Description / content",
+      "sort": "Order",
+      "hidden": "Hidden",
+      "keep_draft": "Keep hidden from students (draft)",
+      "draft": "Draft / hidden",
+      "published": "Published",
+      "status": "Status",
+      "uncategorized": "Uncategorized",
+      "all_videos": "All videos",
+      "all_categories": "All categories",
+      "search": "Search lessons",
+      "study_intro": "Choose a lesson, listen at your own pace, and click any sentence to practice it again.",
+      "no_lessons": "No lessons found. Try another category or search, or check back for new lessons.",
+      "draft_help": "Imported and existing lessons start as drafts. Edit a lesson, choose a category, and uncheck the draft checkbox to publish it. Hidden categories also hide their lessons.",
+      "delete_category": "Delete this category, its subtitles, and its lessons?"
+    },
+    "breadcrumbs": {
+      "sections": {
+        "video_lessons": "Video learning",
+        "video_genres": "Categories"
+      }
+    },
+    "page_title": {
+      "video_lessons": {
+        "youtube_import": "Video maintenance",
+        "youtube_tracks": "Video maintenance",
+        "import_youtube": "Video maintenance"
+      }
+    }
+  },
+  "ja": {
+    "video_learning": {
+      "title": "動画学習",
+      "new": "動画レッスンを追加",
+      "edit": "レッスンを編集",
+      "lesson_title": "レッスン名",
+      "url": "YouTube URL または動画 ID",
+      "subtitles": "字幕（.srt / .vtt）",
+      "upload_help": "UTF-8 の字幕ファイル（2 MB 以下）をアップロードしてください。YouTube の字幕は自動取得されません。編集時は空欄にすると既存の字幕を保持します。",
+      "save": "保存",
+      "cancel": "キャンセル",
+      "intro": "自分の動画ライブラリで、一文ずつ聞いて学習しましょう。",
+      "empty": "YouTube 動画と字幕を追加して学習を始めましょう。",
+      "lines": {
+        "other": "字幕 %{count} 件",
+        "one": "字幕 %{count} 件"
+      },
+      "study": "学習を始める",
+      "library": "レッスン一覧",
+      "loading": "YouTube プレーヤーを読み込み中…",
+      "ready": "再生ボタンを押すか、字幕を選択してください。",
+      "error": "動画を読み込めませんでした。接続と埋め込みの許可を確認し、ページを再読み込みしてください。",
+      "blocked": "YouTube プレーヤーの再生ボタンを押してください。",
+      "controls": "学習コントロール",
+      "previous": "前の文",
+      "replay": "もう一度再生",
+      "next": "次の文",
+      "loop": "一文をリピート",
+      "speed": "再生速度",
+      "follow": "字幕を自動スクロール",
+      "transcript": "字幕",
+      "click_help": "字幕をクリックすると、その場面に移動します。自由に読むときは自動スクロールをオフにしてください。",
+      "delete": "レッスンを削除",
+      "confirm_delete": "このレッスンと字幕を削除しますか？",
+      "youtube": {
+        "connected": "YouTube に接続しました。",
+        "disconnected": "NIHO との接続を解除しました。Google のアクセス権も取り消す場合は、Google アカウントの接続から NIHO を削除してください。",
+        "connect": "YouTube に接続",
+        "reconnect": "YouTube に再接続",
+        "disconnect": "接続を解除",
+        "explanation": "動画を所有する Google アカウントを接続して字幕を取り込みます。Google は字幕の取得に YouTube の管理権限を要求します。NIHO は字幕の読み取りに使用します。",
+        "setup": "YouTube 連携の設定が必要です。Google OAuth のクライアント ID とシークレットを Rails credentials に設定して再起動してください。",
+        "find": "字幕を検索",
+        "language": "字幕の言語",
+        "refresh": "YouTube の字幕を更新",
+        "refreshed": "YouTube から字幕を更新しました。",
+        "invalid_video": "レッスン名と有効な YouTube 動画 URL を入力してください。",
+        "no_tracks": "字幕が見つかりません。YouTube Studio で字幕を公開してから再度お試しください。",
+        "import": "YouTube から取り込む"
+      },
+      "manage": "動画マスタ管理",
+      "categories": "カテゴリ一覧",
+      "category": "カテゴリ・サブタイトル",
+      "new_category": "カテゴリを追加",
+      "new_subcategory": "サブタイトルを追加",
+      "parent": "親タイトル",
+      "top_level": "親なし",
+      "description": "説明・内容",
+      "sort": "表示順",
+      "hidden": "非表示",
+      "keep_draft": "学習者に表示しない（下書き）",
+      "draft": "下書き・非表示",
+      "published": "公開",
+      "status": "状態",
+      "uncategorized": "未分類",
+      "all_videos": "動画一覧",
+      "all_categories": "すべてのカテゴリ",
+      "search": "レッスンを検索",
+      "study_intro": "レッスンを選んで、自分のペースで学習しましょう。字幕をクリックすると、好きな文を繰り返し聞けます。",
+      "no_lessons": "レッスンが見つかりません。カテゴリや検索条件を変更してください。",
+      "draft_help": "取り込んだ動画と既存の動画は下書きです。編集画面でカテゴリを選び、非表示を解除すると公開されます。カテゴリが非表示の場合、動画も表示されません。",
+      "delete_category": "カテゴリと配下のサブタイトル・動画を削除しますか？"
+    },
+    "breadcrumbs": {
+      "sections": {
+        "video_lessons": "動画学習",
+        "video_genres": "カテゴリ一覧"
+      }
+    },
+    "page_title": {
+      "video_lessons": {
+        "youtube_import": "動画マスタ管理",
+        "youtube_tracks": "動画マスタ管理",
+        "import_youtube": "動画マスタ管理"
+      }
+    }
+  }
+}

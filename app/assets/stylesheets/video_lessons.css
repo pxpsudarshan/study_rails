@@ -1,0 +1,21 @@
+.video-lesson { max-width: 1040px; }
+.video-lesson-player { background: #101828; aspect-ratio: 16 / 9; min-height: 200px; border-radius: 12px; overflow: hidden; }
+.video-lesson-player iframe { width: 100%; height: 100%; display: block; }
+.video-lesson-controls { border: 0; padding: 12px; background: #f1f5f9; border-radius: 8px; }
+.video-lesson-controls label { margin: 6px; }
+.video-lesson-transcript { max-height: 380px; overflow-y: auto; border: 1px solid #cbd5e1; border-radius: 8px; }
+.video-lesson-cue { display: flex; gap: 18px; width: 100%; padding: 15px 18px; border: 0; border-bottom: 1px solid #e2e8f0; background: white; color: #273449; text-align: left; }
+.video-lesson-cue:hover { background: #f1f5f9; }
+.video-lesson-cue.is-active { background: #e0edff; box-shadow: inset 4px 0 #2563eb; color: #163c85; }
+.video-lesson-cue:focus-visible { outline: 3px solid #2563eb; outline-offset: -3px; }
+.video-lesson-time { font-variant-numeric: tabular-nums; color: #526581; font-size: .85rem; padding-top: 3px; flex-shrink: 0; }
+.video-lesson-text { white-space: pre-line; line-height: 1.7; }
+.video-library { max-width: 1240px; }
+.video-library-heading { border-left: 4px solid #2563eb; padding-left: 20px; }
+.video-study-card { border-radius: 12px; overflow: hidden; border-color: #e2e8f0; }
+.video-study-thumbnail { aspect-ratio: 16 / 9; object-fit: cover; }
+.video-lesson-description { white-space: pre-line; }
+@media (max-width: 575px) {
+  .video-lesson-controls .btn { flex: 1 1 28%; font-size: .85rem; }
+  .video-lesson-cue { padding: 12px 10px; gap: 10px; }
+}

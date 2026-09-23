@@ -1,0 +1,6 @@
+<div class="table-responsive"><table class="table table-bordered table-hover table-sm">
+  <thead class="table-success"><tr><th><%= t('video_learning.sort') %></th><th><%= t('video_learning.lesson_title') %></th><th><%= t('video_learning.category') %></th><th><%= t('video_learning.status') %></th><th><%= t('video_learning.edit') %></th></tr></thead>
+  <tbody><% lessons.each do |lesson| %><tr>
+    <td><%= lesson.sort %></td><td><%= link_to lesson.title, admin_video_lesson_path(lesson) %></td><td><%= lesson.video_genre&.label %></td><td><%= t(lesson.hide_flg ? 'video_learning.draft' : 'video_learning.published') %></td><td><%= link_to t('video_learning.edit'), edit_admin_video_lesson_path(lesson), class: 'btn btn-sm btn-primary' %></td>
+  </tr><% end %></tbody>
+</table></div>

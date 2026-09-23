@@ -1,0 +1,13 @@
+<h1 class="h3"><%= @video_genre.label %></h1>
+<p><%= @video_genre.content %></p>
+<div class="d-flex flex-wrap gap-2 mb-3">
+  <%= link_to t('video_learning.categories'), admin_video_genres_path, class: 'btn btn-secondary' %>
+  <%= link_to t('video_learning.edit'), edit_admin_video_genre_path(@video_genre), class: 'btn btn-primary' %>
+  <% unless @video_genre.video_genre_id.present? %><%= link_to t('video_learning.new_subcategory'), new_admin_video_genre_path(parent_id: @video_genre.id), class: 'btn btn-primary' %><% end %>
+  <%= link_to t('video_learning.youtube.import'), youtube_import_admin_video_lessons_path(video_genre_id: @video_genre.id), class: 'btn btn-primary' %>
+  <%= link_to t('video_learning.new'), new_admin_video_lesson_path(video_genre_id: @video_genre.id), class: 'btn btn-outline-primary' %>
+  <%= link_to t('video_learning.all_videos'), admin_video_lessons_path, class: 'btn btn-outline-primary' %>
+  <%= button_to t('video_learning.delete'), admin_video_genre_path(@video_genre), method: :delete, class: 'btn btn-outline-danger', data: { confirm: t('video_learning.delete_category') } %>
+</div>
+<%= render 'table', genres: @sub_genres if @sub_genres.any? %>
+<%= render 'admin/video_lessons/table', lessons: @video_lessons %>

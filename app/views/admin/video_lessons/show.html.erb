@@ -1,0 +1,10 @@
+<div class="container pt-3">
+  <div class="d-flex flex-wrap gap-2 align-items-center">
+    <%= link_to t('video_learning.manage'), admin_video_lessons_path, class: 'btn btn-secondary' %>
+    <%= link_to t('video_learning.edit'), edit_admin_video_lesson_path(@video_lesson), class: 'btn btn-primary' %>
+    <% if @video_lesson.youtube_caption_id.present? %><%= button_to t('video_learning.youtube.refresh'), refresh_youtube_admin_video_lesson_path(@video_lesson), class: 'btn btn-outline-secondary' %><% end %>
+    <%= button_to t('video_learning.delete'), admin_video_lesson_path(@video_lesson), method: :delete, class: 'btn btn-outline-danger', data: { confirm: t('video_learning.confirm_delete') } %>
+    <span class="badge bg-secondary"><%= t(@video_lesson.hide_flg ? 'video_learning.draft' : 'video_learning.published') %></span>
+  </div>
+</div>
+<%= render 'video_lessons/player' %>

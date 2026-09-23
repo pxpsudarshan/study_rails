@@ -21,11 +21,11 @@ module SidebarHelper
         ['sidebar.dashboard', menus_path, 'home'], ['feature.vocab_hiragana', gois_path, 'book'],
         ['feature.vocab_native', foreigns_path, 'language'], ['feature.kanji', kanjis_path, 'font'],
         ['feature.parts', parts_path, 'puzzle-piece'], ['feature.mycard', vocab_mycards_path, 'clone'],
-        ['feature.quiz', quizes_path, 'question-circle']
+        ['feature.quiz', quizes_path, 'question-circle'], ['video_learning.title', video_lessons_path, 'play-circle']
       ]], [t('sidebar.track'), [['sidebar.progress', charts_path, 'chart-line']]],
         [t('sidebar.career'), [['navbar.job', jobs_path, 'briefcase'], ['navbar.store', new_store_path, 'book-open'], ['navbar.profile', profile_user_path(current_user), 'user']]]]
       if current_user.access_type != User::ACCESS_TYPE::USER
-        management = [['navbar.vocab_table', admin_vocab_tables_path, 'book'], ['navbar.audio_a', admin_audio_as_path, 'comments'], ['navbar.tokutei', admin_tokuteis_path, 'tasks']]
+        management = [['video_learning.manage', admin_video_genres_path, 'play-circle'], ['navbar.vocab_table', admin_vocab_tables_path, 'book'], ['navbar.audio_a', admin_audio_as_path, 'comments'], ['navbar.tokutei', admin_tokuteis_path, 'tasks']]
         if current_user.access_type == User::ACCESS_TYPE::KANRISHA
           management.unshift(['navbar.vocab_genre', admin_vocab_genres_path, 'tags'])
           unless current_user.comp&.channel_id.present?

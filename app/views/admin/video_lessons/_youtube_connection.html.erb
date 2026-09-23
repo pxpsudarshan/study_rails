@@ -1,0 +1,15 @@
+<div class="card card-body mb-4">
+  <% if YoutubeConnection.exists?(user: current_user) %>
+    <p><%= t('video_learning.youtube.connected') %></p>
+    <div class="d-flex flex-wrap gap-2">
+      <%= link_to t('video_learning.youtube.import'), youtube_import_admin_video_lessons_path, class: 'btn btn-primary' %>
+      <%= button_to t('video_learning.youtube.reconnect'), connect_youtube_path, class: 'btn btn-outline-secondary' %>
+      <%= button_to t('video_learning.youtube.disconnect'), disconnect_youtube_path, method: :delete, class: 'btn btn-outline-secondary' %>
+    </div>
+  <% elsif YoutubeApi.configured? %>
+    <p><%= t('video_learning.youtube.explanation') %></p>
+    <%= button_to t('video_learning.youtube.connect'), connect_youtube_path, class: 'btn btn-primary' %>
+  <% else %>
+    <p class="mb-0"><%= t('video_learning.youtube.setup') %></p>
+  <% end %>
+</div>

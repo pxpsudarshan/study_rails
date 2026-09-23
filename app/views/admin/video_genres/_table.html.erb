@@ -1,0 +1,4 @@
+<div class="table-responsive"><table class="table table-bordered table-hover table-sm">
+<thead class="table-success"><tr><th><%= t('video_learning.sort') %></th><th><%= t('video_learning.category') %></th><th><%= t('video_learning.hidden') %></th><th><%= t('video_learning.edit') %></th></tr></thead>
+<tbody><% genres.each do |genre| %><tr><td><%= genre.sort %></td><td><%= link_to genre.title, admin_video_genre_path(genre) %></td><td><%= genre.hide_flg ? '✓' : '—' %></td><td><%= link_to t('video_learning.edit'), edit_admin_video_genre_path(genre), class: 'btn btn-sm btn-primary' %></td></tr><% end %></tbody>
+</table></div>

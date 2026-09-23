@@ -1,0 +1,9 @@
+<%= form_with model: [:admin, @video_genre], local: true do |f| %>
+  <% if @video_genre.errors.any? %><div class="alert alert-danger"><%= @video_genre.errors.full_messages.join(', ') %></div><% end %>
+  <div class="row mb-3"><%= f.label :title, t('video_learning.category'), class: 'col-md-2 col-form-label' %><div class="col-md-6"><%= f.text_field :title, required: true, maxlength: 200, class: 'form-control' %></div></div>
+  <div class="row mb-3"><%= f.label :video_genre_id, t('video_learning.parent'), class: 'col-md-2 col-form-label' %><div class="col-md-6"><%= f.collection_select :video_genre_id, @parents.where.not(id: @video_genre.id).where(channel_id: @video_genre.channel_id), :id, :title, { include_blank: t('video_learning.top_level') }, class: 'form-select' %></div></div>
+  <div class="row mb-3"><%= f.label :content, t('video_learning.description'), class: 'col-md-2 col-form-label' %><div class="col-md-6"><%= f.text_area :content, rows: 3, class: 'form-control' %></div></div>
+  <div class="row mb-3"><%= f.label :sort, t('video_learning.sort'), class: 'col-md-2 col-form-label' %><div class="col-md-2"><%= f.number_field :sort, class: 'form-control' %></div></div>
+  <div class="mb-3"><%= f.check_box :hide_flg %> <%= f.label :hide_flg, t('video_learning.hidden') %></div>
+  <%= f.submit t('video_learning.save'), class: 'btn btn-primary' %> <%= link_to t('video_learning.cancel'), admin_video_genres_path, class: 'btn btn-secondary' %>
+<% end %>

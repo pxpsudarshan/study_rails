@@ -24,3 +24,5 @@ config/master.key
 # Node.js & Yarn (if using Webpacker)
 node_modules/
 yarn-error.log
+
+/config/master.key

@@ -1,0 +1,33 @@
+<% content_for :stylesheet do %><%= stylesheet_link_tag 'video_lessons', media: 'all' %><% end %>
+<div class="container py-4 video-lesson" data-video-lesson data-video-id="<%= @video_lesson.youtube_video_id %>" data-loading="<%= t('video_learning.loading') %>" data-ready="<%= t('video_learning.ready') %>" data-error="<%= t('video_learning.error') %>" data-blocked="<%= t('video_learning.blocked') %>">
+  <div class="d-flex justify-content-between align-items-center gap-3 mb-3">
+    <h1 class="h3 mb-0"><%= @video_lesson.title %></h1>
+    <div class="d-flex gap-2"><%= link_to t('video_learning.library'), video_lessons_path, class: 'btn btn-outline-secondary btn-sm' %></div>
+  </div>
+  <% if @video_lesson.video_genre %><p class="text-muted"><%= @video_lesson.video_genre.label %></p><% end %>
+  <% if @video_lesson.content.present? %><p class="video-lesson-description"><%= @video_lesson.content %></p><% end %>
+  <div class="video-lesson-player"><div id="video-lesson-player"></div></div>
+  <p data-status role="status" class="text-muted my-2"><%= t('video_learning.loading') %></p>
+  <fieldset data-controls disabled class="video-lesson-controls d-flex flex-wrap align-items-center gap-2 my-3">
+    <legend class="visually-hidden"><%= t('video_learning.controls') %></legend>
+    <button type="button" data-action="previous" class="btn btn-outline-primary"><%= t('video_learning.previous') %></button>
+    <button type="button" data-action="replay" class="btn btn-primary"><%= t('video_learning.replay') %></button>
+    <button type="button" data-action="next" class="btn btn-outline-primary"><%= t('video_learning.next') %></button>
+    <label class="d-flex align-items-center gap-2"><input type="checkbox" data-loop> <%= t('video_learning.loop') %></label>
+    <label class="d-flex align-items-center gap-2"><%= t('video_learning.speed') %> <select data-speed class="form-select form-select-sm w-auto"><option value="1">1×</option></select></label>
+    <label class="d-flex align-items-center gap-2"><input type="checkbox" data-follow checked> <%= t('video_learning.follow') %></label>
+  </fieldset>
+  <h2 class="h5"><%= t('video_learning.transcript') %></h2>
+  <p class="text-muted"><%= t('video_learning.click_help') %></p>
+  <div class="video-lesson-transcript" data-transcript role="region" aria-label="<%= t('video_learning.transcript') %>" tabindex="0">
+    <% @video_lesson.subtitle_cues.each_with_index do |cue, index| %>
+      <button type="button" class="video-lesson-cue" data-cue="<%= index %>" data-start="<%= cue['start'] %>" data-end="<%= cue['end'] %>" disabled>
+        <span class="video-lesson-time"><%= '%02d:%02d:%02d' % [cue['start'].to_i / 3600, cue['start'].to_i / 60 % 60, cue['start'].to_i % 60] %></span><span class="video-lesson-text"><%= cue['text'] %></span>
+      </button>
+    <% end %>
+  </div>
+  <div class="d-flex justify-content-between gap-3 mt-4">
+    <% if @previous_lesson %><%= link_to "← #{@previous_lesson.title}", video_lesson_path(@previous_lesson), class: 'btn btn-outline-primary' %><% end %>
+    <% if @next_lesson %><%= link_to "#{@next_lesson.title} →", video_lesson_path(@next_lesson), class: 'btn btn-primary ms-auto' %><% end %>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 module BreadcrumbsHelper
   # Only link to section landing pages that work without additional parameters.
   BREADCRUMB_SECTIONS = %w[
-    gois foreigns kanjis kanji_scrolls kanji_units parts jobs vocab_mycards
+    admin/video_lessons admin/video_genres video_lessons gois foreigns kanjis kanji_scrolls kanji_units parts jobs vocab_mycards
     quizes specified_vocabs charts admin/parts_tables admin/kanji_tables
     admin/vocab_tables admin/vocab_genres admin/tokuteis admin/users
     admin/channels admin/block_ips admin/audio_as kaisha/comps kaisha/users

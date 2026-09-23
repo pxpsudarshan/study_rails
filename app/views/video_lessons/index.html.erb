@@ -1,0 +1,20 @@
+<% content_for :stylesheet do %><%= stylesheet_link_tag 'video_lessons', media: 'all' %><% end %>
+<div class="container py-4 video-library">
+  <div class="video-library-heading mb-4"><span class="text-uppercase text-primary small fw-bold">NIHO</span><h1 class="mt-2"><%= t('video_learning.title') %></h1><p class="text-muted"><%= t('video_learning.study_intro') %></p></div>
+  <%= form_with url: video_lessons_path, method: :get, local: true, class: 'row g-2 mb-4' do |f| %>
+    <div class="col-md-5"><%= f.label :q, t('video_learning.search'), class: 'form-label' %><%= f.search_field :q, value: @query, class: 'form-control', placeholder: t('video_learning.search') %></div>
+    <div class="col-md-5"><%= f.label :genre_id, t('video_learning.category'), class: 'form-label' %><%= f.select :genre_id, options_from_collection_for_select(@genres, :id, :label, @selected_genre&.id), { include_blank: t('video_learning.all_categories') }, class: 'form-select' %></div>
+    <div class="col-md-2 d-flex align-items-end"><%= f.submit t('video_learning.search'), class: 'btn btn-primary w-100' %></div>
+  <% end %>
+  <% if @selected_genre %><h2 class="h4"><%= @selected_genre.label %></h2><p class="text-muted"><%= @selected_genre.content %></p><% end %>
+  <% if @video_lessons.empty? %><div class="card card-body text-center py-5"><%= t('video_learning.no_lessons') %></div><% end %>
+  <div class="row g-4">
+    <% @video_lessons.each do |lesson| %>
+      <div class="col-md-6 col-xl-4"><article class="card h-100 video-study-card">
+        <%= link_to video_lesson_path(lesson), tabindex: -1, aria: { hidden: true } do %><img src="https://i.ytimg.com/vi/<%= lesson.youtube_video_id %>/hqdefault.jpg" alt="" loading="lazy" class="card-img-top video-study-thumbnail"><% end %>
+        <div class="card-body d-flex flex-column"><p class="small text-primary mb-2"><%= lesson.video_genre.label %></p><h2 class="h5"><%= link_to lesson.title, video_lesson_path(lesson), class: 'text-decoration-none' %></h2><p class="text-muted"><%= truncate(lesson.content.to_s, length: 130) %></p><p class="small text-muted"><%= t('video_learning.lines', count: lesson.subtitle_count) %></p><%= link_to t('video_learning.study'), video_lesson_path(lesson), class: 'btn btn-primary mt-auto' %></div>
+      </article></div>
+    <% end %>
+  </div>
+  <div class="mt-4"><%= paginate @video_lessons %></div>
+</div>

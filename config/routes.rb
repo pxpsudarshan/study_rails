@@ -1,6 +1,21 @@
 require "sidekiq/web" # require the web UI
 
 Rails.application.routes.draw do
+  post 'youtube/connect', to: 'youtube#connect', as: :connect_youtube
+  get 'youtube/callback', to: 'youtube#callback', as: :youtube_callback
+  delete 'youtube/disconnect', to: 'youtube#disconnect', as: :disconnect_youtube
+  resources :video_lessons, only: %i[index show]
+  namespace :admin do
+    resources :video_genres
+    resources :video_lessons do
+      collection do
+        get :youtube_import
+        post :youtube_tracks
+        post :import_youtube
+      end
+      post :refresh_youtube, on: :member
+    end
+  end
   devise_for :comps, controllers: { unlocks: "kaisha/unlocks", passwords: "kaisha/passwords" , registrations: "kaisha/registrations", sessions: "kaisha/sessions" }
   devise_for :users, controllers: { registrations: "users/registrations" }
 

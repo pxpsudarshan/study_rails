@@ -1,0 +1,6 @@
+<h1 class="h3 mb-3"><%= t('video_learning.manage') %></h1>
+<div class="d-flex gap-2 mb-3"><%= link_to t('video_learning.categories'), admin_video_genres_path, class: 'btn btn-secondary' %><%= link_to t('video_learning.new'), new_admin_video_lesson_path, class: 'btn btn-primary' %></div>
+<%= render 'youtube_connection' %>
+<p class="text-muted"><%= t('video_learning.draft_help') %></p>
+<%= render 'table', lessons: @video_lessons %>
+<%= paginate @video_lessons %>

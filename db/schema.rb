@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_11_11_121045) do
+ActiveRecord::Schema[7.0].define(version: 2026_09_23_010000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -779,6 +779,45 @@ ActiveRecord::Schema[7.0].define(version: 2025_11_11_121045) do
     t.index ["stripe_customer_id"], name: "index_users_on_stripe_customer_id", unique: true
   end
 
+  create_table "video_genres", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "video_genre_id"
+    t.uuid "channel_id"
+    t.string "title", null: false
+    t.text "content"
+    t.integer "sort", default: 0, null: false
+    t.boolean "hide_flg", default: false, null: false
+    t.uuid "created_by"
+    t.uuid "updated_by"
+    t.uuid "deleted_by"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["channel_id"], name: "index_video_genres_on_channel_id"
+    t.index ["video_genre_id"], name: "index_video_genres_on_video_genre_id"
+  end
+
+  create_table "video_lessons", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.string "title", null: false
+    t.string "youtube_video_id", null: false
+    t.jsonb "subtitle_cues", default: [], null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "youtube_caption_id"
+    t.uuid "video_genre_id"
+    t.uuid "channel_id"
+    t.text "content"
+    t.integer "sort", default: 0, null: false
+    t.boolean "hide_flg", default: true, null: false
+    t.uuid "created_by"
+    t.uuid "updated_by"
+    t.uuid "deleted_by"
+    t.datetime "deleted_at"
+    t.index ["channel_id"], name: "index_video_lessons_on_channel_id"
+    t.index ["user_id"], name: "index_video_lessons_on_user_id"
+    t.index ["video_genre_id"], name: "index_video_lessons_on_video_genre_id"
+  end
+
   create_table "vocab_genre_contents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "vocab_genre_id", null: false
     t.uuid "vocab_table_id", null: false
@@ -874,6 +913,15 @@ ActiveRecord::Schema[7.0].define(version: 2025_11_11_121045) do
     t.datetime "deleted_at"
   end
 
+  create_table "youtube_connections", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.text "encrypted_tokens", null: false
+    t.datetime "expires_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_youtube_connections_on_user_id", unique: true
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "audio_bs", "audio_as"
@@ -899,6 +947,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_11_11_121045) do
   add_foreign_key "user_channels", "channels"
   add_foreign_key "user_channels", "users"
   add_foreign_key "users", "comps"
+  add_foreign_key "video_lessons", "users"
+  add_foreign_key "youtube_connections", "users"
   add_foreign_key "vocab_genre_contents", "vocab_genres"
   add_foreign_key "vocab_genre_contents", "vocab_tables"
   add_foreign_key "vocab_genres", "channels"
@@ -907,4 +957,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_11_11_121045) do
   add_foreign_key "vocab_mycards", "vocab_tables"
   add_foreign_key "vocab_nations", "vocab_tables"
   add_foreign_key "vocab_tables", "channels"
+  add_foreign_key "video_genres", "channels"
+  add_foreign_key "video_genres", "video_genres"
+  add_foreign_key "video_lessons", "channels"
+  add_foreign_key "video_lessons", "video_genres"
 end
