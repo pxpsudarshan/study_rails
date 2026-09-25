@@ -150,8 +150,3 @@ body.darkpagetheme .radiocontainer:hover {
 .hidden {
   display: none;
 }
-
-.card,
-.btn {
-  border-radius: 0 !important;
-}

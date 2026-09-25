@@ -1,6 +1,6 @@
 <div class="w-100">
   <!-- Pie Chart -->
-  <div class="col-12 mb-4">
+  <div class="col-12 mb-4 chart-surface border rounded p-3">
     <%= pie_chart @chart_data,
       height: "240px",
       donut: true,
@@ -9,7 +9,7 @@
   </div>
 
   <!-- Line Chart -->
-  <div class="col-12 mb-4">
+  <div class="col-12 mb-4 chart-surface border rounded p-3">
     <%= line_chart @line_chart_data,
       height: "250px",
       title: "Progress Over Time",
@@ -19,7 +19,7 @@
 
   <!-- JLPT -->
   
-  <div class="col-12 mb-4">
+  <div class="col-12 mb-4 chart-surface border rounded p-3">
     <%= bar_chart @jlpt_chart_data,
       stacked: true,
       max: 100,
@@ -35,7 +35,7 @@
 
           <!-- 👇 header全体をリンク化 -->
           <%= link_to sub_genre_chart_kaisha_progress_index_path(genre_id: values[:id], user_id: values[:user_id]),remote: true,
-                      class: "d-flex justify-content-between align-items-center text-decoration-none text-dark" do %>
+                      class: "d-flex justify-content-between align-items-center text-decoration-none text-body" do %>
 
             <span class="text-truncate" style="max-width: 70%;">
               ▶ <%= genre %>

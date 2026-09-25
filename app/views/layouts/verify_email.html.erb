@@ -19,8 +19,10 @@
   <!--[if lt IE 9]>
     <%= javascript_include_tag 'html5shiv' %>
   <![endif]-->
+  <%= render partial: "shared/theme_head", formats: [:html] %>
 </head>
 <body>
+  <%= render partial: "shared/theme_switch", formats: [:html] %>
   <main class="overflow-hidden">
     <%= bootstrap_flash %>
     <%= yield %>

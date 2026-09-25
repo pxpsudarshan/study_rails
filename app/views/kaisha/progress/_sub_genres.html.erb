@@ -3,7 +3,7 @@
 
     <%= link_to sub_genre_chart_kaisha_progress_index_path(genre_id: sg[:id], user_id: sg[:user_id]),
                 remote: true,
-                class: "genre-link d-flex justify-content-between text-decoration-none text-dark" do %>
+                class: "genre-link d-flex justify-content-between text-decoration-none text-body" do %>
 
       <span>▶ <%= sg[:name] %></span>
       <span><%= sg[:progress] %>%</span>

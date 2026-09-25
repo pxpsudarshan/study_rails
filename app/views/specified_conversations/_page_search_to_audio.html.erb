@@ -17,7 +17,7 @@
 
           <% if filtered_audio.present? %>
             <% filtered_audio.each_with_index do |audio, index| %>
-              <li class="list-group-item dropdown-item" style="<%= audio.customer_flg ? 'text-align: end; background-color: #e9f5ff;' : '' %>">
+              <li class="list-group-item dropdown-item <%= 'text-end bg-body-secondary' if audio.customer_flg %>">
                 <h6 class="text-wrap text-break js-conversation"><%= get_content(audio, @selected_language) %></h6>
                 <audio controls>
                   <source src="<%= get_media(audio, @selected_language) %>" type="audio/mpeg" />

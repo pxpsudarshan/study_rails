@@ -25,3 +25,4 @@ Rails.application.config.assets.precompile += ['admin/users.js','admin/channels.
 Rails.application.config.assets.precompile += ['kaisha/progress.js']
 Rails.application.config.assets.precompile += ['kaisha/users.js']
 Rails.application.config.assets.precompile += ['admin/parts_tables.js', 'admin/kanji_tables.js', 'admin/vocab_tables.js', 'admin/vocab_genres.js']
+Rails.application.config.assets.precompile += %w( theme.js theme.css )

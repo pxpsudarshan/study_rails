@@ -18,12 +18,14 @@
   <!--[if lt IE 9]>
     <%= javascript_include_tag 'html5shiv' %>
   <![endif]-->
+  <%= render partial: "shared/theme_head", formats: [:html] %>
 </head>
 <body class="<%= 'app-with-sidebar' if show_app_sidebar? %>">
+  <%= render partial: "shared/theme_switch", formats: [:html] %>
   <% if show_app_sidebar? %>
     <%= render 'shared/sidebar' %>
   <% else %>
-  <nav class="navbar navbar-expand-md navbar-light static-top bg-light">
+  <nav class="navbar navbar-expand-md static-top bg-body border-bottom">
   <div class="container-fluid">
     <a class="navbar-brand" href="<%= menus_path %>"><%= t('title.header') %></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">

@@ -380,7 +380,6 @@ $(document).ready(function() {
   });
 
   hsize = $(window).height();
-  $('.form-signin').css("height", hsize - 100 + "px");
   $('.mainpage').css("height", hsize + "px");
   $('.my-image').css("height", hsize + "px");
   setInterval(function() {
@@ -397,7 +396,6 @@ $(document).ready(function() {
 
 $(window).resize(function () {
   hsize = $(window).height();
-  $('.form-signin').css("height", hsize - 100 + "px");
   $('.mainpage').css("height", hsize + "px");
   $('.my-image').css("height", hsize + "px");
 });

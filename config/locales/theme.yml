@@ -1,0 +1,10 @@
+en:
+  theme:
+    appearance: Appearance
+    day: Day
+    night: Night
+ja:
+  theme:
+    appearance: 表示モード
+    day: ライト
+    night: ダーク

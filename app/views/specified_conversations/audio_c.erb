@@ -37,7 +37,7 @@
     
     <% language_options.each_with_index do |lang, index| %>
         <%= form.radio_button :language, lang, id: "language_#{lang}", class: 'btn-check visually-hidden', autocomplete: 'off', checked: index.zero? %>
-        <%= form.label :language, lang, for: "language_#{lang}", class: 'btn btn-primary mb-1 mr-sm-2' %>
+        <%= form.label :language, lang, for: "language_#{lang}", class: 'btn btn-outline-primary mb-1 me-sm-2' %>
     <% end %>
 
     <div class="d-inline-block w-100" style="max-width: 250px;">
@@ -50,20 +50,6 @@
 </div>
 
   </div>
-  <style>
-    .btn-primary {
-      background-color: aliceblue;
-      color: black;
-    }
-
-    .btn-primary:hover {
-      background-color: #007bff; /* Change to desired hover color */
-    }
-  
-    .btn-primary.active {
-      background-color: #007bff; /* Change to desired selected color */
-    }
-  </style>
   <hr class="mx-0 border border-secondary border-2 opacity-75">
   <div class="col">
     <div id="audio_d"></div>

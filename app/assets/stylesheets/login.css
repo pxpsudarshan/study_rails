@@ -4,19 +4,15 @@ body {
 }
 
 body {
-  display: flex;
-  align-items: center;
-  padding-top: 40px;
+  padding-top: 64px;
   padding-bottom: 40px;
-  background-color: #f5f5f5;
-  overflow: hidden;
+  background-color: var(--bs-body-bg);
 }
 
 .form-signin {
   max-width: 1100px;
   padding: 15px;
   position: relative;
-  overflow: auto;
 }
 
 .form-signin .form-floating:focus-within {
@@ -42,10 +38,6 @@ body {
   text-align: right;
 }
 
-a {
-  color: #101111;
-  text-decoration: none;
-}
 
 .my-image{
   position: absolute;
@@ -53,21 +45,8 @@ a {
   opacity: .8;
   height: 900px;
   width: 100%;
-  overflow: hidden;
 }
 
-select,
-input[type="email"],
-input[type="password"],
-input[type="text"],
-textarea {
-  border: none;
-  outline: none;
-  border-bottom: 2px solid #201d1d;
-  border-radius: 0 !important;
-  background-color: rgba(245, 245, 245, 1);
-  opacity: .8;
-}
 @media only screen
 and (max-width : 600px) {
 .w-50{
@@ -76,18 +55,4 @@ and (max-width : 600px) {
 .hide-text{
   display: none;
 }
-}
-
-.card{
-  background-color: rgba(245, 245, 245, 1);
-  opacity: .8;
-}
-
-.border-student {
-  border-color: #c8a772;
-  border-width: 5px !important;
-}
-.border-company {
-  border-color: #30a7df;
-  border-width: 5px !important;
 }

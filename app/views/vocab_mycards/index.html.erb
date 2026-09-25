@@ -35,7 +35,7 @@
   <% @cards.each do |card| %>
     <% current_date = card.created_at.strftime('%Y/%m/%d') %>
     <% if last_date != current_date %>
-      <div style="width: 100%; background: lightblue; text-align: center; margin: 10px;">
+      <div class="study-card-heading" style="width: 100%; text-align: center; margin: 10px;">
         <%= current_date %>
       </div>
       <% last_date = current_date %>
