@@ -21,9 +21,6 @@ class User < ApplicationRecord
 
   validates :sei, presence: true
   validates :mei, presence: true
-  validates :sei_kana, presence: true
-  validates :mei_kana, presence: true
-  validates :mobile, presence: true
 
   validates :email, presence: true, if: :email_required?
   validates :email, format: { with: Devise.email_regexp, allow_blank: true, if: :email_changed? }

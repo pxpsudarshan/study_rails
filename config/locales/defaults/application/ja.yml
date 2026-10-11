@@ -91,6 +91,8 @@ ja:
     registrations:
       form:
         sign_up:      '学生用のアカウント登録'
+        title: 学生用アカウントを作成
+        select_language: 母国語を選択してください
     shared:
       links:
         back: 戻る

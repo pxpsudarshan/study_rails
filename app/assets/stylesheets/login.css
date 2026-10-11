@@ -91,3 +91,13 @@ and (max-width : 600px) {
   border-color: #30a7df;
   border-width: 5px !important;
 }
+
+.registration-card {
+  max-width: 560px;
+  opacity: 1;
+}
+
+.registration-card .field_with_errors .form-control,
+.registration-card .field_with_errors .form-select {
+  border-color: #b02a37;
+}
