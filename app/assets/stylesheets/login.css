@@ -97,6 +97,19 @@ and (max-width : 600px) {
   opacity: 1;
 }
 
+.registration-card .registration-actions .btn {
+  flex: 0 1 auto;
+  min-width: 0;
+  min-height: 48px;
+  padding: .5rem .75rem;
+  white-space: normal;
+}
+
+.registration-card .registration-actions .btn-outline-dark {
+  flex: 0 0 auto;
+  padding-inline: 1rem;
+}
+
 .registration-card .field_with_errors .form-control,
 .registration-card .field_with_errors .form-select {
   border-color: #b02a37;

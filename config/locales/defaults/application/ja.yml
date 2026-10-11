@@ -93,6 +93,13 @@ ja:
         sign_up:      '学生用のアカウント登録'
         title: 学生用アカウントを作成
         select_language: 母国語を選択してください
+        review: 入力内容を確認
+      confirm:
+        title: 入力内容の確認
+        send_email: 確認メールを送信
+        edit: 戻る
+        expired: 確認の有効期限が切れました。もう一度入力してください。
+        reenter_password: 修正後、パスワードをもう一度入力してください。
     shared:
       links:
         back: 戻る
@@ -765,6 +772,7 @@ ja:
       empty: "未設定"
 
   email_verification:
+    sender_notice: "%{sender} から確認メールが届きます。"
     eyebrow: あと少しで完了です
     title: メールをご確認ください
     description: 確認メールに記載されたリンクを開いて、メールアドレスの確認を完了してください。

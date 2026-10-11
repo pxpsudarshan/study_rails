@@ -4,36 +4,23 @@
     <p class="small text-muted mb-2"><%= t('email_verification.eyebrow') %></p>
     <h1 id="verification-title" class="h3 mb-3 fw-normal"><%= t('email_verification.title') %></h1>
     <p class="text-muted small lh-lg mb-0"><%= t('email_verification.description') %></p>
+    <p class="small text-break mt-2 mb-0"><%= t('email_verification.sender_notice', sender: UserMailer::VERIFICATION_SENDER) %></p>
     <% if current_user.present? %>
       <div class="border p-3 mt-4">
         <span class="d-block text-muted small mb-1"><%= t('email_verification.recipient') %></span>
         <strong class="small text-break"><%= current_user.email %></strong>
-        <div class="mt-2">
-          <%= link_to t('email_verification.change_email'), edit_verification_email_users_path, class: 'btn btn-outline-dark btn-sm rounded-0' %>
-        </div>
       </div>
     <% end %>
     <ol class="text-start small my-4">
       <li><%= t('email_verification.step_open') %></li>
       <li><%= t('email_verification.step_verify') %></li>
     </ol>
-    <aside class="bg-light p-3 text-start" aria-labelledby="verification-help-title">
-      <h2 id="verification-help-title" class="small fw-bold mb-2"><%= t('email_verification.help_title') %></h2>
-      <p class="small text-muted lh-lg mb-0"><%= t('email_verification.help_body') %></p>
-      <% if current_user.present? %>
-        <%= button_to t('email_verification.resend'), resend_verification_email_users_path, method: :post, class: 'btn btn-outline-dark btn-sm rounded-0 mt-3' %>
-        <p class="small text-muted mt-2 mb-0"><%= t('email_verification.resend_hint') %></p>
-      <% else %>
-        <p class="small text-muted mt-2 mb-0"><%= t('email_verification.sign_in_to_resend') %></p>
-      <% end %>
-    </aside>
     <div class="mt-4">
       <% if current_user.present? %>
         <%= button_to t('email_verification.back_to_login'), back_to_login_users_path, method: :post, class: 'btn btn-link text-secondary small mt-2' %>
       <% else %>
         <%= link_to t('email_verification.sign_in'), new_user_session_path, class: 'btn btn-dark rounded-0 w-100 py-3' %>
       <% end %>
-      <p class="small text-muted mt-3 mb-0"><%= t('email_verification.link_hint') %></p>
     </div>
   </div>
 </section>

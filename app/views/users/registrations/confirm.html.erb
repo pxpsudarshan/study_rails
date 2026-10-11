@@ -1,0 +1,21 @@
+<section class="registration-card card border-student rounded-0 mx-auto" aria-labelledby="registration-title">
+  <div class="card-body p-4 p-sm-5">
+    <h1 id="registration-title" class="h3 mb-4"><%= t('.title') %></h1>
+    <dl class="mb-4">
+      <% [:sei, :mei, :email].each do |attribute| %>
+        <dt class="small text-muted mb-1"><%= t("activerecord.attributes.user.#{attribute}") %></dt>
+        <dd class="text-break mb-3"><%= resource.public_send(attribute) %></dd>
+      <% end %>
+      <dt class="small text-muted mb-1"><%= t('activerecord.attributes.user.lang_id') %></dt>
+      <dd class="mb-3"><%= langs(resource.lang_id).first&.first %></dd>
+    </dl>
+
+    <%= form_tag registration_path(resource_name), method: :post do %>
+      <%= hidden_field_tag :registration_token, @registration_token %>
+      <div class="registration-actions d-flex justify-content-between gap-2">
+        <%= button_tag t('.edit'), name: 'edit', value: '1', class: 'btn btn-outline-dark rounded-0' %>
+        <%= button_tag t('.send_email'), class: 'btn btn-dark rounded-0' %>
+      </div>
+    <% end %>
+  </div>
+</section>

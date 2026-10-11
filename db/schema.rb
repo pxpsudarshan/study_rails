@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_09_19_000000) do
+ActiveRecord::Schema[7.0].define(version: 2026_10_11_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -535,9 +535,9 @@ ActiveRecord::Schema[7.0].define(version: 2026_09_19_000000) do
     t.uuid "deleted_by"
     t.string "sei", null: false
     t.string "mei", null: false
-    t.string "sei_kana", null: false
-    t.string "mei_kana", null: false
-    t.string "mobile", null: false
+    t.string "sei_kana"
+    t.string "mei_kana"
+    t.string "mobile"
     t.string "lang_id", default: "EN", null: false
     t.boolean "mycard_sign", default: false, null: false
     t.string "jp_level"
