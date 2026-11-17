@@ -7,9 +7,8 @@ class QuizesController < ApplicationController
 
   def period
     # ① 期間指定あり → mycard 起点
-    source = current_user.vocab_mycards
+    source = current_user.vocab_mycards.for_learning_period(params[:period])
                .joins(:vocab_table)
-               .where(updated_at: period_range(params[:period]))
                .select(:vocab_read, :vocab_code).select("vocab_tables.id as vocab_table_id")
     source = source.joins(vocab_table: :vocab_nations)
                .where(vocab_nations: { hide_flg: false, lang: current_user.lang_id })
@@ -84,18 +83,5 @@ class QuizesController < ApplicationController
       mycard_level: (quiz['correct_'+quiz[:index]] == quiz['answer_'+quiz[:index]] ? 1 : 0),
       updated_at: Time.current
     )
-  end
-
-  private
-
-  # 期間指定用
-  def period_range(period)
-    case period
-    when '1d' then 1.day.ago..Time.current
-    when '1m' then 1.month.ago..Time.current
-    when '3m' then 3.months.ago..Time.current
-    when 'all' then 1.years.ago..Time.current
-    else nil
-    end
   end
 end

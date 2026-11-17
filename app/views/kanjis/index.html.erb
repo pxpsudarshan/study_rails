@@ -2,7 +2,7 @@
 <div class="w-100 p-3">
   <%= form_for :kanji, url: kanjis_path, html: { id: 'kanjis', role: 'form', method: :get }, remote: true do |f| %>
   <%= f.text_field :kanji, value: @goi, class: 'form-control' %>
-  <%= f.submit 'next', class: 'btn btn-primary' %>
+  <%= f.submit 'next', class: 'btn btn-primary rounded-0 m-1' %>
   <% end %>
   <div class="row">
     <div class="col-md-12" id="part">

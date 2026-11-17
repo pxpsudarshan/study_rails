@@ -21,7 +21,8 @@ module SidebarHelper
         ['sidebar.dashboard', menus_path, 'home'], ['feature.vocab_hiragana', gois_path, 'book'],
         ['feature.vocab_native', foreigns_path, 'language'], ['feature.kanji', kanjis_path, 'font'],
         ['feature.parts', parts_path, 'puzzle-piece'], ['feature.mycard', vocab_mycards_path, 'clone'],
-        ['feature.quiz', quizes_path, 'question-circle']
+        ['feature.quiz', quizes_path, 'question-circle'],
+        ['feature.conversation', specified_conversations_path, 'comments']
       ]], [t('sidebar.track'), [['sidebar.progress', charts_path, 'chart-line']]],
         [t('sidebar.career'), [['navbar.job', jobs_path, 'briefcase'], ['navbar.store', new_store_path, 'book-open'], ['navbar.profile', profile_user_path(current_user), 'user']]]]
       if current_user.access_type != User::ACCESS_TYPE::USER
@@ -46,6 +47,8 @@ module SidebarHelper
     label = strip_tags(t(label)).strip
     active = false unless method == :get
     content = content_tag(:i, '', class: "fas fa-#{icon} fa-fw", aria: { hidden: true }) + content_tag(:span, label)
-    link_to content, path, class: "nav-link d-flex align-items-center gap-3 rounded-0 px-3 py-2 mb-1#{' active' if active}", method: method, title: label, aria: { label: label, current: ('page' if active) }
+    options = { class: "nav-link d-flex align-items-center gap-3 rounded-0 px-3 py-2 mb-1#{' active' if active}", title: label, aria: { label: label, current: ('page' if active) } }
+    options[:method] = method unless method == :get
+    link_to content, path, options
   end
 end

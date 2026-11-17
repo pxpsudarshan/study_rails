@@ -27,8 +27,35 @@ function page(url, storage = new Map(), options = {}) {
   vm.runInNewContext(source, { document, window: { location, addEventListener(name, fn) { events[name] = fn; } }, $, URL, URLSearchParams,
     sessionStorage: { getItem: key => storage.get(key), setItem: (key, value) => storage.set(key, value) } });
   events.DOMContentLoaded();
-  return { list, dropdown, hiddenList, resize: () => events.resize(), calls, ajaxEvents, entries: () => JSON.parse(storage.get('breadcrumbs:v2:User:1:student')) };
+  return { list, dropdown, hiddenList, resize: () => events.resize(), click: event => events.click(event), calls, ajaxEvents, entries: () => JSON.parse(storage.get('breadcrumbs:v2:User:1:student')) };
 }
+
+function sidebarClick(current, url, label, options = {}) {
+  const link = { href: 'https://example.com' + url, textContent: label,
+    getAttribute: () => null, hasAttribute: () => false };
+  current.click({ button: 0, target: { closest: () => link }, ...options });
+}
+
+test('sidebar navigation starts a new trail with Home and the clicked label', () => {
+  const storage = new Map();
+  page('/gois?q=one', storage);
+  const current = page('/gois?q=two', storage);
+  sidebarClick(current, '/specified_conversations', 'Conversation');
+  const conversation = page('/specified_conversations', storage);
+  assert.deepEqual(conversation.entries(), [{ url: '/specified_conversations', label: 'Conversation' }]);
+  assert.equal(conversation.list.children.filter(item => !item.hidden).length, 2);
+  sidebarClick(conversation, '/kanjis', 'Kanji');
+  const kanji = page('/kanjis', storage);
+  assert.deepEqual(kanji.entries(), [{ url: '/kanjis', label: 'Kanji' }]);
+  assert.equal(kanji.list.children.filter(item => !item.hidden).length, 2);
+  assert.equal(page('/kanjis?page=2', storage).entries().length, 2);
+});
+
+test('opening a sidebar link in another tab preserves the current trail', () => {
+  const current = page('/gois?q=one');
+  sidebarClick(current, '/kanjis', 'Kanji', { metaKey: true });
+  assert.equal(current.entries().length, 1);
+});
 
 test('same controller and changed parameters retain clickable prior URLs', () => {
   const storage = new Map();

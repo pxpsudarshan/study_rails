@@ -736,6 +736,7 @@ ja:
     specified_commercial: "特定商取引法に基づく表示"
 
   quizes:
+    start: "クイズ開始"
     title: クイズを選択
 
     learning_history:
@@ -815,3 +816,25 @@ ja:
     progress: "学習の進捗"
     navigation: "メインナビゲーション"
     menu: "メニュー"
+
+  home:
+    welcome: "%{name}さん、こんにちは"
+    intro: 今日も、自分のペースで日本語を学びましょう。
+    progress: あなたの学習状況
+    progress_details: 学習の進捗を見る →
+    studying: 学習中
+    learned: 習得済み
+    learned_ratio: マイカードの習得率
+    empty: まずは語彙を学んで、覚えたい言葉をマイカードに登録しましょう。
+    start: 語彙の学習を始める
+    review: マイカードを復習する
+    learn: 学習を始める
+    vocab_hint: ひらがなから言葉を学ぶ
+    native_hint: 母国語から日本語を学ぶ
+    kanji_hint: 漢字の読み方と意味を学ぶ
+    parts_hint: 部品から漢字を学ぶ
+    conversation_hint: 場面別の会話を学ぶ
+    quiz_hint: クイズで理解度を確かめる
+    materials: 教材から選ぶ
+    jlpt: JLPTレベル別
+    genres: 分野別の語彙

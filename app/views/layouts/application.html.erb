@@ -114,7 +114,7 @@
     <%= image_tag('backphoto_02.jpg', class: 'my-image', alt: 'background Image') if action_name != 'new_user' %>
   <% end %>
   <% end %>
-  <main class="overflow-hidden">
+  <main class="overflow-auto">
     <%= render partial: "shared/breadcrumbs", formats: [:html] %>
     <%= bootstrap_flash %>
     <%= yield %>

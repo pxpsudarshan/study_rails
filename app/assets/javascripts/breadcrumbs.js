@@ -180,7 +180,10 @@
     if (nav.dataset.track !== 'true') return;
     const pending = read(pendingKey, null);
     save(pendingKey, null);
-    if (pending && pending.base === localURL(window.location.href)) {
+    if (pending && pending.sidebar && pending.url === localURL(window.location.href)) {
+      entries = [];
+      record({ url: pending.url, label: pending.label });
+    } else if (pending && pending.base === localURL(window.location.href)) {
       // Rebuild the page before replaying a remote filter or detail navigation.
       render();
       const target = entries.findIndex(entry => entry.url === pending.url && entry.base === pending.base);
@@ -196,6 +199,18 @@
       record({ url: localURL(window.location.href), label: labelFor(window.location.href, nav.dataset.label) });
     }
   }
+
+  document.addEventListener('click', function (event) {
+    if (!nav || !key || event.defaultPrevented || event.button !== 0 ||
+        event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    const link = event.target.closest('#app-sidebar a.nav-link');
+    if (!link || (link.getAttribute('data-method') || 'get').toLowerCase() !== 'get' ||
+        link.hasAttribute('download') || (link.target && link.target !== '_self')) return;
+    let url;
+    try { url = localURL(link.href); } catch (_) { return; }
+    save(key, []);
+    save(pendingKey, { sidebar: true, url: url, label: link.textContent.trim() });
+  }, true);
 
   // jquery-ujs GET navigation also changes the visible page without a full load.
   $(document).on('ajax:beforeSend', 'a[data-remote], form[data-remote]', function (event, xhr, settings) {

@@ -4,6 +4,8 @@ class SpecifiedConversationsController < ApplicationController
     if params[:id].present?
       audio_a = AudioA.find(params[:id])
       @audio_b = audio_a.audio_bs.order(:sort)
+    else
+      @audio_as = AudioA.order(:sort)
     end
   end
 

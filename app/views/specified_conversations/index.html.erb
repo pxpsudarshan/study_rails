@@ -5,13 +5,14 @@
     <div class="col">
       <div class="card mb-1 ">
         <ul class="list-group list-group-flush text-left ">
-        <% @audio_b.each_with_index do |audio_b_value, index| %>
-          <%= link_to audio_c_specified_conversations_path(id: audio_b_value.id), class: 'text-decoration-none d-inline-block w-100 text-reset' do %>
+        <% (@audio_as || @audio_b).each_with_index do |audio, index| %>
+          <% path = @audio_as ? specified_conversations_path(id: audio.id) : audio_c_specified_conversations_path(id: audio.id) %>
+          <%= link_to path, class: 'text-decoration-none d-inline-block w-100 text-reset' do %>
             <li class="list-group-item dropdown-item">
-              <h6><%= "#{index + 1}. #{title_nation(audio_b_value)}" %></h6>
+              <h6><%= "#{index + 1}. #{title_nation(audio)}" %></h6>
             </li>
           <% end %>
-        <% end %>        
+        <% end %>
         </ul>
       </div>
     </div>

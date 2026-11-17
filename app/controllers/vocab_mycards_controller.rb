@@ -6,13 +6,10 @@ class VocabMycardsController < ApplicationController
     @message = ""
     if vocab_code.present?
       @cards = vocab_cards(vocab_code)
-    elsif params[:selected_item].present?
-      @cards = current_user.vocab_mycards
-                .joins(:vocab_table)
-                .where(created_at: period_range(params[:selected_item]))
-                .order(created_at: :desc)
     else
-      @cards = current_user.vocab_mycards.joins(:vocab_table).order(created_at: :desc)
+      @period = params[:selected_item].presence || 'all'
+      @cards = current_user.vocab_mycards.for_learning_period(@period)
+                .joins(:vocab_table).order(created_at: :desc)
     end
 
     if !@cards.present?
@@ -69,15 +66,5 @@ class VocabMycardsController < ApplicationController
       :recent_date,
       :mycard_check,
     )
-  end
-
-  # 期間指定用
-  def period_range(period)
-    case period
-    when '1' then 1.day.ago..Time.current
-    when '2' then 1.month.ago..Time.current
-    when '3' then 3.months.ago..Time.current
-    else 1.years.ago..Time.current
-    end
   end
 end
