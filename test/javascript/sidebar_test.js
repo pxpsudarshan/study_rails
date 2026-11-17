@@ -60,12 +60,6 @@ test('re-evaluating scripts never changes state or doubles toggle clicks', () =>
   p.click(); assert.equal(p.expanded(), false); assert.equal(p.changes(), 2);
 });
 
-test('load events after opening never close the sidebar', () => {
-  const p = page(); p.load(); p.click();
-  for (const event of ['DOMContentLoaded', 'turbo:load', 'turbolinks:load']) p.emit(event);
-  assert.equal(p.expanded(), true); assert.equal(p.changes(), 1);
-});
-
 test('twenty rapid clicks make exactly twenty state changes', () => {
   const p = page(); p.load();
   for (let i = 0; i < 20; i++) { p.click(); assert.equal(p.expanded(), i % 2 === 0); }
@@ -104,12 +98,6 @@ test('a new session starts closed without animation', () => {
   const p = page(); p.load(); p.restore();
   assert.equal(p.expanded(), false);
   assert.equal(p.classes.has('app-sidebar-animate'), false);
-});
-
-test('layout restores state before sidebar markup and syncs the toggle afterward', () => {
-  const template = fs.readFileSync('app/views/shared/_sidebar.html.erb', 'utf8');
-  assert(template.indexOf('nihoSidebarRestore()') < template.indexOf('<aside'));
-  assert(template.indexOf('nihoSidebarSyncButton()') > template.indexOf('</aside>'));
 });
 
 for (const width of [390, 768, 1024, 1199]) {

@@ -5,15 +5,14 @@ class VocabGenresController < ApplicationController
     redirect_to menus_path and return unless @id.present?
 
     # Parents (root genres) for the given title
-    @root_genre = VocabGenre.find(@id)
-    @selected_genre = child_id.present? ? VocabGenre.find(child_id) : @root_genre
-    parent = @selected_genre
+    root_genre = VocabGenre.find(@id)
+    selected_genre = child_id.present? ? VocabGenre.find(child_id) : root_genre
 
     ids = []
     sub_ids = []
 
     table_ids = []
-    table_ids << parent.id
+    table_ids << selected_genre.id
     while id = table_ids.shift
       vg = VocabGenre.find(id)
       ids += vg.vocab_genre_contents.where(hide_flg: false).pluck(:vocab_table_id)
@@ -30,7 +29,7 @@ class VocabGenresController < ApplicationController
     end
 
     # A selected child must belong to the requested genre tree.
-    raise ActiveRecord::RecordNotFound unless @selected_genre.id == @root_genre.id || sub_ids.include?(@selected_genre.id)
+    raise ActiveRecord::RecordNotFound unless selected_genre.id == root_genre.id || sub_ids.include?(selected_genre.id)
 
     # Children for the select (unique rows, stable order)
     @children = VocabGenre.where(id: sub_ids).select(:title, :sort, :id).order(:sort, :title)

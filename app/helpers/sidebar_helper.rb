@@ -47,7 +47,7 @@ module SidebarHelper
     label = strip_tags(t(label)).strip
     active = false unless method == :get
     content = content_tag(:i, '', class: "fas fa-#{icon} fa-fw", aria: { hidden: true }) + content_tag(:span, label)
-    options = { class: "nav-link d-flex align-items-center gap-3 rounded-0 px-3 py-2 mb-1#{' active' if active}", title: label, aria: { label: label, current: ('page' if active) } }
+    options = { class: "nav-link d-flex align-items-center rounded-0 mb-1#{' active' if active}", title: label, aria: { label: label, current: ('page' if active) } }
     options[:method] = method unless method == :get
     link_to content, path, options
   end
