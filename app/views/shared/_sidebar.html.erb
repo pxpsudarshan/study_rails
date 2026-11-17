@@ -1,0 +1,47 @@
+<aside class="app-sidebar" tabindex="-1" id="app-sidebar" aria-label="<%= t('sidebar.navigation') %>">
+  <div class="app-sidebar-body d-flex flex-column p-3">
+    <nav aria-label="<%= t('sidebar.navigation') %>" class="flex-grow-1">
+      <% sidebar_groups.each do |heading, links| %>
+        <h2 class="app-sidebar-heading small text-uppercase fw-bold px-3 mt-3 mb-2"><%= heading %></h2>
+        <div class="nav flex-column">
+          <% links.each do |label, path, icon| %><%= sidebar_link(label, path, icon) %><% end %>
+        </div>
+      <% end %>
+    </nav>
+    <div class="border-top mt-4 pt-3">
+      <p class="app-sidebar-account small fw-bold text-break px-3 mb-2"><%= current_user.present? ? current_user.name : current_comp.name %></p>
+      <%= sidebar_link('navbar.edit_user', current_user.present? ? edit_user_path(current_user) : edit_kaisha_comp_path(current_comp), 'cog') %>
+      <%= sidebar_link('navbar.logout', current_user.present? ? destroy_user_session_path : destroy_comp_session_path, 'sign-out-alt', method: :delete) %>
+    </div>
+  </div>
+</aside>
+<div class="app-sidebar-header d-flex align-items-center gap-3 px-3 pt-2 sticky-top">
+  <%= link_to image_tag('niho_logo_newWhite.svg', width: 112, height: 54, alt: 'NIHO', class: 'd-block'), current_comp.present? ? kaisha_menus_path : menus_path %>
+  <div class="dropdown ms-auto">
+    <%= button_tag type: 'button', class: 'app-account-toggle btn dropdown-toggle d-inline-flex align-items-center gap-2', data: { bs_toggle: 'dropdown' }, aria: { expanded: false, label: t('sidebar.menu') } do %>
+      <i class="fas fa-user-circle fa-lg" aria-hidden="true"></i>
+    <% end %>
+    <ul class="dropdown-menu dropdown-menu-end rounded-0">
+      <% if @locales.size > 1 %>
+        <li class="px-3 py-2">
+          <%= form_with url: request.path, method: :get, local: true do %>
+            <%= select_tag :locale, options_for_select(@locales, @locale), class: 'form-select rounded-0', aria: { label: @locales.to_h.key(@locale) }, onchange: 'this.form.requestSubmit();' %>
+          <% end %>
+        </li>
+        <li><hr class="dropdown-divider"></li>
+      <% end %>
+      <li>
+        <%= link_to current_user.present? ? destroy_user_session_path : destroy_comp_session_path, method: :delete, class: 'dropdown-item' do %>
+          <i class="fas fa-sign-out-alt me-2" aria-hidden="true"></i><%= strip_tags(t('navbar.logout')).strip %>
+        <% end %>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="app-sidebar-controls px-3">
+  <% { 'd-none d-lg-inline-flex' => true, 'd-inline-flex d-lg-none' => false }.each do |visibility, expanded| %>
+    <%= button_tag type: 'button', class: "app-sidebar-toggle btn rounded-0 #{visibility}", title: t('sidebar.menu'), aria: { controls: 'app-sidebar', expanded: expanded, label: t('sidebar.menu') } do %>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    <% end %>
+  <% end %>
+</div>

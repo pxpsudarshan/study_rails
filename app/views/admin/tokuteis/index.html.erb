@@ -19,7 +19,7 @@
       <tbody>
       <% @tokuteis.each do |a| %>
         <tr class="details_row nested-fields">
-          <td class="text-start text-nowrap w-75"><%= link_to a.title, admin_tokutei_path(id: a.id, audio_lang: @audio_lang), class: '' %></td>
+          <td class="text-start text-nowrap"><%= link_to a.title, admin_tokutei_path(id: a.id, audio_lang: @audio_lang), class: '' %></td>
           <td class="text-start text-nowrap"><%= link_to t('buttons.edit').html_safe, edit_admin_tokutei_path(id: a.id, audio_lang: @audio_lang), class: 'btn btn-sm btn-primary' %></td>
           <% if current_user.access_type == User::ACCESS_TYPE::KANRISHA %>
           <td class="text-start text-nowrap"><%= link_to t('buttons.destroy').html_safe, admin_tokutei_path(id: a.id, audio_lang: @audio_lang), method: :delete, class: 'btn btn-sm btn-danger' %></td>

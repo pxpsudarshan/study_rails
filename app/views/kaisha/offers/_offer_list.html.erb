@@ -33,7 +33,7 @@
                     <% if user.profile.jp_school_name.present? %>
                       <%= school_type_array(user.profile.jp_school_type) %> / <%= school_end_array(user.profile.jp_school_end) %>
                     <% else %>
-                      <%= school_type_array(user.profile.school_type) %> / <%= school_end_array(user.profile.school_end) %>
+                      <%= user.profile.school_type %> / <%= user.profile.school_end %>
                     <% end %>
                   </td>
                   <td class="text-end text-nowrap fw-bold"><%= @stud_rates[user.id] %>%</td>
@@ -50,6 +50,7 @@
           </div>
           <%= f.submit t('offers_ui.request'), class: 'btn btn-primary', id: 'offer-request-submit', disabled: true, data: { disable_with: t('offers_ui.sending') } %>
         </div>
+        <p class="small text-muted mt-3 mb-0"><%= t('offers_ui.contact_hint') %></p>
       <% end %>
     </div>
   </div>

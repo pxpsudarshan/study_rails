@@ -648,7 +648,7 @@ en:
     save:             'Save'
     copy:             '<i class="fas fa-file-alt"></i> Copy'
     back:             'Back'
-    next:             'Next'  
+    next:             'Next'
     cancel:           'Cancel'
     create:           'Create'
     'yes':            'Yes'
@@ -730,7 +730,7 @@ en:
   time:
     formats:
       only_time: "%H:%M"
-      kintone_job: '%Y/%m/%d %H:%M:%S'   
+      kintone_job: '%Y/%m/%d %H:%M:%S'
 
   page_title:
     users:
@@ -753,6 +753,7 @@ en:
     specified_commercial: "Legal Notice"
 
   quizes:
+    start: "Start Quiz"
     title: Select Quiz
 
     learning_history:
@@ -846,3 +847,35 @@ en:
     start_hint: "Choose your filters above, then select Search candidates."
     sent_title: "Your request has been sent"
     back: "Back to candidate search"
+
+  sidebar:
+    learn: "Learn"
+    track: "Track"
+    career: "Career"
+    recruitment: "Recruitment"
+    dashboard: "Dashboard"
+    progress: "Progress"
+    navigation: "Main navigation"
+    menu: "Menu"
+
+  home:
+    welcome: "Hello, %{name}"
+    intro: Keep learning Japanese at your own pace.
+    progress: Your learning progress
+    progress_details: View progress →
+    studying: Studying
+    learned: Learned
+    learned_ratio: Cards learned
+    empty: Start learning vocabulary and save words you want to remember to My Cards.
+    start: Start learning vocabulary
+    review: Review my cards
+    learn: Start learning
+    vocab_hint: Learn words through hiragana
+    native_hint: Learn Japanese from your native language
+    kanji_hint: Learn kanji readings and meanings
+    parts_hint: Explore kanji through their parts
+    conversation_hint: Practice conversations for different situations
+    quiz_hint: Check your understanding with quizzes
+    materials: Browse materials
+    jlpt: By JLPT level
+    genres: Vocabulary by topic

@@ -1,0 +1,116 @@
+en:
+  breadcrumbs:
+    page: "Page %{number}"
+    expand: Show full breadcrumb trail
+    hidden: Earlier steps
+    label: Breadcrumb
+    home: Home
+    actions:
+      new: New
+      edit: Edit
+      show: Details
+      profile: Profile
+      invite: Invite
+      new_user: New student
+      period: Learning history quiz
+      jlpt: JLPT quiz
+      genre: Genre quiz
+      vocab_word: Vocabulary
+      audio_c: Conversations
+      audio_d: Conversation details
+      chart: Chart
+      sub_genre_chart: Genre progress
+    sections:
+      gois: Vocabulary
+      foreigns: Native language vocabulary
+      kanjis: Kanji
+      kanji_scrolls: Kanji scroll
+      kanji_units: Kanji units
+      parts: Kanji parts
+      jobs: Jobs
+      stores: Word entry
+      company_stores: Word entry
+      vocab_mycards: My cards
+      quizes: Quizzes
+      jlpts: JLPT vocabulary
+      vocab_genres: Vocabulary genres
+      tokutei_contents: Specified skills
+      specified_vocabs: Specified skills vocabulary
+      specified_conversations: Conversations
+      charts: Progress
+      progress: Progress
+      users: Students
+      comps: Companies
+      offers: Offers
+      job_profiles: Job profiles
+      parts_tables: Kanji parts
+      kanji_tables: Kanji
+      vocab_tables: Vocabulary
+      tokuteis: Specified skills
+      tokutei_questions: Questions
+      tokutei_answers: Answers
+      channels: Channels
+      block_ips: Blocked IP addresses
+      audio_as: Audio categories
+      audio_bs: Audio topics
+      audio_cs: Audio conversations
+      audio_c_contents: Conversation content
+      audio_ds: Audio details
+ja:
+  breadcrumbs:
+    page: "%{number}ページ"
+    expand: すべての履歴を表示
+    hidden: これまでの履歴
+    label: パンくずリスト
+    home: ホーム
+    actions:
+      new: 新規登録
+      edit: 編集
+      show: 詳細
+      profile: プロフィール
+      invite: 招待
+      new_user: 学生新規登録
+      period: 学習履歴クイズ
+      jlpt: JLPTクイズ
+      genre: ジャンルクイズ
+      vocab_word: 語彙
+      audio_c: 会話
+      audio_d: 会話詳細
+      chart: グラフ
+      sub_genre_chart: ジャンル別進捗
+    sections:
+      gois: 語彙
+      foreigns: 母語から語彙
+      kanjis: 漢字
+      kanji_scrolls: 漢字スクロール
+      kanji_units: 漢字ユニット
+      parts: 漢字の部品
+      jobs: 求人
+      stores: 語彙入力
+      company_stores: 語彙入力
+      vocab_mycards: マイカード
+      quizes: クイズ
+      jlpts: JLPT語彙
+      vocab_genres: 語彙ジャンル
+      tokutei_contents: 特定技能
+      specified_vocabs: 特定技能語彙
+      specified_conversations: 会話
+      charts: 学習進捗
+      progress: 学習進捗
+      users: 学生
+      comps: 企業
+      offers: オファー
+      job_profiles: 求人企業プロファイル
+      parts_tables: 漢字の部品
+      kanji_tables: 漢字
+      vocab_tables: 語彙
+      tokuteis: 特定技能
+      tokutei_questions: 問題
+      tokutei_answers: 解答
+      channels: チャンネル
+      block_ips: ブロックIPアドレス
+      audio_as: 音声カテゴリー
+      audio_bs: 音声トピック
+      audio_cs: 音声会話
+      audio_c_contents: 会話内容
+      audio_ds: 音声詳細
