@@ -1,6 +1,4 @@
 class VocabGenresController < ApplicationController
-  after_action :set_breadcrumb_label, only: :index
-
   def index
     @id       = params[:id]
     child_id  = params[:child_id]
@@ -60,14 +58,5 @@ class VocabGenresController < ApplicationController
     @mycard = current_user.vocab_mycards.where(vocab_table_id: vocab.id).first
     @vocab_mycard = @mycard.present? ? '⭐️' : '☆'
     current_user.vocab_mycards.create!(vocab_table_id: vocab.id) if @mycard.blank?
-  end
-
-  private
-
-  def set_breadcrumb_label
-    return unless request.get? && response.successful? && @cards
-
-    # AJAX pagination needs the same readable title as a full page load.
-    response.set_header('X-Breadcrumb-Label', ERB::Util.url_encode(view_context.breadcrumb_genre_label(@root_genre, @selected_genre)))
   end
 end

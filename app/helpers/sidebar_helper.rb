@@ -17,7 +17,7 @@ module SidebarHelper
       management.unshift(['navbar.comp', kaisha_comps_path, 'building']) if current_comp.access_type != Comp::ACCESS_TYPE::OTHER
       groups << [strip_tags(t('navbar.master')), management]
     else
-      groups = [[t('sidebar.learn'), [
+      groups = [[nil, [
         ['sidebar.dashboard', menus_path, 'home'], ['feature.vocab_hiragana', gois_path, 'book'],
         ['feature.vocab_native', foreigns_path, 'language'], ['feature.kanji', kanjis_path, 'font'],
         ['feature.parts', parts_path, 'puzzle-piece'], ['feature.mycard', vocab_mycards_path, 'clone'],

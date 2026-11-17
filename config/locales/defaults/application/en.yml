@@ -849,6 +849,8 @@ en:
     back: "Back to candidate search"
 
   sidebar:
+    expand: "Open menu"
+    collapse: "Close menu"
     learn: "Learn"
     track: "Track"
     career: "Career"

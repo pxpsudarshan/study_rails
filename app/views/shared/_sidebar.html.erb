@@ -1,8 +1,24 @@
+<%= javascript_tag 'window.nihoSidebarRestore();' %>
 <aside class="app-sidebar" tabindex="-1" id="app-sidebar" aria-label="<%= t('sidebar.navigation') %>">
+  <%= link_to current_comp.present? ? kaisha_menus_path : menus_path, class: 'app-sidebar-brand', aria: { label: 'NIHO' } do %>
+    <%= image_tag 'niho_logo_newWhite.svg', width: 112, height: 54, alt: '', class: 'app-sidebar-logo', aria: { hidden: true } %>
+    <%= image_tag 'niho_mark.svg', width: 44, height: 36, alt: '', class: 'app-sidebar-mark', aria: { hidden: true } %>
+  <% end %>
+  <div class="app-sidebar-controls">
+    <%= button_tag type: 'button', class: 'app-sidebar-toggle btn', title: t('sidebar.expand'), data: { expand_label: t('sidebar.expand'), collapse_label: t('sidebar.collapse') }, aria: { controls: 'app-sidebar', expanded: false, label: t('sidebar.expand') } do %>
+      <span class="app-sidebar-toggle-caption" aria-hidden="true"><%= t('sidebar.menu') %></span>
+      <svg class="app-sidebar-toggle-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <path class="app-sidebar-toggle-menu" d="M4 6h16M4 12h16M4 18h16"/>
+        <path class="app-sidebar-toggle-back" d="m14 6-6 6 6 6"/>
+      </svg>
+    <% end %>
+  </div>
   <div class="app-sidebar-body d-flex flex-column p-3">
     <nav aria-label="<%= t('sidebar.navigation') %>" class="flex-grow-1">
       <% sidebar_groups.each do |heading, links| %>
-        <h2 class="app-sidebar-heading small text-uppercase fw-bold px-3 mt-3 mb-2"><%= heading %></h2>
+        <% if heading.present? %>
+          <h2 class="app-sidebar-heading small text-uppercase fw-bold px-3 mt-3 mb-2"><%= heading %></h2>
+        <% end %>
         <div class="nav flex-column">
           <% links.each do |label, path, icon| %><%= sidebar_link(label, path, icon) %><% end %>
         </div>
@@ -15,33 +31,4 @@
     </div>
   </div>
 </aside>
-<div class="app-sidebar-header d-flex align-items-center gap-3 px-3 pt-2 sticky-top">
-  <%= link_to image_tag('niho_logo_newWhite.svg', width: 112, height: 54, alt: 'NIHO', class: 'd-block'), current_comp.present? ? kaisha_menus_path : menus_path %>
-  <div class="dropdown ms-auto">
-    <%= button_tag type: 'button', class: 'app-account-toggle btn dropdown-toggle d-inline-flex align-items-center gap-2', data: { bs_toggle: 'dropdown' }, aria: { expanded: false, label: t('sidebar.menu') } do %>
-      <i class="fas fa-user-circle fa-lg" aria-hidden="true"></i>
-    <% end %>
-    <ul class="dropdown-menu dropdown-menu-end rounded-0">
-      <% if @locales.size > 1 %>
-        <li class="px-3 py-2">
-          <%= form_with url: request.path, method: :get, local: true do %>
-            <%= select_tag :locale, options_for_select(@locales, @locale), class: 'form-select rounded-0', aria: { label: @locales.to_h.key(@locale) }, onchange: 'this.form.requestSubmit();' %>
-          <% end %>
-        </li>
-        <li><hr class="dropdown-divider"></li>
-      <% end %>
-      <li>
-        <%= link_to current_user.present? ? destroy_user_session_path : destroy_comp_session_path, method: :delete, class: 'dropdown-item' do %>
-          <i class="fas fa-sign-out-alt me-2" aria-hidden="true"></i><%= strip_tags(t('navbar.logout')).strip %>
-        <% end %>
-      </li>
-    </ul>
-  </div>
-</div>
-<div class="app-sidebar-controls px-3">
-  <% { 'd-none d-lg-inline-flex' => true, 'd-inline-flex d-lg-none' => false }.each do |visibility, expanded| %>
-    <%= button_tag type: 'button', class: "app-sidebar-toggle btn rounded-0 #{visibility}", title: t('sidebar.menu'), aria: { controls: 'app-sidebar', expanded: expanded, label: t('sidebar.menu') } do %>
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-    <% end %>
-  <% end %>
-</div>
+<%= javascript_tag 'window.nihoSidebarSyncButton();' %>
