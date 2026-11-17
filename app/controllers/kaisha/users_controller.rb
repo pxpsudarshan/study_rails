@@ -29,11 +29,20 @@ class Kaisha::UsersController < ApplicationController
     @user.assign_attributes(user_params)
     begin
       ActiveRecord::Base.transaction() do
-        delete_stripe_subscription(@user) if @user.comp_id.present? && @user.stripe_subscription_id.present?
-        if @user.comp_id.present? && @user.subscription_status == 'canceled'
-          @user.stripe_subscription_id = nil
-          @user.subscription_status = 'incomplete'
-          Stripe::Customer.delete(@user.stripe_customer_id)
+        if @user.comp_id.blank? && @user.trial_end_date.blank? && @user.stripe_subscription_id.blank? # switch from b2b to b2c without trial
+          @user.trial_end_date = Date.current
+          @user.plan = 'kanrin'
+        end
+        if @user.comp_id.present? && @user.stripe_subscription_id.present? # switch from b2c to b2b
+          if @user.subscription_status != 'canceled'
+            delete_stripe_subscription(@user)
+          else
+            @user.stripe_subscription_id = nil
+            @user.subscription_status = 'incomplete'
+            @user.plan = nil
+            @user.login = true
+            @user.trial_end_date = nil
+          end
         end
         if @user.save
           redirect_to kaisha_users_path, flash: {success: t('message.success_completed')}

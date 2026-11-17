@@ -85,7 +85,7 @@
           <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.user.sei_kana') %><%== t('common.flg_required') %></th>
           <td class="text-nowrap align-middle">
             <div class="input-group">
-              <%= f.text_field :sei_kana, class: 'form-control', required: true %>
+              <%= f.text_field :sei_kana, class: 'form-control', required: false %>
             </div>
           </td>
         </tr>
@@ -93,7 +93,7 @@
           <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.user.mei_kana') %><%== t('common.flg_required') %></th>
           <td class="text-nowrap align-middle">
             <div class="input-group">
-              <%= f.text_field :mei_kana, class: 'form-control', required: true %>
+              <%= f.text_field :mei_kana, class: 'form-control', required: false %>
             </div>
           </td>
         </tr>
@@ -101,7 +101,7 @@
           <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.user.mobile') %><%== t('common.flg_required') %></th>
           <td class="text-nowrap align-middle">
             <div class="input-group">
-              <%= f.text_field :mobile, class: 'form-control', required: true %>
+              <%= f.text_field :mobile, class: 'form-control', required: false %>
             </div>
           </td>
         </tr>

@@ -1,13 +1,21 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery with: :exception
+  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
+  allow_browser versions: :modern
+
   before_action :set_response_headers, except: [ ]
-  before_action :check_ip
-  before_action :authenticate_users
-  before_action :force_tablet_html
-#  has_mobile_fu
+
+  before_action :block_blacklisted_ips
+  before_action :detect_malicious_payload
+  protect_from_forgery with: :exception
+  
   before_action do
-    RecordWithOperator.operator = current_user.present? ? current_user : current_comp.present? ? current_comp : User.first
+    RecordWithOperator.operator = current_user.presence || current_comp.presence
   end
+
+  before_action :check_ip
+  before_action :force_tablet_html
+  has_mobile_fu Rails.env.test?
+  before_action :authenticate_users
   before_action :require_payment
   before_action :require_subscription!
   before_action :set_locales, except: [ ]
@@ -70,16 +78,17 @@ class ApplicationController < ActionController::Base
   end
 
   def require_subscription!
-    if current_user.present? && (current_user.subscription_status == 'canceled' || current_user.subscription_status == 'past_due')
-      sign_out User.find(current_user.id)
-      redirect_to root_path
+    if current_user.present? && current_user.access_type == User::ACCESS_TYPE::USER && current_user.comp_id.blank? &&
+     ((current_user.trial_end_date.present? && current_user.subscription_status == 'incomplete') || (current_user.subscription_status == 'past_due' || current_user.subscription_status == 'canceled')) &&
+      action_name != 'subscription'
+      redirect_to subscription_user_path(current_user.id)  if action_name != 'back_to_login'
     end
   end
 
   def require_payment
     if current_user.present? && current_user.comp.present? &&
        current_user.trial_end_date.present? && current_user.trial_end_date < Date.current
-      sign_out User.find(current_user.id)
+      sign_out current_user
       redirect_to root_path #, flash: { alert: t('message.trial_ended') }
     end
   end
@@ -91,7 +100,7 @@ class ApplicationController < ActionController::Base
         current_user.update!(token: token)
         UserMailer.verify_email(current_user.name, current_user.email, token).deliver_now
       end
-      redirect_to verify_email_users_path
+      redirect_to verify_email_users_path if action_name != 'back_to_login'
     end
   end
 
@@ -166,37 +175,84 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
     if current_user.present?
-      sign_out Comp.find(current_comp.id) if current_comp.present?
-      if current_user.comp_id.present? && current_user.subscription_status == 'canceled'
-        current_user.update!(stripe_subscription_id: nil, subscription_status: 'incomplete')
-        Stripe::Customer.delete(current_user.stripe_customer_id)
-      end
+      sign_out current_comp if current_comp.present?
       login_flg = current_user.login_flg
       unless login_flg
-        sign_out User.find(current_user.id)
+        sign_out current_user
+        return new_user_session_path
       else
         Syslog.create!(occurred_at: Time.current, context: "#{current_user.email}はログインしました。", log_type: 'アクセス')
       end
-      if login_flg && current_user.email_verify_flg && current_user.comp_id.blank? && current_user.access_type == User::ACCESS_TYPE::USER # only b2c user
+      if login_flg && current_user.email_verify_flg && current_user.plan.present? && current_user.comp_id.blank? && current_user.access_type == User::ACCESS_TYPE::USER # only b2c user
         if current_user.stripe_customer_id.blank?
           customer = create_stripe_customer(current_user)
           current_user.update!(stripe_customer_id: customer.id)
         end
-        if current_user.stripe_customer_id.present?
-          update_stripe_subscription(current_user) if current_user.stripe_subscription_id.blank? && current_user.plan.present?
-          create_stripe_subscription(current_user) if current_user.plan.blank?
+        if current_user.stripe_customer_id.present? && current_user.trial_end_date.blank? && current_user.stripe_subscription_id.blank?
+          create_stripe_subscription(current_user)
         end
       end
     end
     if current_comp.present?
-      sign_out User.find(current_user.id) if current_user.present?
+      sign_out current_user if current_user.present?
       login_flg = current_comp.login_flg
       unless login_flg
-        sign_out Comp.find(current_comp.id)
+        sign_out current_comp
+        return new_comp_session_path
       else
         Syslog.create!(occurred_at: Time.current, context: "#{current_comp.email}はログインしました。", log_type: 'アクセス')
       end
     end
     stored_location_for(resource) || (current_user.present? ? menus_path : kaisha_menus_path)
+  end
+
+  private
+
+  def block_blacklisted_ips
+    client_ip = request.remote_ip
+
+    # Кэшируем результат на 5 минут, чтобы не делать SQL-запрос при каждом клике бота
+    is_blocked = Rails.cache.fetch("blocked_ip:#{client_ip}", expires_in: 5.minutes) do
+      BlockIp.exists?(ipaddr: client_ip)
+    end
+
+    if is_blocked
+      render plain: "Not Found", status: :not_found # Или :forbidden (403)
+    end
+  end
+
+  def detect_malicious_payload
+    # 1. Защита от спам-ботов: проверяем поле commit на наличие ссылок
+    # Легитимный сабмит формы никогда не содержит http:// или https://
+    commit_param = params[:commit].to_s
+    is_spam = commit_param.include?('http://') || commit_param.include?('https://')
+
+    # 2. Защита от хакерских сканеров: проверяем все параметры на опасные сигнатуры
+    params_string = params.to_unsafe_h.to_s
+    
+    malicious_signatures = [
+      '__proto__', 
+      'NEXT_REDIRECT', 
+      'constructor:constructor',
+      'UNION SELECT',          # SQLi
+      'INFORMATION_SCHEMA',    # SQLi
+      '/etc/passwd',           # Path Traversal
+      '${'                     # Инъекции кода/шаблонов
+    ]
+
+    is_malicious = malicious_signatures.any? { |sig| params_string.include?(sig) }
+
+    # Если сработал любой из триггеров — баним
+    if is_spam || is_malicious
+      client_ip = request.remote_ip
+
+      unless BlockIp.exists?(ipaddr: client_ip)
+        # Если у вас появится колонка reason, можно писать туда: is_spam ? "Spam Bot" : "Exploit Scanner"
+        BlockIp.create!(ipaddr: client_ip)
+        Rails.cache.write("blocked_ip:#{client_ip}", true, expires_in: 5.minutes)
+      end
+
+      render plain: "Not Found", status: :not_found
+    end
   end
 end

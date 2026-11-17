@@ -1,5 +1,5 @@
 <div class="card w-50 m-auto border-company rounded-0">
-<%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'form-horizontal text-center' }) do |f| %>
+<%= form_with(model: resource, as: resource_name, url: session_path(resource_name), local: true, html: { class: 'form-horizontal text-center' }) do |f| %>
   <%= embedded_svg 'niho_logo_newBlack.svg', class: 'm-4' %>
   <%= render "kaisha/shared/error_messages", resource: resource %>
   <div class="form-floating w-75 m-auto">

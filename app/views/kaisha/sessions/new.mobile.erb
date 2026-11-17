@@ -1,4 +1,4 @@
-<%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'form-horizontal' }) do |f| %>
+<%= form_with(model: resource, as: resource_name, url: session_path(resource_name), local: true, html: { class: 'form-horizontal' }) do |f| %>
   <%= embedded_svg 'niho_logo_newBlack.svg', class: 'mb-4' %>
   <h1 class="h3 mb-3 fw-normal"><%= t('.sign_in') %></h1>
   <%= render "kaisha/shared/error_messages", resource: resource %>

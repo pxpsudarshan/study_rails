@@ -6,13 +6,13 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  config.secret_key = '34bf76844ca08d71056b7543be859e97c7b4a02a652be31f616ebb27ff9b6b8750049034e36ba7d71d18d6f5030a50e0251d9d33fe737b9b98935751cc5c5005'
+  #config.secret_key = '44bf76844ca08d71056b7543be859e97c7b4a02a652be31f616ebb27ff9b6b8750049034e36ba7d71d18d6f5030a50e0251d9d33fe737b9b98935751cc5c5005'
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = Rails.env.development? ? 'webmugen@gmail.com' : 'rails@ni-ho.com'
+  config.mailer_sender = Rails.env.development? ? 'no-reply@study.kanrin.biz' : "no-reply@ni-ho.com"
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
@@ -242,7 +242,7 @@ Devise.setup do |config|
   # should add them to the navigational formats lists.
   #
   # The "*/*" below is required to match Internet Explorer requests.
-  config.navigational_formats = ['*/*', :html, :mobile]
+  config.navigational_formats = ['*/*', :html, :mobile, :turbo_stream]
 
   # The default HTTP method used to sign out a resource. Default is :delete.
   config.sign_out_via = :delete

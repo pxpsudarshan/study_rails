@@ -1,12 +1,25 @@
+# frozen_string_literal: true
+
+require "record_with_operator/operator"
+require "record_with_operator/recorder"
+
 module RecordWithOperator
+  module TableDefinitionExtensions
+    def operator_stamps(null: false, type: :uuid, **options)
+      column(RecordWithOperator.creator_column, type, null: null, **options)
+      column(RecordWithOperator.updater_column, type, null: null, **options)
+      column(RecordWithOperator.deleter_column, type, **options)
+    end
+  end
+
   def self.config
     @config ||= {
-      :operator_class_name => "User",
-      :creator_column => "created_by",
-      :updater_column => "updated_by",
-      :deleter_column => "deleted_by",
-      :operator_association_options => {}}
-    @config
+      operator_class_name: "User",
+      creator_column: "created_by",
+      updater_column: "updated_by",
+      deleter_column: "deleted_by",
+      operator_association_options: {}
+    }
   end
 
   def self.operator_class_name
@@ -26,19 +39,13 @@ module RecordWithOperator
   end
 end
 
+RecordWithOperator.extend(RecordWithOperator::Operator)
 
-require 'record_with_operator/operator'
-require 'record_with_operator/recorder'
-RecordWithOperator.send :extend, RecordWithOperator::Operator
-ActiveRecord::Base.send :include,RecordWithOperator::Operator
-ActiveRecord::Base.send :include,RecordWithOperator::Recorder
+ActiveSupport.on_load(:active_record) do
+  include RecordWithOperator::Operator
+  include RecordWithOperator::Recorder
 
-require 'active_record/connection_adapters/abstract/schema_definitions'
-ActiveRecord::ConnectionAdapters::TableDefinition.class_eval do
-  def operator_stamps(**options)
-    options[:null] = false if options[:null].nil?
-    column(:created_by, :uuid, **options)
-    column(:updated_by, :uuid, **options)
-    column(:deleted_by, :uuid)
-  end
+  ActiveRecord::ConnectionAdapters::TableDefinition.include(
+    RecordWithOperator::TableDefinitionExtensions
+  )
 end

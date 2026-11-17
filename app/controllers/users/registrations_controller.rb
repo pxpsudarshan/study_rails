@@ -13,12 +13,32 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   # POST /resource
- def create
-   super do
-     resource.mycard_sign = true
-     resource.entry_no = Time.current.to_i
-   end
- end
+  def create
+    build_resource(sign_up_params)
+    if params[:back_button] == "true"
+      clean_up_passwords resource
+      set_minimum_password_length
+      render :new
+    elsif params[:confirmed] != "true"
+      saved_password = resource.password
+      saved_password_confirmation = resource.password_confirmation
+      if resource.valid?
+        resource.password = saved_password
+        resource.password_confirmation = saved_password_confirmation        
+        render :confirm
+      else
+        clean_up_passwords resource
+        set_minimum_password_length
+        respond_with resource
+      end
+    else
+      super do
+        resource.mycard_sign = true
+        resource.plan = 'kanrin'
+        resource.entry_no = Time.current.to_i
+      end
+    end
+  end
 
   # GET /resource/edit
   # def edit
@@ -49,8 +69,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
     devise_parameter_sanitizer.permit(:sign_up, keys: [
-      :sei, :mei, :sei_kana, :mei_kana, :mobile,
-      :lang_id, :jp_level
+      :sei, :mei, :lang_id
     ])
   end
 

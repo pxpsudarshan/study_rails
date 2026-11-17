@@ -119,6 +119,15 @@ en:
         we_need_your_current_password_to_confirm_your_changes: we need your current password to confirm your changes
       form:
         sign_up: Student Sign up
+        title: Create a student account
+        select_language: Select your native language
+        review: Review your details
+      confirm:
+        title: Review your details
+        send_email: Submit
+        edit: Back
+        expired: Your confirmation has expired. Please enter your details again.
+        reenter_password: Please re-enter your password after editing your details.
       signed_up: Welcome! You have signed up successfully.
       signed_up_but_inactive: You have signed up successfully. However, we could not sign you in because your account is not yet activated.
       signed_up_but_locked: You have signed up successfully. However, we could not sign you in because your account is locked.
@@ -608,6 +617,7 @@ en:
     kanji_table:      'Kanji'
     vocab_genre:      'Genre'
     vocab_table:      'Vocab'
+    subscription:     'Subscription'
 
   feature:
     parts:            'Parts'
@@ -700,7 +710,27 @@ en:
     success_completed:  'Completed without error.'
     check_email:      'We sent a confirmation mail to you. Please read the instructions on that mail to complete the email verification.'
     verify_email_text:  'Please click the link below to verify your email address.'
+    no_reply_notice: 'This is an automated email. Please do not reply directly to this message.'
     trial_ended:       'Trial period is ended.'
+
+  layouts:
+    devise:
+      specification:  'FileLayout'
+  exception:
+    save_error:       'An error occurred while registering the master data.'
+    save_error:       'An error occurred while registering the master data.'
+    delete_error:     'An error occurred while deleting the master data.'
+    invalid_date:     'The format is invalid.'
+    invalid_password: 'must contain at least one uppercase letter, one lowercase letter, and one digit.'
+    create_error:     'An error occurred while creating the record.'
+  display_condition:
+    number:           "Display by number"
+    search:           "Search"
+
+  time:
+    formats:
+      only_time: "%H:%M"
+      kintone_job: '%Y/%m/%d %H:%M:%S'   
 
   page_title:
     users:
@@ -748,4 +778,71 @@ en:
     genre:
       title: "Genre"
       empty: "Empty"
-     
+
+  email_verification:
+    sender_notice: "Your verification email will arrive from <strong>%{sender}</strong>"
+    eyebrow: ONE MORE STEP
+    title: Check your inbox
+    description: Open your verification email and follow the link to confirm your email address.
+    recipient: Your email address
+    step_open: Find the verification email in your inbox.
+    step_verify: Open the link in the email to verify your address.
+    help_title: Can't find the email?
+    help_body: Check your spam or junk folder. If you just signed up, allow a few minutes for the email to arrive.
+    sign_in: Back to sign in
+    link_hint: Email verification is completed using the link in your email.
+    resend: Resend verification email
+    resend_hint: You can request another email once every 60 seconds.
+    sign_in_to_resend: Sign in to request another verification email.
+    resent: A verification email has been sent. Please check your inbox.
+    cooldown: Please wait 60 seconds between verification emails.
+    send_failed: We couldn't send the email. Please try again shortly.
+    language: Language
+    change_email: Change email address
+    change_email_hint: Enter the correct email address. We will send a new verification link.
+    save_email: Save and send verification email
+    back: Back to verification
+    back_to_login: Back to login
+
+  devise:
+    failure:
+      unauthenticated: ''
+
+  offers_ui:
+    filters: "Search filters"
+    occupation: "Occupation"
+    rate: "Minimum achievement"
+    any_rate: "Any achievement"
+    scope: "Search scope"
+    all_users: "All users"
+    applicants: "Your applicants"
+    source: "Vocabulary source"
+    company_words: "Company vocabulary"
+    genres: "Genres"
+    genre_hint: "Select genres"
+    search: "Search candidates"
+    searching: "Searching…"
+    reset: "Reset filters"
+    search_error: "Search failed. Please try again."
+    results: "Search results"
+    candidate: "candidate"
+    select_page: "Select all on this page"
+    select: "Select"
+    entry: "Entry number"
+    nationality: "Nationality"
+    address: "Current address"
+    sex: "Gender"
+    age: "Age"
+    education: "Education"
+    achievement: "Achievement"
+    select_candidate: "Select candidate %{entry}"
+    selected: "Selected candidates"
+    selection_hint: "Select candidates on this page before requesting details. Selections reset when you change pages or search again."
+    request: "Request candidate details"
+    sending: "Sending…"
+    no_results: "No candidates found"
+    no_results_hint: "Try a lower minimum achievement or different search filters."
+    start_title: "Start your candidate search"
+    start_hint: "Choose your filters above, then select Search candidates."
+    sent_title: "Your request has been sent"
+    back: "Back to candidate search"

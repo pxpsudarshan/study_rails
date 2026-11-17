@@ -90,6 +90,9 @@
             <% if current_user.present? %>
             <li><%= link_to t('navbar.profile').html_safe, profile_user_path(current_user.id), class: "dropdown-item" %></li>
             <% end %>
+            <% if current_user.present? and current_user.stripe_subscription_id.present? %>
+            <li><%= link_to t('navbar.subscription').html_safe, Rails.env.development? ? "https://billing.stripe.com/p/login/test_3cI3cw4v27ht3KDbyHaMU00" : "https://billing.stripe.com/p/login/3cI3cw4v27ht3KDbyHaMU00", target: '_blank', class: 'dropdown-item' %></li>
+            <% end %>
             <li><%= link_to t('navbar.logout').html_safe, current_user.present? ? destroy_user_session_path : destroy_comp_session_path, method: 'delete', class: "dropdown-item" %></li>
           </ul>
         </li>

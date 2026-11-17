@@ -22,9 +22,9 @@ class Kaisha::OffersController < ApplicationController
 
       stud_arr = {}
       if current_comp.company_store.present? && search_mode == 0
-        comp = current_comp.company_store.company_store_contents.map(&:vocab_code)
+        comp = current_comp.company_store.company_store_contents
         comp = comp.where(occupation: params[:search][:occupation]) if params[:search][:occupation].present? && params[:search][:occupation].to_i != 0
-        comp_arr = comp
+        comp_arr = comp.map(&:vocab_code)
 
         stud = StoreContent.joins(:store).group(:user_id).select(:user_id).select('ARRAY_AGG("store_contents"."vocab_code") as vocab_code_arr')
         #stud = stud.where(user: id) if params[:search][:user] != 0

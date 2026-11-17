@@ -91,6 +91,15 @@ ja:
     registrations:
       form:
         sign_up:      '学生用のアカウント登録'
+        title: 学生用アカウントを作成
+        select_language: 母国語を選択してください
+        review: 入力内容を確認
+      confirm:
+        title: 入力内容の確認
+        send_email: 仮登録
+        edit: 戻る
+        expired: 確認の有効期限が切れました。もう一度入力してください。
+        reenter_password: 修正後、パスワードをもう一度入力してください。
     shared:
       links:
         back: 戻る
@@ -591,6 +600,7 @@ ja:
     vocab_table:      '語彙'
     channel:          'チャンネル'
     block_ip:         'ブロックIP'
+    subscription:     'サブスクリプション'
 
   feature:
     parts:            'パーツ'
@@ -696,6 +706,7 @@ ja:
     select_file:        'ファイルを選択してください。'
     check_email:        '確認メールを送信しました。メールを開いて、登録手続きを完了してください。<br /><br />A confirmation email has been sent. Open it and complete your registration.'
     verify_email_text:  '以下のURLでメールアドレスをご確認してください。'
+    no_reply_notice: 'このメールは送信専用です。直接ご返信いただいてもお答えできませんので、あらかじめご了承ください。'
     trial_ended:        'お試し期間は終了しました。'
 
   layouts:
@@ -761,3 +772,71 @@ ja:
     genre:
       title: "ジャンル"
       empty: "未設定"
+
+  email_verification:
+    sender_notice: "<strong>%{sender}</strong> から確認メールが届きます。"
+    eyebrow: あと少しで完了です
+    title: メールをご確認ください
+    description: 確認メールに記載されたリンクを開いて、メールアドレスの確認を完了してください。
+    recipient: ご登録のメールアドレス
+    step_open: 受信トレイで確認メールを探します。
+    step_verify: メール内のリンクを開いて確認を完了します。
+    help_title: メールが見つからない場合
+    help_body: 迷惑メールフォルダもご確認ください。登録直後の場合は、メールが届くまで数分かかることがあります。
+    sign_in: ログイン画面へ戻る
+    link_hint: メールアドレスの確認には、メール内のリンクをご利用ください。
+    resend: 確認メールを再送する
+    resend_hint: 確認メールは60秒ごとに再送できます。
+    sign_in_to_resend: 確認メールの再送にはログインが必要です。
+    resent: 確認メールを送信しました。受信トレイをご確認ください。
+    cooldown: 確認メールの再送は60秒以上あけてお試しください。
+    send_failed: メールを送信できませんでした。しばらくしてからもう一度お試しください。
+    language: 表示言語
+    change_email: メールアドレスを変更する
+    change_email_hint: 正しいメールアドレスを入力してください。新しい確認リンクを送信します。
+    save_email: 保存して確認メールを送信
+    back: メール確認画面に戻る
+    back_to_login: ログイン画面へ戻る
+
+  devise:
+    failure:
+      unauthenticated: ''
+
+  offers_ui:
+    filters: "検索条件"
+    occupation: "職種"
+    rate: "最低達成率"
+    any_rate: "指定なし"
+    scope: "検索範囲"
+    all_users: "全ユーザー"
+    applicants: "貴社求人への申込者"
+    source: "検索種類"
+    company_words: "貴社用語集"
+    genres: "ジャンル"
+    genre_hint: "ジャンルを選択してください"
+    search: "候補者を検索"
+    searching: "検索中…"
+    reset: "条件をリセット"
+    search_error: "検索に失敗しました。もう一度お試しください。"
+    results: "検索結果"
+    candidate: "候補者"
+    select_page: "このページの候補者をすべて選択"
+    select: "選択"
+    entry: "エントリー番号"
+    nationality: "国籍"
+    address: "現住所"
+    sex: "性別"
+    age: "年齢"
+    education: "最終学歴"
+    achievement: "達成率"
+    select_candidate: "候補者 %{entry} を選択"
+    selected: "選択中の候補者"
+    selection_hint: "このページの候補者を選んでから詳細情報をご希望ください。ページ移動・再検索で選択は解除されます。"
+    request: "詳細情報を希望する"
+    sending: "送信中…"
+    no_results: "該当する候補者が見つかりませんでした"
+    no_results_hint: "達成率を下げるなど、検索条件を変更してお試しください。"
+    start_title: "条件を選んで候補者を検索"
+    start_hint: "上の検索条件を設定し、「候補者を検索」を押してください。"
+    sent_title: "詳細情報のご希望を受け付けました"
+    back: "候補者検索に戻る"

@@ -182,8 +182,13 @@ Rails.application.routes.draw do
   resources :users do
     collection do
       get :verify_email
+#      get :edit_verification_email
+#      patch :update_verification_email
+#      post :resend_verification_email
+      get :back_to_login
     end
     member do
+      get :subscription
       get :profile
       post :update_profile
       patch :update_profile
@@ -240,6 +245,8 @@ Rails.application.routes.draw do
       post 'update_mycard_level'
     end
   end
+
+  get "up" => "rails/health#show", as: :rails_health_check
 
   # Defines the root path route ("/")
   # root "articles#index"

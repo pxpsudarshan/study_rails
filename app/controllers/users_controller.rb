@@ -13,7 +13,54 @@ class UsersController < ApplicationController
     render :verify_email, layout: 'verify_email'
   end
 
-  def show
+  def back_to_login
+    sign_out current_user if current_user.present?
+    redirect_to menus_path
+  end
+
+  def subscription
+    redirect_to menus_path and return if current_user.subscription_status == 'active'
+    price = Stripe::Price.list(
+            lookup_keys: ['kanrin', 'kanrin_usd', 'trip-arcade'],
+            expand: ['data.product'],
+            active: true
+            ).data.first
+    @user_price = "#{price.unit_amount} #{price.currency.upcase} / #{price.recurring.interval}" if price.present?
+    @product_name = price.product.name
+
+    if current_user.trial_end_date.present? && current_user.subscription_status == 'incomplete' && current_user.stripe_customer_id.blank?
+      customer = create_stripe_customer(current_user)
+      current_user.update!(stripe_customer_id: customer.id)
+    elsif current_user.stripe_subscription_id.present?
+      subscription = Stripe::Subscription.retrieve(current_user.stripe_subscription_id)
+      @end_date = Time.zone.at(subscription.trial_end).strftime("%Y-%m-%d %H:%M:%S %Z") if subscription.trial_end.present?
+      @canceled_at = Time.zone.at(subscription.canceled_at).strftime("%Y-%m-%d %H:%M:%S %Z") if subscription.canceled_at.present?
+    end
+
+    if current_user.subscription_status == 'canceled' || current_user.subscription_status == 'incomplete'
+#      Stripe::Customer.update(current_user.stripe_customer_id,
+#      { address: { country: current_user.lang_id } })
+
+      price = Stripe::Price.list(lookup_keys: [current_user.plan]).data.first
+      session = Stripe::Checkout::Session.create({
+        customer: current_user.stripe_customer_id,
+        mode: 'subscription',
+        automatic_tax: { enabled: true }, 
+        billing_address_collection: 'required',
+        customer_update: {
+          address: 'auto'
+        },
+        line_items: [{
+          price: price.id,
+          quantity: 1,
+        }],
+        success_url: Rails.env.development? ? 'https://study.kanrin.biz' : 'https://www.ni-ho.com', 
+        cancel_url: Rails.env.development? ? 'https://study.kanrin.biz' : 'https://www.ni-ho.com', 
+      })
+      @payment_link = session.url
+    end
+
+    render :subscription, layout: 'devise'
   end
 
   def edit

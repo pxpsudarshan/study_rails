@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class WebhookEventsController < ApplicationController
   # ignore csrf
   skip_before_action :verify_authenticity_token
@@ -14,13 +16,13 @@ class WebhookEventsController < ApplicationController
     #    - https://uzer:pa$$@myapp.com/webhook_events/stripe
     # - retrieve event when notified
     #   - Stripe::Event.retrieve("evt_xxx")
-    if !signatures_valid?
-      render json: {message: "signature invalid"}, status: 400
+    unless signatures_valid?
+      render json: { message: "signature invalid" }, status: :bad_request
       return
     end
 
     # check if already handled
-    if !WebhookEvent.find_by(external_id: external_id, source: params[:source]).nil?
+    if WebhookEvent.exists?(external_id: external_id, source: params[:source])
       render json: {}
       return
     end
@@ -41,13 +43,15 @@ class WebhookEventsController < ApplicationController
     render json: { message: 'success' }
   end
 
+  private 
+
   def signatures_valid?
     if params[:source] == 'stripe'
       begin
         credentials = Rails.application.credentials
         wh_secret = Rails.env.development? ? credentials.dig(:stripe_test, :wh) : credentials.dig(:stripe, :wh)
         Stripe::Webhook.construct_event(
-          request.body.read,
+          request.raw_post,
           request.env['HTTP_STRIPE_SIGNATURE'],
           wh_secret
         )
@@ -62,9 +66,17 @@ class WebhookEventsController < ApplicationController
   def webhook_params
     {
       source: params[:source],
-      data: params.except(:source, :controller, :action).permit!,
+      data: parsed_payload, #params.except(:source, :controller, :action).permit!,
       external_id: external_id
     }
+  end
+
+  def parsed_payload
+    return {} if request.raw_post.blank?
+
+    JSON.parse(request.raw_post)
+  rescue JSON::ParserError
+    {}
   end
 
   def external_id

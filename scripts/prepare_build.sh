@@ -16,7 +16,20 @@ retry() {
 }
 
 if [ -f /.dockerenv ] || [ -f ./dockerinit ]; then
-#    mkdir -p vendor/apt
+    mkdir -p vendor/apt
+
+    PACKAGES="openssh-client git"
+
+    if [ "$USE_NODEJS" = "true" ]; then
+        PACKAGES="$PACKAGES nodejs"
+    fi
+
+    if [ "$USE_BROWSER" = "true" ]; then
+        PACKAGES="$PACKAGES nodejs chromium chromium-driver"
+    fi
+
+    retry "apt-get update -yqq && apt-get -o dir::cache::archives='vendor/apt' install -y -qq --no-install-recommends $PACKAGES"
+
 
     # Install phantomjs package
 #    pushd vendor/apt
@@ -34,7 +47,7 @@ if [ -f /.dockerenv ] || [ -f ./dockerinit ]; then
 #    curl -vO https://api.rubygems.org/specs.4.8.gz
 #    wget https://api.rubygems.org/specs.4.8.gz
 
-    export FLAGS=(--path vendor --retry 3)
+    export FLAGS=( --retry 3)
 else
     export PATH=$HOME/bin:/usr/local/bin:/usr/bin:/bin
 fi

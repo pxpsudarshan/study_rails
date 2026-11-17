@@ -1,28 +1,26 @@
-require 'mobile_fu/tablet'
-require 'rails'
-require 'rack/mobile-detect'
+# frozen_string_literal: true
+
+require "mobile_fu/mobile_detect"
+require "mobile_fu/tablet"
+require "rails"
 
 module MobileFu
-  autoload :Helper, 'mobile_fu/helper'
+  autoload :Helper, "mobile_fu/helper"
 
   class Railtie < Rails::Railtie
     initializer "mobile-fu.configure" do |app|
-      app.config.middleware.use Rack::MobileDetect
+      app.config.middleware.use MobileFu::MobileDetect
     end
 
-    if Rails::VERSION::MAJOR >= 3
-      initializer "mobile-fu.action_controller" do |app|
-        ActiveSupport.on_load :action_controller do
-          include ActionController::MobileFu
-        end
+    initializer "mobile-fu.action_controller" do
+      ActiveSupport.on_load(:action_controller) do
+        include ActionController::MobileFu
       end
+    end
 
-      initializer "mobile-fu.action_view" do |app|
-        ActiveSupport.on_load :action_view do
-          include MobileFu::Helper
-          alias_method :stylesheet_link_tag_without_mobilization, :stylesheet_link_tag
-          alias_method :stylesheet_link_tag, :stylesheet_link_tag_with_mobilization
-        end
+    initializer "mobile-fu.action_view" do
+      ActiveSupport.on_load(:action_view) do
+        prepend MobileFu::Helper
       end
     end
 
@@ -33,34 +31,18 @@ end
 
 module ActionController
   module MobileFu
+    extend ActiveSupport::Concern
 
-    def self.included(base)
-      base.extend ClassMethods
+    included do
+      class_attribute :mobile_exempt_actions, instance_writer: false
+      class_attribute :mobile_include_actions, instance_writer: false
     end
 
-    module ClassMethods
-
-      # Add this to one of your controllers to use MobileFu.
-      #
-      #    class ApplicationController < ActionController::Base
-      #      has_mobile_fu
-      #    end
-      #
-      # If you don't want mobile_fu to set the request format automatically,
-      # you can pass false here.
-      #
-      #    class ApplicationController < ActionController::Base
-      #      has_mobile_fu false
-      #    end
-      #
+    class_methods do
       def has_mobile_fu(set_request_format = true)
         include ActionController::MobileFu::InstanceMethods
 
-        if Rails::VERSION::MAJOR < 4
-          before_filter :set_request_format if set_request_format
-        else
-          before_action :set_request_format if set_request_format
-        end
+        before_action :set_request_format if set_request_format
 
         helper_method :is_mobile_device?
         helper_method :is_tablet_device?
@@ -70,37 +52,12 @@ module ActionController
         helper_method :mobile_device
       end
 
-      # Add this to your controllers to prevent the mobile format from being set for specific actions
-      #   class AwesomeController < ApplicationController
-      #     has_no_mobile_fu_for :index
-      #
-      #     def index
-      #       # Mobile format will not be set, even if user is on a mobile device
-      #     end
-      #
-      #     def show
-      #       # Mobile format will be set as normal here if user is on a mobile device
-      #     end
-      #   end
       def has_no_mobile_fu_for(*actions)
-        @mobile_exempt_actions = actions
+        self.mobile_exempt_actions = actions.map(&:to_sym)
       end
 
-      # Add this to your controllers to only let those actions use the mobile format
-      # this method has priority over the #has_no_mobile_fu_for
-      #   class AwesomeController < ApplicationController
-      #     has_mobile_fu_for :index
-      #
-      #     def index
-      #       # Mobile format will be set as normal here if user is on a mobile device
-      #     end
-      #
-      #     def show
-      #       # Mobile format will not be set, even if user is on a mobile device
-      #     end
-      #   end
       def has_mobile_fu_for(*actions)
-        @mobile_include_actions = actions
+        self.mobile_include_actions = actions.map(&:to_sym)
       end
     end
 
@@ -108,100 +65,70 @@ module ActionController
       def set_request_format(force_mobile = false)
         force_mobile ? force_mobile_format : set_mobile_format
       end
-      alias :set_device_type :set_request_format
+      alias set_device_type set_request_format
 
-      # Forces the request format to be :mobile
       def force_mobile_format
-        unless request.xhr?
-          request.format = :mobile
-          session[:mobile_view] = true if session[:mobile_view].nil?
-        end
+        return if request.xhr?
+
+        request.format = :mobile
+        session[:mobile_view] = true if session[:mobile_view].nil?
       end
 
-      # Forces the request format to be :tablet
       def force_tablet_format
-        unless request.xhr?
-          request.format = :tablet
-          session[:tablet_view] = true if session[:tablet_view].nil?
-        end
-      end
+        return if request.xhr?
 
-      # Determines the request format based on whether the device is mobile or if
-      # the user has opted to use either the 'Standard' view or 'Mobile' view or
-      # 'Tablet' view.
+        request.format = :tablet
+        session[:tablet_view] = true if session[:tablet_view].nil?
+      end
 
       def set_mobile_format
         return unless request.format
-        if request.format.html? && mobile_action? && is_mobile_device? && !request.xhr?
+        return unless request.format.html? && mobile_action? && !request.xhr?
+
+        if is_mobile_device?
           request.format = :mobile unless session[:mobile_view] == false
           session[:mobile_view] = true if session[:mobile_view].nil?
-        elsif request.format.html? && mobile_action? && is_tablet_device? && !request.xhr?
+        elsif is_tablet_device?
           request.format = :tablet unless session[:tablet_view] == false
           session[:tablet_view] = true if session[:tablet_view].nil?
         end
       end
 
-      # Returns either true or false depending on whether or not the format of the
-      # request is either :mobile or not.
-
       def in_mobile_view?
-        return false unless request.format
-        request.format.to_sym == :mobile
+        request.format&.to_sym == :mobile
       end
-
-      # Returns either true or false depending on whether or not the format of the
-      # request is either :tablet or not.
 
       def in_tablet_view?
-        return false unless request.format
-        request.format.to_sym == :tablet
+        request.format&.to_sym == :tablet
       end
 
-      # Returns either true or false depending on whether or not the user agent of
-      # the device making the request is matched to a device in our regex.
-
       def is_tablet_device?
-        ::MobileFu::Tablet.is_a_tablet_device? request.user_agent
+        ::MobileFu::Tablet.is_a_tablet_device?(request.user_agent)
       end
 
       def is_mobile_device?
-        !is_tablet_device? && !!mobile_device
+        !is_tablet_device? && mobile_device.present?
       end
 
       def mobile_device
-        request.headers['X_MOBILE_DEVICE']
+        request.env["HTTP_X_MOBILE_DEVICE"] || request.headers["X-Mobile-Device"]
       end
-
-      # Can check for a specific user agent
-      # e.g., is_device?('iphone') or is_device?('mobileexplorer')
 
       def is_device?(type)
-        request.user_agent.to_s.downcase.include? type.to_s.downcase
+        request.user_agent.to_s.downcase.include?(type.to_s.downcase)
       end
 
-      # Returns true if current action is supposed to use mobile format
-      # See #has_mobile_fu_for
       def mobile_action?
-        if self.class.instance_variable_get("@mobile_include_actions").nil? #Now we know we dont have any includes, maybe excludes?
-          return !mobile_exempt?
+        if mobile_include_actions.nil?
+          !mobile_exempt?
         else
-          self.class.instance_variable_get("@mobile_include_actions").try(:include?, params[:action].try(:to_sym))
+          mobile_include_actions.include?(params[:action]&.to_sym)
         end
       end
 
-      # Returns true if current action isn't supposed to use mobile format
-      # See #has_no_mobile_fu_for
-
       def mobile_exempt?
-        self.class.instance_variable_get("@mobile_exempt_actions").try(:include?, params[:action].try(:to_sym))
+        mobile_exempt_actions&.include?(params[:action]&.to_sym) || false
       end
     end
   end
-end
-
-if Rails::VERSION::MAJOR < 3
-  ActionController::Base.send :include, ActionController::MobileFu
-  ActionView::Base.send :include, MobileFu::Helper
-  ActionView::Base.send :alias_method, :stylesheet_link_tag_without_mobilization, :stylesheet_link_tag
-  ActionView::Base.send :alias_method, :stylesheet_link_tag, :stylesheet_link_tag_with_mobilization
 end

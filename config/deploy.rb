@@ -1,5 +1,5 @@
 # config valid only for current version of Capistrano
-lock '3.17.3'
+lock '3.20.1'
 
 set :repo_url, 'git@gitlab.kanrin.biz:kanrin/study_rails.git'
 
@@ -37,11 +37,33 @@ set :assets_roles, [:app, :app_dev]
 set :keep_assets, 2
 set :bundle_without, %w{test}
 
+namespace :sidekiq do
+  desc 'Перевод Sidekiq в режим тишины (остановка приема новых задач)'
+  task :quiet do
+    on roles([:app, :app_dev]) do
+      # Сигнал TSTP заставляет Sidekiq перестать брать новые задачи из очередей
+      execute :sudo, :systemctl, :kill, '--signal=TSTP', :sidekiq, raise_on_non_zero_exit: false
+    end
+  end
+
+  desc 'Перезапуск Sidekiq на новой версии кода'
+  task :restart do
+    on roles([:app, :app_dev]) do
+      execute :sudo, :systemctl, :restart, :sidekiq
+    end
+  end
+end
+
+# Автоматические хуки:
+before 'deploy:starting', 'sidekiq:quiet'
+after 'deploy:publishing', 'sidekiq:restart'
+
 namespace :deploy do
   desc 'Update Crontab'
   task :crontab do
     on roles([:app, :app_dev]), in: :sequence, wait: 5 do
       within current_path do
+        execute :bundle, :exec, :rails, 'tmp:clear'
         execute "touch  #{release_path}/tmp/restart.txt"
         execute :chmod, "u+x bin/rails"
         execute :bundle, :exec, "whenever --update-crontab #{fetch(:application)}  -s environment=#{fetch(:rails_env)}"

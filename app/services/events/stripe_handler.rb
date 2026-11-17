@@ -34,7 +34,15 @@ module Events
         subscription = stripe_event.data.object
         user = User.find_by(stripe_customer_id: subscription.customer)
         status = subscription.status
-        user.update!(stripe_subscription_id: subscription.id, plan: subscription.items.data[0].price.lookup_key, subscription_status: subscription.status, login_flg: (status == 'active' || status == 'trialing')) if user.present?
+        if user.comp_id.present? && status == 'canceled' # switch to B2B
+          user.stripe_subscription_id = nil
+          user.subscription_status = 'incomplete'
+          user.plan = nil
+          user.save!
+#          Stripe::Customer.delete(user.stripe_customer_id)
+        else
+          user.update!(stripe_subscription_id: subscription.id, plan: subscription.items.data[0].price.lookup_key, subscription_status: subscription.status, login_flg: (status == 'active' || status == 'trialing'))
+        end if user.present?
       when 'customer.subscription.trial_will_end'
       when 'invoice.updated'
         invoice = stripe_event.data.object

@@ -25,7 +25,7 @@
           <th class="table-success w-25 text-nowrap align-middle"><%= t('activerecord.attributes.user.lang_id') %><%== t('common.flg_required') %></th>
           <td class="text-nowrap align-middle">
             <div class="input-group">
-              <%= f.select :lang_id, options_for_select(langs, f.object.lang_id), {include_blank: true}, class: 'form-select', required: true, disabled: current_user.access_type != User::ACCESS_TYPE::KANRISHA %>
+              <%= f.select :lang_id, options_for_select(langs, f.object.lang_id), {include_blank: true}, class: 'form-select', required: true %>
             </div>
           </td>
         </tr>

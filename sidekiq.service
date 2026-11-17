@@ -52,7 +52,8 @@ NotifyAccess=all
 # If your Sidekiq process locks up, systemd's watchdog will restart it within seconds.
 WatchdogSec=10
 
-WorkingDirectory=/home/rails/niho_dev/current
+WorkingDirectory=/home/rails/niho/current
+#WorkingDirectory=/home/rails/niho_dev/current
 # If you use rbenv:
 # ExecStart=/bin/bash -lc 'exec /home/deploy/.rbenv/shims/bundle exec sidekiq -e production'
 # If you use the system's ruby:
@@ -64,9 +65,13 @@ WorkingDirectory=/home/rails/niho_dev/current
 # If you use rvm in production with gemset and ruby version/gemset is specified in .ruby-version,
 # .ruby-gemsetor or .rvmrc file in the working directory
 #ExecStart=/usr/local/rvm/bin/rvm in /home/rails/niho_dev/current do bundle exec sidekiq -e development
-ExecStart=/bin/bash -lc 'bundle exec --keep-file-descriptors sidekiq -e development'
+ExecStart=/bin/bash -lc 'bundle exec --keep-file-descriptors sidekiq -e production'
+#ExecStart=/bin/bash -lc 'bundle exec --keep-file-descriptors sidekiq -e development'
 
 # Use `systemctl kill -s TSTP sidekiq` to quiet the Sidekiq process
+# Безопасный quiet-режим и завершение задач
+KillSignal=SIGTERM
+TimeoutStopSec=35
 
 # Uncomment this if you are going to use this as a system service
 # if using as a user service then leave commented out, or you will get an error trying to start the service
