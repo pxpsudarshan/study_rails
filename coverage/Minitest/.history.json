@@ -1,0 +1,644 @@
+{
+  "simplecov_history": {
+    "format_version": 1,
+    "entries": [
+      {
+        "created_at": "2026-11-19T13:58:30Z",
+        "branch": "main",
+        "commit": "be91078645810367bd20dc16d8bda23ad7d8c604",
+        "totals": {
+          "line": 14.26,
+          "branch": 4.67
+        },
+        "groups": {
+          "Channels": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "Controllers": {
+            "line": 3.8,
+            "branch": 1.47
+          },
+          "Helpers": {
+            "line": 42.08,
+            "branch": 0.68
+          },
+          "Jobs": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "Libraries": {
+            "line": 60.0,
+            "branch": 32.11
+          },
+          "Mailers": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "Models": {
+            "line": 17.05,
+            "branch": 0.0
+          },
+          "Ungrouped": {
+            "line": 0.0,
+            "branch": 0.0
+          }
+        },
+        "files": {
+          "app/channels/application_cable/channel.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/channels/application_cable/connection.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/controllers/admin/audio_as_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/admin/audio_bs_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/admin/audio_c_contents_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/admin/audio_cs_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/admin/audio_ds_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/admin/block_ips_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/admin/channels_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/admin/kanji_tables_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/admin/parts_tables_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/admin/tokutei_answers_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/admin/tokutei_questions_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/admin/tokuteis_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/admin/users_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/admin/vocab_genres_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/admin/vocab_tables_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/application_controller.rb": {
+            "line": 48.48,
+            "branch": 14.81
+          },
+          "app/controllers/charts_controller.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/controllers/foreigns_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/gois_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/jlpts_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/jobs_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/kaisha/company_stores_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/kaisha/comps_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/kaisha/job_profiles_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/kaisha/menus_controller.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/controllers/kaisha/offers_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/kaisha/passwords_controller.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/controllers/kaisha/progress_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/kaisha/registrations_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/kaisha/sessions_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/kaisha/unlocks_controller.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/controllers/kaisha/users_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/kanji_scrolls_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/kanji_units_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/kanjis_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/mains_controller.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/controllers/menus_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/parts_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/quizes_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/specified_conversations_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/specified_vocabs_controller.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/controllers/stores_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/tokutei_contents_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/users/registrations_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/users_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/vocab_genres_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/vocab_mycards_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/controllers/webhook_events_controller.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/helpers/admin/audio_as_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/admin/audio_bs_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/admin/audio_c_contents_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/admin/audio_cs_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/admin/audio_ds_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/admin/block_ips_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/admin/channels_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/admin/kanji_tables_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/admin/parts_tables_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/admin/tokutei_answers_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/admin/tokutei_questions_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/admin/tokuteis_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/admin/users_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/admin/vocab_genres_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/admin/vocab_tables_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/application_helper.rb": {
+            "line": 33.33,
+            "branch": 0.94
+          },
+          "app/helpers/bootstrap_flash_helper.rb": {
+            "line": 35.29,
+            "branch": 0.0
+          },
+          "app/helpers/charts_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/foreigns_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/gois_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/jobs_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/kaisha/comps_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/kaisha/job_profiles_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/kaisha/offers_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/kaisha/progress_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/kaisha/stores_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/kaisha/users_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/kanji_scrolls_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/kanji_units_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/kanjis_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/mains_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/menus_helper.rb": {
+            "line": 40.0,
+            "branch": 0.0
+          },
+          "app/helpers/parts_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/sidebar_helper.rb": {
+            "line": 15.38,
+            "branch": 0.0
+          },
+          "app/helpers/specified_conversations_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/stores_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/tokutei_contents_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/users_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/helpers/vocab_mycards_helper.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/jobs/application_job.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/jobs/process_events_job.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/mailers/application_mailer.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/mailers/kaisha/job_mailer.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/mailers/kaisha/kaisha_mailer.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/mailers/user_mailer.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/models/application_record.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/models/audio_a.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/models/audio_b.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/models/audio_c.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/models/audio_c_content.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/models/audio_d.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/models/azure.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/models/block_ip.rb": {
+            "line": 100.0,
+            "branch": 100.0
+          },
+          "app/models/channel.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/models/comp.rb": {
+            "line": 85.1,
+            "branch": 0.0
+          },
+          "app/models/company_store.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/models/company_store_content.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/models/explains.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/models/job_profile.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/models/job_profile_content.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/models/kanji_table.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/models/kanji_vocab.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/models/langs.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/models/language.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/models/parts_kanji.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/models/parts_table.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/models/profile.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/models/profile_language.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/models/profile_qualification.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/models/profile_work.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/models/specified_vocab_a.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/models/specified_vocab_b.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/models/store.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/models/store_content.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/models/syslog.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/models/tokutei.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/models/tokutei_answer.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/models/tokutei_explain.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/models/tokutei_question.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/models/user.rb": {
+            "line": 85.36,
+            "branch": 0.0
+          },
+          "app/models/user_channel.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/models/vocab_genre.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/models/vocab_genre_content.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/models/vocab_mycard.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/models/vocab_nation.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/models/vocab_table.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/models/webhook_event.rb": {
+            "line": 0.0,
+            "branch": 100.0
+          },
+          "app/services/chart_service.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "app/services/events/stripe_handler.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "lib/azure_api/base.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "lib/azure_api/http_error_handler.rb": {
+            "line": 0.0,
+            "branch": 0.0
+          },
+          "lib/mobile_fu.rb": {
+            "line": 84.0,
+            "branch": 35.0
+          },
+          "lib/mobile_fu/helper.rb": {
+            "line": 26.31,
+            "branch": 0.0
+          },
+          "lib/mobile_fu/mobile_detect.rb": {
+            "line": 100.0,
+            "branch": 83.33
+          },
+          "lib/mobile_fu/tablet.rb": {
+            "line": 91.66,
+            "branch": 83.33
+          },
+          "lib/record_with_operator.rb": {
+            "line": 86.95,
+            "branch": 100.0
+          },
+          "lib/record_with_operator/operator.rb": {
+            "line": 62.5,
+            "branch": 0.0
+          },
+          "lib/record_with_operator/recorder.rb": {
+            "line": 70.9,
+            "branch": 28.94
+          }
+        }
+      }
+    ]
+  }
+}

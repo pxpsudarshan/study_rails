@@ -5,13 +5,14 @@ class VocabGenresController < ApplicationController
     redirect_to menus_path and return unless @id.present?
 
     # Parents (root genres) for the given title
-    parent = child_id.present? ? VocabGenre.find(child_id) : VocabGenre.find(@id)
+    root_genre = VocabGenre.find(@id)
+    selected_genre = child_id.present? ? VocabGenre.find(child_id) : root_genre
 
     ids = []
     sub_ids = []
 
     table_ids = []
-    table_ids << parent.id
+    table_ids << selected_genre.id
     while id = table_ids.shift
       vg = VocabGenre.find(id)
       ids += vg.vocab_genre_contents.where(hide_flg: false).pluck(:vocab_table_id)

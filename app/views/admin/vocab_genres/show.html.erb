@@ -34,7 +34,7 @@
       <tbody>
       <% @vocab_genre.sub_genres.each do |a| %>
         <tr class="details_row nested-fields">
-          <td class="text-start text-nowrap w-75"><%= link_to a.title, admin_vocab_genre_path(id: a.id), class: '' %></td>
+          <td class="text-start text-nowrap"><%= link_to a.title, admin_vocab_genre_path(id: a.id), class: '' %></td>
           <td class="text-start text-nowrap"><%= link_to t('buttons.edit').html_safe, edit_admin_vocab_genre_path(id: a.id), class: 'btn btn-sm btn-primary' %></td>
           <td class="text-start text-nowrap"><%= link_to t('buttons.destroy').html_safe, admin_vocab_genre_path(id: a.id), method: :delete, class: 'btn btn-sm btn-danger' %></td>
         </tr>

@@ -1,6 +1,6 @@
 <%= paginate @users, remote: true %>
-<div style="white-space: nowrap; min-width: 800px;">
-<table class="table table-bordered table-hover table-sm text-center">
+<div class="table-responsive">
+<table style="min-width: 800px;" class="table text-nowrap table-bordered table-hover table-sm text-center">
   <thead>
     <tr class="table-success">
       <th><%= t('activerecord.attributes.user.name') %></th>

@@ -23,7 +23,7 @@
           <% unless current_user.comp&.channel_id.present? %>
           <td class="text-start text-nowrap"><%= vg.channel&.channel_name %></td>
           <% end %>
-          <td class="text-start text-nowrap w-75"><%= link_to vg.title, admin_vocab_genre_path(id: vg.id) %></td>
+          <td class="text-start text-nowrap"><%= link_to vg.title, admin_vocab_genre_path(id: vg.id) %></td>
           <td class="text-start text-nowrap"><%= link_to t('buttons.edit').html_safe, edit_admin_vocab_genre_path(id: vg.id), class: 'btn btn-sm btn-primary' %></td>
           <td class="text-start text-nowrap"><%= link_to t('buttons.destroy').html_safe, admin_vocab_genre_path(id: vg.id), method: :delete, class: 'btn btn-sm btn-danger' %></td>
         </tr>

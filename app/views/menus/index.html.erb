@@ -1,161 +1,83 @@
-<ul class="dropdown-menu border-0 text-center inherit d-block w-50 m-auto">
-  <div class="row">
-  <!-- Charts Button -->
-  <div class="text-center mb-4">
-    <%= link_to "📊 Progress",
-        charts_path,
-        class: "btn btn-dark px-4 rounded-0",
-        data: { turbo_frame: "charts_area" } %>
-  </div>
+<div class="home-page w-100 p-3">
+  <header class="home-welcome mb-4">
+    <h1 class="h3 fw-bold mb-2"><%= t('home.welcome', name: current_user.name.strip) %></h1>
+    <p class="text-muted mb-0"><%= t('home.intro') %></p>
+  </header>
 
-  <!-- "Select Parts" Link (Centered) -->
-  <div class="d-flex justify-content-center">
-    <li class="dropdown-item fs-5 fw-bold font-en text-center" data-bs-toggle="collapse" data-bs-target="#collapsePart" aria-expanded="false" aria-controls="collapsePart">
-      <%= t('feature.parts') %>
-    </li>
-  </div>
-
-  <!-- Collapse for Select Parts -->
-  <div class="collapse" id="collapsePart">
-    <ul class="dropdown-menu inherit d-block w-100 m-auto rounded-0">
-      <li class="dropdown-item text-center">
-        <%= link_to t('feature.parts_parts'), parts_path, class: 'text-decoration-none d-inline-block w-100 text-reset' %>
-      </li>
-    </ul>
-  </div>
-
-  <!-- Additional Collapse Sections with Centered Content -->
-  <div class="d-flex justify-content-center">
-    <li class="dropdown-item fs-5 fw-bold font-en text-center" data-bs-toggle="collapse" data-bs-target="#collapseVocab" aria-expanded="false" aria-controls="collapseVocab">
-      <%= t('feature.vocab') %>
-    </li>
-  </div>
-
-  <div class="collapse" id="collapseVocab">
-    <ul class="dropdown-menu inherit d-block w-100 m-auto rounded-0">
-      <li class="dropdown-item text-center">
-        <%= link_to t('feature.vocab_hiragana'), gois_path, class: 'text-decoration-none d-inline-block w-100 text-reset' %>
-      </li>
-      <hr class="mb-1 mt-1">
-      <li class="dropdown-item text-center">
-        <%= link_to t('feature.vocab_native'), foreigns_path, class: 'text-decoration-none d-inline-block w-100 text-reset' %>
-      </li>
-      <!-- <hr class="mb-1 mt-1">
-      <li class="dropdown-item text-center">
-        <%= link_to 'Specific skill word', specified_vocabs_path, class: 'text-decoration-none d-inline-block w-100 text-reset' %>
-      </li> -->
-    </ul>
-  </div>
-
-  <div class="d-flex justify-content-center">
-    <li class="dropdown-item fs-5 fw-bold font-en text-center" data-bs-toggle="collapse" data-bs-target="#collapseKanji" aria-expanded="false" aria-controls="collapseKanji">
-      <%= t('feature.kanji') %>
-    </li>
-  </div>
-
-  <div class="collapse" id="collapseKanji">
-    <ul class="dropdown-menu inherit d-block w-100 m-auto rounded-0">
-      <li class="dropdown-item text-center">
-        <%= link_to t('feature.kanji_kanji'), kanjis_path, class: 'text-decoration-none d-inline-block w-100 text-reset' %>
-      </li>
- <!--
-      <hr class="mb-1 mt-1">
-      <li class="dropdown-item text-center">
-        <%= link_to 'kanji_scroll', kanji_scrolls_path, class: 'text-decoration-none d-inline-block w-100 text-reset' %>
-      </li>
-      <hr class="mb-1 mt-1">
-      <li class="dropdown-item text-center">
-        <%#= link_to 'kanji_unit', kanji_units_path, class: 'text-decoration-none d-inline-block w-100 text-reset' %>
-      </li>
--->
-    </ul>
-  </div>
-
-  <div class="d-flex justify-content-center">
-    <li class="dropdown-item fs-5 fw-bold font-en text-center" data-bs-toggle="collapse" data-bs-target="#collapseJlpt" aria-expanded="false" aria-controls="collapseJlpt">
-      <%= t('feature.word') %>
-    </li>
-  </div>
-
-  <div class="collapse" id="collapseJlpt">
-    <ul class="dropdown-menu inherit d-block w-100 m-auto rounded-0">
-      <li class="dropdown-item text-center">
-        <%= link_to 'jlpt N5 (CEFR A1)', jlpts_path(jlpt: 5), class: 'text-decoration-none d-inline-block w-100 text-reset' %>
-      </li>
-      <hr class="mb-1 mt-1">
-      <li class="dropdown-item text-center">
-        <%= link_to 'jlpt N4 JFT-Basic(CEFR A2)', jlpts_path(jlpt: 4), class: 'text-decoration-none d-inline-block w-100 text-reset' %>
-      </li>
-      <hr class="mb-1 mt-1">
-      <li class="dropdown-item text-center">
-        <%= link_to 'jlpt N3', jlpts_path(jlpt: 3), class: 'text-decoration-none d-inline-block w-100 text-reset' %>
-      </li>
-      <hr class="mb-1 mt-1">
-      <li class="dropdown-item text-center">
-        <%= link_to 'jlpt N2', jlpts_path(jlpt: 2), class: 'text-decoration-none d-inline-block w-100 text-reset' %>
-      </li>
-      <hr class="mb-1 mt-1">
-      <li class="dropdown-item text-center">
-        <%= link_to 'jlpt N1', jlpts_path(jlpt: 1), class: 'text-decoration-none d-inline-block w-100 text-reset' %>
-      </li>
-      <% rows = VocabGenre.where(vocab_genre_id: nil, hide_flg: false).select(:title, :sort, :id).order(:sort, :title) %>
-      <% rows.each do |row| %>
-        <hr class="mb-1 mt-1">
-        <li class='dropdown-item text-center'>
-          <%= link_to (current_user.lang_id == 'JP' ? row.title : (get_content(row, current_user.lang_id)||'Empty')), vocab_genres_path(id: row.id), class: 'text-decoration-none d-inline-block w-100 text-reset'  %>
-        </li>
+  <section aria-labelledby="home-progress" class="home-progress p-3 p-lg-4 mb-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+      <h2 id="home-progress" class="h5 fw-bold mb-0"><%= t('home.progress') %></h2>
+      <%= link_to t('home.progress_details'), charts_path, class: 'home-text-link' %>
+    </div>
+    <div class="row g-3 mb-3">
+      <% [['feature.mycard', @card_total], ['home.studying', @card_studying], ['home.learned', @card_learned]].each do |label, count| %>
+        <div class="col-4"><p class="small text-muted mb-1"><%= t(label) %></p><p class="h3 fw-bold mb-0"><%= number_with_delimiter(count) %></p></div>
       <% end %>
-    </ul>
-  </div>
+    </div>
+    <% if @card_total.zero? %>
+      <p class="small text-muted mb-3"><%= t('home.empty') %></p>
+    <% else %>
+      <div class="d-flex justify-content-between small mb-2"><span><%= t('home.learned_ratio') %></span><span><%= @learned_percent %>%</span></div>
+      <div class="progress mb-3" style="height: 8px"><div class="progress-bar home-progress-bar" role="progressbar" style="width: <%= @learned_percent %>%" aria-valuenow="<%= @learned_percent %>" aria-valuemin="0" aria-valuemax="100" aria-label="<%= t('home.learned_ratio') %>"></div></div>
+    <% end %>
+    <%= link_to t(@card_total.zero? ? 'home.start' : 'home.review'), @card_total.zero? ? gois_path : vocab_mycards_path, class: 'btn home-primary rounded-0 px-4' %>
+  </section>
 
-  <div class="d-flex justify-content-center">
-    <li class="dropdown-item fs-5 fw-bold font-en text-center" data-bs-toggle="collapse" data-bs-target="#collapsemycard" aria-expanded="false" aria-controls="collapsemycard">
-      <%= t('feature.mycard') %>
-    </li>
-  </div>
-
-  <div class="collapse" id="collapsemycard">
-    <ul class="dropdown-menu inherit d-block w-100 m-auto rounded-0">
-      <li class="dropdown-item text-center">
-        <%= link_to t('feature.mycard_mycard'), vocab_mycards_path, class: 'text-decoration-none d-inline-block w-100 text-reset' %>
-      </li>
-    </ul>
-  </div>
-
-  <div class="d-flex justify-content-center">
-    <li class="dropdown-item fs-5 fw-bold font-en text-center" data-bs-toggle="collapse" data-bs-target="#collapsequiz" aria-expanded="false" aria-controls="collapsequiz">
-      <%= t('feature.quiz') %>
-    </li>
-  </div>
-
-  <div class="collapse" id="collapsequiz">
-    <ul class="dropdown-menu inherit d-block w-100 m-auto rounded-0">
-      <li class="dropdown-item text-center">
-        <%= link_to t('feature.quiz'), quizes_path, class: 'text-decoration-none d-inline-block w-100 text-reset'  %>
-      </li>
-      <% Tokutei.where(tokutei_id: nil).each do |tokutei| %>
-        <hr class="mb-1 mt-1">
-        <li class="dropdown-item text-center">
-          <%= link_to (current_user.lang_id == 'JP' ? tokutei.title : (get_content(tokutei, current_user.lang_id)||'Empty')), tokutei_contents_path(id: tokutei.id), class: 'text-decoration-none d-inline-block w-100 text-reset'  %>
-        </li>
+  <section aria-labelledby="home-learn" class="mb-4">
+    <h2 id="home-learn" class="h5 fw-bold mb-3"><%= t('home.learn') %></h2>
+    <div class="row g-3">
+      <% [['feature.vocab_hiragana', 'home.vocab_hint', gois_path, 'book'], ['feature.vocab_native', 'home.native_hint', foreigns_path, 'language'], ['feature.kanji', 'home.kanji_hint', kanjis_path, 'font'], ['feature.parts', 'home.parts_hint', parts_path, 'puzzle-piece'], ['feature.conversation', 'home.conversation_hint', specified_conversations_path, 'comments'], ['feature.quiz', 'home.quiz_hint', quizes_path, 'question-circle']].each do |label, hint, path, icon| %>
+        <div class="col-12 col-md-6 col-xl-4">
+          <%= link_to path, class: 'home-learning-card d-flex align-items-center gap-3 p-3 h-100' do %>
+            <i class="fas fa-<%= icon %> fa-fw home-learning-icon" aria-hidden="true"></i>
+            <div class="flex-grow-1"><h3 class="h6 fw-bold mb-1"><%= t(label) %></h3><p class="small text-muted mb-0"><%= t(hint) %></p></div>
+            <span aria-hidden="true">›</span>
+          <% end %>
+        </div>
       <% end %>
-    </ul>
-  </div>
+    </div>
+  </section>
 
-  <div class="d-flex justify-content-center">
-    <li class="dropdown-item fs-5 fw-bold font-en text-center" data-bs-toggle="collapse" data-bs-target="#collapseConversation" aria-expanded="false" aria-controls="collapseConvertion">
-      <%= t('feature.conversation') %>
-    </li>
-  </div>
+  <%#= link_to 'Specific skill word', specified_vocabs_path, class: 'btn btn-outline-dark rounded-0' %>
+  <%#= link_to 'kanji_scroll', kanji_scrolls_path, class: 'btn btn-outline-dark rounded-0' %>
 
-  <div class="collapse" id="collapseConversation">
-      <ul class="dropdown-menu inherit d-block w-100 m-auto rounded-0">
-        <% AudioA.order(:sort).each_with_index do |audio_a, index| %>
-          <% if index > 0 %> <hr class="mb-1 mt-1"> <% end %>
-          <li class="dropdown-item text-center">
-              <%= link_to title_nation(audio_a), specified_conversations_path(id: audio_a.id), class: 'text-decoration-none d-inline-block w-100 text-reset' %>
-          </li>
+  <section aria-labelledby="home-materials" class="mb-3">
+    <h2 id="home-materials" class="h5 fw-bold mb-3"><%= t('home.materials') %></h2>
+    <h3 class="h6 fw-bold mb-3"><%= t('home.jlpt') %></h3>
+    <div class="row g-3">
+      <% 5.downto(1) do |level| %>
+        <div class="col-6 col-md-4 col-lg">
+          <%= link_to jlpts_path(jlpt: level), class: 'home-material-card card h-100 rounded-0 text-decoration-none text-dark' do %>
+            <div class="home-material-cover home-material-cover-jlpt" aria-hidden="true">
+              <span class="small fw-bold">JLPT</span>
+              <span class="home-material-level">N<%= level %></span>
+            </div>
+            <div class="card-body d-flex align-items-center justify-content-between gap-2 p-3">
+              <h4 class="h6 fw-bold mb-0">JLPT N<%= level %></h4>
+              <span aria-hidden="true">›</span>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <% if @genres.any? %>
+      <h3 class="h6 fw-bold mt-4 mb-3"><%= t('home.genres') %></h3>
+      <div class="row g-3">
+        <% @genres.each do |genre| %>
+          <% title = get_content(genre, @lang) if @lang.present? && @lang != 'JP' %>
+          <div class="col-6 col-md-4 col-xl-3">
+            <%= link_to vocab_genres_path(id: genre.id), class: 'home-material-card card h-100 rounded-0 text-decoration-none text-dark' do %>
+              <div class="home-material-cover" aria-hidden="true">
+                <i class="fas fa-book-open"></i>
+              </div>
+              <div class="card-body d-flex align-items-center justify-content-between gap-2 p-3">
+                <h4 class="h6 fw-bold mb-0"><%= strip_tags(title.presence || genre.title).strip %></h4>
+                <span aria-hidden="true">›</span>
+              </div>
+            <% end %>
+          </div>
         <% end %>
-      </ul>
-  </div>
-</ul>
+      </div>
+    <% end %>
+  </section>
+</div>

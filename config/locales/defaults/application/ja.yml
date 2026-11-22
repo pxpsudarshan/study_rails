@@ -189,8 +189,8 @@ ja:
     select_photo:     '写真を選択'
     prefer_image_format: 'JPG / PNG（推奨：長方形）'
 
-  select:           
-      visa_type:           
+  select:
+      visa_type:
         1:   '留学'
         2:   '特定活動'
         3:   '技術・人文知識・国際業務'
@@ -217,7 +217,7 @@ ja:
         14:  '建設・土木・電気工事の職業'
         15:  '運搬・清掃・包装・選別等の職業'
 
-      industries:           
+      industries:
         0:   '全て'
         1:   ' 農業・林業'
         2:   ' 漁業'
@@ -238,13 +238,13 @@ ja:
         17:  ' 複合サービス事業'
         18:  ' サービス業（その他）'
         19:  ' 公務（政府・地方自治体）'
-      toeic:           
+      toeic:
         1:  '600以上'
         2:  '650以上'
         3:  '700以上'
         4:  '800以上'
         5:  '900以上'
-        6:  '950以上'  
+        6:  '950以上'
       kokusekis:
         1:  "🇦🇫 アフガニスタン"
         2:  "🇦🇱 アルバニア"
@@ -438,7 +438,7 @@ ja:
         190: "🇾🇪 イエメン"
         191: "🇿🇲 ザンビア"
         192: "🇿🇼 ジンバブエ"
-      langs:           
+      langs:
         EN: '🇬🇧 英語'
         JP: '🇯🇵 日本語'
         RU: '🇷🇺 ロシア語'
@@ -459,7 +459,7 @@ ja:
         TR: "🇹🇷 トルコ語"
         TH: "🇹🇭 タイ語"
         FA: "🇮🇷 ペルシア語"
-      second_langs:           
+      second_langs:
         1:  '🇨🇳 中国語'
         2:  '🇫🇷 フランス語'
         3:  '🇪🇸 スペイン語'
@@ -480,30 +480,30 @@ ja:
         18: '🇰🇭 クメール語（カンボジア）'
         19: '🇹🇭 タイ語'
         20: '🇵🇭 タガログ語'
-      school_end:           
+      school_end:
         1:  '卒業'
         2:  '中退'
         3:  '休学'
         4:  '卒業予定'
-      language_level:           
+      language_level:
         1:  '初級レベル'
         2:  '日常会話レベル'
         3:  'ビジネスレベル'
         4:  'ネイティブレベル'
-      work_country:           
+      work_country:
         1:  '日本'
         2:  '母国'
         3:  'その他'
-      sex:           
+      sex:
         1:  '男性'
         2:  '女性'
-      school_type:           
+      school_type:
         1:  '大学(博士)'
         2:  '大学(修士)'
         3:  '大学(学部)'
         4:  '専門学校'
         5:  '高校'
-      prefectures:           
+      prefectures:
         1:  '北海道'
         2:  '青森県'
         3:  '岩手県'
@@ -553,13 +553,13 @@ ja:
         47: '沖縄県'
         48: '海外'
 
-  placeholder:           
+  placeholder:
     sei:              '姓'
     mei:              '名'
     sei_kana:         '姓カナ'
     mei_kana:         '名カナ'
     no_photo:         '写真なし'
-    image_type:       'JPG / PNG が使用できます'  
+    image_type:       'JPG / PNG が使用できます'
     school_senko:     '例）語学、工学、経済'
     school_name:      '例）〇〇学校、〇〇専門学校'
     desired_job_type: '例）システムエンジニア、インフラエンジニア など'
@@ -747,6 +747,7 @@ ja:
     specified_commercial: "特定商取引法に基づく表示"
 
   quizes:
+    start: "クイズ開始"
     title: クイズを選択
 
     learning_history:
@@ -840,3 +841,36 @@ ja:
     start_hint: "上の検索条件を設定し、「候補者を検索」を押してください。"
     sent_title: "詳細情報のご希望を受け付けました"
     back: "候補者検索に戻る"
+
+  sidebar:
+    expand: "メニューを開く"
+    collapse: "メニューを閉じる"
+    track: "学習記録"
+    career: "キャリア"
+    recruitment: "採用"
+    dashboard: "ホーム"
+    progress: "学習の進捗"
+    navigation: "メインナビゲーション"
+    menu: "メニュー"
+
+  home:
+    welcome: "%{name}さん、こんにちは"
+    intro: 今日も、自分のペースで日本語を学びましょう。
+    progress: あなたの学習状況
+    progress_details: 学習の進捗を見る →
+    studying: 学習中
+    learned: 習得済み
+    learned_ratio: マイカードの習得率
+    empty: まずは語彙を学んで、覚えたい言葉をマイカードに登録しましょう。
+    start: 語彙の学習を始める
+    review: マイカードを復習する
+    learn: 学習を始める
+    vocab_hint: ひらがなから言葉を学ぶ
+    native_hint: 母国語から日本語を学ぶ
+    kanji_hint: 漢字の読み方と意味を学ぶ
+    parts_hint: 部品から漢字を学ぶ
+    conversation_hint: 場面別の会話を学ぶ
+    quiz_hint: クイズで理解度を確かめる
+    materials: 教材から選ぶ
+    jlpt: JLPTレベル別
+    genres: 分野別の語彙

@@ -1,5 +1,5 @@
 <%= form_with model: [:kaisha, @company_store], locale: true, id: 'new_store', class: 'needs-validation', novalidate: true, role: 'form' do |f| %>
-<div class="row">
+<div class="row mx-0">
   <div class="col-md-12">
     <div class="text-center mt-3">
       <h2 class="border border-1 border-info rounded p-1">貴社用語集</h2>
@@ -15,9 +15,10 @@
         </ul>
       </div>
     <% end %>
-<div class="bg-blue bg-primary text-white p-4">
+<div class="bg-blue bg-primary text-white p-2 p-md-4">
   <h3 class="text-center p-2">外国人材に「知っておいてほしい」語集</h3>
-  <table id="stores_table" class=" table align-middle table-bordered border-dark bg-light" >
+  <div class="table-responsive">
+  <table id="stores_table" class="table align-middle table-bordered border-dark bg-light" style="min-width: 640px;">
     <thead>
       <tr class="bg-secondary bg-opacity-50 align-middle ">
         <th class="text-center"><%= t('common.id')%></th>
@@ -34,13 +35,14 @@
     <% end %>
     </tbody>
   </table>
+  </div>
   <%= link_to_add_association t('buttons.add_item').html_safe, f, :company_store_contents,
     'data-association-insertion-method'    => 'append' ,
     'data-association-insertion-node'      => '#store_details', class: "invisible"
   %>
 </div>
 <div class="p-3 text-center">
-  <%= f.submit t('buttons.done'), class: "btn btn-primary btn-lg w-25", id: 'button_done' %>
+  <%= f.submit t('buttons.done'), class: "btn btn-primary btn-lg px-4", id: 'button_done' %>
 </div>
       </div>
     </div>

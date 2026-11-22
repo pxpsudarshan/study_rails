@@ -1,0 +1,38 @@
+<%= javascript_tag 'window.nihoSidebarRestore();' %>
+<aside class="app-sidebar" tabindex="-1" id="app-sidebar" aria-label="<%= t('sidebar.navigation') %>">
+  <%= link_to current_comp.present? ? kaisha_menus_path : menus_path, class: 'app-sidebar-brand', aria: { label: 'NIHO' } do %>
+    <%= image_tag 'niho_logo_newWhite.svg', width: 112, height: 54, alt: '', class: 'app-sidebar-logo', aria: { hidden: true } %>
+    <%= image_tag 'niho_mark.svg', width: 44, height: 36, alt: '', class: 'app-sidebar-mark', aria: { hidden: true } %>
+  <% end %>
+  <div class="app-sidebar-controls">
+    <%= button_tag type: 'button', class: 'app-sidebar-toggle btn', title: t('sidebar.expand'), data: { expand_label: t('sidebar.expand'), collapse_label: t('sidebar.collapse') }, aria: { controls: 'app-sidebar', expanded: false, label: t('sidebar.expand') } do %>
+      <span class="app-sidebar-toggle-caption" aria-hidden="true"><%= t('sidebar.menu') %></span>
+      <svg class="app-sidebar-toggle-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <path class="app-sidebar-toggle-menu" d="M4 6h16M4 12h16M4 18h16"/>
+        <path class="app-sidebar-toggle-back" d="m14 6-6 6 6 6"/>
+      </svg>
+    <% end %>
+  </div>
+  <div class="app-sidebar-body d-flex flex-column">
+    <nav aria-label="<%= t('sidebar.navigation') %>" class="flex-grow-1">
+      <% sidebar_groups.each do |heading, links| %>
+        <% if heading.present? %>
+          <h2 class="app-sidebar-heading small text-uppercase fw-bold px-3 mt-3 mb-2"><%= heading %></h2>
+        <% end %>
+        <div class="nav flex-column">
+          <% links.each do |label, path, icon| %><%= sidebar_link(label, path, icon) %><% end %>
+        </div>
+      <% end %>
+    </nav>
+    <div class="border-top mt-4 pt-3">
+      <p class="app-sidebar-account small fw-bold text-break px-3 mb-2"><%= current_user.present? ? current_user.name : current_comp.name %></p>
+      <%= sidebar_link('navbar.edit_user', current_user.present? ? edit_user_path(current_user) : edit_kaisha_comp_path(current_comp), 'cog') %>
+      <% if current_user&.stripe_subscription_id.present? %>
+        <% billing_url = Rails.env.development? ? "https://billing.stripe.com/p/login/test_3cI3cw4v27ht3KDbyHaMU00" : "https://billing.stripe.com/p/login/3cI3cw4v27ht3KDbyHaMU00" %>
+        <%= sidebar_link('navbar.subscription', billing_url, 'credit-card', target: '_blank', rel: 'noopener') %>
+      <% end %>
+      <%= sidebar_link('navbar.logout', current_user.present? ? destroy_user_session_path : destroy_comp_session_path, 'sign-out-alt', method: :delete) %>
+    </div>
+  </div>
+</aside>
+<%= javascript_tag 'window.nihoSidebarSyncButton();' %>
