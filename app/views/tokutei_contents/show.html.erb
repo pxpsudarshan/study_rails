@@ -6,6 +6,7 @@
       You need at least 1 question to start the quiz.
     </div>
     <% else %>
+      <% linked_questions = linked_tokutei_questions(@datas) %>
       <% @datas.each_with_index do |data, index| %>
         <% if data.tokutei_answers.where(correct_flg: true).present? %>
           <% correct_answer = data.tokutei_answers.where(correct_flg: true).first %>
@@ -29,8 +30,7 @@
                   <%= index + 1 %>
                 </h1>
                 <h2>
-                  <%#= "#{strict_decode64(data.content_hex)}".html_safe %>
-                  <%#= "#{index + 1}." %><%= "#{data.content}".html_safe %>
+                  <%= linked_questions.fetch(data.id) %>
                   <br />
                   <%= content_tag :span, "(#{question_nation(data)})", class: "hiraText d-none" %>
                   <br/>
