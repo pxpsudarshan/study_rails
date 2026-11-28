@@ -13,6 +13,7 @@
 
 //= require jquery
 //= require jquery_ujs
+//= require vocab_popover
 //= require sidebar
 //= require jquery-ui/widgets/sortable
 

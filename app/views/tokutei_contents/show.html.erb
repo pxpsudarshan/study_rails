@@ -6,7 +6,8 @@
       You need at least 1 question to start the quiz.
     </div>
     <% else %>
-      <% linked_questions = linked_tokutei_questions(@datas) %>
+      <% question_texts = @datas.to_h { |question| [question.id, question.content.to_s.html_safe] } %>
+      <% linked_questions = link_vocab_texts(question_texts) %>
       <% @datas.each_with_index do |data, index| %>
         <% if data.tokutei_answers.where(correct_flg: true).present? %>
           <% correct_answer = data.tokutei_answers.where(correct_flg: true).first %>

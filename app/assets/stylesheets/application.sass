@@ -11,6 +11,59 @@ $nprogress-color: #ff0000
 @import "nprogress"
 @import "nprogress-bootstrap"
 
+.vocab-popover-trigger
+  display: inline
+  padding: 0
+  border: 0
+  background: transparent
+  color: inherit
+  font: inherit
+  text-decoration: underline
+  cursor: pointer
+
+.vocab-popover
+  position: fixed
+  z-index: 1070
+  width: 13rem
+  height: 160px
+  max-width: calc(100vw - 16px)
+  max-height: calc(100vh - 16px)
+  overflow-x: hidden
+  overflow-y: auto
+  overflow-wrap: anywhere
+  padding: .75rem 1rem
+  border: 1px solid #9b7a3f
+  border-radius: 0
+  background: var(--bs-body-bg, #fff)
+  color: var(--bs-body-color, #212529)
+  box-shadow: 2px 3px 0 rgba(116, 89, 39, .3), 0 5px 12px rgba(41, 37, 30, .18)
+  font-size: .875rem
+  text-align: center
+
+  @media (prefers-reduced-motion: no-preference)
+    &.vocab-popover-opening
+      animation: vocab-popover-open 180ms ease-out
+
+@keyframes vocab-popover-open
+  from
+    opacity: 0
+    transform: scale(.96)
+  to
+    opacity: 1
+    transform: scale(1)
+
+.vocab-popover-word
+  display: block
+  margin-top: .5rem
+  padding: .25rem 0
+  border-top: 1px solid var(--bs-border-color, #ccc)
+  color: inherit
+  font-size: 1.75rem
+
+.vocab-popover-meaning
+  padding-top: .5rem
+  border-top: 1px solid var(--bs-border-color, #ccc)
+
 .nopadding th, .nopadding td
   padding: 0px !important
 

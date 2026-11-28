@@ -13,12 +13,16 @@
         <p class="text-center text-muted mt-3">表示できる音声データがありません。</p>
       <% else %>
         <ul class="list-group list-group-flush text-left">
-          <% filtered_audio = @audio_d.take_while { |audio| get_content(audio, @selected_language).presence.present? } %>
+          <% conversation_lines = @audio_d.lazy
+               .map { |audio| [audio, get_content(audio, @selected_language)] }
+               .take_while { |_audio, text| text.present? }
+               .to_h %>
+          <% conversation_lines = link_vocab_texts(conversation_lines) if @selected_language.blank? && conversation_lines.present? %>
 
-          <% if filtered_audio.present? %>
-            <% filtered_audio.each_with_index do |audio, index| %>
+          <% if conversation_lines.present? %>
+            <% conversation_lines.each do |audio, text| %>
               <li class="list-group-item dropdown-item" style="<%= audio.customer_flg ? 'text-align: end; background-color: #e9f5ff;' : '' %>">
-                <h6 class="text-wrap text-break js-conversation"><%= get_content(audio, @selected_language) %></h6>
+                <h6 class="text-wrap text-break js-conversation"><%= text %></h6>
                 <audio controls>
                   <source src="<%= get_media(audio, @selected_language) %>" type="audio/mpeg" />
                 </audio>
